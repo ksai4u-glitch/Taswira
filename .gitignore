@@ -5,3 +5,6 @@
 __pycache__/
 *.pyc
 .venv/
+
+# Local database (rebuilt from the API with save_events.py)
+data/
