@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Taswira: Nigeria __YEAR__</title>
+<title>Taswira: __COUNTRY__ __PERIOD__</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
@@ -70,6 +70,19 @@
   table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
   th, td { text-align: left; padding: 3px 4px; border-bottom: 1px solid var(--border); }
   td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .years { display: flex; align-items: flex-end; gap: 2px; height: 72px; margin-top: 6px; }
+  .years button {
+    flex: 1; height: 100%; padding: 0; border: 0; background: none; cursor: pointer;
+    display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch;
+  }
+  .years .bar { background: var(--series-1); border-radius: 4px 4px 0 0; min-height: 2px; opacity: .45; }
+  .years button.on .bar, .years button:hover .bar { opacity: 1; }
+  .years .yl { font-size: 10px; color: var(--text-muted); text-align: center; margin-top: 3px;
+               font-variant-numeric: tabular-nums; }
+  .year-row { display: flex; align-items: center; gap: 8px; }
+  .year-row button { font: inherit; font-size: 13px; padding: 3px 10px; cursor: pointer;
+    border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
+  #year-label { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
   .credit { margin-top: 20px; font-size: 12px; color: var(--text-muted); }
   .credit a { color: inherit; }
   .leaflet-tooltip { font: 13px/1.4 system-ui, sans-serif; }
@@ -82,7 +95,7 @@
 </head>
 <body>
 <aside id="panel">
-  <h1>Taswira: Nigeria __YEAR__</h1>
+  <h1>Taswira: __COUNTRY__ __PERIOD__</h1>
   <p class="sub">Organised violence, UCDP GED __VERSION__</p>
 
   <div class="stats">
@@ -90,6 +103,14 @@
     <div class="stat"><b id="s-deaths"></b><span>deaths (best est.)</span></div>
     <div class="stat"><b id="s-ready"></b><span>on the map</span></div>
   </div>
+
+  <h2>Year</h2>
+  <div class="year-row">
+    <button id="year-all" type="button">All years</button>
+    <button id="year-play" type="button" aria-label="Play through the years">&#9654; Play</button>
+    <span id="year-label"></span>
+  </div>
+  <div class="years" id="years" role="group" aria-label="Deaths per year; click a bar to show that year"></div>
 
   <h2>Show</h2>
   <label><input type="radio" name="layer" value="heat" checked> Heatmap (weighted by deaths)</label>
@@ -114,7 +135,7 @@
     Deaths are UCDP's best estimates. Base map &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors.
   </p>
 </aside>
-<div id="map" role="region" aria-label="Map of conflict events in Nigeria"></div>
+<div id="map" role="region" aria-label="Map of conflict events in __COUNTRY__"></div>
 
 <script>
 const EVENTS = __EVENTS_JSON__;      // map-ready events
@@ -133,20 +154,34 @@ const fmt = n => n.toLocaleString("en-GB");
 const sum = (list, f) => list.reduce((t, e) => t + e[f], 0);
 const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 
-// --- Panel numbers ------------------------------------------------------
-const all = EVENTS.concat(UNMAPPED);
-document.getElementById("s-events").textContent = fmt(all.length);
-document.getElementById("s-deaths").textContent = fmt(sum(all, "deaths_best"));
-document.getElementById("s-ready").textContent = Math.round(100 * EVENTS.length / all.length) + "%";
-document.getElementById("unmapped-note").textContent =
-  `${UNMAPPED.length} events (${fmt(sum(UNMAPPED, "deaths_best"))} deaths) are not drawn, ` +
-  "because UCDP only knows the state, or a road, river or border they happened along. " +
-  "They are still counted above.";
-document.getElementById("unmapped-rows").innerHTML = UNMAPPED
-  .slice().sort((a, b) => b.deaths_best - a.deaths_best)
-  .map(e => `<tr><td>${e.date_start}</td><td>${esc(e.state)}</td>` +
-            `<td>${esc(e.place)}</td><td class="num">${e.deaths_best}</td></tr>`)
-  .join("");
+const yearOf = e => e.date_start.slice(0, 4);
+const YEARS = [...new Set(EVENTS.concat(UNMAPPED).map(yearOf))].sort();
+let year = null;   // null = all years
+
+// --- Panel numbers (follow the year and type filters) ---------------------
+function updatePanel(mapped, unmapped) {
+  const all = mapped.concat(unmapped);
+  document.getElementById("s-events").textContent = fmt(all.length);
+  document.getElementById("s-deaths").textContent = fmt(sum(all, "deaths_best"));
+  document.getElementById("s-ready").textContent =
+    all.length ? Math.round(100 * mapped.length / all.length) + "%" : "–";
+  // Events per type on the map for the selected year(s), whether or not the type is ticked
+  document.querySelectorAll("#types .count").forEach(c => {
+    c.textContent = EVENTS.filter(e => e.violence_label === c.dataset.type &&
+                                       (year === null || yearOf(e) === year)).length;
+  });
+  document.getElementById("year-label").textContent = year ?? `${YEARS[0]}–${YEARS.at(-1)}`;
+  document.querySelectorAll("#years button").forEach(b => b.classList.toggle("on", year === null || b.dataset.year === year));
+  document.getElementById("unmapped-note").textContent =
+    `${unmapped.length} events (${fmt(sum(unmapped, "deaths_best"))} deaths) are not drawn, ` +
+    "because UCDP only knows the state, or a road, river or border they happened along. " +
+    "They are still counted above.";
+  document.getElementById("unmapped-rows").innerHTML = unmapped
+    .slice().sort((a, b) => b.deaths_best - a.deaths_best)
+    .map(e => `<tr><td>${e.date_start}</td><td>${esc(e.state)}</td>` +
+              `<td>${esc(e.place)}</td><td class="num">${e.deaths_best}</td></tr>`)
+    .join("");
+}
 
 // --- Map ------------------------------------------------------------------
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
@@ -170,11 +205,15 @@ function tooltip(e) {
 }
 
 function draw() {
-  const shown = EVENTS.filter(e => active.has(e.violence_label));
+  const keep = e => active.has(e.violence_label) && (year === null || yearOf(e) === year);
+  const shown = EVENTS.filter(keep);
+  updatePanel(shown, UNMAPPED.filter(keep));
 
   if (heatLayer) map.removeLayer(heatLayer);
   heatLayer = L.heatLayer(shown.map(e => [e.latitude, e.longitude, e.deaths_best]), {
-    radius: 22, blur: 18, max: 15, minOpacity: 0.35,
+    // Heat adds up, so ten years of events need a ten times higher ceiling than one year.
+    // Otherwise "All years" saturates and the whole country looks the same.
+    radius: 22, blur: 18, max: 15 * (year === null ? YEARS.length : 1), minOpacity: 0.35,
     // one hue, light to dark; on a dark map the ramp runs the other way so "more" stays brighter
     gradient: dark
       ? { 0.2: "#256abf", 0.4: "#3987e5", 0.6: "#6da7ec", 0.8: "#9ec5f4", 1.0: "#cde2fb" }
@@ -199,17 +238,46 @@ function draw() {
 
 // --- Filters ------------------------------------------------------------
 document.getElementById("types").innerHTML = TYPES.map(t => {
-  const n = EVENTS.filter(e => e.violence_label === t.key);
   return `<label><input type="checkbox" value="${t.key}" checked>` +
          `<span class="swatch" style="background:var(${t.color})"></span>` +
          `<span>${t.name}<br><span class="note">${t.help}</span></span>` +
-         `<span class="count">${n.length}</span></label>`;
+         `<span class="count" data-type="${t.key}"></span></label>`;
 }).join("");
 document.querySelectorAll("#types input").forEach(box => box.addEventListener("change", () => {
   box.checked ? active.add(box.value) : active.delete(box.value);
   draw();
 }));
 document.querySelectorAll('input[name="layer"]').forEach(r => r.addEventListener("change", draw));
+
+// --- Year chart: one bar per year, height = deaths that year ---------------
+const deathsByYear = Object.fromEntries(YEARS.map(y =>
+  [y, sum(EVENTS.concat(UNMAPPED).filter(e => yearOf(e) === y), "deaths_best")]));
+const maxDeaths = Math.max(...Object.values(deathsByYear));
+document.getElementById("years").innerHTML = YEARS.map(y =>
+  `<button type="button" data-year="${y}" title="${y}: ${fmt(deathsByYear[y])} deaths">` +
+  `<span class="bar" style="height:${Math.round(100 * deathsByYear[y] / maxDeaths)}%"></span>` +
+  `<span class="yl">${YEARS.length > 6 ? "’" + y.slice(2) : y}</span></button>`).join("");
+
+let timer = null;
+function stopPlay() {
+  clearInterval(timer); timer = null;
+  document.getElementById("year-play").innerHTML = "&#9654; Play";
+}
+function selectYear(y) { year = y; draw(); }
+document.querySelectorAll("#years button").forEach(b =>
+  b.addEventListener("click", () => { stopPlay(); selectYear(b.dataset.year); }));
+document.getElementById("year-all").addEventListener("click", () => { stopPlay(); selectYear(null); });
+document.getElementById("year-play").addEventListener("click", () => {
+  if (timer) return stopPlay();
+  document.getElementById("year-play").innerHTML = "&#10074;&#10074; Pause";
+  let i = year === null ? 0 : (YEARS.indexOf(year) + 1) % YEARS.length;
+  selectYear(YEARS[i]);
+  timer = setInterval(() => {
+    i += 1;
+    if (i >= YEARS.length) { stopPlay(); return; }
+    selectYear(YEARS[i]);
+  }, 1200);
+});
 
 draw();
 </script>

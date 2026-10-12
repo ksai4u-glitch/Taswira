@@ -1,5 +1,5 @@
 """
-Stage 3: save Nigeria 2024 events to a local SQLite database,
+Stage 3: save the events (settings.py says which) to a local SQLite database,
 so later stages (cleaning, mapping) never need to call the API again.
 
 - Fetches with fetch_all() from Stage 2, but ONLY if this exact query
@@ -16,8 +16,9 @@ import sqlite3
 import sys
 from datetime import datetime, timezone
 
-from fetch_all_nigeria import API_VERSION, PARAMS, fetch_all
+from fetch_all_nigeria import PARAMS, fetch_all
 from fetch_nigeria import load_token
+from settings import API_VERSION
 
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "taswira.db")
 

@@ -18,6 +18,10 @@ Any public version of this project will credit UCDP as the data source, cite the
 
 ## Setup
 
+The country, dates, dataset version and request limits are all in `settings.py`
+(currently Nigeria, 2015 to 2024, GED 26.1). Change them there and every script follows.
+
+
 1. Copy `.env.example` to `.env` and paste your UCDP token after `UCDP_TOKEN=`.
    `.env` is listed in `.gitignore` and must never be committed.
 2. Run the Stage 1 script (Python 3, no extra packages needed):
@@ -25,7 +29,8 @@ Any public version of this project will credit UCDP as the data source, cite the
    ```
    python3 fetch_nigeria.py
    ```
-3. Run the Stage 2 script to fetch every page (about 6 requests for Nigeria 2024):
+3. Run the Stage 2 script to fetch every page (100 events per request; it stops
+   after the first request if the download would need more than `MAX_REQUESTS`):
 
    ```
    python3 fetch_all_nigeria.py
@@ -37,13 +42,13 @@ Any public version of this project will credit UCDP as the data source, cite the
    python3 save_events.py
    ```
 5. Run the Stage 4 script to build a clean, map-ready table (`clean_events`) and
-   `data/nigeria_2024_clean.csv`. It reads the database only, with no API requests:
+   `data/<country>_<years>_clean.csv`. It reads the database only, with no API requests:
 
    ```
    python3 clean_events.py
    ```
-6. Run the Stage 5 script to build the interactive map `data/nigeria_2024_map.html`
-   (heatmap and individual events). It opens in your browser automatically:
+6. Run the Stage 5 script to build the interactive map `data/<country>_<years>_map.html`
+   (heatmap, individual events, and a per-year chart with a play button). It opens in your browser automatically:
 
    ```
    python3 build_map.py
@@ -55,6 +60,6 @@ Any public version of this project will credit UCDP as the data source, cite the
 2. **Paginate:** loop through all pages safely, respecting the daily limit
 3. **Store:** save events locally (CSV/SQLite) so the API is not hit repeatedly
 4. **Clean:** select key fields (date, location, deaths estimate, violence type, actors)
-5. **Map:** plot events and build a heatmap for Nigeria ← *current*
-6. **Expand:** extend to wider Africa, add time filtering and Candidate data
+5. **Map:** plot events and build a heatmap for Nigeria
+6. **Expand:** extend to wider Africa, add time filtering and Candidate data ← *current: time filtering (6a)*
 7. **Publish:** public version with full UCDP attribution

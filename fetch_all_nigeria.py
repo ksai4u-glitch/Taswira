@@ -1,5 +1,5 @@
 """
-Stage 2: fetch EVERY page of Nigeria 2024 events from the UCDP GED API,
+Stage 2: fetch EVERY page of events from the UCDP GED API (dates and country in settings.py),
 safely and within the daily request limit.
 
 How paging works: the API returns one page at a time. Each page includes
@@ -17,20 +17,18 @@ import urllib.parse
 import urllib.request
 
 from fetch_nigeria import load_token
+from settings import API_VERSION, COUNTRY, END_DATE, MAX_REQUESTS, PAGE_SIZE, START_DATE
 
-# --- Settings -------------------------------------------------------------
-API_VERSION = "26.1"
+# --- Settings (the values themselves live in settings.py) -------------------
 BASE_URL = f"https://ucdpapi.pcr.uu.se/api/gedevents/{API_VERSION}"
 
 PARAMS = {
-    "Country": 475,            # Nigeria
-    "StartDate": "2024-01-01",
-    "EndDate": "2024-12-31",
-    "pagesize": 100,           # bigger pages = fewer requests (502 events -> 6 requests)
+    "Country": COUNTRY,
+    "StartDate": START_DATE,
+    "EndDate": END_DATE,
+    "pagesize": PAGE_SIZE,
 }
 
-# Safety limits
-MAX_REQUESTS = 20       # hard cap for one run; far below the 5,000/day limit
 PAUSE_SECONDS = 1       # wait between requests, to be polite to the server
 
 
@@ -67,6 +65,10 @@ def fetch_all(token):
         if total_count is None:
             total_count = data["TotalCount"]
             print(f"API reports {total_count} events across {data['TotalPages']} pages.")
+            # Stop now, after 1 request, rather than halfway through a download that can't finish
+            if data["TotalPages"] > MAX_REQUESTS:
+                sys.exit(f"Stopped: this needs {data['TotalPages']} requests but MAX_REQUESTS is "
+                         f"{MAX_REQUESTS}. Raise it in settings.py if that's OK.")
 
         page_events = data.get("Result", [])
         events.extend(page_events)
