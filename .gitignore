@@ -1,0 +1,7 @@
+# Secrets: never commit the UCDP token
+.env
+
+# Python clutter
+__pycache__/
+*.pyc
+.venv/
