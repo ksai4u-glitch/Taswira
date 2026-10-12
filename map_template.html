@@ -211,7 +211,9 @@ function draw() {
 
   if (heatLayer) map.removeLayer(heatLayer);
   heatLayer = L.heatLayer(shown.map(e => [e.latitude, e.longitude, e.deaths_best]), {
-    radius: 22, blur: 18, max: 15, minOpacity: 0.35,
+    // Heat adds up, so ten years of events need a ten times higher ceiling than one year.
+    // Otherwise "All years" saturates and the whole country looks the same.
+    radius: 22, blur: 18, max: 15 * (year === null ? YEARS.length : 1), minOpacity: 0.35,
     // one hue, light to dark; on a dark map the ramp runs the other way so "more" stays brighter
     gradient: dark
       ? { 0.2: "#256abf", 0.4: "#3987e5", 0.6: "#6da7ec", 0.8: "#9ec5f4", 1.0: "#cde2fb" }
