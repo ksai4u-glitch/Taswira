@@ -25,11 +25,16 @@ Any public version of this project will credit UCDP as the data source, cite the
    ```
    python3 fetch_nigeria.py
    ```
+3. Run the Stage 2 script to fetch every page (about 6 requests for Nigeria 2024):
+
+   ```
+   python3 fetch_all_nigeria.py
+   ```
 
 ## Planned build stages
 
-1. **Fetch:** one authenticated request for Nigeria events, inspect the JSON fields ← *current*
-2. **Paginate:** loop through all pages safely, respecting the daily limit
+1. **Fetch:** one authenticated request for Nigeria events, inspect the JSON fields
+2. **Paginate:** loop through all pages safely, respecting the daily limit ← *current*
 3. **Store:** save events locally (CSV/SQLite) so the API is not hit repeatedly
 4. **Clean:** select key fields (date, location, deaths estimate, violence type, actors)
 5. **Map:** plot events and build a heatmap for Nigeria
