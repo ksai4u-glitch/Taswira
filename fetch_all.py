@@ -20,14 +20,21 @@ from fetch_nigeria import load_token
 from settings import API_VERSION, COUNTRIES, END_DATE, MAX_REQUESTS, PAGE_SIZE, START_DATE
 
 # --- Settings (the values themselves live in settings.py) -------------------
-BASE_URL = f"https://ucdpapi.pcr.uu.se/api/gedevents/{API_VERSION}"
+API_URL = "https://ucdpapi.pcr.uu.se/api/gedevents/"   # + version, e.g. "26.1"
 
-PARAMS = {
-    "Country": ",".join(str(c) for c in COUNTRIES),   # all codes, used as the saved-query label
-    "StartDate": START_DATE,
-    "EndDate": END_DATE,
-    "pagesize": PAGE_SIZE,
-}
+
+def params_for(version):
+    """The filters for one dataset version.
+
+    The stable release is filtered to START_DATE-END_DATE. A Candidate release only
+    holds recent months anyway, so it gets no date filter.
+    """
+    params = {"Country": ",".join(str(c) for c in COUNTRIES)}   # all codes, used as the saved-query label
+    if version == API_VERSION:
+        params.update(StartDate=START_DATE, EndDate=END_DATE)
+    params["pagesize"] = PAGE_SIZE
+    return params
+
 
 PAUSE_SECONDS = 1       # wait between requests, to be polite to the server
 
@@ -39,13 +46,15 @@ def get_json(url, token):
         with urllib.request.urlopen(request, timeout=30) as response:
             return json.load(response)
     except urllib.error.HTTPError as e:
-        sys.exit(f"HTTP error {e.code}: {e.reason} (url: {url})")
+        hint = " Is that dataset version in settings.py published yet?" if e.code == 404 else ""
+        sys.exit(f"HTTP error {e.code}: {e.reason} (url: {url}).{hint}")
     except urllib.error.URLError as e:
         sys.exit(f"Could not reach the API: {e.reason}")
 
 
-def fetch_all(token):
-    """Fetch every page for every country in settings.py and return all events in one list.
+def fetch_all(token, version=API_VERSION):
+    """Fetch every page for every country in settings.py from one dataset version
+    and return all events in one list.
 
     The API seems to ignore all but the first few codes in a comma-separated
     Country list (an all-Africa query only returned the first 7 codes), so we ask
@@ -56,8 +65,8 @@ def fetch_all(token):
     total_count = 0
 
     for position, country in enumerate(COUNTRIES):
-        params = dict(PARAMS, Country=country)
-        url = BASE_URL + "?" + urllib.parse.urlencode(params)
+        params = dict(params_for(version), Country=country)
+        url = API_URL + version + "?" + urllib.parse.urlencode(params)
         first_page = True
 
         while url:
@@ -89,7 +98,7 @@ def fetch_all(token):
 
             url = data.get("NextPageUrl") or None   # empty on the last page -> next country
 
-    print(f"API reports {total_count} events in total across {len(COUNTRIES)} countries.")
+    print(f"GED {version}: API reports {total_count} events in total across {len(COUNTRIES)} countries.")
     return events, total_count, requests_made
 
 
