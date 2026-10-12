@@ -3,7 +3,13 @@ One place for the settings every Taswira script shares.
 Change AREA or the dates here and every stage (fetch, save, clean, map) follows.
 """
 
-API_VERSION = "26.1"          # stable yearly GED release
+API_VERSION = "26.1"          # stable yearly GED release (covers events up to the end of 2025)
+
+# Preliminary GED Candidate releases for the months after the stable release, oldest first.
+# "26.01.26.06" is the quarterly release for January-June 2026; "26.0.7" and "26.0.8" are the
+# monthly releases after it. Add the next monthly version here when UCDP publishes it.
+# Set to [] to leave preliminary data out entirely.
+CANDIDATE_VERSIONS = ["26.01.26.06", "26.0.7", "26.0.8"]
 
 # African countries by Gleditsch-Ward code (the codes the API's Country filter uses)
 AFRICA = [
@@ -27,12 +33,12 @@ AREAS = {
 AREA = "africa"
 
 START_DATE = "2020-01-01"     # the API filters both dates on date_end
-END_DATE = "2024-12-31"
+END_DATE = "2025-12-31"       # the stable release; Candidate data covers what comes after
 
 PAGE_SIZE = 1000              # events per request; fewer, bigger pages save requests
-MAX_REQUESTS = 200            # hard cap for one download (at least 1 per country); the daily limit is 5,000
+MAX_REQUESTS = 200            # hard cap per dataset version (at least 1 request per country); the daily limit is 5,000
 
-# Derived values, e.g. "Africa", [402, ...], "2020-2024", "africa_2020-2024"
+# Derived values, e.g. "Africa", [402, ...], "2020-2025", "africa_2020-2025"
 AREA_NAME = AREAS[AREA]["name"]
 COUNTRIES = AREAS[AREA]["countries"]
 BOUNDS = AREAS[AREA]["bounds"]

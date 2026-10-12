@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Stage 5 map template. build_map.py fills in the __PLACEHOLDERS__ and writes
+  Map template (Stages 5-6). build_map.py fills in the __PLACEHOLDERS__ and writes
   the finished page to data/. Leaflet draws the map; leaflet.heat draws the heatmap.
 -->
 <html lang="en">
@@ -77,6 +77,11 @@
   }
   .years .bar { background: var(--series-1); border-radius: 4px 4px 0 0; min-height: 2px; opacity: .45; }
   .years button.on .bar, .years button:hover .bar { opacity: 1; }
+  /* preliminary (GED Candidate) years: hatched, so they never read as final numbers */
+  .years .bar.prelim {
+    background: repeating-linear-gradient(135deg, var(--series-1) 0 3px, transparent 3px 6px);
+    box-shadow: inset 0 0 0 1px var(--series-1);
+  }
   .years .yl { font-size: 10px; color: var(--text-muted); text-align: center; margin-top: 3px;
                font-variant-numeric: tabular-nums; }
   .year-row { display: flex; align-items: center; gap: 8px; }
@@ -96,7 +101,7 @@
 <body>
 <aside id="panel">
   <h1>Taswira: __AREA__ __PERIOD__</h1>
-  <p class="sub">Organised violence, UCDP GED __VERSION__</p>
+  <p class="sub">Organised violence, UCDP GED __VERSION__<span id="prelim-sub"></span></p>
 
   <div class="stats">
     <div class="stat"><b id="s-events"></b><span>events</span></div>
@@ -111,10 +116,12 @@
     <span id="year-label"></span>
   </div>
   <div class="years" id="years" role="group" aria-label="Deaths per year; click a bar to show that year"></div>
+  <p class="note" id="prelim-note" hidden></p>
 
   <h2>Show</h2>
   <label><input type="radio" name="layer" value="heat" checked> Heatmap (weighted by deaths)</label>
   <label><input type="radio" name="layer" value="points"> Individual events</label>
+  <label id="prelim-toggle" hidden><input type="checkbox" id="show-prelim" checked> Include preliminary data</label>
 
   <h2>Type of violence</h2>
   <div id="types"></div>
@@ -132,6 +139,7 @@
   <p class="credit">
     Data: Uppsala Conflict Data Program (UCDP), Georeferenced Event Dataset (GED)
     version __VERSION__, <a href="https://ucdp.uu.se/">ucdp.uu.se</a>.
+    <span id="prelim-credit" hidden>Preliminary events: GED Candidate __CANDIDATES__, which UCDP may still revise.</span>
     Deaths are UCDP's best estimates. Base map &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors.
   </p>
 </aside>
@@ -157,6 +165,21 @@ const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&
 const yearOf = e => e.date_start.slice(0, 4);
 const YEARS = [...new Set(EVENTS.concat(UNMAPPED).map(yearOf))].sort();
 let year = null;   // null = all years
+
+// Preliminary = GED Candidate data, which UCDP may still revise. Always marked as such.
+const PRELIM = EVENTS.concat(UNMAPPED).filter(e => e.preliminary);
+const PRELIM_YEARS = new Set(PRELIM.map(yearOf));
+let showPrelim = true;
+if (PRELIM.length) {
+  const last = PRELIM.map(e => e.date_end).sort().at(-1);
+  document.getElementById("prelim-sub").textContent = `, plus preliminary data to ${last}`;
+  const note = document.getElementById("prelim-note");
+  note.textContent = `Hatched: preliminary GED Candidate data (up to ${last}). ` +
+                     "UCDP may still revise these events and numbers.";
+  note.hidden = false;
+  document.getElementById("prelim-toggle").hidden = false;
+  document.getElementById("prelim-credit").hidden = false;
+}
 
 // --- Panel numbers (follow the year and type filters) ---------------------
 function updatePanel(mapped, unmapped) {
@@ -195,7 +218,8 @@ const map = L.map("map", { zoomSnap: 0.5, preferCanvas: true }).fitBounds(__BOUN
 // Esri's grey canvas tiles need no API key and work when the page is opened from a file
 const basemap = dark ? "World_Dark_Gray_Base" : "World_Light_Gray_Base";
 L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${basemap}/MapServer/tile/{z}/{y}/{x}`, {
-  attribution: 'Base map &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors | Data: UCDP GED __VERSION__',
+  attribution: 'Base map &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors | Data: UCDP GED __VERSION__' +
+               (PRELIM.length ? ' + GED Candidate __CANDIDATES__ (preliminary)' : ''),
   maxZoom: 12,
 }).addTo(map);
 
@@ -207,11 +231,13 @@ function tooltip(e) {
   return `<b>${esc(e.place ?? "Unknown place")}</b><br>${esc(e.state)}, ${esc(e.country)}<br>` +
          `${e.date_start}${e.date_end !== e.date_start ? " to " + e.date_end : ""}<br>` +
          `${e.violence_label}: ${esc(e.side_a)} vs ${esc(e.side_b)}<br>` +
-         `<b>${e.deaths_best}</b> deaths (range ${e.deaths_low} to ${e.deaths_high})`;
+         `<b>${e.deaths_best}</b> deaths (range ${e.deaths_low} to ${e.deaths_high})` +
+         (e.preliminary ? `<br><i>Preliminary: GED Candidate ${esc(e.dataset_version)}</i>` : "");
 }
 
 function draw() {
-  const keep = e => active.has(e.violence_label) && (year === null || yearOf(e) === year);
+  const keep = e => active.has(e.violence_label) && (year === null || yearOf(e) === year) &&
+                    (showPrelim || !e.preliminary);
   const shown = EVENTS.filter(keep);
   updatePanel(shown, UNMAPPED.filter(keep));
 
@@ -235,6 +261,8 @@ function draw() {
     L.circleMarker([e.latitude, e.longitude], {
       radius: Math.max(4, Math.min(18, 3 * Math.sqrt(e.deaths_best))),
       color: css("--surface-1"), weight: 2,                   // 2px surface ring
+      // preliminary events: dashed ring in the text colour
+      ...(e.preliminary ? { color: css("--text-primary"), dashArray: "2 3" } : {}),
       fillColor: css(type.color), fillOpacity: 0.85,
     }).bindTooltip(tooltip(e)).addTo(pointLayer);
   });
@@ -255,15 +283,17 @@ document.querySelectorAll("#types input").forEach(box => box.addEventListener("c
   draw();
 }));
 document.querySelectorAll('input[name="layer"]').forEach(r => r.addEventListener("change", draw));
+document.getElementById("show-prelim").addEventListener("change", e => { showPrelim = e.target.checked; draw(); });
 
 // --- Year chart: one bar per year, height = deaths that year ---------------
 const deathsByYear = Object.fromEntries(YEARS.map(y =>
   [y, sum(EVENTS.concat(UNMAPPED).filter(e => yearOf(e) === y), "deaths_best")]));
 const maxDeaths = Math.max(...Object.values(deathsByYear));
 document.getElementById("years").innerHTML = YEARS.map(y =>
-  `<button type="button" data-year="${y}" title="${y}: ${fmt(deathsByYear[y])} deaths">` +
-  `<span class="bar" style="height:${Math.round(100 * deathsByYear[y] / maxDeaths)}%"></span>` +
-  `<span class="yl">${YEARS.length > 6 ? "’" + y.slice(2) : y}</span></button>`).join("");
+  `<button type="button" data-year="${y}" title="${y}: ${fmt(deathsByYear[y])} deaths` +
+  `${PRELIM_YEARS.has(y) ? " (includes preliminary data)" : ""}">` +
+  `<span class="bar${PRELIM_YEARS.has(y) ? " prelim" : ""}" style="height:${Math.round(100 * deathsByYear[y] / maxDeaths)}%"></span>` +
+  `<span class="yl">${YEARS.length > 6 ? "’" + y.slice(2) : y}${PRELIM_YEARS.has(y) ? "*" : ""}</span></button>`).join("");
 
 let timer = null;
 function stopPlay() {

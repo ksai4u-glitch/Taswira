@@ -15,7 +15,7 @@ import sys
 import webbrowser
 from pathlib import Path
 
-from settings import API_VERSION, AREA_NAME, BOUNDS, FILE_STEM, HEAT_MAX, PERIOD
+from settings import API_VERSION, AREA_NAME, BOUNDS, CANDIDATE_VERSIONS, FILE_STEM, HEAT_MAX, PERIOD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(HERE, "data", "taswira.db")
@@ -26,16 +26,18 @@ OUTPUT_PATH = os.path.join(HERE, "data", f"{FILE_STEM}_map.html")
 MAP_FIELDS = [
     "date_start", "date_end", "country", "state", "place", "latitude", "longitude",
     "violence_label", "side_a", "side_b", "deaths_best", "deaths_low", "deaths_high",
+    "dataset_version", "preliminary",
 ]
 
 
 def load(db, map_ready):
-    """Return clean events as a list of dicts, either map-ready (1) or not (0)."""
+    """Return clean events as a list of dicts, either map-ready (1) or not (0).
+    clean_events already holds exactly the stable + preliminary events to show."""
     db.row_factory = sqlite3.Row
     rows = db.execute(
         f"SELECT {', '.join(MAP_FIELDS)} FROM clean_events "
-        "WHERE dataset_version = ? AND map_ready = ? ORDER BY date_start",
-        (API_VERSION, map_ready),
+        "WHERE map_ready = ? ORDER BY date_start",
+        (map_ready,),
     ).fetchall()
     return [dict(row) for row in rows]
 
@@ -59,13 +61,14 @@ def main():
         db.close()
 
     if not mapped:
-        sys.exit(f"No map-ready GED {API_VERSION} events. Run clean_events.py first.")
+        sys.exit("No map-ready events. Run clean_events.py first.")
 
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         page = f.read()
     page = (page.replace("__EVENTS_JSON__", to_js(mapped))
                 .replace("__UNMAPPED_JSON__", to_js(unmapped))
                 .replace("__VERSION__", API_VERSION)
+                .replace("__CANDIDATES__", ", ".join(CANDIDATE_VERSIONS))
                 .replace("__PERIOD__", PERIOD)
                 .replace("__AREA__", AREA_NAME)
                 .replace("__BOUNDS__", json.dumps(BOUNDS))

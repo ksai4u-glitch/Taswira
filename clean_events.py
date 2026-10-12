@@ -10,6 +10,8 @@ What "clean" means here:
 - dates as plain YYYY-MM-DD, violence type as a readable label
 - "Borno state" -> "Borno"
 - a `map_ready` flag: 1 only if the location is precise enough to plot (see below)
+- a `preliminary` flag: 1 for GED Candidate events, which UCDP may still revise.
+  Candidate events only fill the months after the stable release (after END_DATE).
 
 Uses only the Python standard library.
 """
@@ -19,7 +21,8 @@ import os
 import sqlite3
 import sys
 
-from settings import API_VERSION, AREA_NAME, BOUNDS, COUNTRIES, END_DATE, FILE_STEM, PERIOD, START_DATE
+from settings import (API_VERSION, AREA_NAME, BOUNDS, CANDIDATE_VERSIONS, COUNTRIES, END_DATE,
+                      FILE_STEM, PERIOD, START_DATE)
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 DB_PATH = os.path.join(DATA_DIR, "taswira.db")
@@ -38,7 +41,7 @@ MAP_READY_PRECISION = (1, 2, 3)
 (LAT_MIN, LON_MIN), (LAT_MAX, LON_MAX) = BOUNDS
 
 CLEAN_COLUMNS = [
-    "id", "dataset_version",
+    "id", "dataset_version", "preliminary",
     "date_start", "date_end", "date_prec",
     "country", "state", "lga", "place", "latitude", "longitude", "where_prec", "map_ready",
     "violence_type", "violence_label", "side_a", "side_b", "conflict_name",
@@ -68,6 +71,7 @@ def clean_event(raw):
     return {
         "id": int(raw["id"]),
         "dataset_version": raw["dataset_version"],
+        "preliminary": int(raw["dataset_version"] != API_VERSION),
         "date_start": str(raw["date_start"])[:10],      # keep only YYYY-MM-DD
         "date_end": str(raw["date_end"])[:10],
         "date_prec": int(raw["date_prec"]),
@@ -99,19 +103,32 @@ def main():
     db = sqlite3.connect(DB_PATH)
     db.row_factory = sqlite3.Row       # lets us read columns by name: row["best"]
 
+    country_list = ", ".join("?" for _ in COUNTRIES)
     raw_rows = db.execute(
         # Only the area and period in settings.py. The database may also hold other downloads.
         # Like the API, filter on date_end; substr() ignores any time part after the date.
         f"SELECT * FROM events WHERE dataset_version = ? "
         f"AND substr(date_end, 1, 10) BETWEEN ? AND ? "
-        f"AND country_id IN ({', '.join('?' for _ in COUNTRIES)}) ORDER BY date_start, id",
+        f"AND country_id IN ({country_list}) ORDER BY date_start, id",
         (API_VERSION, START_DATE, END_DATE, *COUNTRIES),
     ).fetchall()
     if not raw_rows:
         sys.exit(f"No GED {API_VERSION} events for {AREA_NAME} {PERIOD} in the database. "
                  "Run save_events.py first.")
-
     clean = [clean_event(dict(row)) for row in raw_rows]
+
+    # Preliminary Candidate events: only those after the stable release ends. If two Candidate
+    # releases hold the same event, keep the newer one (later in CANDIDATE_VERSIONS).
+    newest = {}
+    for version in CANDIDATE_VERSIONS:
+        for row in db.execute(
+            f"SELECT * FROM events WHERE dataset_version = ? AND substr(date_end, 1, 10) > ? "
+            f"AND country_id IN ({country_list})",
+            (version, END_DATE, *COUNTRIES),
+        ):
+            newest[row["id"]] = row
+    clean += sorted((clean_event(dict(row)) for row in newest.values()),
+                    key=lambda e: (e["date_start"], e["id"]))
 
     # Rebuild the clean table from scratch every run: it is derived data,
     # so the raw `events` table stays the single source of truth.
@@ -136,7 +153,14 @@ def main():
 
 def report(db, total):
     """Print what cleaning found, so we can decide what to map."""
-    print(f"Cleaned {total} events ({AREA_NAME} {PERIOD}, GED {API_VERSION}).\n")
+    print(f"Cleaned {total} events ({AREA_NAME} {PERIOD}, GED {API_VERSION}).")
+    prelim, prelim_deaths, first, last = db.execute(
+        "SELECT COUNT(*), SUM(deaths_best), MIN(date_end), MAX(date_end) FROM clean_events WHERE preliminary = 1"
+    ).fetchone()
+    if prelim:
+        print(f"  of which {prelim} are PRELIMINARY (GED Candidate, {first} to {last}), "
+              f"{prelim_deaths} deaths.")
+    print()
 
     print("Location precision (where_prec):")
     for prec, count, deaths in db.execute(
