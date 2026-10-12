@@ -111,7 +111,7 @@
   <p class="credit">
     Data: Uppsala Conflict Data Program (UCDP), Georeferenced Event Dataset (GED)
     version __VERSION__, <a href="https://ucdp.uu.se/">ucdp.uu.se</a>.
-    Deaths are UCDP's best estimates. Map tiles &copy; OpenStreetMap contributors, &copy; CARTO.
+    Deaths are UCDP's best estimates. Base map &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors.
   </p>
 </aside>
 <div id="map" role="region" aria-label="Map of conflict events in Nigeria"></div>
@@ -151,8 +151,10 @@ document.getElementById("unmapped-rows").innerHTML = UNMAPPED
 // --- Map ------------------------------------------------------------------
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
 const map = L.map("map", { zoomSnap: 0.5 }).fitBounds([[4.2, 2.7], [13.9, 14.7]]);
-L.tileLayer(`https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`, {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a> | Data: UCDP GED __VERSION__',
+// Esri's grey canvas tiles need no API key and work when the page is opened from a file
+const basemap = dark ? "World_Dark_Gray_Base" : "World_Light_Gray_Base";
+L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${basemap}/MapServer/tile/{z}/{y}/{x}`, {
+  attribution: 'Base map &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors | Data: UCDP GED __VERSION__',
   maxZoom: 12,
 }).addTo(map);
 
@@ -172,10 +174,10 @@ function draw() {
 
   if (heatLayer) map.removeLayer(heatLayer);
   heatLayer = L.heatLayer(shown.map(e => [e.latitude, e.longitude, e.deaths_best]), {
-    radius: 22, blur: 18, max: 20, minOpacity: 0.25,
+    radius: 22, blur: 18, max: 15, minOpacity: 0.35,
     // one hue, light to dark; on a dark map the ramp runs the other way so "more" stays brighter
     gradient: dark
-      ? { 0.2: "#104281", 0.4: "#1c5cab", 0.6: "#2a78d6", 0.8: "#6da7ec", 1.0: "#cde2fb" }
+      ? { 0.2: "#256abf", 0.4: "#3987e5", 0.6: "#6da7ec", 0.8: "#9ec5f4", 1.0: "#cde2fb" }
       : { 0.2: "#b7d3f6", 0.4: "#6da7ec", 0.6: "#2a78d6", 0.8: "#1c5cab", 1.0: "#0d366b" },
   });
 
