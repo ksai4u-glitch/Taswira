@@ -1,8 +1,8 @@
 """
-Stage 5: build an interactive map of Nigeria from the clean events (Stage 4).
+Stage 5: build an interactive map from the clean events (Stage 4).
 
 Reads the clean_events table (no API requests), fills in map_template.html
-and writes data/<country>_<years>_map.html. Open that file in your browser.
+and writes data/<area>_<years>_map.html. Open that file in your browser.
 
 Python does the data; the template (HTML + JavaScript with Leaflet) does the drawing.
 Uses only the Python standard library.
@@ -15,7 +15,7 @@ import sys
 import webbrowser
 from pathlib import Path
 
-from settings import API_VERSION, COUNTRY_NAME, FILE_STEM, PERIOD
+from settings import API_VERSION, AREA_NAME, BOUNDS, FILE_STEM, HEAT_MAX, PERIOD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(HERE, "data", "taswira.db")
@@ -24,7 +24,7 @@ OUTPUT_PATH = os.path.join(HERE, "data", f"{FILE_STEM}_map.html")
 
 # Only the fields the map page uses, to keep the file small
 MAP_FIELDS = [
-    "date_start", "date_end", "state", "place", "latitude", "longitude",
+    "date_start", "date_end", "country", "state", "place", "latitude", "longitude",
     "violence_label", "side_a", "side_b", "deaths_best", "deaths_low", "deaths_high",
 ]
 
@@ -67,7 +67,9 @@ def main():
                 .replace("__UNMAPPED_JSON__", to_js(unmapped))
                 .replace("__VERSION__", API_VERSION)
                 .replace("__PERIOD__", PERIOD)
-                .replace("__COUNTRY__", COUNTRY_NAME))
+                .replace("__AREA__", AREA_NAME)
+                .replace("__BOUNDS__", json.dumps(BOUNDS))
+                .replace("__HEAT_MAX__", str(HEAT_MAX)))
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(page)

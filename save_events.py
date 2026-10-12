@@ -16,7 +16,7 @@ import sqlite3
 import sys
 from datetime import datetime, timezone
 
-from fetch_all_nigeria import PARAMS, fetch_all
+from fetch_all import PARAMS, fetch_all
 from fetch_nigeria import load_token
 from settings import API_VERSION
 
@@ -98,10 +98,10 @@ def summary(db):
     print(f"\nDatabase now holds {total[0]} events for GED {API_VERSION} "
           f"({total[1]} deaths, best estimate).")
 
-    print("\nTop 5 states by number of events:")
+    print("\nTop 5 countries by number of events:")
     for state, count, deaths in db.execute(
-        "SELECT adm_1, COUNT(*), SUM(best) FROM events WHERE dataset_version = ? "
-        "GROUP BY adm_1 ORDER BY COUNT(*) DESC LIMIT 5",
+        "SELECT country, COUNT(*), SUM(best) FROM events WHERE dataset_version = ? "
+        "GROUP BY country ORDER BY COUNT(*) DESC LIMIT 5",
         (API_VERSION,),
     ):
         print(f"  {state or '(unknown)'}: {count} events, {deaths} deaths")

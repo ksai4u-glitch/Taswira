@@ -1,5 +1,5 @@
 """
-Stage 2: fetch EVERY page of events from the UCDP GED API (dates and country in settings.py),
+Stage 2: fetch EVERY page of events from the UCDP GED API (area and dates in settings.py),
 safely and within the daily request limit.
 
 How paging works: the API returns one page at a time. Each page includes
@@ -17,13 +17,13 @@ import urllib.parse
 import urllib.request
 
 from fetch_nigeria import load_token
-from settings import API_VERSION, COUNTRY, END_DATE, MAX_REQUESTS, PAGE_SIZE, START_DATE
+from settings import API_VERSION, COUNTRIES, END_DATE, MAX_REQUESTS, PAGE_SIZE, START_DATE
 
 # --- Settings (the values themselves live in settings.py) -------------------
 BASE_URL = f"https://ucdpapi.pcr.uu.se/api/gedevents/{API_VERSION}"
 
 PARAMS = {
-    "Country": COUNTRY,
+    "Country": ",".join(str(c) for c in COUNTRIES),   # e.g. "475" or "402,403,..."
     "StartDate": START_DATE,
     "EndDate": END_DATE,
     "pagesize": PAGE_SIZE,
@@ -46,7 +46,7 @@ def get_json(url, token):
 
 def fetch_all(token):
     """Follow NextPageUrl from page to page and return every event in one list."""
-    url = BASE_URL + "?" + urllib.parse.urlencode(PARAMS)
+    url = BASE_URL + "?" + urllib.parse.urlencode(PARAMS, safe=",")   # keep commas readable
     events = []
     requests_made = 0
     total_count = None

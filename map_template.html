@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Taswira: __COUNTRY__ __PERIOD__</title>
+<title>Taswira: __AREA__ __PERIOD__</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
@@ -95,7 +95,7 @@
 </head>
 <body>
 <aside id="panel">
-  <h1>Taswira: __COUNTRY__ __PERIOD__</h1>
+  <h1>Taswira: __AREA__ __PERIOD__</h1>
   <p class="sub">Organised violence, UCDP GED __VERSION__</p>
 
   <div class="stats">
@@ -124,7 +124,7 @@
   <details>
     <summary>List these events</summary>
     <table>
-      <thead><tr><th>Date</th><th>State</th><th>Place</th><th class="num">Deaths</th></tr></thead>
+      <thead><tr><th>Date</th><th>Country</th><th>Province / state</th><th class="num">Deaths</th></tr></thead>
       <tbody id="unmapped-rows"></tbody>
     </table>
   </details>
@@ -135,7 +135,7 @@
     Deaths are UCDP's best estimates. Base map &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors.
   </p>
 </aside>
-<div id="map" role="region" aria-label="Map of conflict events in __COUNTRY__"></div>
+<div id="map" role="region" aria-label="Map of conflict events in __AREA__"></div>
 
 <script>
 const EVENTS = __EVENTS_JSON__;      // map-ready events
@@ -174,18 +174,24 @@ function updatePanel(mapped, unmapped) {
   document.querySelectorAll("#years button").forEach(b => b.classList.toggle("on", year === null || b.dataset.year === year));
   document.getElementById("unmapped-note").textContent =
     `${unmapped.length} events (${fmt(sum(unmapped, "deaths_best"))} deaths) are not drawn, ` +
-    "because UCDP only knows the state, or a road, river or border they happened along. " +
+    "because UCDP only knows the province or state, the country, or a road, river or border " +
+    "they happened along. " +
     "They are still counted above.";
+  // Only the deadliest 300 rows: thousands of table rows would slow the page down
+  const LIST_MAX = 300;
   document.getElementById("unmapped-rows").innerHTML = unmapped
-    .slice().sort((a, b) => b.deaths_best - a.deaths_best)
-    .map(e => `<tr><td>${e.date_start}</td><td>${esc(e.state)}</td>` +
-              `<td>${esc(e.place)}</td><td class="num">${e.deaths_best}</td></tr>`)
-    .join("");
+    .slice().sort((a, b) => b.deaths_best - a.deaths_best).slice(0, LIST_MAX)
+    .map(e => `<tr><td>${e.date_start}</td><td>${esc(e.country)}</td>` +
+              `<td>${esc(e.state)}</td><td class="num">${e.deaths_best}</td></tr>`)
+    .join("") +
+    (unmapped.length > LIST_MAX
+      ? `<tr><td colspan="4" class="note">…and ${fmt(unmapped.length - LIST_MAX)} smaller events</td></tr>` : "");
 }
 
 // --- Map ------------------------------------------------------------------
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
-const map = L.map("map", { zoomSnap: 0.5 }).fitBounds([[4.2, 2.7], [13.9, 14.7]]);
+// preferCanvas draws dots on one canvas instead of one SVG element each: much faster with many events
+const map = L.map("map", { zoomSnap: 0.5, preferCanvas: true }).fitBounds(__BOUNDS__);
 // Esri's grey canvas tiles need no API key and work when the page is opened from a file
 const basemap = dark ? "World_Dark_Gray_Base" : "World_Light_Gray_Base";
 L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${basemap}/MapServer/tile/{z}/{y}/{x}`, {
@@ -198,7 +204,7 @@ let heatLayer = null;
 const pointLayer = L.layerGroup();
 
 function tooltip(e) {
-  return `<b>${esc(e.place ?? "Unknown place")}</b>, ${esc(e.state)}<br>` +
+  return `<b>${esc(e.place ?? "Unknown place")}</b><br>${esc(e.state)}, ${esc(e.country)}<br>` +
          `${e.date_start}${e.date_end !== e.date_start ? " to " + e.date_end : ""}<br>` +
          `${e.violence_label}: ${esc(e.side_a)} vs ${esc(e.side_b)}<br>` +
          `<b>${e.deaths_best}</b> deaths (range ${e.deaths_low} to ${e.deaths_high})`;
@@ -213,16 +219,18 @@ function draw() {
   heatLayer = L.heatLayer(shown.map(e => [e.latitude, e.longitude, e.deaths_best]), {
     // Heat adds up, so ten years of events need a ten times higher ceiling than one year.
     // Otherwise "All years" saturates and the whole country looks the same.
-    radius: 22, blur: 18, max: 15 * (year === null ? YEARS.length : 1), minOpacity: 0.35,
+    radius: 22, blur: 18, max: __HEAT_MAX__ * (year === null ? YEARS.length : 1), minOpacity: 0.35,
     // one hue, light to dark; on a dark map the ramp runs the other way so "more" stays brighter
     gradient: dark
       ? { 0.2: "#256abf", 0.4: "#3987e5", 0.6: "#6da7ec", 0.8: "#9ec5f4", 1.0: "#cde2fb" }
       : { 0.2: "#b7d3f6", 0.4: "#6da7ec", 0.6: "#2a78d6", 0.8: "#1c5cab", 1.0: "#0d366b" },
   });
 
+  const mode = document.querySelector('input[name="layer"]:checked').value;
+
   pointLayer.clearLayers();
-  // Biggest first, so small events stay clickable on top
-  shown.slice().sort((a, b) => b.deaths_best - a.deaths_best).forEach(e => {
+  // Only build the dots when they're on screen. Biggest first, so small events stay on top.
+  if (mode === "points") shown.slice().sort((a, b) => b.deaths_best - a.deaths_best).forEach(e => {
     const type = TYPES.find(t => t.key === e.violence_label);
     L.circleMarker([e.latitude, e.longitude], {
       radius: Math.max(4, Math.min(18, 3 * Math.sqrt(e.deaths_best))),
@@ -231,7 +239,6 @@ function draw() {
     }).bindTooltip(tooltip(e)).addTo(pointLayer);
   });
 
-  const mode = document.querySelector('input[name="layer"]:checked').value;
   map.removeLayer(pointLayer);
   if (mode === "heat") heatLayer.addTo(map); else pointLayer.addTo(map);
 }
