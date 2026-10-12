@@ -3,7 +3,7 @@ Stage 4: turn the raw UCDP events saved in Stage 3 into a clean, map-ready table
 
 Reads data/taswira.db (no API requests at all) and writes:
 - a `clean_events` table in the same database, rebuilt on every run
-- data/nigeria_2024_clean.csv, which you can open in Excel or VS Code
+- data/<country>_<years>_clean.csv, which you can open in Excel or VS Code
 
 What "clean" means here:
 - keep only the ~20 fields we need, with clear names and proper types
@@ -19,11 +19,11 @@ import os
 import sqlite3
 import sys
 
-from fetch_all_nigeria import API_VERSION
+from settings import API_VERSION, END_DATE, FILE_STEM, PERIOD, START_DATE
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 DB_PATH = os.path.join(DATA_DIR, "taswira.db")
-CSV_PATH = os.path.join(DATA_DIR, "nigeria_2024_clean.csv")
+CSV_PATH = os.path.join(DATA_DIR, f"{FILE_STEM}_clean.csv")
 
 VIOLENCE_TYPES = {1: "state-based", 2: "non-state", 3: "one-sided"}
 
@@ -100,10 +100,14 @@ def main():
     db.row_factory = sqlite3.Row       # lets us read columns by name: row["best"]
 
     raw_rows = db.execute(
-        "SELECT * FROM events WHERE dataset_version = ? ORDER BY date_start, id", (API_VERSION,)
+        # Only the period in settings.py. The database may also hold other downloads.
+        # Like the API, filter on date_end; substr() ignores any time part after the date.
+        "SELECT * FROM events WHERE dataset_version = ? "
+        "AND substr(date_end, 1, 10) BETWEEN ? AND ? ORDER BY date_start, id",
+        (API_VERSION, START_DATE, END_DATE),
     ).fetchall()
     if not raw_rows:
-        sys.exit(f"No GED {API_VERSION} events in the database. Run save_events.py first.")
+        sys.exit(f"No GED {API_VERSION} events for {PERIOD} in the database. Run save_events.py first.")
 
     clean = [clean_event(dict(row)) for row in raw_rows]
 
@@ -130,7 +134,7 @@ def main():
 
 def report(db, total):
     """Print what cleaning found, so we can decide what to map."""
-    print(f"Cleaned {total} events (GED {API_VERSION}).\n")
+    print(f"Cleaned {total} events ({PERIOD}, GED {API_VERSION}).\n")
 
     print("Location precision (where_prec):")
     for prec, count, deaths in db.execute(
