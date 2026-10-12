@@ -42,13 +42,19 @@ Any public version of this project will credit UCDP as the data source, cite the
    ```
    python3 clean_events.py
    ```
+6. Run the Stage 5 script to build the interactive map `data/nigeria_2024_map.html`
+   (heatmap and individual events). It opens in your browser automatically:
+
+   ```
+   python3 build_map.py
+   ```
 
 ## Planned build stages
 
 1. **Fetch:** one authenticated request for Nigeria events, inspect the JSON fields
 2. **Paginate:** loop through all pages safely, respecting the daily limit
 3. **Store:** save events locally (CSV/SQLite) so the API is not hit repeatedly
-4. **Clean:** select key fields (date, location, deaths estimate, violence type, actors) ← *current*
-5. **Map:** plot events and build a heatmap for Nigeria
+4. **Clean:** select key fields (date, location, deaths estimate, violence type, actors)
+5. **Map:** plot events and build a heatmap for Nigeria ← *current*
 6. **Expand:** extend to wider Africa, add time filtering and Candidate data
 7. **Publish:** public version with full UCDP attribution
