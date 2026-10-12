@@ -1,0 +1,215 @@
+<!doctype html>
+<!--
+  Stage 5 map template. build_map.py fills in the __PLACEHOLDERS__ and writes
+  the finished page to data/. Leaflet draws the map; leaflet.heat draws the heatmap.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taswira: Nigeria __YEAR__</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1: #fcfcfb;
+    --surface-2: #f2f1ee;
+    --border: #dcdbd6;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #77766f;
+    /* violence types: first three categorical slots, fixed order */
+    --series-1: #2a78d6;   /* state-based */
+    --series-2: #eb6834;   /* non-state */
+    --series-3: #1baf7a;   /* one-sided */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface-1: #1a1a19;
+      --surface-2: #242423;
+      --border: #3a3a38;
+      --text-primary: #f0efec;
+      --text-secondary: #c3c2b7;
+      --text-muted: #9a998f;
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --series-3: #199e70;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--surface-1);
+    color: var(--text-primary);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+  }
+  #panel {
+    width: 340px; flex: none; overflow-y: auto;
+    padding: 20px 16px; border-right: 1px solid var(--border);
+  }
+  #map { flex: 1; min-height: 100%; }
+  h1 { font-size: 20px; margin: 0; }
+  .sub { color: var(--text-secondary); margin: 2px 0 16px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .stat { background: var(--surface-2); border-radius: 8px; padding: 8px; }
+  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--text-secondary); font-size: 12px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em;
+       color: var(--text-muted); margin: 18px 0 6px; }
+  label { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
+  #types label { align-items: flex-start; }
+  #types .swatch, #types input { margin-top: 4px; }
+  .swatch { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+  .count { margin-left: auto; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .note { color: var(--text-secondary); font-size: 13px; }
+  details summary { cursor: pointer; color: var(--text-secondary); font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+  th, td { text-align: left; padding: 3px 4px; border-bottom: 1px solid var(--border); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .credit { margin-top: 20px; font-size: 12px; color: var(--text-muted); }
+  .credit a { color: inherit; }
+  .leaflet-tooltip { font: 13px/1.4 system-ui, sans-serif; }
+  @media (max-width: 720px) {
+    body { flex-direction: column; }
+    #panel { width: 100%; border-right: 0; border-bottom: 1px solid var(--border); max-height: 45vh; }
+    #map { min-height: 55vh; }
+  }
+</style>
+</head>
+<body>
+<aside id="panel">
+  <h1>Taswira: Nigeria __YEAR__</h1>
+  <p class="sub">Organised violence, UCDP GED __VERSION__</p>
+
+  <div class="stats">
+    <div class="stat"><b id="s-events"></b><span>events</span></div>
+    <div class="stat"><b id="s-deaths"></b><span>deaths (best est.)</span></div>
+    <div class="stat"><b id="s-ready"></b><span>on the map</span></div>
+  </div>
+
+  <h2>Show</h2>
+  <label><input type="radio" name="layer" value="heat" checked> Heatmap (weighted by deaths)</label>
+  <label><input type="radio" name="layer" value="points"> Individual events</label>
+
+  <h2>Type of violence</h2>
+  <div id="types"></div>
+
+  <h2>Not on the map</h2>
+  <p class="note" id="unmapped-note"></p>
+  <details>
+    <summary>List these events</summary>
+    <table>
+      <thead><tr><th>Date</th><th>State</th><th>Place</th><th class="num">Deaths</th></tr></thead>
+      <tbody id="unmapped-rows"></tbody>
+    </table>
+  </details>
+
+  <p class="credit">
+    Data: Uppsala Conflict Data Program (UCDP), Georeferenced Event Dataset (GED)
+    version __VERSION__, <a href="https://ucdp.uu.se/">ucdp.uu.se</a>.
+    Deaths are UCDP's best estimates. Map tiles &copy; OpenStreetMap contributors, &copy; CARTO.
+  </p>
+</aside>
+<div id="map" role="region" aria-label="Map of conflict events in Nigeria"></div>
+
+<script>
+const EVENTS = __EVENTS_JSON__;      // map-ready events
+const UNMAPPED = __UNMAPPED_JSON__;  // events whose location is too vague to plot
+
+const TYPES = [
+  { key: "state-based", name: "State-based", color: "--series-1",
+    help: "government vs armed group" },
+  { key: "non-state",   name: "Non-state",   color: "--series-2",
+    help: "armed groups vs each other" },
+  { key: "one-sided",   name: "One-sided",   color: "--series-3",
+    help: "attacks on civilians" },
+];
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const fmt = n => n.toLocaleString("en-GB");
+const sum = (list, f) => list.reduce((t, e) => t + e[f], 0);
+const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+
+// --- Panel numbers ------------------------------------------------------
+const all = EVENTS.concat(UNMAPPED);
+document.getElementById("s-events").textContent = fmt(all.length);
+document.getElementById("s-deaths").textContent = fmt(sum(all, "deaths_best"));
+document.getElementById("s-ready").textContent = Math.round(100 * EVENTS.length / all.length) + "%";
+document.getElementById("unmapped-note").textContent =
+  `${UNMAPPED.length} events (${fmt(sum(UNMAPPED, "deaths_best"))} deaths) are not drawn, ` +
+  "because UCDP only knows the state, or a road, river or border they happened along. " +
+  "They are still counted above.";
+document.getElementById("unmapped-rows").innerHTML = UNMAPPED
+  .slice().sort((a, b) => b.deaths_best - a.deaths_best)
+  .map(e => `<tr><td>${e.date_start}</td><td>${esc(e.state)}</td>` +
+            `<td>${esc(e.place)}</td><td class="num">${e.deaths_best}</td></tr>`)
+  .join("");
+
+// --- Map ------------------------------------------------------------------
+const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+const map = L.map("map", { zoomSnap: 0.5 }).fitBounds([[4.2, 2.7], [13.9, 14.7]]);
+L.tileLayer(`https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`, {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a> | Data: UCDP GED __VERSION__',
+  maxZoom: 12,
+}).addTo(map);
+
+const active = new Set(TYPES.map(t => t.key));
+let heatLayer = null;
+const pointLayer = L.layerGroup();
+
+function tooltip(e) {
+  return `<b>${esc(e.place ?? "Unknown place")}</b>, ${esc(e.state)}<br>` +
+         `${e.date_start}${e.date_end !== e.date_start ? " to " + e.date_end : ""}<br>` +
+         `${e.violence_label}: ${esc(e.side_a)} vs ${esc(e.side_b)}<br>` +
+         `<b>${e.deaths_best}</b> deaths (range ${e.deaths_low} to ${e.deaths_high})`;
+}
+
+function draw() {
+  const shown = EVENTS.filter(e => active.has(e.violence_label));
+
+  if (heatLayer) map.removeLayer(heatLayer);
+  heatLayer = L.heatLayer(shown.map(e => [e.latitude, e.longitude, e.deaths_best]), {
+    radius: 22, blur: 18, max: 20, minOpacity: 0.25,
+    // one hue, light to dark; on a dark map the ramp runs the other way so "more" stays brighter
+    gradient: dark
+      ? { 0.2: "#104281", 0.4: "#1c5cab", 0.6: "#2a78d6", 0.8: "#6da7ec", 1.0: "#cde2fb" }
+      : { 0.2: "#b7d3f6", 0.4: "#6da7ec", 0.6: "#2a78d6", 0.8: "#1c5cab", 1.0: "#0d366b" },
+  });
+
+  pointLayer.clearLayers();
+  // Biggest first, so small events stay clickable on top
+  shown.slice().sort((a, b) => b.deaths_best - a.deaths_best).forEach(e => {
+    const type = TYPES.find(t => t.key === e.violence_label);
+    L.circleMarker([e.latitude, e.longitude], {
+      radius: Math.max(4, Math.min(18, 3 * Math.sqrt(e.deaths_best))),
+      color: css("--surface-1"), weight: 2,                   // 2px surface ring
+      fillColor: css(type.color), fillOpacity: 0.85,
+    }).bindTooltip(tooltip(e)).addTo(pointLayer);
+  });
+
+  const mode = document.querySelector('input[name="layer"]:checked').value;
+  map.removeLayer(pointLayer);
+  if (mode === "heat") heatLayer.addTo(map); else pointLayer.addTo(map);
+}
+
+// --- Filters ------------------------------------------------------------
+document.getElementById("types").innerHTML = TYPES.map(t => {
+  const n = EVENTS.filter(e => e.violence_label === t.key);
+  return `<label><input type="checkbox" value="${t.key}" checked>` +
+         `<span class="swatch" style="background:var(${t.color})"></span>` +
+         `<span>${t.name}<br><span class="note">${t.help}</span></span>` +
+         `<span class="count">${n.length}</span></label>`;
+}).join("");
+document.querySelectorAll("#types input").forEach(box => box.addEventListener("change", () => {
+  box.checked ? active.add(box.value) : active.delete(box.value);
+  draw();
+}));
+document.querySelectorAll('input[name="layer"]').forEach(r => r.addEventListener("change", draw));
+
+draw();
+</script>
+</body>
+</html>
