@@ -29,8 +29,8 @@ Set `AREA = "nigeria"` to go back to Nigeria only. Change them there and every s
    ```
    python3 fetch_nigeria.py
    ```
-3. Run the Stage 2 script to fetch every page (`PAGE_SIZE` events per request; it stops
-   after the first request if the download would need more than `MAX_REQUESTS`):
+3. Run the Stage 2 script to fetch every page (`PAGE_SIZE` events per request, one country at a time; it stops
+   early if the download would need more than `MAX_REQUESTS`):
 
    ```
    python3 fetch_all.py

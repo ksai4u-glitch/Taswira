@@ -30,7 +30,7 @@ START_DATE = "2020-01-01"     # the API filters both dates on date_end
 END_DATE = "2024-12-31"
 
 PAGE_SIZE = 1000              # events per request; fewer, bigger pages save requests
-MAX_REQUESTS = 150            # hard cap for one download; the daily limit is 5,000
+MAX_REQUESTS = 200            # hard cap for one download (at least 1 per country); the daily limit is 5,000
 
 # Derived values, e.g. "Africa", [402, ...], "2020-2024", "africa_2020-2024"
 AREA_NAME = AREAS[AREA]["name"]

@@ -23,7 +23,7 @@ from settings import API_VERSION, COUNTRIES, END_DATE, MAX_REQUESTS, PAGE_SIZE, 
 BASE_URL = f"https://ucdpapi.pcr.uu.se/api/gedevents/{API_VERSION}"
 
 PARAMS = {
-    "Country": ",".join(str(c) for c in COUNTRIES),   # e.g. "475" or "402,403,..."
+    "Country": ",".join(str(c) for c in COUNTRIES),   # all codes, used as the saved-query label
     "StartDate": START_DATE,
     "EndDate": END_DATE,
     "pagesize": PAGE_SIZE,
@@ -45,38 +45,51 @@ def get_json(url, token):
 
 
 def fetch_all(token):
-    """Follow NextPageUrl from page to page and return every event in one list."""
-    url = BASE_URL + "?" + urllib.parse.urlencode(PARAMS, safe=",")   # keep commas readable
+    """Fetch every page for every country in settings.py and return all events in one list.
+
+    The API seems to ignore all but the first few codes in a comma-separated
+    Country list (an all-Africa query only returned the first 7 codes), so we ask
+    for one country at a time and follow NextPageUrl within each country.
+    """
     events = []
     requests_made = 0
-    total_count = None
+    total_count = 0
 
-    while url:
-        if requests_made >= MAX_REQUESTS:
-            sys.exit(f"Stopped: reached MAX_REQUESTS ({MAX_REQUESTS}) before the last page. "
-                     "Raise it only if you expected this many pages.")
+    for position, country in enumerate(COUNTRIES):
+        params = dict(PARAMS, Country=country)
+        url = BASE_URL + "?" + urllib.parse.urlencode(params)
+        first_page = True
 
-        if requests_made > 0:
-            time.sleep(PAUSE_SECONDS)
+        while url:
+            if requests_made >= MAX_REQUESTS:
+                sys.exit(f"Stopped: reached MAX_REQUESTS ({MAX_REQUESTS}) before the last page. "
+                         "Raise it only if you expected this many pages.")
 
-        data = get_json(url, token)
-        requests_made += 1
+            if requests_made > 0:
+                time.sleep(PAUSE_SECONDS)
 
-        if total_count is None:
-            total_count = data["TotalCount"]
-            print(f"API reports {total_count} events across {data['TotalPages']} pages.")
-            # Stop now, after 1 request, rather than halfway through a download that can't finish
-            if data["TotalPages"] > MAX_REQUESTS:
-                sys.exit(f"Stopped: this needs {data['TotalPages']} requests but MAX_REQUESTS is "
-                         f"{MAX_REQUESTS}. Raise it in settings.py if that's OK.")
+            data = get_json(url, token)
+            requests_made += 1
+            page_events = data.get("Result", [])
+            events.extend(page_events)
 
-        page_events = data.get("Result", [])
-        events.extend(page_events)
-        print(f"  request {requests_made}: got {len(page_events)} events "
-              f"(running total {len(events)})")
+            if first_page:
+                first_page = False
+                total_count += data["TotalCount"]
+                print(f"  country {country}: {data['TotalCount']} events, {data['TotalPages']} pages")
+                # Stop early, rather than halfway through a download that can't finish:
+                # this country's remaining pages + at least 1 request per country still to go
+                countries_left = len(COUNTRIES) - position - 1
+                needed = requests_made + max(data["TotalPages"] - 1, 0) + countries_left
+                if needed > MAX_REQUESTS:
+                    sys.exit(f"Stopped: this needs at least {needed} requests but MAX_REQUESTS is "
+                             f"{MAX_REQUESTS}. Raise it in settings.py if that's OK.")
+            else:
+                print(f"    request {requests_made}: got {len(page_events)} more")
 
-        url = data.get("NextPageUrl") or None   # empty on the last page -> loop stops
+            url = data.get("NextPageUrl") or None   # empty on the last page -> next country
 
+    print(f"API reports {total_count} events in total across {len(COUNTRIES)} countries.")
     return events, total_count, requests_made
 
 
