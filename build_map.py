@@ -70,6 +70,13 @@ def to_js(data):
     return json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
 
+def shown_period(events):
+    """The years the map actually covers, e.g. "2020-2026" once preliminary 2026 data is in.
+    (PERIOD in settings.py is only the stable release's years.)"""
+    years = sorted({e["date_start"][:4] for e in events})
+    return years[0] if years[0] == years[-1] else f"{years[0]}-{years[-1]}"
+
+
 def fill_template(mapped, unmapped):
     """Fill map_template.html with the events and settings; return the finished page as text."""
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
@@ -84,7 +91,9 @@ def fill_template(mapped, unmapped):
                 .replace("__HEAT_MAX__", str(HEAT_MAX))
                 # one country on screen: same heat ceiling as the Nigeria-only map
                 .replace("__COUNTRY_HEAT_MAX__", str(AREAS["nigeria"]["heat_max"]))
-                .replace("__BUILT__", date.today().isoformat()))
+                .replace("__BUILT__", date.today().isoformat())
+                .replace("__BUILT_LONG__", f"{date.today().day} {date.today():%B %Y}")
+                .replace("__SHOWN_PERIOD__", shown_period(mapped + unmapped)))
     return page
 
 
