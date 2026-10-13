@@ -7,8 +7,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Taswira: Africa 2020-2025</title>
-<meta name="description" content="Map of organised violence in Africa, 2020-2025, from the UCDP Georeferenced Event Dataset (GED 26.1).">
+<title>Taswira: Africa 2020-2026</title>
+<meta name="description" content="Map of organised violence in Africa, 2020-2026, from the UCDP Georeferenced Event Dataset (GED 26.1).">
+<!-- What WhatsApp, X, Slack etc. show when someone shares the link.
+     docs/preview.png is a fixed picture: it does not change when the data updates. -->
+<meta property="og:title" content="Taswira: organised violence in Africa, 2020-2026">
+<meta property="og:description" content="Interactive map of conflict events and deaths, from UCDP data. Last updated 13 October 2026.">
+<meta property="og:image" content="https://ksai4u-glitch.github.io/Taswira/preview.png">
+<meta property="og:url" content="https://ksai4u-glitch.github.io/Taswira/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
@@ -135,8 +142,9 @@
 <body>
 <aside id="panel">
   <button id="drawer" type="button" aria-expanded="false" aria-controls="panel">Show filters and years &#9650;</button>
-  <h1>Taswira: Africa 2020-2025</h1>
-  <p class="sub">Organised violence, UCDP GED 26.1<span id="prelim-sub"></span></p>
+  <h1>Taswira: Africa 2020-2026</h1>
+  <p class="sub">Organised violence, UCDP GED 26.1<span id="prelim-sub"></span>.
+    Last updated 13 October 2026.</p>
 
   <div class="stats">
     <div class="stat"><b id="s-events"></b><span>events</span></div>
