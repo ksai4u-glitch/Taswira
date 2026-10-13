@@ -106,6 +106,8 @@
   .year-row { display: flex; align-items: center; gap: 8px; }
   .year-row button { font: inherit; font-size: 13px; padding: 3px 10px; cursor: pointer;
     border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
+  #states-rows tr { cursor: pointer; }
+  #states-rows tr:hover td { background: var(--surface-2); }
   #year-label { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
   .credit { margin-top: 20px; font-size: 12px; color: var(--text-muted); }
   .credit a { color: inherit; }
@@ -183,6 +185,13 @@
 
   <h2>Type of violence</h2>
   <div id="types"></div>
+
+  <h2 id="states-title">Deaths by state or province</h2>
+  <p class="note" id="states-note"></p>
+  <table id="states-table" hidden>
+    <thead><tr><th id="states-col">State / province</th><th class="num">Events</th><th class="num">Deaths</th><th class="num">Share</th></tr></thead>
+    <tbody id="states-rows"></tbody>
+  </table>
 
   <h2>Not on the map</h2>
   <p class="note" id="unmapped-note"></p>
@@ -329,6 +338,7 @@ function updatePanel(mapped, unmapped) {
   updateMonths();
   document.getElementById("year-label").textContent =
     month !== null ? monthName(month) : year ?? `${YEARS[0]}–${YEARS.at(-1)}`;
+  updateStates(all);
   const litYear = month !== null ? month.slice(0, 4) : year;
   document.querySelectorAll("#years button").forEach(b => b.classList.toggle("on", litYear === null || b.dataset.year === litYear));
   document.getElementById("unmapped-note").textContent =
@@ -345,6 +355,40 @@ function updatePanel(mapped, unmapped) {
     .join("") +
     (unmapped.length > LIST_MAX
       ? `<tr><td colspan="4" class="note">…and ${fmt(unmapped.length - LIST_MAX)} smaller events</td></tr>` : "");
+}
+
+// --- Deaths by state: totals per province / state for the picked country ---
+// Counts every event, drawn or not, so the totals match the numbers at the top.
+function updateStates(all) {
+  const table = document.getElementById("states-table");
+  const note = document.getElementById("states-note");
+  table.hidden = country === null;
+  if (country === null) {
+    note.textContent = "Pick a country to see its totals by state or province.";
+    return;
+  }
+  const byState = {};
+  for (const e of all) {
+    const name = e.state || "Not known";   // UCDP only knows the country for a few events
+    byState[name] ??= { events: 0, deaths: 0 };
+    byState[name].events += 1;
+    byState[name].deaths += e.deaths_best;
+  }
+  const total = sum(all, "deaths_best");
+  const rows = Object.entries(byState).sort((a, b) => b[1].deaths - a[1].deaths || b[1].events - a[1].events);
+  const prelim = showPrelim && all.some(e => e.preliminary);
+  note.textContent = `${country}, ${document.getElementById("year-label").textContent}` +
+    (prelim ? ", including preliminary data" : "") + ". Click a row to zoom to it.";
+  // Nigeria's first-level areas are states; other countries call them regions, provinces...
+  const nigeria = country === "Nigeria";
+  document.getElementById("states-title").textContent = `Deaths by ${nigeria ? "state" : "state or province"}`;
+  document.getElementById("states-col").textContent = nigeria ? "State" : "State / province";
+  document.getElementById("states-rows").innerHTML = rows.length
+    ? rows.map(([name, t]) =>
+        `<tr data-state="${esc(name)}"><td>${esc(name)}</td><td class="num">${fmt(t.events)}</td>` +
+        `<td class="num">${fmt(t.deaths)}</td>` +
+        `<td class="num">${total ? Math.round(100 * t.deaths / total) + "%" : "–"}</td></tr>`).join("")
+    : `<tr><td colspan="4" class="note">No events for these filters</td></tr>`;
 }
 
 // --- Map ------------------------------------------------------------------
@@ -467,6 +511,15 @@ function selectCountry(c) {
   draw();
 }
 countrySelect.addEventListener("change", () => selectCountry(countrySelect.value));
+// Click a state in the table to zoom to its events on the map
+document.getElementById("states-rows").addEventListener("click", e => {
+  const row = e.target.closest("tr[data-state]");
+  if (!row) return;
+  const spots = EVENTS.filter(ev => inCountry(ev) && ev.state === row.dataset.state).map(ev => [ev.latitude, ev.longitude]);
+  if (!spots.length) return;   // e.g. "Not known", or only events too vague to draw
+  setDrawer(false);
+  fitTo(spots, 40);
+});
 document.getElementById("zoom-nigeria").addEventListener("click", () => selectCountry("Nigeria"));
 
 // --- Year chart: one bar per year, height = deaths that year ---------------
