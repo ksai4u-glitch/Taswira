@@ -106,8 +106,9 @@
   .year-row { display: flex; align-items: center; gap: 8px; }
   .year-row button { font: inherit; font-size: 13px; padding: 3px 10px; cursor: pointer;
     border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
-  #states-rows tr { cursor: pointer; }
-  #states-rows tr:hover td { background: var(--surface-2); }
+  #states-rows tr, #groups-rows tr { cursor: pointer; }
+  #states-rows tr:hover td, #groups-rows tr:hover td { background: var(--surface-2); }
+  #groups-rows tr.on td { background: var(--surface-2); font-weight: 600; }
   #year-label { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
   .credit { margin-top: 20px; font-size: 12px; color: var(--text-muted); }
   .credit a { color: inherit; }
@@ -183,6 +184,11 @@
     </div>
   </div>
 
+  <h2>Armed group</h2>
+  <div class="country-row">
+    <select id="group" aria-label="Show one armed group"><option value="">All armed groups</option></select>
+  </div>
+
   <h2>Year</h2>
   <div class="year-row">
     <button id="year-all" type="button">All years</button>
@@ -202,6 +208,13 @@
 
   <h2>Type of violence</h2>
   <div id="types"></div>
+
+  <h2>Deadliest armed groups</h2>
+  <p class="note" id="groups-note"></p>
+  <table id="groups-table">
+    <thead><tr><th>Group (UCDP name)</th><th class="num">Events</th><th class="num">Deaths</th></tr></thead>
+    <tbody id="groups-rows"></tbody>
+  </table>
 
   <h2 id="states-title">Deaths by state or province</h2>
   <p class="note" id="states-note"></p>
@@ -239,6 +252,10 @@
         Events placed only at a province, country or along a road, river or border are counted
         in the totals and listed under "Not on the map", but not drawn, because their point is a
         stand-in and would create false hotspots.</li>
+      <li>Armed groups are the two sides UCDP names for each event, under UCDP's own names.
+        "IS" covers every Islamic State branch (in Nigeria and Lake Chad that is ISWAP);
+        "JAS" is the Boko Haram faction led by Shekau until 2021; "XXX" codes are groups UCDP could not identify.
+        An event's deaths count for both of its sides, so the group table adds up to more than the total.</li>
       <li>Deaths are UCDP's best estimates; each event also has a low and high estimate (shown on hover).
         The heatmap is weighted by deaths.</li>
     </ul>
@@ -297,6 +314,23 @@ function unpack({ count, columns }) {
 const EVENTS = unpack(__EVENTS_JSON__);      // map-ready events
 const UNMAPPED = unpack(__UNMAPPED_JSON__);  // events whose location is too vague to plot
 
+// --- Armed groups: the sides UCDP names for each event ---------------------
+// A side can be a coalition, "APCLS, CMC", so split on commas, but not commas inside
+// brackets as in "Bena Kapuya (Bena Lulua, Luba)". "Civilians" is a target, not a group.
+const sides = s => (s ?? "").split(/,(?![^()]*\))/).map(g => g.trim()).filter(g => g && g !== "Civilians");
+for (const e of EVENTS.concat(UNMAPPED)) e.groups = [...new Set(sides(e.side_a).concat(sides(e.side_b)))];
+// Plain-language hints for the best-known short names; the UCDP name always comes first
+const GROUP_HINTS = {
+  "IS": "Islamic State, incl. ISWAP", "JAS": "Boko Haram", "JNIM": "al-Qaeda in the Sahel",
+  "TPLF": "Tigray", "RSF": "Rapid Support Forces", "SFA": "RSF-led alliance",
+  "OLA": "Oromo Liberation Army", "IPOB": "Biafra separatists", "AFC": "M23 alliance",
+};
+// "XXX475" = an armed group UCDP could not identify, in the country with that code
+const UNKNOWN_IN = {};
+for (const e of EVENTS.concat(UNMAPPED)) for (const g of e.groups) if (g.startsWith("XXX")) UNKNOWN_IN[g] ??= e.country;
+const groupName = g => g.startsWith("XXX") ? `Unidentified group (${UNKNOWN_IN[g]})`
+  : GROUP_HINTS[g] ? `${g} (${GROUP_HINTS[g]})` : g;
+
 const TYPES = [
   { key: "state-based", name: "State-based", color: "--series-1",
     help: "government vs armed group" },
@@ -321,6 +355,8 @@ const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Se
 const monthName = m => `${MONTH_NAMES[+m.slice(5) - 1]} ${m.slice(0, 4)}`;
 let country = null;   // null = every country in the area
 const inCountry = e => country === null || e.country === country;
+let group = null;     // null = every armed group
+const inGroup = e => group === null || e.groups.includes(group);
 
 // Preliminary = GED Candidate data, which UCDP may still revise. Always marked as such.
 const PRELIM = EVENTS.concat(UNMAPPED).filter(e => e.preliminary);
@@ -349,7 +385,7 @@ function updatePanel(mapped, unmapped) {
     all.length ? Math.round(100 * mapped.length / all.length) + "%" : "–";
   // Events per type on the map for the selected year(s), whether or not the type is ticked
   document.querySelectorAll("#types .count").forEach(c => {
-    c.textContent = EVENTS.filter(e => e.violence_label === c.dataset.type && inCountry(e) && inTime(e)).length;
+    c.textContent = EVENTS.filter(e => e.violence_label === c.dataset.type && inCountry(e) && inGroup(e) && inTime(e)).length;
   });
   updateYears();
   updateMonths();
@@ -394,7 +430,7 @@ function updateStates(all) {
   const total = sum(all, "deaths_best");
   const rows = Object.entries(byState).sort((a, b) => b[1].deaths - a[1].deaths || b[1].events - a[1].events);
   const prelim = showPrelim && all.some(e => e.preliminary);
-  note.textContent = `${country}, ${document.getElementById("year-label").textContent}` +
+  note.textContent = `${country}${group ? ", " + groupName(group) : ""}, ${document.getElementById("year-label").textContent}` +
     (prelim ? ", including preliminary data" : "") + ". Click a row to zoom to it.";
   // Nigeria's first-level areas are states; other countries call them regions, provinces...
   const nigeria = country === "Nigeria";
@@ -406,6 +442,27 @@ function updateStates(all) {
         `<td class="num">${fmt(t.deaths)}</td>` +
         `<td class="num">${total ? Math.round(100 * t.deaths / total) + "%" : "–"}</td></tr>`).join("")
     : `<tr><td colspan="4" class="note">No events for these filters</td></tr>`;
+}
+
+// --- Deadliest armed groups for the country, years and types picked ---------
+// `all` ignores the group filter, so the list stays put while you click through it.
+function updateGroups(all) {
+  const byGroup = {};
+  for (const e of all) for (const g of e.groups) {
+    byGroup[g] ??= { events: 0, deaths: 0 };
+    byGroup[g].events += 1;
+    byGroup[g].deaths += e.deaths_best;
+  }
+  const rows = Object.entries(byGroup).sort((a, b) => b[1].deaths - a[1].deaths || b[1].events - a[1].events).slice(0, 10);
+  document.getElementById("groups-note").textContent = rows.length
+    ? `${country ?? "All of __AREA__"}, ${document.getElementById("year-label").textContent}. ` +
+      "Click a group to show only its events; click it again to show all."
+    : "";
+  document.getElementById("groups-rows").innerHTML = rows.length
+    ? rows.map(([g, t]) =>
+        `<tr data-group="${esc(g)}" class="${g === group ? "on" : ""}" title="UCDP name: ${esc(g)}">` +
+        `<td>${esc(groupName(g))}</td><td class="num">${fmt(t.events)}</td><td class="num">${fmt(t.deaths)}</td></tr>`).join("")
+    : `<tr><td colspan="3" class="note">No events for these filters</td></tr>`;
 }
 
 // --- Map ------------------------------------------------------------------
@@ -421,7 +478,7 @@ function setDrawer(open) {
   panel.classList.toggle("open", open);
   drawer.setAttribute("aria-expanded", open);
   drawer.innerHTML = open ? "Hide filters &#9660;" : "Show filters and years &#9650;";
-  if (!open) panel.scrollTop = 0;
+  if (!open && phone.matches) panel.scrollTop = 0;   // on a computer, keep the panel where it was
 }
 drawer.addEventListener("click", () => setDrawer(!panel.classList.contains("open")));
 
@@ -443,19 +500,22 @@ const active = new Set(TYPES.map(t => t.key));
 let heatLayer = null;
 const pointLayer = L.layerGroup();
 
+const sideName = s => sides(s).map(groupName).join(", ") || s;   // "Civilians" stays as it is
 function tooltip(e) {
   return `<b>${esc(e.place ?? "Unknown place")}</b><br>${esc(e.state)}, ${esc(e.country)}<br>` +
          `${e.date_start}${e.date_end !== e.date_start ? " to " + e.date_end : ""}<br>` +
-         `${e.violence_label}: ${esc(e.side_a)} vs ${esc(e.side_b)}<br>` +
+         `${e.violence_label}: ${esc(sideName(e.side_a))} vs ${esc(sideName(e.side_b))}<br>` +
          `<b>${e.deaths_best}</b> deaths (range ${e.deaths_low} to ${e.deaths_high})` +
          (e.preliminary ? `<br><i>Preliminary: GED Candidate ${esc(e.dataset_version)}</i>` : "");
 }
 
 function draw() {
-  const filters = e => active.has(e.violence_label) && inCountry(e) && (showPrelim || !e.preliminary);
+  const basic = e => active.has(e.violence_label) && inCountry(e) && (showPrelim || !e.preliminary);
+  const filters = e => basic(e) && inGroup(e);
   const keep = e => filters(e) && inTime(e);
   const shown = EVENTS.filter(keep);
   updatePanel(shown, UNMAPPED.filter(keep));
+  updateGroups(EVENTS.concat(UNMAPPED).filter(e => basic(e) && inTime(e)));
   writeLink();
 
   if (heatLayer) map.removeLayer(heatLayer);
@@ -528,6 +588,7 @@ document.getElementById("country-box").hidden = COUNTRIES.length < 2;   // e.g. 
 function selectCountry(c) {
   country = c || null;
   countrySelect.value = country ?? "";
+  fillGroups();
   // Zoom to where this country's events are; back to the whole area for "All"
   const spots = EVENTS.filter(inCountry).map(e => [e.latitude, e.longitude]);
   setDrawer(false);   // on a phone, close the drawer so the zoom is visible
@@ -547,15 +608,44 @@ document.getElementById("states-rows").addEventListener("click", e => {
 });
 document.getElementById("zoom-nigeria").addEventListener("click", () => selectCountry("Nigeria"));
 
+// --- Armed group: filter to one group and zoom to its events ----------------
+// The dropdown lists the groups active in the picked country, deadliest first.
+const groupSelect = document.getElementById("group");
+function fillGroups() {
+  const deaths = {};
+  for (const e of EVENTS.concat(UNMAPPED)) if (inCountry(e)) for (const g of e.groups) deaths[g] = (deaths[g] ?? 0) + e.deaths_best;
+  if (group !== null && !(group in deaths)) group = null;   // not active in this country
+  groupSelect.innerHTML = `<option value="">All armed groups</option>` +
+    Object.entries(deaths).sort((a, b) => b[1] - a[1])
+      .map(([g, d]) => `<option value="${esc(g)}">${esc(groupName(g))}: ${fmt(d)} deaths</option>`).join("");
+  groupSelect.value = group ?? "";
+}
+const ALL_GROUPS = new Set(EVENTS.concat(UNMAPPED).flatMap(e => e.groups));
+
+function selectGroup(g) {
+  group = g || null;
+  groupSelect.value = group ?? "";
+  const spots = EVENTS.filter(e => inCountry(e) && inGroup(e)).map(e => [e.latitude, e.longitude]);
+  setDrawer(false);
+  if (spots.length) fitTo(spots, 20);
+  else fitTo(__BOUNDS__);
+  draw();
+}
+groupSelect.addEventListener("change", () => selectGroup(groupSelect.value));
+document.getElementById("groups-rows").addEventListener("click", e => {
+  const row = e.target.closest("tr[data-group]");
+  if (row) selectGroup(row.dataset.group === group ? null : row.dataset.group);
+});
+
 // --- Year chart: one bar per year, height = deaths that year ---------------
-// The bars follow the country; everything else on the panel follows the filters too.
+// The bars follow the country and group; everything else on the panel follows the filters too.
 document.getElementById("years").innerHTML = YEARS.map(y =>
   `<button type="button" data-year="${y}">` +
   `<span class="bar${PRELIM_YEARS.has(y) ? " prelim" : ""}"></span>` +
   `<span class="yl">${YEARS.length > 6 ? "’" + y.slice(2) : y}${PRELIM_YEARS.has(y) ? "*" : ""}</span></button>`).join("");
 
 function updateYears() {
-  const all = EVENTS.concat(UNMAPPED).filter(inCountry);
+  const all = EVENTS.concat(UNMAPPED).filter(e => inCountry(e) && inGroup(e));
   const deathsByYear = Object.fromEntries(YEARS.map(y => [y, sum(all.filter(e => yearOf(e) === y), "deaths_best")]));
   const maxDeaths = Math.max(1, ...Object.values(deathsByYear));
   document.querySelectorAll("#years button").forEach(b => {
@@ -579,7 +669,7 @@ function shownMonths() {
 
 function updateMonths() {
   const months = shownMonths();
-  const all = EVENTS.concat(UNMAPPED).filter(inCountry);
+  const all = EVENTS.concat(UNMAPPED).filter(e => inCountry(e) && inGroup(e));
   const deaths = Object.fromEntries(months.map(m => [m, 0]));
   for (const e of all) if (monthOf(e) in deaths) deaths[monthOf(e)] += e.deaths_best;
   const maxDeaths = Math.max(1, ...Object.values(deaths));
@@ -784,11 +874,12 @@ document.getElementById("year-all").addEventListener("click", () => { stopPlay()
 document.getElementById("year-play").addEventListener("click", togglePlay);
 
 // --- Shareable links --------------------------------------------------------
-// The address keeps the current view after the #, e.g. ...#country=Nigeria&year=2024&month=2024-03&layer=points,
+// The address keeps the current view after the #, e.g. ...#country=Nigeria&group=JAS&year=2024&month=2024-03&layer=points,
 // so a copied link opens the map on the same country, year and layer.
 function writeLink() {
   const link = new URLSearchParams();
   if (country) link.set("country", country);
+  if (group) link.set("group", group);
   if (year) link.set("year", year);
   if (month) link.set("month", month);
   const mode = document.querySelector('input[name="layer"]:checked').value;
@@ -807,8 +898,11 @@ function readLink() {
   month = /^\d{4}-\d{2}$/.test(m) && m <= LAST_MONTH && YEARS.includes(m.slice(0, 4)) ? m : null;
   const layer = document.querySelector(`input[name="layer"][value="${link.get("layer") === "points" ? "points" : "heat"}"]`);
   layer.checked = true;
+  const g = link.get("group");
+  group = ALL_GROUPS.has(g) ? g : null;
   const c = link.get("country");
   selectCountry(COUNTRIES.includes(c) ? c : null);   // also zooms and redraws
+  if (group) selectGroup(group);                      // zoom to the group's events
 }
 window.addEventListener("hashchange", readLink);   // a link pasted into the same tab
 
