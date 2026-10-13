@@ -90,6 +90,8 @@
     border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
   .country-row button { font: inherit; font-size: 13px; padding: 3px 10px; cursor: pointer;
     border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
+  .link-button { font: inherit; font-size: 13px; padding: 3px 10px; cursor: pointer;
+    border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
   .year-row { display: flex; align-items: center; gap: 8px; }
   .year-row button { font: inherit; font-size: 13px; padding: 3px 10px; cursor: pointer;
     border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
@@ -163,6 +165,7 @@
   <label><input type="radio" name="layer" value="heat" checked> Heatmap (weighted by deaths)</label>
   <label><input type="radio" name="layer" value="points"> Individual events</label>
   <label id="prelim-toggle" hidden><input type="checkbox" id="show-prelim" checked> Include preliminary data</label>
+  <p><button id="copy-link" type="button" class="link-button">Copy link to this view</button></p>
 
   <h2>Type of violence</h2>
   <div id="types"></div>
@@ -207,6 +210,19 @@
         cluster, not every death.</li>
       <li>Reporting is uneven: areas with less media coverage may have fewer recorded events.</li>
     </ul>
+
+    <h3>Why other sources show more violence</h3>
+    <p>UCDP only counts deaths in <b>organised</b> conflicts: fighting between identifiable groups
+      that kills at least 25 people in a year. A lot of violence is left out, such as banditry,
+      kidnapping gangs, scattered communal clashes and crime, as are events with no deaths, like
+      protests and riots. Other trackers count some or all of these, so they show higher numbers.</p>
+    <p>For example, for Nigeria in 2024, UCDP records 502 events and 3,201 deaths.
+      <a href="https://acleddata.com/">ACLED</a>, which counts all political violence and unrest,
+      reports about 4,000 violent events and 9,300 deaths
+      (<a href="https://www.ecoi.net/en/file/local/2121561/2024yNigeria_en.pdf">ACCORD summary of ACLED data</a>).
+      The gap is mostly down to what each source counts, not which one is more accurate.
+      UCDP answers "how deadly are the organised armed conflicts?", while ACLED answers
+      "how much political violence and unrest is there?".</p>
 
     <h3>Cite the data</h3>
     <p>Sundberg, Ralph and Erik Melander (2013). Introducing the UCDP Georeferenced Event Dataset.
@@ -354,6 +370,7 @@ function draw() {
                     inCountry(e) && (showPrelim || !e.preliminary);
   const shown = EVENTS.filter(keep);
   updatePanel(shown, UNMAPPED.filter(keep));
+  writeLink();
 
   if (heatLayer) map.removeLayer(heatLayer);
   heatLayer = L.heatLayer(shown.map(e => [e.latitude, e.longitude, e.deaths_best]), {
@@ -462,7 +479,42 @@ document.getElementById("year-play").addEventListener("click", () => {
   }, 1200);
 });
 
-draw();
+// --- Shareable links --------------------------------------------------------
+// The address keeps the current view after the #, e.g. ...#country=Nigeria&year=2024&layer=points,
+// so a copied link opens the map on the same country, year and layer.
+function writeLink() {
+  const link = new URLSearchParams();
+  if (country) link.set("country", country);
+  if (year) link.set("year", year);
+  const mode = document.querySelector('input[name="layer"]:checked').value;
+  if (mode !== "heat") link.set("layer", mode);
+  const hash = link.toString();
+  // replaceState changes the address without adding a Back-button step for every click
+  history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
+}
+
+function readLink() {
+  const link = new URLSearchParams(location.hash.slice(1));
+  const y = link.get("year");
+  year = YEARS.includes(y) ? y : null;
+  const layer = document.querySelector(`input[name="layer"][value="${link.get("layer") === "points" ? "points" : "heat"}"]`);
+  layer.checked = true;
+  const c = link.get("country");
+  selectCountry(COUNTRIES.includes(c) ? c : null);   // also zooms and redraws
+}
+window.addEventListener("hashchange", readLink);   // a link pasted into the same tab
+
+document.getElementById("copy-link").addEventListener("click", async e => {
+  try {
+    await navigator.clipboard.writeText(location.href);
+    e.target.textContent = "Link copied";
+  } catch {
+    e.target.textContent = "Copy the address bar to share";   // e.g. clipboard blocked
+  }
+  setTimeout(() => { e.target.textContent = "Copy link to this view"; }, 2000);
+});
+
+readLink();
 </script>
 </body>
 </html>
