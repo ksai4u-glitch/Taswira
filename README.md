@@ -54,7 +54,7 @@ again: only the new version is downloaded.
    python3 clean_events.py
    ```
 6. Run the Stage 5 script to build the interactive map `data/<area>_<years>_map.html`
-   (heatmap, individual events, and a per-year chart with a play button). It opens in your browser automatically:
+   (heatmap, individual events, a per-year chart with a play button, and a per-month chart). It opens in your browser automatically:
 
    ```
    python3 build_map.py
