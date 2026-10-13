@@ -2,7 +2,9 @@
 Stage 3: save the events (settings.py says which) to a local SQLite database,
 so later stages (cleaning, mapping) never need to call the API again.
 
-- Fetches with fetch_all() from Stage 2, but ONLY if this exact query
+- Downloads the stable release and then each preliminary Candidate release
+  in settings.py, each tagged with its dataset_version.
+- Fetches with fetch_all() from Stage 2, but ONLY if that version + query
   has not been saved before. Run with --refresh to fetch again anyway.
 - Keeps all 49 fields of every event, exactly as UCDP sent them.
 - Saving the same event twice updates it instead of duplicating it.
@@ -16,14 +18,18 @@ import sqlite3
 import sys
 from datetime import datetime, timezone
 
-from fetch_all_nigeria import PARAMS, fetch_all
+from fetch_all import fetch_all, params_for
 from fetch_nigeria import load_token
-from settings import API_VERSION
+from settings import API_VERSION, CANDIDATE_VERSIONS
 
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "taswira.db")
 
-# A readable label for this query, e.g. "Country=475&StartDate=2024-01-01&EndDate=2024-12-31"
-QUERY = f"Country={PARAMS['Country']}&StartDate={PARAMS['StartDate']}&EndDate={PARAMS['EndDate']}"
+VERSIONS = [API_VERSION] + CANDIDATE_VERSIONS   # stable first, then preliminary
+
+
+def query_label(version):
+    """A readable label for one version's query, e.g. "Country=475&StartDate=2024-01-01&EndDate=2024-12-31"."""
+    return "&".join(f"{k}={v}" for k, v in params_for(version).items() if k != "pagesize")
 
 
 def connect():
@@ -42,18 +48,25 @@ def connect():
     return db
 
 
-def already_saved(db):
+def already_saved(db, version):
     """Return the log row if this version + query was saved before, else None."""
     return db.execute(
         "SELECT fetched_at, event_count FROM fetch_log "
         "WHERE dataset_version = ? AND query = ? ORDER BY fetched_at DESC LIMIT 1",
-        (API_VERSION, QUERY),
+        (version, query_label(version)),
     ).fetchone()
 
 
-def save(db, events):
+def save(db, events, version):
     """Create the events table from the fields UCDP sends, then insert or update every event."""
     fields = list(events[0].keys())          # the 49 UCDP field names
+    existing = [row[1] for row in db.execute("PRAGMA table_info(events)")]
+    if existing:
+        # The table already exists: if a release sends a field the table doesn't have, skip it
+        extra = [f for f in fields if f not in existing]
+        if extra:
+            print(f"  Note: GED {version} has fields the table lacks, not saved: {', '.join(extra)}")
+        fields = [f for f in fields if f in existing]
     columns = ["dataset_version"] + fields
     column_list = ", ".join(f'"{c}"' for c in columns)   # quoted, e.g. "id", "best"
 
@@ -69,7 +82,7 @@ def save(db, events):
     placeholders = ", ".join("?" for _ in columns)
     rows = []
     for event in events:
-        values = [API_VERSION]
+        values = [version]
         for field in fields:
             value = event.get(field)
             # SQLite stores numbers and text; anything else (lists, dicts) is saved as JSON text
@@ -83,25 +96,32 @@ def save(db, events):
         f"INSERT OR REPLACE INTO events ({column_list}) VALUES ({placeholders})",
         rows,
     )
+    db.commit()
+
+
+def log_fetch(db, version, count):
+    """Remember that this version + query was downloaded, so the next run can skip it."""
     db.execute(
         "INSERT INTO fetch_log VALUES (?, ?, ?, ?)",
-        (API_VERSION, QUERY, datetime.now(timezone.utc).isoformat(timespec="seconds"), len(events)),
+        (version, query_label(version), datetime.now(timezone.utc).isoformat(timespec="seconds"), count),
     )
     db.commit()
 
 
 def summary(db):
     """Prove the data is there by asking the database a couple of questions."""
-    total = db.execute(
-        "SELECT COUNT(*), SUM(best) FROM events WHERE dataset_version = ?", (API_VERSION,)
-    ).fetchone()
-    print(f"\nDatabase now holds {total[0]} events for GED {API_VERSION} "
-          f"({total[1]} deaths, best estimate).")
+    print("\nDatabase now holds:")
+    for version in VERSIONS:
+        count, deaths = db.execute(
+            "SELECT COUNT(*), SUM(best) FROM events WHERE dataset_version = ?", (version,)
+        ).fetchone()
+        tag = "stable" if version == API_VERSION else "Candidate, preliminary"
+        print(f"  GED {version:12} {count:6} events, {deaths or 0:7} deaths  ({tag})")
 
-    print("\nTop 5 states by number of events:")
+    print(f"\nTop 5 countries by number of events (GED {API_VERSION}):")
     for state, count, deaths in db.execute(
-        "SELECT adm_1, COUNT(*), SUM(best) FROM events WHERE dataset_version = ? "
-        "GROUP BY adm_1 ORDER BY COUNT(*) DESC LIMIT 5",
+        "SELECT country, COUNT(*), SUM(best) FROM events WHERE dataset_version = ? "
+        "GROUP BY country ORDER BY COUNT(*) DESC LIMIT 5",
         (API_VERSION,),
     ):
         print(f"  {state or '(unknown)'}: {count} events, {deaths} deaths")
@@ -110,18 +130,27 @@ def summary(db):
 def main():
     refresh = "--refresh" in sys.argv
     db = connect()
+    token = None
 
-    previous = already_saved(db)
-    if previous and not refresh:
-        fetched_at, count = previous
-        print(f"Already saved {count} events for GED {API_VERSION} ({QUERY}) on {fetched_at}.")
-        print("No API requests made. Run with --refresh to download again.")
-    else:
-        events, total_count, requests_made = fetch_all(load_token())
+    for version in VERSIONS:
+        previous = already_saved(db, version)
+        if previous and not refresh:
+            fetched_at, count = previous
+            print(f"GED {version}: already saved {count} events on {fetched_at}. No API requests made.")
+            continue
+
+        token = token or load_token()
+        print(f"GED {version}: downloading...")
+        events, total_count, requests_made = fetch_all(token, version)
         if len(events) != total_count:
             sys.exit(f"Not saving: collected {len(events)} events but the API said {total_count}.")
-        save(db, events)
-        print(f"\nSaved {len(events)} events to {DB_PATH} using {requests_made} requests.")
+        if events:
+            save(db, events, version)
+        log_fetch(db, version, len(events))
+        print(f"GED {version}: saved {len(events)} events using {requests_made} requests.\n")
+
+    if not refresh:
+        print("Run with --refresh to download everything again.")
 
     summary(db)
     db.close()

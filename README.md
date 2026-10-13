@@ -18,9 +18,15 @@ Any public version of this project will credit UCDP as the data source, cite the
 
 ## Setup
 
-The country, dates, dataset version and request limits are all in `settings.py`
-(currently Nigeria, 2015 to 2024, GED 26.1). Change them there and every script follows.
+The area, dates, dataset version and request limits are all in `settings.py`
+(currently `AREA = "africa"`, all 54 African countries, 2020 to 2025 from the stable GED 26.1,
+plus 2026 so far from the preliminary GED Candidate releases in `CANDIDATE_VERSIONS`).
+Set `AREA = "nigeria"` to go back to Nigeria only. Change them there and every script follows.
 
+Candidate events are marked `preliminary` in the clean table and shown hatched or dashed
+on the map, because UCDP may still revise them. When UCDP publishes a new monthly
+Candidate release, add its version to `CANDIDATE_VERSIONS` and run `save_events.py`
+again: only the new version is downloaded.
 
 1. Copy `.env.example` to `.env` and paste your UCDP token after `UCDP_TOKEN=`.
    `.env` is listed in `.gitignore` and must never be committed.
@@ -29,25 +35,25 @@ The country, dates, dataset version and request limits are all in `settings.py`
    ```
    python3 fetch_nigeria.py
    ```
-3. Run the Stage 2 script to fetch every page (100 events per request; it stops
-   after the first request if the download would need more than `MAX_REQUESTS`):
+3. Run the Stage 2 script to fetch every page (`PAGE_SIZE` events per request, one country at a time; it stops
+   early if the download would need more than `MAX_REQUESTS`):
 
    ```
-   python3 fetch_all_nigeria.py
+   python3 fetch_all.py
    ```
-4. Run the Stage 3 script to save every event to `data/taswira.db` (SQLite).
-   It only calls the API the first time; add `--refresh` to download again:
+4. Run the Stage 3 script to save every event (stable and Candidate) to `data/taswira.db` (SQLite).
+   It only calls the API for versions it hasn't saved yet; add `--refresh` to download everything again:
 
    ```
    python3 save_events.py
    ```
 5. Run the Stage 4 script to build a clean, map-ready table (`clean_events`) and
-   `data/<country>_<years>_clean.csv`. It reads the database only, with no API requests:
+   `data/<area>_<years>_clean.csv`. It reads the database only, with no API requests:
 
    ```
    python3 clean_events.py
    ```
-6. Run the Stage 5 script to build the interactive map `data/<country>_<years>_map.html`
+6. Run the Stage 5 script to build the interactive map `data/<area>_<years>_map.html`
    (heatmap, individual events, and a per-year chart with a play button). It opens in your browser automatically:
 
    ```
@@ -61,5 +67,5 @@ The country, dates, dataset version and request limits are all in `settings.py`
 3. **Store:** save events locally (CSV/SQLite) so the API is not hit repeatedly
 4. **Clean:** select key fields (date, location, deaths estimate, violence type, actors)
 5. **Map:** plot events and build a heatmap for Nigeria
-6. **Expand:** extend to wider Africa, add time filtering and Candidate data ← *current: time filtering (6a)*
+6. **Expand:** extend to wider Africa, add time filtering and Candidate data ← *current: Candidate data (6c); time filtering (6a) and wider Africa (6b) done*
 7. **Publish:** public version with full UCDP attribution
