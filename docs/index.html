@@ -90,6 +90,10 @@
     background: repeating-linear-gradient(135deg, var(--series-1) 0 3px, transparent 3px 6px);
     box-shadow: inset 0 0 0 1px var(--series-1);
   }
+  /* months: same bars, a bit shorter; months UCDP hasn't released yet are an empty outline */
+  .years.months { height: 56px; }
+  .years button:disabled { cursor: default; }
+  .years .bar.empty { background: none; box-shadow: inset 0 0 0 1px var(--border); opacity: 1; height: 100%; }
   .years .yl { font-size: 10px; color: var(--text-muted); text-align: center; margin-top: 3px;
                font-variant-numeric: tabular-nums; }
   .country-row { display: flex; gap: 8px; }
@@ -167,6 +171,8 @@
     <span id="year-label"></span>
   </div>
   <div class="years" id="years" role="group" aria-label="Deaths per year; click a bar to show that year"></div>
+  <h2 id="months-title">Month</h2>
+  <div class="years months" id="months" role="group" aria-label="Deaths per month; click a bar to show that month"></div>
   <p class="note" id="prelim-note" hidden></p>
 
   <h2>Show</h2>
@@ -281,12 +287,21 @@ const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&
 const yearOf = e => e.date_start.slice(0, 4);
 const YEARS = [...new Set(EVENTS.concat(UNMAPPED).map(yearOf))].sort();
 let year = null;   // null = all years
+let month = null;  // "2026-08" = one month; null = the whole year (or all years)
+const monthOf = e => e.date_start.slice(0, 7);
+// The time filter: one month if picked, otherwise one year or all years
+const inTime = e => month !== null ? monthOf(e) === month : (year === null || yearOf(e) === year);
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthName = m => `${MONTH_NAMES[+m.slice(5) - 1]} ${m.slice(0, 4)}`;
 let country = null;   // null = every country in the area
 const inCountry = e => country === null || e.country === country;
 
 // Preliminary = GED Candidate data, which UCDP may still revise. Always marked as such.
 const PRELIM = EVENTS.concat(UNMAPPED).filter(e => e.preliminary);
 const PRELIM_YEARS = new Set(PRELIM.map(yearOf));
+const PRELIM_MONTHS = new Set(PRELIM.map(monthOf));
+// The latest month with any data: months after it are "not released yet", not zero
+const LAST_MONTH = EVENTS.concat(UNMAPPED).map(monthOf).sort().at(-1);
 let showPrelim = true;
 if (PRELIM.length) {
   const last = PRELIM.map(e => e.date_end).sort().at(-1);
@@ -308,12 +323,14 @@ function updatePanel(mapped, unmapped) {
     all.length ? Math.round(100 * mapped.length / all.length) + "%" : "–";
   // Events per type on the map for the selected year(s), whether or not the type is ticked
   document.querySelectorAll("#types .count").forEach(c => {
-    c.textContent = EVENTS.filter(e => e.violence_label === c.dataset.type && inCountry(e) &&
-                                       (year === null || yearOf(e) === year)).length;
+    c.textContent = EVENTS.filter(e => e.violence_label === c.dataset.type && inCountry(e) && inTime(e)).length;
   });
   updateYears();
-  document.getElementById("year-label").textContent = year ?? `${YEARS[0]}–${YEARS.at(-1)}`;
-  document.querySelectorAll("#years button").forEach(b => b.classList.toggle("on", year === null || b.dataset.year === year));
+  updateMonths();
+  document.getElementById("year-label").textContent =
+    month !== null ? monthName(month) : year ?? `${YEARS[0]}–${YEARS.at(-1)}`;
+  const litYear = month !== null ? month.slice(0, 4) : year;
+  document.querySelectorAll("#years button").forEach(b => b.classList.toggle("on", litYear === null || b.dataset.year === litYear));
   document.getElementById("unmapped-note").textContent =
     `${unmapped.length} events (${fmt(sum(unmapped, "deaths_best"))} deaths) are not drawn, ` +
     "because UCDP only knows the province or state, the country, or a road, river or border " +
@@ -374,7 +391,7 @@ function tooltip(e) {
 }
 
 function draw() {
-  const keep = e => active.has(e.violence_label) && (year === null || yearOf(e) === year) &&
+  const keep = e => active.has(e.violence_label) && inTime(e) &&
                     inCountry(e) && (showPrelim || !e.preliminary);
   const shown = EVENTS.filter(keep);
   updatePanel(shown, UNMAPPED.filter(keep));
@@ -385,7 +402,11 @@ function draw() {
     // Heat adds up, so ten years of events need a ten times higher ceiling than one year.
     // Otherwise "All years" saturates and the whole country looks the same.
     // Zoomed in on one country, events spread over more pixels, so a lower ceiling.
-    radius: 22, blur: 18, max: (country === null ? 60 : 15) * (year === null ? YEARS.length : 1), minOpacity: 0.35,
+    // One month has about a twelfth of a year's events; a quarter of the year's ceiling
+    // keeps a deadly month bright without one event filling the screen.
+    radius: 22, blur: 18, minOpacity: 0.35,
+    max: (country === null ? 60 : 15) *
+         (month !== null ? 0.25 : year === null ? YEARS.length : 1),
     // one hue, light to dark; on a dark map the ramp runs the other way so "more" stays brighter
     gradient: dark
       ? { 0.2: "#256abf", 0.4: "#3987e5", 0.6: "#6da7ec", 0.8: "#9ec5f4", 1.0: "#cde2fb" }
@@ -466,12 +487,55 @@ function updateYears() {
   });
 }
 
+// --- Month chart: one bar per month of the picked year ---------------------
+// With "All years" it shows the last 12 months, so the newest (often preliminary)
+// month is visible instead of hiding inside its year bar.
+function shownMonths() {
+  if (year !== null) return MONTH_NAMES.map((_, i) => `${year}-${String(i + 1).padStart(2, "0")}`);
+  const [y, m] = LAST_MONTH.split("-").map(Number);
+  return Array.from({ length: 12 }, (_, i) => {
+    const d = new Date(Date.UTC(y, m - 12 + i, 1));
+    return d.toISOString().slice(0, 7);
+  });
+}
+
+function updateMonths() {
+  const months = shownMonths();
+  const all = EVENTS.concat(UNMAPPED).filter(inCountry);
+  const deaths = Object.fromEntries(months.map(m => [m, 0]));
+  for (const e of all) if (monthOf(e) in deaths) deaths[monthOf(e)] += e.deaths_best;
+  const maxDeaths = Math.max(1, ...Object.values(deaths));
+  document.getElementById("months-title").textContent = year !== null
+    ? `Month (${year})` : `Last 12 months (${monthName(months[0])} – ${monthName(months.at(-1))})`;
+  document.getElementById("months").innerHTML = months.map(m => {
+    const notYet = m > LAST_MONTH;    // UCDP hasn't released this month yet
+    const prelim = PRELIM_MONTHS.has(m);
+    const title = notYet ? `${monthName(m)}: no data yet`
+      : `${monthName(m)}: ${fmt(deaths[m])} deaths${prelim ? " (preliminary)" : ""}`;
+    const bar = notYet ? "bar empty" : `bar${prelim ? " prelim" : ""}`;
+    const height = notYet ? "" : ` style="height:${Math.round(100 * deaths[m] / maxDeaths)}%"`;
+    const on = month === null ? !notYet : m === month;
+    return `<button type="button" data-month="${m}" title="${title}" aria-label="${title}"` +
+           `${notYet ? " disabled" : ""} class="${on ? "on" : ""}">` +
+           `<span class="${bar}"${height}></span>` +
+           `<span class="yl">${MONTH_NAMES[+m.slice(5) - 1][0]}${prelim ? "*" : ""}</span></button>`;
+  }).join("");
+}
+// Click a month to show just that month; click it again to go back to the year
+document.getElementById("months").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b || b.disabled) return;
+  stopPlay();
+  month = month === b.dataset.month ? null : b.dataset.month;
+  draw();
+});
+
 let timer = null;
 function stopPlay() {
   clearInterval(timer); timer = null;
   document.getElementById("year-play").innerHTML = "&#9654; Play";
 }
-function selectYear(y) { year = y; draw(); }
+function selectYear(y) { year = y; month = null; draw(); }
 document.querySelectorAll("#years button").forEach(b =>
   b.addEventListener("click", () => { stopPlay(); selectYear(b.dataset.year); }));
 document.getElementById("year-all").addEventListener("click", () => { stopPlay(); selectYear(null); });
@@ -488,12 +552,13 @@ document.getElementById("year-play").addEventListener("click", () => {
 });
 
 // --- Shareable links --------------------------------------------------------
-// The address keeps the current view after the #, e.g. ...#country=Nigeria&year=2024&layer=points,
+// The address keeps the current view after the #, e.g. ...#country=Nigeria&year=2024&month=2024-03&layer=points,
 // so a copied link opens the map on the same country, year and layer.
 function writeLink() {
   const link = new URLSearchParams();
   if (country) link.set("country", country);
   if (year) link.set("year", year);
+  if (month) link.set("month", month);
   const mode = document.querySelector('input[name="layer"]:checked').value;
   if (mode !== "heat") link.set("layer", mode);
   const hash = link.toString();
@@ -505,6 +570,8 @@ function readLink() {
   const link = new URLSearchParams(location.hash.slice(1));
   const y = link.get("year");
   year = YEARS.includes(y) ? y : null;
+  const m = link.get("month");
+  month = /^\d{4}-\d{2}$/.test(m) && m <= LAST_MONTH && YEARS.includes(m.slice(0, 4)) ? m : null;
   const layer = document.querySelector(`input[name="layer"][value="${link.get("layer") === "points" ? "points" : "heat"}"]`);
   layer.checked = true;
   const c = link.get("country");
