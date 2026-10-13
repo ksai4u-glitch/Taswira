@@ -101,15 +101,38 @@
   #about ul { padding-left: 18px; margin: 6px 0; }
   #about h3 { font-size: 13px; margin: 12px 0 2px; }
   .leaflet-tooltip { font: 13px/1.4 system-ui, sans-serif; }
+  #drawer { display: none; }
+  /* Phones: the map fills the screen and the panel is a drawer at the bottom.
+     Closed, it shows the title and the three numbers; "Filters" opens the rest. */
   @media (max-width: 720px) {
-    body { flex-direction: column; }
-    #panel { width: 100%; border-right: 0; border-bottom: 1px solid var(--border); max-height: 45vh; }
-    #map { min-height: 55vh; }
+    :root { --peek: 232px; }
+    #map { position: fixed; inset: 0; }
+    #panel {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000; width: auto;
+      max-height: var(--peek); overflow: hidden; padding: 0 16px 16px;
+      background: var(--surface-1); border: 0; border-top: 1px solid var(--border);
+      border-radius: 14px 14px 0 0; box-shadow: 0 -4px 16px rgb(0 0 0 / .15);
+      transition: max-height .25s ease;
+    }
+    #panel.open { max-height: 85vh; overflow-y: auto; }
+    #drawer {
+      display: block; position: sticky; top: 0; z-index: 1; width: calc(100% + 32px); margin: 0 -16px 8px;
+      padding: 10px 16px; border: 0; background: var(--surface-1); color: var(--text-secondary);
+      font: inherit; font-size: 13px; cursor: pointer;
+    }
+    #drawer::before {   /* the little grab handle */
+      content: ""; display: block; width: 36px; height: 4px; border-radius: 2px;
+      background: var(--border); margin: 0 auto 6px;
+    }
+    .stats { margin-bottom: 0; }
+    /* keep Leaflet's credit line and buttons above the closed drawer */
+    .leaflet-bottom { bottom: var(--peek); }
   }
 </style>
 </head>
 <body>
 <aside id="panel">
+  <button id="drawer" type="button" aria-expanded="false" aria-controls="panel">Show filters and years &#9650;</button>
   <h1>Taswira: __AREA__ __PERIOD__</h1>
   <p class="sub">Organised violence, UCDP GED __VERSION__<span id="prelim-sub"></span></p>
 
@@ -286,7 +309,26 @@ function updatePanel(mapped, unmapped) {
 // --- Map ------------------------------------------------------------------
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
 // preferCanvas draws dots on one canvas instead of one SVG element each: much faster with many events
-const map = L.map("map", { zoomSnap: 0.5, preferCanvas: true }).fitBounds(__BOUNDS__);
+const map = L.map("map", { zoomSnap: 0.5, preferCanvas: true });
+
+// --- Phone drawer ---------------------------------------------------------
+const phone = matchMedia("(max-width: 720px)");
+const panel = document.getElementById("panel");
+const drawer = document.getElementById("drawer");
+function setDrawer(open) {
+  panel.classList.toggle("open", open);
+  drawer.setAttribute("aria-expanded", open);
+  drawer.innerHTML = open ? "Hide filters &#9660;" : "Show filters and years &#9650;";
+  if (!open) panel.scrollTop = 0;
+}
+drawer.addEventListener("click", () => setDrawer(!panel.classList.contains("open")));
+
+// Fit the map to some bounds, leaving room for the closed drawer on phones
+function fitTo(bounds, pad = 0) {
+  const peek = phone.matches ? parseInt(css("--peek")) : 0;
+  map.fitBounds(bounds, { paddingTopLeft: [pad, pad], paddingBottomRight: [pad, pad + peek], maxZoom: 9 });
+}
+fitTo(__BOUNDS__);
 // Esri's grey canvas tiles need no API key and work when the page is opened from a file
 const basemap = dark ? "World_Dark_Gray_Base" : "World_Light_Gray_Base";
 L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${basemap}/MapServer/tile/{z}/{y}/{x}`, {
@@ -373,8 +415,9 @@ function selectCountry(c) {
   countrySelect.value = country ?? "";
   // Zoom to where this country's events are; back to the whole area for "All"
   const spots = EVENTS.filter(inCountry).map(e => [e.latitude, e.longitude]);
-  if (country && spots.length) map.fitBounds(spots, { padding: [20, 20], maxZoom: 9 });
-  else map.fitBounds(__BOUNDS__);
+  setDrawer(false);   // on a phone, close the drawer so the zoom is visible
+  if (country && spots.length) fitTo(spots, 20);
+  else fitTo(__BOUNDS__);
   draw();
 }
 countrySelect.addEventListener("change", () => selectCountry(countrySelect.value));
