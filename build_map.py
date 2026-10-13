@@ -25,7 +25,7 @@ OUTPUT_PATH = os.path.join(HERE, "data", f"{FILE_STEM}_map.html")
 
 # Only the fields the map page uses, to keep the file small
 MAP_FIELDS = [
-    "date_start", "date_end", "country", "state", "place", "latitude", "longitude",
+    "date_start", "date_end", "country", "state", "lga", "place", "latitude", "longitude",
     "violence_label", "side_a", "side_b", "deaths_best", "deaths_low", "deaths_high",
     "dataset_version", "preliminary",
 ]
