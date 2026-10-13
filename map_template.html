@@ -1020,7 +1020,7 @@ const box = q => playBox.getContainer().querySelector(q);
 
 // Keyboard while the animation is on: Space plays or pauses, arrows step a month, Esc closes
 document.addEventListener("keydown", e => {
-  if (!anim.on || e.target.matches("select, input:not([type=checkbox]):not([type=radio]), textarea")) return;
+  if (!anim.on || e.target.matches("select, input:not([type=checkbox]):not([type=radio]):not(.pb-time), textarea")) return;
   if (e.key === " ") togglePlay();   // preventDefault below stops a focused button from also clicking
   else if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
     const m = monthAt(anim.cursor);
@@ -1135,8 +1135,9 @@ function paint(force) {
   // Hotspot zones with recent deaths pulse: a ring that swells out from the zone's edge and fades
   ctx.setLineDash([]);
   const phase = lessMotion.matches ? 0 : (performance.now() / 1400) % 1;
+  const showZones = document.getElementById("show-zones").checked;
   zones.forEach((z, k) => {
-    if (!zoneHeat[k]) return;
+    if (!showZones || !zoneHeat[k]) return;
     const c = map.latLngToContainerPoint([z.lat, z.lon]);
     const edge = map.latLngToContainerPoint([z.lat + z.radius / 111.2, z.lon]);
     const rz = Math.abs(c.y - edge.y);
