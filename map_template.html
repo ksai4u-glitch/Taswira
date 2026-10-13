@@ -184,6 +184,8 @@
   /* the timeline: drag it to any month */
   .play-box .pb-time { grid-column: 1 / -1; width: 100%; margin: 4px 0 0; accent-color: var(--series-1); cursor: pointer; }
   .play-box .pb-keys { grid-column: 1 / -1; font-size: 11px; color: var(--text-muted); }
+  /* read out by screen readers, not shown */
+  .play-box .pb-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   /* what each mark on the map means, for the view that's playing */
   .play-box .pb-legend { grid-column: 1 / -1; max-width: 300px; font-size: 11px; line-height: 1.35; color: var(--text-secondary); }
   /* deaths per month across the played range, just above the timeline; click to jump */
@@ -746,7 +748,13 @@ function draw() {
     drawZones(EVENTS.filter(filters));   // the played year's zones stay on; paint() makes active ones pulse
     // Which zones each event falls in, worked out once per month instead of every frame
     anim.zoneOf = anim.events.map(e => zones.flatMap((z, k) => km(z.lat, z.lon, e.latitude, e.longitude) <= z.radius ? [k] : []));
-    anim.chartEvents = EVENTS.concat(UNMAPPED).filter(filters);
+    // Deaths per month for the activity chart, counted here (when filters or month change), not every frame
+    const months = [];
+    for (let m = monthAt(anim.from); monthStart(m) < anim.to; m = nextMonth(m)) months.push(m);
+    const deaths = Object.fromEntries(months.map(m => [m, 0]));
+    for (const e of EVENTS.concat(UNMAPPED)) if (monthOf(e) in deaths && filters(e)) deaths[monthOf(e)] += e.deaths_best;
+    anim.chart = { months, deaths };
+    anim.chartDrawn = null;   // redraw on the next showMonth()
     if (anim.heat) map.removeLayer(anim.heat);
     anim.heat = document.querySelector('input[name="layer"]:checked').value === "heat"
       ? L.heatLayer([], { ...heatLook(), max: (country === null ? __HEAT_MAX__ : __COUNTRY_HEAT_MAX__) * 0.4 }).addTo(map)
@@ -981,7 +989,7 @@ const anim = {
   events: [], days: [],               // events for the current filters, oldest first (set by draw)
   last: 0, wait: 0,
   trail: false,
-  zoneOf: [], chartEvents: [],
+  zoneOf: [], chart: { months: [], deaths: {} }, chartDrawn: null, inspectAt: -1,
   heat: null,                         // the moving heatmap, when Heatmap is picked
 };
 
@@ -1012,23 +1020,33 @@ const PlayBox = L.Control.extend({
       `<button type="button" class="pb-trail" aria-pressed="${anim.trail}" title="Leave a faint mark where events have been">Trail</button>` +
       `<button type="button" class="pb-speed" aria-label="Playback speed">${anim.speed}&times;</button>` +
       `<button type="button" class="pb-close" aria-label="Stop playing">&times;</button></div>` +
-      `<canvas class="pb-chart" aria-hidden="true" title="Deaths per month; click to jump there"></canvas>` +
+      `<canvas class="pb-chart" role="img" title="Deaths per month; click a bar to jump there"></canvas>` +
       `<input type="range" class="pb-time" min="0" max="1" step="1" aria-label="Timeline: drag to any month">` +
       `<div class="pb-legend"></div>` +
-      `<div class="pb-keys">Space: play or pause · &larr; &rarr;: a month back or on · Esc: close</div>`;
+      `<div class="pb-keys">Space: play or pause · &larr; &rarr;: a month back or on · N: next event · Esc: close</div>` +
+      `<div class="pb-sr" aria-live="polite"></div>`;
     L.DomEvent.disableClickPropagation(box);
     L.DomEvent.disableScrollPropagation(box);
     const time = box.querySelector(".pb-time");
     time.addEventListener("input", () => { anim.cursor = +time.value; showMonth(); paint(); });
     // Pause while dragging, so the month stays where you put it; carry on after letting go
     let resume = false;
-    time.addEventListener("pointerdown", () => { resume = anim.playing; if (resume) pausePlay(); });
-    time.addEventListener("change", () => { if (resume) { resume = false; startPlay(); } });
+    const letGo = () => {
+      removeEventListener("pointerup", letGo); removeEventListener("pointercancel", letGo);
+      if (resume) { resume = false; startPlay(); }
+    };
+    time.addEventListener("pointerdown", () => {
+      resume = anim.playing;
+      if (!resume) return;
+      pausePlay();
+      // listen on the whole page: the pointer may be released outside the slider, or without moving it
+      addEventListener("pointerup", letGo); addEventListener("pointercancel", letGo);
+    });
     box.querySelector(".pb-chart").addEventListener("click", e => {
-      const r = e.target.getBoundingClientRect();
-      anim.cursor = anim.from + (anim.to - anim.from) * (e.clientX - r.left) / r.width;
-      anim.cursor = Math.min(anim.to - 0.01, monthStart(nextMonth(monthAt(anim.cursor))) - 0.01);   // end of that month
-      showMonth(); paint();
+      // Bars are all the same width, so pick the bar under the pointer, then go to the end of its month
+      const r = e.target.getBoundingClientRect(), { months } = anim.chart;
+      const m = months[Math.min(months.length - 1, Math.max(0, Math.floor(months.length * (e.clientX - r.left) / r.width)))];
+      goToMonth(m);
     });
     box.querySelector(".pb-trail").addEventListener("click", e => {
       anim.trail = !anim.trail;
@@ -1047,17 +1065,22 @@ const PlayBox = L.Control.extend({
 const playBox = new PlayBox({ position: "topright" });
 const box = q => playBox.getContainer().querySelector(q);
 
+// Jump to a month. Paused: its last day, so all its events are on screen.
+// Playing: its first day, so it plays through that month instead of rolling straight into the next.
+function goToMonth(m) {
+  anim.cursor = anim.playing ? Math.max(anim.from, monthStart(m)) : Math.min(anim.to - 0.01, monthStart(nextMonth(m)) - 0.01);
+  showMonth(); paint();
+}
+
 // Keyboard while the animation is on: Space plays or pauses, arrows step a month, Esc closes
 document.addEventListener("keydown", e => {
   if (!anim.on || e.target.matches("select, input:not([type=checkbox]):not([type=radio]):not(.pb-time), textarea")) return;
   if (e.key === " ") togglePlay();   // preventDefault below stops a focused button from also clicking
   else if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
     const m = monthAt(anim.cursor);
-    const target = e.key === "ArrowRight" ? monthStart(nextMonth(m)) : Math.max(anim.from, monthStart(m) - 1);
-    // jump to the end of the month, so that month's events are all on screen
-    anim.cursor = Math.min(anim.to - 0.01, monthStart(nextMonth(monthAt(target))) - 0.01);
-    showMonth(); paint();
+    goToMonth(monthAt(e.key === "ArrowRight" ? monthStart(nextMonth(m)) : Math.max(anim.from, monthStart(m) - 1)));
   } else if (e.key === "Escape") { stopPlay(); draw(); }
+  else if (e.key === "n" || e.key === "N") inspectNext(e.shiftKey ? -1 : 1);
   else return;
   e.preventDefault();
 });
@@ -1203,21 +1226,23 @@ function showMonth() {
                  (anim.trail ? "Specks: earlier events since Play started. " : "")) +
     `Numbers: ${monthName(month)} only.` +
     (zonesOn ? ` Rings: ${year}'s hotspot zones; a pulse means deaths there in the past 6 weeks.` : "");
-  drawChart();
+  if (anim.chartDrawn !== month) drawChart();
 }
 
 // The activity chart: deaths per month over the whole played range, current month highlighted
 function drawChart() {
   const c = box(".pb-chart"), w = c.clientWidth, h = c.clientHeight, ratio = devicePixelRatio || 1;
-  if (!w) return;
+  const { months, deaths } = anim.chart;
+  if (!w || !months.length) return;
+  anim.chartDrawn = month;
   if (c.width !== w * ratio) { c.width = w * ratio; c.height = h * ratio; }
   const g = c.getContext("2d");
   g.setTransform(ratio, 0, 0, ratio, 0, 0);
   g.clearRect(0, 0, w, h);
-  const months = [];
-  for (let m = monthAt(anim.from); monthStart(m) < anim.to; m = nextMonth(m)) months.push(m);
-  const deaths = Object.fromEntries(months.map(m => [m, 0]));
-  for (const e of anim.chartEvents) if (monthOf(e) in deaths) deaths[monthOf(e)] += e.deaths_best;
+  // The same chart in words, for screen readers
+  const peak = months.reduce((a, b) => deaths[b] > deaths[a] ? b : a);
+  c.setAttribute("aria-label", `Deaths per month, ${monthName(months[0])} to ${monthName(months.at(-1))}. ` +
+    `Highest: ${monthName(peak)}, ${fmt(deaths[peak])} deaths. ${monthName(month)}: ${fmt(deaths[month] ?? 0)} deaths.`);
   const max = Math.max(1, ...Object.values(deaths)), bw = w / months.length, base = h - 10;
   const color = css("--series-1"), muted = css("--text-muted");
   g.font = "9px system-ui, sans-serif"; g.textBaseline = "bottom";
@@ -1277,6 +1302,7 @@ function startPlay() {
   if (lessMotion.matches) anim.cursor = monthStart(nextMonth(monthAt(anim.cursor))) - 0.01;
   month = monthAt(anim.cursor); year = month.slice(0, 4);
   anim.playing = true;
+  anim.inspectAt = -1;
   map.closeTooltip(hoverTip);
   setPlayLabels();
   draw();
@@ -1301,6 +1327,24 @@ function inspect(ev) {
   else map.closeTooltip(hoverTip);
 }
 map.on("mousemove click", inspect);
+
+// Keyboard version of hovering: N (Shift+N back) pauses and steps through the events on screen,
+// opening each one's details and reading them out
+function inspectNext(step) {
+  if (anim.heat) return;
+  if (anim.playing) pausePlay();
+  const visible = [];
+  for (let i = firstAfter(lessMotion.matches ? monthStart(month) - 0.5 : anim.cursor - FADE_DAYS);
+       i < anim.events.length && anim.days[i] <= anim.cursor; i++) visible.push(anim.events[i]);
+  const sr = box(".pb-sr");
+  if (!visible.length) { sr.textContent = "No events on the map right now."; return; }
+  anim.inspectAt = ((anim.inspectAt + step) % visible.length + visible.length) % visible.length;
+  const e = visible[visible.length - 1 - anim.inspectAt];   // newest first
+  map.openTooltip(hoverTip.setLatLng([e.latitude, e.longitude]).setContent(tooltip(e)));
+  const text = document.createElement("div");
+  text.innerHTML = tooltip(e).replace(/<br>/g, ". ");
+  sr.textContent = `Event ${anim.inspectAt + 1} of ${visible.length}: ${text.textContent}`;
+}
 function togglePlay() { anim.playing ? pausePlay() : startPlay(); }
 // Leave the animation; the map goes back to the normal view of the month it was on
 function stopPlay() {
