@@ -85,6 +85,11 @@
   }
   .years .yl { font-size: 10px; color: var(--text-muted); text-align: center; margin-top: 3px;
                font-variant-numeric: tabular-nums; }
+  .country-row { display: flex; gap: 8px; }
+  .country-row select { flex: 1; min-width: 0; font: inherit; font-size: 13px; padding: 3px 6px;
+    border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
+  .country-row button { font: inherit; font-size: 13px; padding: 3px 10px; cursor: pointer;
+    border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
   .year-row { display: flex; align-items: center; gap: 8px; }
   .year-row button { font: inherit; font-size: 13px; padding: 3px 10px; cursor: pointer;
     border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
@@ -96,15 +101,38 @@
   #about ul { padding-left: 18px; margin: 6px 0; }
   #about h3 { font-size: 13px; margin: 12px 0 2px; }
   .leaflet-tooltip { font: 13px/1.4 system-ui, sans-serif; }
+  #drawer { display: none; }
+  /* Phones: the map fills the screen and the panel is a drawer at the bottom.
+     Closed, it shows the title and the three numbers; "Filters" opens the rest. */
   @media (max-width: 720px) {
-    body { flex-direction: column; }
-    #panel { width: 100%; border-right: 0; border-bottom: 1px solid var(--border); max-height: 45vh; }
-    #map { min-height: 55vh; }
+    :root { --peek: 232px; }
+    #map { position: fixed; inset: 0; }
+    #panel {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000; width: auto;
+      max-height: var(--peek); overflow: hidden; padding: 0 16px 16px;
+      background: var(--surface-1); border: 0; border-top: 1px solid var(--border);
+      border-radius: 14px 14px 0 0; box-shadow: 0 -4px 16px rgb(0 0 0 / .15);
+      transition: max-height .25s ease;
+    }
+    #panel.open { max-height: 85vh; overflow-y: auto; }
+    #drawer {
+      display: block; position: sticky; top: 0; z-index: 1; width: calc(100% + 32px); margin: 0 -16px 8px;
+      padding: 10px 16px; border: 0; background: var(--surface-1); color: var(--text-secondary);
+      font: inherit; font-size: 13px; cursor: pointer;
+    }
+    #drawer::before {   /* the little grab handle */
+      content: ""; display: block; width: 36px; height: 4px; border-radius: 2px;
+      background: var(--border); margin: 0 auto 6px;
+    }
+    .stats { margin-bottom: 0; }
+    /* keep Leaflet's credit line and buttons above the closed drawer */
+    .leaflet-bottom { bottom: var(--peek); }
   }
 </style>
 </head>
 <body>
 <aside id="panel">
+  <button id="drawer" type="button" aria-expanded="false" aria-controls="panel">Show filters and years &#9650;</button>
   <h1>Taswira: Africa 2020-2025</h1>
   <p class="sub">Organised violence, UCDP GED 26.1<span id="prelim-sub"></span></p>
 
@@ -112,6 +140,14 @@
     <div class="stat"><b id="s-events"></b><span>events</span></div>
     <div class="stat"><b id="s-deaths"></b><span>deaths (best est.)</span></div>
     <div class="stat"><b id="s-ready"></b><span>on the map</span></div>
+  </div>
+
+  <div id="country-box">
+    <h2>Country</h2>
+    <div class="country-row">
+      <select id="country" aria-label="Show one country"><option value="">All of Africa</option></select>
+      <button id="zoom-nigeria" type="button">Nigeria</button>
+    </div>
   </div>
 
   <h2>Year</h2>
@@ -221,6 +257,8 @@ const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&
 const yearOf = e => e.date_start.slice(0, 4);
 const YEARS = [...new Set(EVENTS.concat(UNMAPPED).map(yearOf))].sort();
 let year = null;   // null = all years
+let country = null;   // null = every country in the area
+const inCountry = e => country === null || e.country === country;
 
 // Preliminary = GED Candidate data, which UCDP may still revise. Always marked as such.
 const PRELIM = EVENTS.concat(UNMAPPED).filter(e => e.preliminary);
@@ -246,9 +284,10 @@ function updatePanel(mapped, unmapped) {
     all.length ? Math.round(100 * mapped.length / all.length) + "%" : "–";
   // Events per type on the map for the selected year(s), whether or not the type is ticked
   document.querySelectorAll("#types .count").forEach(c => {
-    c.textContent = EVENTS.filter(e => e.violence_label === c.dataset.type &&
+    c.textContent = EVENTS.filter(e => e.violence_label === c.dataset.type && inCountry(e) &&
                                        (year === null || yearOf(e) === year)).length;
   });
+  updateYears();
   document.getElementById("year-label").textContent = year ?? `${YEARS[0]}–${YEARS.at(-1)}`;
   document.querySelectorAll("#years button").forEach(b => b.classList.toggle("on", year === null || b.dataset.year === year));
   document.getElementById("unmapped-note").textContent =
@@ -270,7 +309,26 @@ function updatePanel(mapped, unmapped) {
 // --- Map ------------------------------------------------------------------
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
 // preferCanvas draws dots on one canvas instead of one SVG element each: much faster with many events
-const map = L.map("map", { zoomSnap: 0.5, preferCanvas: true }).fitBounds([[-35.0, -26.0], [38.0, 60.0]]);
+const map = L.map("map", { zoomSnap: 0.5, preferCanvas: true });
+
+// --- Phone drawer ---------------------------------------------------------
+const phone = matchMedia("(max-width: 720px)");
+const panel = document.getElementById("panel");
+const drawer = document.getElementById("drawer");
+function setDrawer(open) {
+  panel.classList.toggle("open", open);
+  drawer.setAttribute("aria-expanded", open);
+  drawer.innerHTML = open ? "Hide filters &#9660;" : "Show filters and years &#9650;";
+  if (!open) panel.scrollTop = 0;
+}
+drawer.addEventListener("click", () => setDrawer(!panel.classList.contains("open")));
+
+// Fit the map to some bounds, leaving room for the closed drawer on phones
+function fitTo(bounds, pad = 0) {
+  const peek = phone.matches ? parseInt(css("--peek")) : 0;
+  map.fitBounds(bounds, { paddingTopLeft: [pad, pad], paddingBottomRight: [pad, pad + peek], maxZoom: 9 });
+}
+fitTo([[-35.0, -26.0], [38.0, 60.0]]);
 // Esri's grey canvas tiles need no API key and work when the page is opened from a file
 const basemap = dark ? "World_Dark_Gray_Base" : "World_Light_Gray_Base";
 L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${basemap}/MapServer/tile/{z}/{y}/{x}`, {
@@ -293,7 +351,7 @@ function tooltip(e) {
 
 function draw() {
   const keep = e => active.has(e.violence_label) && (year === null || yearOf(e) === year) &&
-                    (showPrelim || !e.preliminary);
+                    inCountry(e) && (showPrelim || !e.preliminary);
   const shown = EVENTS.filter(keep);
   updatePanel(shown, UNMAPPED.filter(keep));
 
@@ -301,7 +359,8 @@ function draw() {
   heatLayer = L.heatLayer(shown.map(e => [e.latitude, e.longitude, e.deaths_best]), {
     // Heat adds up, so ten years of events need a ten times higher ceiling than one year.
     // Otherwise "All years" saturates and the whole country looks the same.
-    radius: 22, blur: 18, max: 60 * (year === null ? YEARS.length : 1), minOpacity: 0.35,
+    // Zoomed in on one country, events spread over more pixels, so a lower ceiling.
+    radius: 22, blur: 18, max: (country === null ? 60 : 15) * (year === null ? YEARS.length : 1), minOpacity: 0.35,
     // one hue, light to dark; on a dark map the ramp runs the other way so "more" stays brighter
     gradient: dark
       ? { 0.2: "#256abf", 0.4: "#3987e5", 0.6: "#6da7ec", 0.8: "#9ec5f4", 1.0: "#cde2fb" }
@@ -341,15 +400,46 @@ document.querySelectorAll("#types input").forEach(box => box.addEventListener("c
 document.querySelectorAll('input[name="layer"]').forEach(r => r.addEventListener("change", draw));
 document.getElementById("show-prelim").addEventListener("change", e => { showPrelim = e.target.checked; draw(); });
 
+// --- Country: filter to one country and zoom to it ------------------------
+// Countries in the dropdown, most events first
+const COUNTRIES = Object.entries(EVENTS.concat(UNMAPPED).reduce((n, e) => {
+  n[e.country] = (n[e.country] ?? 0) + 1; return n;
+}, {})).sort((a, b) => b[1] - a[1]).map(([name]) => name);
+const countrySelect = document.getElementById("country");
+countrySelect.innerHTML += COUNTRIES.map(c => `<option>${esc(c)}</option>`).join("");
+document.getElementById("zoom-nigeria").hidden = !COUNTRIES.includes("Nigeria");
+document.getElementById("country-box").hidden = COUNTRIES.length < 2;   // e.g. AREA = "nigeria"
+
+function selectCountry(c) {
+  country = c || null;
+  countrySelect.value = country ?? "";
+  // Zoom to where this country's events are; back to the whole area for "All"
+  const spots = EVENTS.filter(inCountry).map(e => [e.latitude, e.longitude]);
+  setDrawer(false);   // on a phone, close the drawer so the zoom is visible
+  if (country && spots.length) fitTo(spots, 20);
+  else fitTo([[-35.0, -26.0], [38.0, 60.0]]);
+  draw();
+}
+countrySelect.addEventListener("change", () => selectCountry(countrySelect.value));
+document.getElementById("zoom-nigeria").addEventListener("click", () => selectCountry("Nigeria"));
+
 // --- Year chart: one bar per year, height = deaths that year ---------------
-const deathsByYear = Object.fromEntries(YEARS.map(y =>
-  [y, sum(EVENTS.concat(UNMAPPED).filter(e => yearOf(e) === y), "deaths_best")]));
-const maxDeaths = Math.max(...Object.values(deathsByYear));
+// The bars follow the country; everything else on the panel follows the filters too.
 document.getElementById("years").innerHTML = YEARS.map(y =>
-  `<button type="button" data-year="${y}" title="${y}: ${fmt(deathsByYear[y])} deaths` +
-  `${PRELIM_YEARS.has(y) ? " (includes preliminary data)" : ""}">` +
-  `<span class="bar${PRELIM_YEARS.has(y) ? " prelim" : ""}" style="height:${Math.round(100 * deathsByYear[y] / maxDeaths)}%"></span>` +
+  `<button type="button" data-year="${y}">` +
+  `<span class="bar${PRELIM_YEARS.has(y) ? " prelim" : ""}"></span>` +
   `<span class="yl">${YEARS.length > 6 ? "’" + y.slice(2) : y}${PRELIM_YEARS.has(y) ? "*" : ""}</span></button>`).join("");
+
+function updateYears() {
+  const all = EVENTS.concat(UNMAPPED).filter(inCountry);
+  const deathsByYear = Object.fromEntries(YEARS.map(y => [y, sum(all.filter(e => yearOf(e) === y), "deaths_best")]));
+  const maxDeaths = Math.max(1, ...Object.values(deathsByYear));
+  document.querySelectorAll("#years button").forEach(b => {
+    const y = b.dataset.year;
+    b.title = `${y}: ${fmt(deathsByYear[y])} deaths${PRELIM_YEARS.has(y) ? " (includes preliminary data)" : ""}`;
+    b.querySelector(".bar").style.height = Math.round(100 * deathsByYear[y] / maxDeaths) + "%";
+  });
+}
 
 let timer = null;
 function stopPlay() {
