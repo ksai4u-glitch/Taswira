@@ -54,7 +54,7 @@ again: only the new version is downloaded.
    python3 clean_events.py
    ```
 6. Run the Stage 5 script to build the interactive map `data/<area>_<years>_map.html`
-   (heatmap, individual events, a per-year chart, a per-month chart, a month-by-month animation (Play, with a draggable timeline, trail mode and a moving heatmap), deaths by state for the picked country, a filter by armed group, hotspot zones worked out from the last 12 months, and a dark "ops" look with a Light button). It opens in your browser automatically:
+   (heatmap, individual events, a per-year chart, a per-month chart, a month-by-month animation (Play, with a draggable timeline, trail mode, a moving heatmap, and blast or gunfire bursts as events appear), deaths by state for the picked country, a filter by armed group, hotspot zones worked out from the last 12 months, and a dark "ops" look with a Light button). It opens in your browser automatically:
 
    ```
    python3 build_map.py
