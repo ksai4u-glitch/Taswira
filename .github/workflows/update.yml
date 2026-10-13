@@ -1,0 +1,73 @@
+# Weekly check for a new monthly UCDP GED Candidate release.
+# If there is one: add it to settings.py, download it, rebuild docs/index.html,
+# commit both to main and ask GitHub Pages to republish the map.
+# Needs a repository secret called UCDP_TOKEN (Settings -> Secrets and variables -> Actions).
+
+name: Update map with new UCDP releases
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"     # every Monday at 06:00 UTC
+  workflow_dispatch:         # plus a "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write            # to commit settings.py and docs/index.html
+  pages: write               # to ask GitHub Pages to rebuild
+
+concurrency:
+  group: ucdp-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      UCDP_TOKEN: ${{ secrets.UCDP_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # The database is not in git (data/ is ignored), so keep it between runs in
+      # the Actions cache. Weekly runs keep the cache from expiring. If it is ever
+      # lost, save_events.py simply downloads everything again (a few hundred requests).
+      - name: Restore saved events
+        uses: actions/cache/restore@v4
+        with:
+          path: data/taswira.db
+          key: taswira-db-${{ github.run_id }}
+          restore-keys: taswira-db-
+
+      - name: Check for a new Candidate release (1 request)
+        id: check
+        run: python update_candidates.py
+
+      - name: Download, clean and rebuild the public page
+        if: steps.check.outputs.new_versions != ''
+        run: |
+          python save_events.py
+          python clean_events.py
+          python publish.py
+
+      - name: Save events for next time
+        if: steps.check.outputs.new_versions != ''
+        uses: actions/cache/save@v4
+        with:
+          path: data/taswira.db
+          key: taswira-db-${{ github.run_id }}
+
+      - name: Commit and republish
+        if: steps.check.outputs.new_versions != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW_VERSIONS: ${{ steps.check.outputs.new_versions }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add settings.py docs/index.html
+          git commit -m "Add GED Candidate $NEW_VERSIONS"
+          git push
+          # Pushes made by this workflow don't start a Pages build on their own
+          gh api -X POST "repos/${{ github.repository }}/pages/builds"

@@ -73,6 +73,20 @@ again: only the new version is downloaded.
    the map appears at `https://ksai4u-glitch.github.io/Taswira/`.
    Re-run `publish.py` and push again whenever you add a new Candidate release.
 
+## Automatic updates
+
+A GitHub Actions workflow (`.github/workflows/update.yml`) runs every Monday. It costs
+1 API request to check whether UCDP has published the next monthly Candidate release
+(`update_candidates.py`). If it has, the workflow adds it to `settings.py`, downloads it,
+rebuilds `docs/index.html`, commits both to `main` and republishes the map.
+
+It needs your token as a repository secret: Settings → Secrets and variables → Actions →
+New repository secret, name `UCDP_TOKEN`. You can also start it any time from the
+Actions tab → "Update map with new UCDP releases" → Run workflow.
+
+The yearly stable release (for example 27.1) still needs a manual change of
+`API_VERSION` and the dates in `settings.py`.
+
 ## Planned build stages
 
 1. **Fetch:** one authenticated request for Nigeria events, inspect the JSON fields
