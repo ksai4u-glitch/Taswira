@@ -106,6 +106,8 @@
   .year-row { display: flex; align-items: center; gap: 8px; }
   .year-row button { font: inherit; font-size: 13px; padding: 3px 10px; cursor: pointer;
     border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
+  #states-rows tr { cursor: pointer; }
+  #states-rows tr:hover td { background: var(--surface-2); }
   #year-label { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
   .credit { margin-top: 20px; font-size: 12px; color: var(--text-muted); }
   .credit a { color: inherit; }
@@ -114,6 +116,23 @@
   #about ul { padding-left: 18px; margin: 6px 0; }
   #about h3 { font-size: 13px; margin: 12px 0 2px; }
   .leaflet-tooltip { font: 13px/1.4 system-ui, sans-serif; }
+  /* Animation: dots are drawn on this canvas above the map while it plays */
+  .anim-canvas { position: absolute; top: 0; left: 0; z-index: 450; pointer-events: none; }
+  .play-box {
+    display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 4px 10px;
+    min-width: 230px; padding: 8px 10px; border-radius: 10px;
+    background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--border); box-shadow: 0 2px 10px rgb(0 0 0 / .15);
+    font: 13px/1.3 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .play-box button { font: inherit; padding: 3px 8px; cursor: pointer; min-width: 34px;
+    border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
+  .play-box .pb-month { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .play-box .pb-prelim { font-size: 11px; color: var(--text-secondary); border: 1px dashed var(--text-secondary);
+    border-radius: 4px; padding: 0 4px; margin-left: 4px; vertical-align: 2px; }
+  .play-box .pb-deaths { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .play-box .pb-progress { grid-column: 1 / -1; height: 3px; background: var(--surface-2); border-radius: 2px; }
+  .play-box .pb-progress span { display: block; height: 100%; width: 0; background: var(--series-1); border-radius: 2px; }
   #drawer { display: none; }
   /* Phones: the map fills the screen and the panel is a drawer at the bottom.
      Closed, it shows the title and the three numbers; "Filters" opens the rest. */
@@ -167,7 +186,7 @@
   <h2>Year</h2>
   <div class="year-row">
     <button id="year-all" type="button">All years</button>
-    <button id="year-play" type="button" aria-label="Play through the years">&#9654; Play</button>
+    <button id="year-play" type="button" aria-label="Play month by month">&#9654; Play</button>
     <span id="year-label"></span>
   </div>
   <div class="years" id="years" role="group" aria-label="Deaths per year; click a bar to show that year"></div>
@@ -183,6 +202,13 @@
 
   <h2>Type of violence</h2>
   <div id="types"></div>
+
+  <h2 id="states-title">Deaths by state or province</h2>
+  <p class="note" id="states-note"></p>
+  <table id="states-table" hidden>
+    <thead><tr><th id="states-col">State / province</th><th class="num">Events</th><th class="num">Deaths</th><th class="num">Share</th></tr></thead>
+    <tbody id="states-rows"></tbody>
+  </table>
 
   <h2>Not on the map</h2>
   <p class="note" id="unmapped-note"></p>
@@ -329,6 +355,7 @@ function updatePanel(mapped, unmapped) {
   updateMonths();
   document.getElementById("year-label").textContent =
     month !== null ? monthName(month) : year ?? `${YEARS[0]}–${YEARS.at(-1)}`;
+  updateStates(all);
   const litYear = month !== null ? month.slice(0, 4) : year;
   document.querySelectorAll("#years button").forEach(b => b.classList.toggle("on", litYear === null || b.dataset.year === litYear));
   document.getElementById("unmapped-note").textContent =
@@ -345,6 +372,40 @@ function updatePanel(mapped, unmapped) {
     .join("") +
     (unmapped.length > LIST_MAX
       ? `<tr><td colspan="4" class="note">…and ${fmt(unmapped.length - LIST_MAX)} smaller events</td></tr>` : "");
+}
+
+// --- Deaths by state: totals per province / state for the picked country ---
+// Counts every event, drawn or not, so the totals match the numbers at the top.
+function updateStates(all) {
+  const table = document.getElementById("states-table");
+  const note = document.getElementById("states-note");
+  table.hidden = country === null;
+  if (country === null) {
+    note.textContent = "Pick a country to see its totals by state or province.";
+    return;
+  }
+  const byState = {};
+  for (const e of all) {
+    const name = e.state || "Not known";   // UCDP only knows the country for a few events
+    byState[name] ??= { events: 0, deaths: 0 };
+    byState[name].events += 1;
+    byState[name].deaths += e.deaths_best;
+  }
+  const total = sum(all, "deaths_best");
+  const rows = Object.entries(byState).sort((a, b) => b[1].deaths - a[1].deaths || b[1].events - a[1].events);
+  const prelim = showPrelim && all.some(e => e.preliminary);
+  note.textContent = `${country}, ${document.getElementById("year-label").textContent}` +
+    (prelim ? ", including preliminary data" : "") + ". Click a row to zoom to it.";
+  // Nigeria's first-level areas are states; other countries call them regions, provinces...
+  const nigeria = country === "Nigeria";
+  document.getElementById("states-title").textContent = `Deaths by ${nigeria ? "state" : "state or province"}`;
+  document.getElementById("states-col").textContent = nigeria ? "State" : "State / province";
+  document.getElementById("states-rows").innerHTML = rows.length
+    ? rows.map(([name, t]) =>
+        `<tr data-state="${esc(name)}"><td>${esc(name)}</td><td class="num">${fmt(t.events)}</td>` +
+        `<td class="num">${fmt(t.deaths)}</td>` +
+        `<td class="num">${total ? Math.round(100 * t.deaths / total) + "%" : "–"}</td></tr>`).join("")
+    : `<tr><td colspan="4" class="note">No events for these filters</td></tr>`;
 }
 
 // --- Map ------------------------------------------------------------------
@@ -391,13 +452,21 @@ function tooltip(e) {
 }
 
 function draw() {
-  const keep = e => active.has(e.violence_label) && inTime(e) &&
-                    inCountry(e) && (showPrelim || !e.preliminary);
+  const filters = e => active.has(e.violence_label) && inCountry(e) && (showPrelim || !e.preliminary);
+  const keep = e => filters(e) && inTime(e);
   const shown = EVENTS.filter(keep);
   updatePanel(shown, UNMAPPED.filter(keep));
   writeLink();
 
   if (heatLayer) map.removeLayer(heatLayer);
+  // While the animation is on it draws its own fading dots instead of the heatmap or events
+  if (anim.on) {
+    map.removeLayer(pointLayer);
+    anim.events = SORTED.filter(filters);
+    anim.days = anim.events.map(e => e.day);
+    paint();
+    return;
+  }
   heatLayer = L.heatLayer(shown.map(e => [e.latitude, e.longitude, e.deaths_best]), {
     // Heat adds up, so ten years of events need a ten times higher ceiling than one year.
     // Otherwise "All years" saturates and the whole country looks the same.
@@ -467,6 +536,15 @@ function selectCountry(c) {
   draw();
 }
 countrySelect.addEventListener("change", () => selectCountry(countrySelect.value));
+// Click a state in the table to zoom to its events on the map
+document.getElementById("states-rows").addEventListener("click", e => {
+  const row = e.target.closest("tr[data-state]");
+  if (!row) return;
+  const spots = EVENTS.filter(ev => inCountry(ev) && ev.state === row.dataset.state).map(ev => [ev.latitude, ev.longitude]);
+  if (!spots.length) return;   // e.g. "Not known", or only events too vague to draw
+  setDrawer(false);
+  fitTo(spots, 40);
+});
 document.getElementById("zoom-nigeria").addEventListener("click", () => selectCountry("Nigeria"));
 
 // --- Year chart: one bar per year, height = deaths that year ---------------
@@ -530,26 +608,180 @@ document.getElementById("months").addEventListener("click", e => {
   draw();
 });
 
-let timer = null;
-function stopPlay() {
-  clearInterval(timer); timer = null;
-  document.getElementById("year-play").innerHTML = "&#9654; Play";
+// --- Animation: play month by month, events appear and fade ----------------
+// While it plays, each event lights up on the day it started and fades out over six
+// weeks, so you can watch violence move around rather than jump a year at a time.
+// The month label, numbers, bars and state table follow along as each month starts.
+const DAY = 86400000;
+const T0 = Date.UTC(+YEARS[0], 0, 1);
+const monthStart = m => (Date.UTC(+m.slice(0, 4), +m.slice(5) - 1, 1) - T0) / DAY;   // in days since T0
+const monthAt = d => new Date(T0 + d * DAY).toISOString().slice(0, 7);
+const nextMonth = m => monthAt(monthStart(m) + 32);
+for (const e of EVENTS) e.day = (Date.parse(e.date_start) - T0) / DAY;
+const SORTED = EVENTS.slice().sort((a, b) => a.day - b.day);
+const FADE_DAYS = 42;
+const DAYS_PER_SECOND = 20;           // at 1x speed: about one month every 1.5 seconds
+const SPEEDS = [0.5, 1, 2, 4];
+// People who ask their device for less motion get one month at a time, no fading
+const lessMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const anim = {
+  on: false, playing: false, speed: 1,
+  cursor: 0, from: 0, to: 0,          // the current moment and the range being played, in days
+  events: [], days: [],               // events for the current filters, oldest first (set by draw)
+  last: 0, wait: 0,
+};
+
+const canvas = document.createElement("canvas");
+canvas.className = "anim-canvas";
+canvas.style.display = "none";
+map.getContainer().appendChild(canvas);
+const ctx = canvas.getContext("2d");
+function sizeCanvas() {
+  const { x, y } = map.getSize(), ratio = devicePixelRatio || 1;
+  canvas.width = x * ratio; canvas.height = y * ratio;
+  canvas.style.width = x + "px"; canvas.style.height = y + "px";
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);   // sharp dots on high-resolution screens
 }
+sizeCanvas();
+map.on("resize", () => { sizeCanvas(); paint(); });
+map.on("move zoomend", paint);
+
+// The box on the map: play/pause, the month, its deaths, speed, close, progress
+const PlayBox = L.Control.extend({
+  onAdd() {
+    const box = L.DomUtil.create("div", "play-box");
+    box.innerHTML =
+      `<button type="button" class="pb-play" aria-label="Pause">&#10074;&#10074;</button>` +
+      `<div><span class="pb-month" aria-live="polite"></span><span class="pb-prelim" hidden>preliminary</span>` +
+      `<br><span class="pb-deaths"></span></div>` +
+      `<button type="button" class="pb-speed" aria-label="Playback speed">1&times;</button>` +
+      `<button type="button" class="pb-close" aria-label="Stop playing">&times;</button>` +
+      `<div class="pb-progress"><span></span></div>`;
+    L.DomEvent.disableClickPropagation(box);
+    box.querySelector(".pb-play").addEventListener("click", togglePlay);
+    box.querySelector(".pb-close").addEventListener("click", () => { stopPlay(); draw(); });
+    box.querySelector(".pb-speed").addEventListener("click", e => {
+      anim.speed = SPEEDS[(SPEEDS.indexOf(anim.speed) + 1) % SPEEDS.length];
+      e.target.textContent = `${anim.speed}×`;
+    });
+    return box;
+  },
+});
+const playBox = new PlayBox({ position: "topright" });
+const box = q => playBox.getContainer().querySelector(q);
+
+// Index of the first event that started after day d (binary search: events are sorted by day)
+function firstAfter(d) {
+  let lo = 0, hi = anim.days.length;
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (anim.days[mid] <= d) lo = mid + 1; else hi = mid; }
+  return lo;
+}
+
+function paint() {
+  if (!anim.on) return;
+  const { x, y } = map.getSize();
+  ctx.clearRect(0, 0, x, y);
+  const now = anim.cursor;
+  const ring = css("--surface-1"), dash = css("--text-primary");
+  const colors = Object.fromEntries(TYPES.map(t => [t.key, css(t.color)]));
+  for (let i = firstAfter(lessMotion.matches ? monthStart(month) - 0.5 : now - FADE_DAYS);
+       i < anim.events.length && anim.days[i] <= now; i++) {
+    const e = anim.events[i];
+    const age = now - e.day;
+    const fade = lessMotion.matches ? 1 : 1 - age / FADE_DAYS;
+    const flash = lessMotion.matches ? 1 : 1 + 0.8 * Math.max(0, 1 - age / 4);   // bigger for its first few days
+    const p = map.latLngToContainerPoint([e.latitude, e.longitude]);
+    const r = Math.max(4, Math.min(18, 3 * Math.sqrt(e.deaths_best))) * flash;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
+    ctx.fillStyle = colors[e.violence_label];
+    ctx.globalAlpha = 0.85 * Math.max(0, fade);
+    ctx.fill();
+    // same rings as the events layer: surface ring, dashed for preliminary events
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = e.preliminary ? dash : ring;
+    ctx.setLineDash(e.preliminary ? [2, 3] : []);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  ctx.setLineDash([]);
+}
+
+// Move to the cursor's month: the panel, bars and link update when a new month starts
+function showMonth() {
+  const m = monthAt(anim.cursor);
+  if (m !== month) { month = m; year = m.slice(0, 4); draw(); }
+  box(".pb-month").textContent = monthName(month);
+  box(".pb-prelim").hidden = !(showPrelim && PRELIM_MONTHS.has(month));
+  box(".pb-deaths").textContent = `${document.getElementById("s-deaths").textContent} deaths`;
+  box(".pb-progress span").style.width = `${100 * (anim.cursor - anim.from) / (anim.to - anim.from)}%`;
+}
+
+function tick(time) {
+  if (!anim.playing) return;
+  const seconds = Math.min(time - anim.last, 100) / 1000;   // a background tab doesn't jump ahead
+  anim.last = time;
+  if (lessMotion.matches) {
+    anim.wait += seconds * anim.speed;
+    if (anim.wait >= 1.5) { anim.wait = 0; anim.cursor = monthStart(nextMonth(nextMonth(month))) - 0.01; }
+  } else {
+    anim.cursor += seconds * anim.speed * DAYS_PER_SECOND;
+  }
+  if (anim.cursor >= anim.to) { anim.cursor = anim.to - 0.01; pausePlay(); }
+  showMonth();
+  paint();
+  if (anim.playing) requestAnimationFrame(tick);
+}
+
+// What Play covers: from a picked month to the newest data, a picked year, or everything
+function playRange() {
+  const end = monthStart(nextMonth(LAST_MONTH));
+  if (month !== null) return [monthStart(month), end];
+  if (year !== null) return [monthStart(`${year}-01`), Math.min(end, monthStart(`${+year + 1}-01`))];
+  return [monthStart(`${YEARS[0]}-01`), end];
+}
+
+function startPlay() {
+  if (!anim.on) {
+    [anim.from, anim.to] = playRange();
+    anim.cursor = anim.from;
+    anim.on = true;
+    canvas.style.display = "";
+    playBox.addTo(map);
+    setDrawer(false);   // on a phone, close the drawer so the map is visible
+  }
+  if (anim.cursor >= anim.to - 0.02) anim.cursor = anim.from;   // at the end: play again from the start
+  if (lessMotion.matches) anim.cursor = monthStart(nextMonth(monthAt(anim.cursor))) - 0.01;
+  month = monthAt(anim.cursor); year = month.slice(0, 4);
+  anim.playing = true;
+  setPlayLabels();
+  draw();
+  showMonth();
+  anim.last = performance.now();
+  requestAnimationFrame(tick);
+}
+function pausePlay() { anim.playing = false; setPlayLabels(); }
+function togglePlay() { anim.playing ? pausePlay() : startPlay(); }
+// Leave the animation; the map goes back to the normal view of the month it was on
+function stopPlay() {
+  if (!anim.on) return;
+  anim.playing = anim.on = false;
+  canvas.style.display = "none";
+  playBox.remove();
+  setPlayLabels();
+}
+function setPlayLabels() {
+  document.getElementById("year-play").innerHTML = anim.playing ? "&#10074;&#10074; Pause" : "&#9654; Play";
+  if (!anim.on) return;
+  box(".pb-play").innerHTML = anim.playing ? "&#10074;&#10074;" : "&#9654;";
+  box(".pb-play").setAttribute("aria-label", anim.playing ? "Pause" : "Play");
+}
+
 function selectYear(y) { year = y; month = null; draw(); }
 document.querySelectorAll("#years button").forEach(b =>
   b.addEventListener("click", () => { stopPlay(); selectYear(b.dataset.year); }));
 document.getElementById("year-all").addEventListener("click", () => { stopPlay(); selectYear(null); });
-document.getElementById("year-play").addEventListener("click", () => {
-  if (timer) return stopPlay();
-  document.getElementById("year-play").innerHTML = "&#10074;&#10074; Pause";
-  let i = year === null ? 0 : (YEARS.indexOf(year) + 1) % YEARS.length;
-  selectYear(YEARS[i]);
-  timer = setInterval(() => {
-    i += 1;
-    if (i >= YEARS.length) { stopPlay(); return; }
-    selectYear(YEARS[i]);
-  }, 1200);
-});
+document.getElementById("year-play").addEventListener("click", togglePlay);
 
 // --- Shareable links --------------------------------------------------------
 // The address keeps the current view after the #, e.g. ...#country=Nigeria&year=2024&month=2024-03&layer=points,
@@ -567,6 +799,7 @@ function writeLink() {
 }
 
 function readLink() {
+  stopPlay();
   const link = new URLSearchParams(location.hash.slice(1));
   const y = link.get("year");
   year = YEARS.includes(y) ? y : null;
