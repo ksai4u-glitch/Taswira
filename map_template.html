@@ -174,7 +174,8 @@
   }
   .play-box button { font: inherit; padding: 3px 8px; cursor: pointer; min-width: 34px;
     border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text-primary); }
-  .play-box .pb-month { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .play-box .pb-month { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .play-box .pb-deaths { white-space: nowrap; }
   .play-box .pb-prelim { font-size: 11px; color: var(--text-secondary); border: 1px dashed var(--text-secondary);
     border-radius: 4px; padding: 0 4px; margin-left: 4px; vertical-align: 2px; }
   .play-box .pb-deaths { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
@@ -183,7 +184,18 @@
   /* the timeline: drag it to any month */
   .play-box .pb-time { grid-column: 1 / -1; width: 100%; margin: 4px 0 0; accent-color: var(--series-1); cursor: pointer; }
   .play-box .pb-keys { grid-column: 1 / -1; font-size: 11px; color: var(--text-muted); }
-  @media (max-width: 720px) { .play-box .pb-keys { display: none; } }
+  /* what each mark on the map means, for the view that's playing */
+  .play-box .pb-legend { grid-column: 1 / -1; max-width: 300px; font-size: 11px; line-height: 1.35; color: var(--text-secondary); }
+  /* deaths per month across the played range, just above the timeline; click to jump */
+  .play-box .pb-chart { grid-column: 1 / -1; display: block; width: 100%; height: 34px; margin-top: 4px; cursor: pointer; }
+  .play-box .pb-chart + .pb-time { margin-top: 0; }
+  @media (max-width: 720px) {
+    .play-box .pb-keys { display: none; }
+    .play-box button { min-height: 36px; min-width: 40px; }   /* easier to hit with a finger */
+    /* leave room for the zoom buttons on the left */
+    .play-box { min-width: 0; width: calc(100vw - 72px); gap: 4px 8px; padding: 6px 8px; }
+    .play-box .pb-month { font-size: 16px; }
+  }
   #drawer { display: none; }
   /* Phones: the map fills the screen and the panel is a drawer at the bottom.
      Closed, it shows the title and the three numbers; "Filters" opens the rest. */
@@ -732,6 +744,9 @@ function draw() {
     anim.events = SORTED.filter(filters);
     anim.days = anim.events.map(e => e.day);
     drawZones(EVENTS.filter(filters));   // the played year's zones stay on; paint() makes active ones pulse
+    // Which zones each event falls in, worked out once per month instead of every frame
+    anim.zoneOf = anim.events.map(e => zones.flatMap((z, k) => km(z.lat, z.lon, e.latitude, e.longitude) <= z.radius ? [k] : []));
+    anim.chartEvents = EVENTS.concat(UNMAPPED).filter(filters);
     if (anim.heat) map.removeLayer(anim.heat);
     anim.heat = document.querySelector('input[name="layer"]:checked').value === "heat"
       ? L.heatLayer([], { ...heatLook(), max: (country === null ? __HEAT_MAX__ : __COUNTRY_HEAT_MAX__) * 0.4 }).addTo(map)
@@ -789,7 +804,8 @@ function drawZones(events) {
   for (const z of zones) {
     L.circle([z.lat, z.lon], {
       radius: z.radius * 1000, color: css(z.level.color), weight: 2, dashArray: "6 6",
-      fillColor: css(z.level.color), fillOpacity: 0.06, interactive: true,
+      fillColor: css(z.level.color), fillOpacity: 0.06,
+      interactive: !anim.on,   // while animating, hovering shows events, not zones
     }).bindTooltip(`<b>${esc(z.name)}</b>${country === null ? ", " + esc(z.country) : ""}<br>` +
       `${z.level.name}: ${fmt(z.deaths)} deaths in ${esc(label)}<br>` +
       `Trend: ${trendText(z)} (${fmt(z.previous)} the 12 months before)` +
@@ -965,6 +981,7 @@ const anim = {
   events: [], days: [],               // events for the current filters, oldest first (set by draw)
   last: 0, wait: 0,
   trail: false,
+  zoneOf: [], chartEvents: [],
   heat: null,                         // the moving heatmap, when Heatmap is picked
 };
 
@@ -995,12 +1012,24 @@ const PlayBox = L.Control.extend({
       `<button type="button" class="pb-trail" aria-pressed="${anim.trail}" title="Leave a faint mark where events have been">Trail</button>` +
       `<button type="button" class="pb-speed" aria-label="Playback speed">${anim.speed}&times;</button>` +
       `<button type="button" class="pb-close" aria-label="Stop playing">&times;</button></div>` +
+      `<canvas class="pb-chart" aria-hidden="true" title="Deaths per month; click to jump there"></canvas>` +
       `<input type="range" class="pb-time" min="0" max="1" step="1" aria-label="Timeline: drag to any month">` +
+      `<div class="pb-legend"></div>` +
       `<div class="pb-keys">Space: play or pause · &larr; &rarr;: a month back or on · Esc: close</div>`;
     L.DomEvent.disableClickPropagation(box);
     L.DomEvent.disableScrollPropagation(box);
     const time = box.querySelector(".pb-time");
     time.addEventListener("input", () => { anim.cursor = +time.value; showMonth(); paint(); });
+    // Pause while dragging, so the month stays where you put it; carry on after letting go
+    let resume = false;
+    time.addEventListener("pointerdown", () => { resume = anim.playing; if (resume) pausePlay(); });
+    time.addEventListener("change", () => { if (resume) { resume = false; startPlay(); } });
+    box.querySelector(".pb-chart").addEventListener("click", e => {
+      const r = e.target.getBoundingClientRect();
+      anim.cursor = anim.from + (anim.to - anim.from) * (e.clientX - r.left) / r.width;
+      anim.cursor = Math.min(anim.to - 0.01, monthStart(nextMonth(monthAt(anim.cursor))) - 0.01);   // end of that month
+      showMonth(); paint();
+    });
     box.querySelector(".pb-trail").addEventListener("click", e => {
       anim.trail = !anim.trail;
       e.target.setAttribute("aria-pressed", anim.trail);
@@ -1112,16 +1141,16 @@ function paint(force) {
     const flash = lessMotion.matches ? 1 : 1 + 0.8 * Math.max(0, 1 - age / 4);   // bigger for its first few days
     const p = map.latLngToContainerPoint([e.latitude, e.longitude]);
     const r = Math.max(4, Math.min(18, 3 * Math.sqrt(e.deaths_best))) * flash;
-    zones.forEach((z, k) => { if (km(z.lat, z.lon, e.latitude, e.longitude) <= z.radius) zoneHeat[k] += fade * e.deaths_best; });
+    for (const k of anim.zoneOf[i]) zoneHeat[k] += fade * e.deaths_best;
     if (anim.heat) continue;   // the heatmap shows these; only the zone pulses are drawn here
     if (dark) {
-      ctx.globalAlpha = 0.6 * fade;
-      ctx.drawImage(glowSprite(colors[e.violence_label]), p.x - 2.2 * r, p.y - 2.2 * r, 4.4 * r, 4.4 * r);
+      ctx.globalAlpha = 0.35 * fade;    // soft halo, so busy areas don't wash out
+      ctx.drawImage(glowSprite(colors[e.violence_label]), p.x - 1.8 * r, p.y - 1.8 * r, 3.6 * r, 3.6 * r);
     }
     ctx.beginPath();
     ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
     ctx.fillStyle = colors[e.violence_label];
-    ctx.globalAlpha = (dark ? 0.7 : 0.85) * fade;
+    ctx.globalAlpha = (dark ? 0.9 : 0.85) * fade;   // crisp centres
     ctx.fill();
     // rings as on the events layer: dashed for preliminary events; the light map also
     // has a surface ring (on the dark map the glow already separates the dots)
@@ -1166,6 +1195,47 @@ function showMonth() {
   box(".pb-trail").hidden = !!anim.heat;   // the trail is for the dots view
   const time = box(".pb-time");
   if (document.activeElement !== time || anim.playing) time.value = anim.cursor;
+  time.setAttribute("aria-valuetext", monthName(month));   // screen readers hear "Mar 2024", not a day number
+  const zonesOn = document.getElementById("show-zones").checked && zones.length;
+  box(".pb-legend").textContent =
+    (anim.heat ? "Heat: the past 3 months, older events weigh less. "
+               : "Dots: events of the past 6 weeks, fading with age. " +
+                 (anim.trail ? "Specks: earlier events since Play started. " : "")) +
+    `Numbers: ${monthName(month)} only.` +
+    (zonesOn ? ` Rings: ${year}'s hotspot zones; a pulse means deaths there in the past 6 weeks.` : "");
+  drawChart();
+}
+
+// The activity chart: deaths per month over the whole played range, current month highlighted
+function drawChart() {
+  const c = box(".pb-chart"), w = c.clientWidth, h = c.clientHeight, ratio = devicePixelRatio || 1;
+  if (!w) return;
+  if (c.width !== w * ratio) { c.width = w * ratio; c.height = h * ratio; }
+  const g = c.getContext("2d");
+  g.setTransform(ratio, 0, 0, ratio, 0, 0);
+  g.clearRect(0, 0, w, h);
+  const months = [];
+  for (let m = monthAt(anim.from); monthStart(m) < anim.to; m = nextMonth(m)) months.push(m);
+  const deaths = Object.fromEntries(months.map(m => [m, 0]));
+  for (const e of anim.chartEvents) if (monthOf(e) in deaths) deaths[monthOf(e)] += e.deaths_best;
+  const max = Math.max(1, ...Object.values(deaths)), bw = w / months.length, base = h - 10;
+  const color = css("--series-1"), muted = css("--text-muted");
+  g.font = "9px system-ui, sans-serif"; g.textBaseline = "bottom";
+  months.forEach((m, i) => {
+    const bh = Math.max(1, (base - 2) * deaths[m] / max), x = i * bw;
+    g.globalAlpha = m === month ? 1 : 0.4;
+    g.fillStyle = color;
+    if (PRELIM_MONTHS.has(m)) {   // preliminary months: outline only, as hatching is too fine at this size
+      g.strokeStyle = color; g.lineWidth = 1;
+      g.strokeRect(x + 0.5, base - bh + 0.5, Math.max(1, bw - 1.5), bh - 1);
+    } else g.fillRect(x, base - bh, Math.max(1, bw - 1), bh);
+    // a year label under each January (or the first month), if there's room
+    if ((m.endsWith("-01") || i === 0) && bw * 12 > 24) {
+      g.globalAlpha = 1; g.fillStyle = muted;
+      g.fillText(months.length > 24 ? "’" + m.slice(2, 4) : m.slice(0, 4), x, h);
+    }
+  });
+  g.globalAlpha = 1;
 }
 
 function tick(time) {
@@ -1207,6 +1277,7 @@ function startPlay() {
   if (lessMotion.matches) anim.cursor = monthStart(nextMonth(monthAt(anim.cursor))) - 0.01;
   month = monthAt(anim.cursor); year = month.slice(0, 4);
   anim.playing = true;
+  map.closeTooltip(hoverTip);
   setPlayLabels();
   draw();
   showMonth();
@@ -1214,6 +1285,22 @@ function startPlay() {
   requestAnimationFrame(tick);
 }
 function pausePlay() { anim.playing = false; setPlayLabels(); }
+
+// While paused, hover (or tap) a dot to see its event, as on the normal events view
+const hoverTip = L.tooltip({ direction: "top", offset: [0, -6] });
+function inspect(ev) {
+  if (!anim.on || anim.playing || anim.heat) return map.closeTooltip(hoverTip);
+  let best = null, bestDist = Infinity;
+  for (let i = firstAfter(lessMotion.matches ? monthStart(month) - 0.5 : anim.cursor - FADE_DAYS);
+       i < anim.events.length && anim.days[i] <= anim.cursor; i++) {
+    const e = anim.events[i], p = map.latLngToContainerPoint([e.latitude, e.longitude]);
+    const d = p.distanceTo(ev.containerPoint), r = Math.max(4, Math.min(18, 3 * Math.sqrt(e.deaths_best)));
+    if (d <= r + 4 && d < bestDist) { best = e; bestDist = d; }
+  }
+  if (best) map.openTooltip(hoverTip.setLatLng([best.latitude, best.longitude]).setContent(tooltip(best)));
+  else map.closeTooltip(hoverTip);
+}
+map.on("mousemove click", inspect);
 function togglePlay() { anim.playing ? pausePlay() : startPlay(); }
 // Leave the animation; the map goes back to the normal view of the month it was on
 function stopPlay() {
@@ -1221,6 +1308,7 @@ function stopPlay() {
   anim.playing = anim.on = false;
   canvas.style.display = "none";
   playBox.remove();
+  map.closeTooltip(hoverTip);
   if (anim.heat) { map.removeLayer(anim.heat); anim.heat = null; }
   setPlayLabels();
 }
