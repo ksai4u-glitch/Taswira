@@ -345,10 +345,12 @@ document.getElementById("show-prelim").addEventListener("change", e => { showPre
 const deathsByYear = Object.fromEntries(YEARS.map(y =>
   [y, sum(EVENTS.concat(UNMAPPED).filter(e => yearOf(e) === y), "deaths_best")]));
 const maxDeaths = Math.max(...Object.values(deathsByYear));
+// Bar height in pixels, not %: a % height inside a <button> is not drawn by every browser
+const BAR_MAX = 52;
 document.getElementById("years").innerHTML = YEARS.map(y =>
   `<button type="button" data-year="${y}" title="${y}: ${fmt(deathsByYear[y])} deaths` +
   `${PRELIM_YEARS.has(y) ? " (includes preliminary data)" : ""}">` +
-  `<span class="bar${PRELIM_YEARS.has(y) ? " prelim" : ""}" style="height:${Math.round(100 * deathsByYear[y] / maxDeaths)}%"></span>` +
+  `<span class="bar${PRELIM_YEARS.has(y) ? " prelim" : ""}" style="height:${Math.round(BAR_MAX * deathsByYear[y] / maxDeaths)}px"></span>` +
   `<span class="yl">${YEARS.length > 6 ? "’" + y.slice(2) : y}${PRELIM_YEARS.has(y) ? "*" : ""}</span></button>`).join("");
 
 let timer = null;
