@@ -13,6 +13,7 @@ import os
 import sqlite3
 import sys
 import webbrowser
+from datetime import date
 from pathlib import Path
 
 from settings import API_VERSION, AREA_NAME, BOUNDS, CANDIDATE_VERSIONS, FILE_STEM, HEAT_MAX, PERIOD
@@ -47,7 +48,24 @@ def to_js(data):
     return json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
 
 
-def main():
+def fill_template(mapped, unmapped):
+    """Fill map_template.html with the events and settings; return the finished page as text."""
+    with open(TEMPLATE_PATH, encoding="utf-8") as f:
+        page = f.read()
+    page = (page.replace("__EVENTS_JSON__", to_js(mapped))
+                .replace("__UNMAPPED_JSON__", to_js(unmapped))
+                .replace("__VERSION__", API_VERSION)
+                .replace("__CANDIDATES__", ", ".join(CANDIDATE_VERSIONS))
+                .replace("__PERIOD__", PERIOD)
+                .replace("__AREA__", AREA_NAME)
+                .replace("__BOUNDS__", json.dumps(BOUNDS))
+                .replace("__HEAT_MAX__", str(HEAT_MAX))
+                .replace("__BUILT__", date.today().isoformat()))
+    return page
+
+
+def load_all():
+    """Return (map-ready events, events too vague to plot) from the clean table."""
     if not os.path.exists(DB_PATH):
         sys.exit("No database yet. Run save_events.py and clean_events.py first.")
 
@@ -62,17 +80,12 @@ def main():
 
     if not mapped:
         sys.exit("No map-ready events. Run clean_events.py first.")
+    return mapped, unmapped
 
-    with open(TEMPLATE_PATH, encoding="utf-8") as f:
-        page = f.read()
-    page = (page.replace("__EVENTS_JSON__", to_js(mapped))
-                .replace("__UNMAPPED_JSON__", to_js(unmapped))
-                .replace("__VERSION__", API_VERSION)
-                .replace("__CANDIDATES__", ", ".join(CANDIDATE_VERSIONS))
-                .replace("__PERIOD__", PERIOD)
-                .replace("__AREA__", AREA_NAME)
-                .replace("__BOUNDS__", json.dumps(BOUNDS))
-                .replace("__HEAT_MAX__", str(HEAT_MAX)))
+
+def main():
+    mapped, unmapped = load_all()
+    page = fill_template(mapped, unmapped)
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(page)

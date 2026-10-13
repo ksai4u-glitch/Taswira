@@ -8,6 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Taswira: __AREA__ __PERIOD__</title>
+<meta name="description" content="Map of organised violence in __AREA__, __PERIOD__, from the UCDP Georeferenced Event Dataset (GED __VERSION__).">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
@@ -90,6 +91,10 @@
   #year-label { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
   .credit { margin-top: 20px; font-size: 12px; color: var(--text-muted); }
   .credit a { color: inherit; }
+  #about { margin-top: 18px; }
+  #about p, #about li { font-size: 13px; color: var(--text-secondary); }
+  #about ul { padding-left: 18px; margin: 6px 0; }
+  #about h3 { font-size: 13px; margin: 12px 0 2px; }
   .leaflet-tooltip { font: 13px/1.4 system-ui, sans-serif; }
   @media (max-width: 720px) {
     body { flex-direction: column; }
@@ -136,11 +141,53 @@
     </table>
   </details>
 
+  <details id="about">
+    <summary>About this map, methods and sources</summary>
+
+    <h3>What it shows</h3>
+    <p>Each event is an incident of organised violence that killed at least one person,
+      recorded by the Uppsala Conflict Data Program (UCDP). UCDP sorts events into three types:
+      state-based (a government against an armed group or another government), non-state
+      (armed groups against each other) and one-sided (an armed group or government against civilians).</p>
+
+    <h3>How it was made</h3>
+    <ul>
+      <li>Events come from the UCDP GED API, version __VERSION__, for __PERIOD__.</li>
+      <li id="prelim-method" hidden>Later events come from the GED Candidate releases
+        (__CANDIDATES__). They are <b>preliminary</b>: UCDP may still correct, add or remove them.
+        They are hatched in the year chart and have a dashed ring on the map.</li>
+      <li>Only events located to a place, within about 25 km, or to a district are drawn.
+        Events placed only at a province, country or along a road, river or border are counted
+        in the totals and listed under "Not on the map", but not drawn, because their point is a
+        stand-in and would create false hotspots.</li>
+      <li>Deaths are UCDP's best estimates; each event also has a low and high estimate (shown on hover).
+        The heatmap is weighted by deaths.</li>
+    </ul>
+
+    <h3>Keep in mind</h3>
+    <ul>
+      <li>Much of the death toll from large wars can sit in the events that are not drawn
+        (for example, the 2020 to 2022 war in northern Ethiopia), so the heatmap shows where events
+        cluster, not every death.</li>
+      <li>Reporting is uneven: areas with less media coverage may have fewer recorded events.</li>
+    </ul>
+
+    <h3>Cite the data</h3>
+    <p>Sundberg, Ralph and Erik Melander (2013). Introducing the UCDP Georeferenced Event Dataset.
+      <i>Journal of Peace Research</i> 50(4).</p>
+    <p id="prelim-cite" hidden>Hegre, Håvard, Mihai Croicu, Kristine Eck and Stina Högbladh (2020).
+      Introducing the UCDP Candidate Events Dataset. <i>Research &amp; Politics</i> 7(3).</p>
+    <p>UCDP data is published under a <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+      licence. This map is a personal, non-commercial, educational project and is not affiliated with
+      or endorsed by UCDP.</p>
+  </details>
+
   <p class="credit">
     Data: Uppsala Conflict Data Program (UCDP), Georeferenced Event Dataset (GED)
     version __VERSION__, <a href="https://ucdp.uu.se/">ucdp.uu.se</a>.
     <span id="prelim-credit" hidden>Preliminary events: GED Candidate __CANDIDATES__, which UCDP may still revise.</span>
     Deaths are UCDP's best estimates. Base map &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors.
+    Built __BUILT__.
   </p>
 </aside>
 <div id="map" role="region" aria-label="Map of conflict events in __AREA__"></div>
@@ -178,7 +225,7 @@ if (PRELIM.length) {
                      "UCDP may still revise these events and numbers.";
   note.hidden = false;
   document.getElementById("prelim-toggle").hidden = false;
-  document.getElementById("prelim-credit").hidden = false;
+  for (const id of ["prelim-credit", "prelim-method", "prelim-cite"]) document.getElementById(id).hidden = false;
 }
 
 // --- Panel numbers (follow the year and type filters) ---------------------

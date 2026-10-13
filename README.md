@@ -60,6 +60,19 @@ again: only the new version is downloaded.
    python3 build_map.py
    ```
 
+7. Run the Stage 7 script to build the public page `docs/index.html`. It checks that
+   your token is not in the page, that UCDP and the dataset version are credited, and that
+   preliminary data is labelled, before writing anything:
+
+   ```
+   python3 publish.py
+   ```
+
+   Then commit and push `docs/index.html`. With GitHub Pages set to serve the `docs/`
+   folder of `main` (repo Settings → Pages → Deploy from a branch → `main` / `/docs`),
+   the map appears at `https://ksai4u-glitch.github.io/Taswira/`.
+   Re-run `publish.py` and push again whenever you add a new Candidate release.
+
 ## Planned build stages
 
 1. **Fetch:** one authenticated request for Nigeria events, inspect the JSON fields
@@ -67,5 +80,5 @@ again: only the new version is downloaded.
 3. **Store:** save events locally (CSV/SQLite) so the API is not hit repeatedly
 4. **Clean:** select key fields (date, location, deaths estimate, violence type, actors)
 5. **Map:** plot events and build a heatmap for Nigeria
-6. **Expand:** extend to wider Africa, add time filtering and Candidate data ← *current: Candidate data (6c); time filtering (6a) and wider Africa (6b) done*
-7. **Publish:** public version with full UCDP attribution
+6. **Expand:** extend to wider Africa, add time filtering and Candidate data (done)
+7. **Publish:** public version with full UCDP attribution ← *current*
