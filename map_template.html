@@ -32,6 +32,10 @@
     --series-1: #2a78d6;   /* state-based */
     --series-2: #eb6834;   /* non-state */
     --series-3: #1baf7a;   /* one-sided */
+    /* hotspot zone levels: always shown with their name too, never colour alone */
+    --level-severe: #c62f2f;
+    --level-high: #c76a00;
+    --level-elevated: #8f7a00;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -45,6 +49,9 @@
       --series-1: #3987e5;
       --series-2: #d95926;
       --series-3: #199e70;
+      --level-severe: #f06a6a;
+      --level-high: #f0a040;
+      --level-elevated: #d9c23a;
     }
   }
   * { box-sizing: border-box; }
@@ -109,6 +116,12 @@
   #states-rows tr, #groups-rows tr { cursor: pointer; }
   #states-rows tr:hover td, #groups-rows tr:hover td { background: var(--surface-2); }
   #groups-rows tr.on td { background: var(--surface-2); font-weight: 600; }
+  #zones-rows tr { cursor: pointer; }
+  #zones-rows tr:hover td { background: var(--surface-2); }
+  .level { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; }
+  .level::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+                   background: currentColor; margin-right: 4px; vertical-align: 0; }
+  .trend { color: var(--text-secondary); white-space: nowrap; }
   #year-label { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
   .credit { margin-top: 20px; font-size: 12px; color: var(--text-muted); }
   .credit a { color: inherit; }
@@ -203,11 +216,19 @@
   <h2>Show</h2>
   <label><input type="radio" name="layer" value="heat" checked> Heatmap (weighted by deaths)</label>
   <label><input type="radio" name="layer" value="points"> Individual events</label>
+  <label><input type="checkbox" id="show-zones" checked> Hotspot zones (dashed circles)</label>
   <label id="prelim-toggle" hidden><input type="checkbox" id="show-prelim" checked> Include preliminary data</label>
   <p><button id="copy-link" type="button" class="link-button">Copy link to this view</button></p>
 
   <h2>Type of violence</h2>
   <div id="types"></div>
+
+  <h2>Hotspot zones</h2>
+  <p class="note" id="zones-note"></p>
+  <table id="zones-table">
+    <thead><tr><th>Zone</th><th>Level</th><th class="num">Deaths</th><th>Trend</th></tr></thead>
+    <tbody id="zones-rows"></tbody>
+  </table>
 
   <h2>Deadliest armed groups</h2>
   <p class="note" id="groups-note"></p>
@@ -256,6 +277,12 @@
         "IS" covers every Islamic State branch (in Nigeria and Lake Chad that is ISWAP);
         "JAS" is the Boko Haram faction led by Shekau until 2021; "XXX" codes are groups UCDP could not identify.
         An event's deaths count for both of its sides, so the group table adds up to more than the total.</li>
+      <li>Hotspot zones are worked out from the events, not drawn by hand. The map looks for the
+        75 km circle with the most deaths in the last 12 months of data (or in the year picked),
+        makes that a zone, sets its events aside and repeats. Level by deaths in the zone:
+        severe 500 or more, high 200 or more, elevated 50 or more. The trend compares with the
+        12 months before. Zones follow the country, group and type filters, and are named after
+        the place and state that most of their deaths were recorded in.</li>
       <li>Deaths are UCDP's best estimates; each event also has a low and high estimate (shown on hover).
         The heatmap is weighted by deaths.</li>
     </ul>
@@ -465,6 +492,116 @@ function updateGroups(all) {
     : `<tr><td colspan="3" class="note">No events for these filters</td></tr>`;
 }
 
+// --- Hotspot zones ----------------------------------------------------------
+// Worked out from the events: find the 75 km circle with the most deaths in the period,
+// make it a zone, set its events aside, and repeat. Only drawn events have coordinates.
+const ZONE_KM = 75, ZONE_MIN_DEATHS = 50, ZONE_MAX = 12;
+const LEVELS = [
+  { name: "Severe", min: 500, color: "--level-severe" },
+  { name: "High", min: 200, color: "--level-high" },
+  { name: "Elevated", min: ZONE_MIN_DEATHS, color: "--level-elevated" },
+];
+const levelOf = deaths => LEVELS.find(l => deaths >= l.min);
+const km = (lat1, lon1, lat2, lon2) => {     // short distances: a flat map is close enough
+  const x = (lon2 - lon1) * Math.cos((lat1 + lat2) * Math.PI / 360), y = lat2 - lat1;
+  return 111.2 * Math.hypot(x, y);
+};
+// UCDP describes places in words: "town of Gwoza", "outside Abare", "Bargaja village in Isa".
+// Keep just the name; skip long descriptions ("between X and Y, 5 km from Z").
+function shortPlace(p) {
+  if (!p) return null;
+  p = p.trim()
+    .replace(/^(the )?(fields|areas?|villages?|outskirts|vicinity|town|city|village)( of| near| around)? /i, "")
+    .replace(/^(near|around|outside|in|at|(south|north|east|west)(-?(east|west))? of) (the )?/i, "")
+    .replace(/^(\S+) (village|town|community) in .*$/i, "$1")
+    .replace(/^([A-Z][\w'-]+) in .*$/, "$1")
+    .replace(/ (town|city|village|area|axis|community|LGA|military camp|camp|forest)$/i, "");
+  if (!p || /^(an?|the|army|military|police|base|position|camp|several|unknown|unspecified)\b/i.test(p)) return null;
+  if (p.length > 24 || /[,;()\n?]| and | between |road|\bkm\b/i.test(p)) return null;
+  return p[0].toUpperCase() + p.slice(1);
+}
+// The zone period: the last 12 months of data, or the year picked; and the 12 months before
+function zonePeriod() {
+  const y = month !== null ? month.slice(0, 4) : year;
+  const end = y !== null ? `${+y + 1}-01` : nextMonth(LAST_MONTH);   // first month after the period
+  const back = (m, n) => { const [a, b] = m.split("-").map(Number); return new Date(Date.UTC(a, b - 1 - n, 1)).toISOString().slice(0, 7); };
+  return { from: back(end, 12), to: end, prevFrom: back(end, 24), label: y ?? `${monthName(back(end, 12))} – ${monthName(back(end, 1))}` };
+}
+
+// Finding zones takes a moment, so remember the last answer while the filters stay the same
+const zoneCache = { key: null, zones: [] };
+function findZones(events) {
+  const { from, to, prevFrom } = zonePeriod();
+  const key = [country, group, [...active].sort(), showPrelim, from].join("|");
+  if (zoneCache.key !== key) zoneCache.zones = computeZones(events, from, to, prevFrom);
+  zoneCache.key = key;
+  return zoneCache.zones;
+}
+function computeZones(events, from, to, prevFrom) {
+  const recent = events.filter(e => monthOf(e) >= from && monthOf(e) < to);
+  const before = events.filter(e => monthOf(e) >= prevFrom && monthOf(e) < from);
+  // Events in 1-degree buckets, so each circle only checks its neighbours
+  const bucket = list => {
+    const b = new Map();
+    for (const e of list) {
+      const k = `${Math.floor(e.latitude)},${Math.floor(e.longitude)}`;
+      if (!b.has(k)) b.set(k, []);
+      b.get(k).push(e);
+    }
+    return b;
+  };
+  const near = (b, lat, lon) => {
+    const out = [];
+    for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++)
+      for (const e of b.get(`${Math.floor(lat) + i},${Math.floor(lon) + j}`) ?? [])
+        if (km(lat, lon, e.latitude, e.longitude) <= ZONE_KM) out.push(e);
+    return out;
+  };
+  const beforeBuckets = bucket(before);
+  let left = recent.filter(e => e.deaths_best > 0);
+  const zones = [];
+  while (left.length && zones.length < ZONE_MAX) {
+    // Try a circle around every quarter-degree square that has deaths
+    const buckets = bucket(left);
+    const centres = new Map();
+    for (const e of left) centres.set(`${Math.round(e.latitude * 4)},${Math.round(e.longitude * 4)}`, null);
+    let best = null;
+    for (const k of centres.keys()) {
+      const [a, b] = k.split(",").map(Number);
+      const inside = near(buckets, a / 4, b / 4);
+      const deaths = sum(inside, "deaths_best");
+      if (!best || deaths > best.deaths) best = { deaths, inside, lat: a / 4, lon: b / 4 };
+    }
+    if (best.deaths < ZONE_MIN_DEATHS) break;
+    const taken = new Set(best.inside);
+    left = left.filter(e => !taken.has(e));
+    // Centre on where the deaths were; the circle reaches the farthest of 90% of them
+    const lat = best.inside.reduce((t, e) => t + e.latitude * e.deaths_best, 0) / best.deaths;
+    const lon = best.inside.reduce((t, e) => t + e.longitude * e.deaths_best, 0) / best.deaths;
+    const dists = best.inside.map(e => km(lat, lon, e.latitude, e.longitude)).sort((a, b) => a - b);
+    const radius = Math.min(90, Math.max(20, dists[Math.floor(dists.length * 0.9)] ?? 0));
+    // Name: the district (LGA in Nigeria) or else the place, and the state, with the most deaths
+    const top = key => Object.entries(best.inside.reduce((t, e) => {
+      const v = key(e); if (v) t[v] = (t[v] ?? 0) + e.deaths_best; return t;
+    }, {})).sort((a, b) => b[1] - a[1])[0]?.[0];
+    const district = e => e.lga?.trim().replace(/ (LGA|district|county|woreda|commune|cercle|territory|department|prefecture)$/i, "");
+    const place = top(district) ?? top(e => shortPlace(e.place)), state = top(e => e.state), where = top(e => e.country);
+    const previous = sum(near(beforeBuckets, best.lat, best.lon), "deaths_best");
+    zones.push({
+      name: [place, state].filter((v, i, all) => v && all.indexOf(v) === i).join(", ") || where,
+      country: where, lat, lon, radius, events: best.inside.length, deaths: best.deaths, previous,
+      level: levelOf(best.deaths),
+      preliminary: best.inside.some(e => e.preliminary),
+    });
+  }
+  return zones;
+}
+function trendText(z) {
+  if (z.previous < 10) return "new";
+  const r = z.deaths / z.previous;
+  return r > 1.25 ? `&#9650; up ${Math.round(100 * (r - 1))}%` : r < 0.8 ? `&#9660; down ${Math.round(100 * (1 - r))}%` : "steady";
+}
+
 // --- Map ------------------------------------------------------------------
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
 // preferCanvas draws dots on one canvas instead of one SVG element each: much faster with many events
@@ -499,6 +636,7 @@ L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${basem
 const active = new Set(TYPES.map(t => t.key));
 let heatLayer = null;
 const pointLayer = L.layerGroup();
+const zoneLayer = L.layerGroup();
 
 const sideName = s => sides(s).map(groupName).join(", ") || s;   // "Civilians" stays as it is
 function tooltip(e) {
@@ -519,6 +657,7 @@ function draw() {
   writeLink();
 
   if (heatLayer) map.removeLayer(heatLayer);
+  map.removeLayer(zoneLayer);
   // While the animation is on it draws its own fading dots instead of the heatmap or events
   if (anim.on) {
     map.removeLayer(pointLayer);
@@ -559,6 +698,34 @@ function draw() {
 
   map.removeLayer(pointLayer);
   if (mode === "heat") heatLayer.addTo(map); else pointLayer.addTo(map);
+  drawZones(EVENTS.filter(filters));
+}
+
+let zones = [];
+function drawZones(events) {
+  zones = findZones(events);
+  const { label } = zonePeriod();
+  document.getElementById("zones-note").textContent = zones.length
+    ? `${country ?? "All of __AREA__"}${group ? ", " + groupName(group) : ""}, ${label}. ` +
+      "Click a zone to zoom to it." + (zones.some(z => z.preliminary) ? " Includes preliminary data." : "")
+    : `No area had ${ZONE_MIN_DEATHS} or more deaths within ${ZONE_KM} km in ${label} for these filters.`;
+  document.getElementById("zones-table").hidden = !zones.length;
+  document.getElementById("zones-rows").innerHTML = zones.map((z, i) =>
+    `<tr data-zone="${i}" title="${fmt(z.events)} events within about ${Math.round(z.radius)} km">` +
+    `<td>${esc(z.name)}${country === null && !z.name.includes(z.country) ? `<br><span class="note">${esc(z.country)}</span>` : ""}</td>` +
+    `<td><span class="level" style="color:var(${z.level.color})">${z.level.name}</span></td>` +
+    `<td class="num">${fmt(z.deaths)}</td><td class="trend">${trendText(z)}</td></tr>`).join("");
+  zoneLayer.clearLayers();
+  for (const z of zones) {
+    L.circle([z.lat, z.lon], {
+      radius: z.radius * 1000, color: css(z.level.color), weight: 2, dashArray: "6 6",
+      fillColor: css(z.level.color), fillOpacity: 0.06, interactive: true,
+    }).bindTooltip(`<b>${esc(z.name)}</b>${country === null ? ", " + esc(z.country) : ""}<br>` +
+      `${z.level.name}: ${fmt(z.deaths)} deaths in ${esc(label)}<br>` +
+      `Trend: ${trendText(z)} (${fmt(z.previous)} the 12 months before)` +
+      (z.preliminary ? "<br><i>Includes preliminary data</i>" : "")).addTo(zoneLayer);
+  }
+  if (document.getElementById("show-zones").checked) zoneLayer.addTo(map);
 }
 
 // --- Filters ------------------------------------------------------------
@@ -573,6 +740,14 @@ document.querySelectorAll("#types input").forEach(box => box.addEventListener("c
   draw();
 }));
 document.querySelectorAll('input[name="layer"]').forEach(r => r.addEventListener("change", draw));
+document.getElementById("show-zones").addEventListener("change", draw);
+// Click a zone in the table to zoom to it
+document.getElementById("zones-rows").addEventListener("click", e => {
+  const z = zones[e.target.closest("tr[data-zone]")?.dataset.zone];
+  if (!z) return;
+  setDrawer(false);
+  map.fitBounds(L.latLng(z.lat, z.lon).toBounds(z.radius * 2600));
+});
 document.getElementById("show-prelim").addEventListener("change", e => { showPrelim = e.target.checked; draw(); });
 
 // --- Country: filter to one country and zoom to it ------------------------
@@ -884,6 +1059,7 @@ function writeLink() {
   if (month) link.set("month", month);
   const mode = document.querySelector('input[name="layer"]:checked').value;
   if (mode !== "heat") link.set("layer", mode);
+  if (!document.getElementById("show-zones").checked) link.set("zones", "off");
   const hash = link.toString();
   // replaceState changes the address without adding a Back-button step for every click
   history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
@@ -898,6 +1074,7 @@ function readLink() {
   month = /^\d{4}-\d{2}$/.test(m) && m <= LAST_MONTH && YEARS.includes(m.slice(0, 4)) ? m : null;
   const layer = document.querySelector(`input[name="layer"][value="${link.get("layer") === "points" ? "points" : "heat"}"]`);
   layer.checked = true;
+  document.getElementById("show-zones").checked = link.get("zones") !== "off";
   const g = link.get("group");
   group = ALL_GROUPS.has(g) ? g : null;
   const c = link.get("country");
