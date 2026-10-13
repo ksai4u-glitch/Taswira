@@ -19,6 +19,12 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script>
+  // Dark "ops" look unless this browser picked the light map before (the button at the top of the panel).
+  // Set before the page draws, so it doesn't flash light first.
+  try { document.documentElement.dataset.theme = localStorage.getItem("taswira-theme") === "light" ? "light" : "dark"; }
+  catch { document.documentElement.dataset.theme = "dark"; }
+</script>
 <style>
   :root {
     color-scheme: light;
@@ -36,24 +42,51 @@
     --level-severe: #c62f2f;
     --level-high: #c76a00;
     --level-elevated: #8f7a00;
+    --accent: #1d6f86;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, "SFMono-Regular", Menlo, monospace;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      color-scheme: dark;
-      --surface-1: #1a1a19;
-      --surface-2: #242423;
-      --border: #3a3a38;
-      --text-primary: #f0efec;
-      --text-secondary: #c3c2b7;
-      --text-muted: #9a998f;
-      --series-1: #3987e5;
-      --series-2: #d95926;
-      --series-3: #199e70;
-      --level-severe: #f06a6a;
-      --level-high: #f0a040;
-      --level-elevated: #d9c23a;
-    }
+  /* Dark "ops" look: blue-black surfaces, cyan monospace headings, a vignette and faint grid on the map */
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-1: #0a0f14;
+    --surface-2: #131c25;
+    --border: #243241;
+    --text-primary: #e8eef4;
+    --text-secondary: #a9b7c5;
+    --text-muted: #8a9bab;
+    --series-1: #3f8de8;
+    --series-2: #e0632f;
+    --series-3: #1fae7c;
+    --level-severe: #f06a6a;
+    --level-high: #f0a040;
+    --level-elevated: #d9c23a;
+    --accent: #4cc9e0;
   }
+  [data-theme="dark"] h1 { font-family: var(--mono); font-size: 17px; letter-spacing: .08em;
+                           text-transform: uppercase; color: var(--accent); }
+  [data-theme="dark"] h2 { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; color: var(--accent); }
+  [data-theme="dark"] .stat { border: 1px solid var(--border); }
+  [data-theme="dark"] .stat b, [data-theme="dark"] #year-label,
+  [data-theme="dark"] .play-box .pb-month { font-family: var(--mono); }
+  [data-theme="dark"] #map::after {
+    content: ""; position: absolute; inset: 0; z-index: 401; pointer-events: none;
+    background:
+      radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / .55) 100%),
+      repeating-linear-gradient(0deg, rgb(76 201 224 / .05) 0 1px, transparent 1px 96px),
+      repeating-linear-gradient(90deg, rgb(76 201 224 / .05) 0 1px, transparent 1px 96px);
+  }
+  [data-theme="dark"] .leaflet-control-attribution { background: rgb(10 15 20 / .8); color: var(--text-secondary); }
+  [data-theme="dark"] .leaflet-control-attribution a { color: var(--accent); }
+  /* Leaflet's own white boxes follow the theme */
+  .leaflet-container { background: var(--surface-2); }
+  .leaflet-bar a, .leaflet-bar a:hover { background: var(--surface-2); color: var(--text-primary); border-bottom-color: var(--border); }
+  .leaflet-tooltip { background: var(--surface-1); color: var(--text-primary); border-color: var(--border); }
+  .leaflet-tooltip-top::before { border-top-color: var(--surface-1); }
+  .leaflet-tooltip-bottom::before { border-bottom-color: var(--surface-1); }
+  .leaflet-tooltip-left::before { border-left-color: var(--surface-1); }
+  .leaflet-tooltip-right::before { border-right-color: var(--surface-1); }
+  .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .title-row button { flex: none; margin-top: 1px; }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; }
   body {
@@ -179,7 +212,10 @@
 <body>
 <aside id="panel">
   <button id="drawer" type="button" aria-expanded="false" aria-controls="panel">Show filters and years &#9650;</button>
-  <h1>Taswira: __AREA__ __SHOWN_PERIOD__</h1>
+  <div class="title-row">
+    <h1>Taswira: __AREA__ __SHOWN_PERIOD__</h1>
+    <button id="theme" type="button" class="link-button"></button>
+  </div>
   <p class="sub">Organised violence, UCDP GED __VERSION__<span id="prelim-sub"></span>.
     Last updated __BUILT_LONG__.</p>
 
@@ -603,7 +639,7 @@ function trendText(z) {
 }
 
 // --- Map ------------------------------------------------------------------
-const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+let dark = document.documentElement.dataset.theme === "dark";
 // preferCanvas draws dots on one canvas instead of one SVG element each: much faster with many events
 const map = L.map("map", { zoomSnap: 0.5, preferCanvas: true });
 
@@ -626,12 +662,30 @@ function fitTo(bounds, pad = 0) {
 }
 fitTo(__BOUNDS__);
 // Esri's grey canvas tiles need no API key and work when the page is opened from a file
-const basemap = dark ? "World_Dark_Gray_Base" : "World_Light_Gray_Base";
-L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${basemap}/MapServer/tile/{z}/{y}/{x}`, {
+const tileUrl = () => "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/" +
+  (dark ? "World_Dark_Gray_Base" : "World_Light_Gray_Base") + "/MapServer/tile/{z}/{y}/{x}";
+const tiles = L.tileLayer(tileUrl(), {
   attribution: 'Base map &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors | Data: UCDP GED __VERSION__' +
                (PRELIM.length ? ' + GED Candidate __CANDIDATES__ (preliminary)' : ''),
   maxZoom: 12,
 }).addTo(map);
+
+// --- Light / dark: dark "ops" look by default, remembered in this browser ----
+const themeButton = document.getElementById("theme");
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  dark = theme === "dark";
+  try { localStorage.setItem("taswira-theme", theme); } catch { /* private window: just don't remember */ }
+  labelTheme();
+  tiles.setUrl(tileUrl());
+}
+function labelTheme() {
+  themeButton.innerHTML = dark ? "&#9788; Light" : "&#9790; Dark";
+  themeButton.setAttribute("aria-label", dark ? "Switch to the light map" : "Switch to the dark map");
+}
+labelTheme();
+// Colours are read when drawing, so redraw (and repaint the animation) after switching
+themeButton.addEventListener("click", () => { setTheme(dark ? "light" : "dark"); draw(); });
 
 const active = new Set(TYPES.map(t => t.key));
 let heatLayer = null;
