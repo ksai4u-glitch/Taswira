@@ -16,7 +16,7 @@ import webbrowser
 from datetime import date
 from pathlib import Path
 
-from settings import API_VERSION, AREA_NAME, BOUNDS, CANDIDATE_VERSIONS, FILE_STEM, HEAT_MAX, PERIOD
+from settings import API_VERSION, AREA_NAME, AREAS, BOUNDS, CANDIDATE_VERSIONS, FILE_STEM, HEAT_MAX, PERIOD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(HERE, "data", "taswira.db")
@@ -82,6 +82,8 @@ def fill_template(mapped, unmapped):
                 .replace("__AREA__", AREA_NAME)
                 .replace("__BOUNDS__", json.dumps(BOUNDS))
                 .replace("__HEAT_MAX__", str(HEAT_MAX))
+                # one country on screen: same heat ceiling as the Nigeria-only map
+                .replace("__COUNTRY_HEAT_MAX__", str(AREAS["nigeria"]["heat_max"]))
                 .replace("__BUILT__", date.today().isoformat()))
     return page
 
