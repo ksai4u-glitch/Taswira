@@ -43,17 +43,39 @@ def load(db, map_ready):
     return [dict(row) for row in rows]
 
 
+def pack(events):
+    """Store the events column by column instead of as one {...} per event.
+
+    Writing every field name 32,000 times made the page about 12 MB. Here each field
+    is one list. Fields with few different values (country, violence type, dates...)
+    become a short list of the values plus, for each event, the position of its value
+    in that list. The page's JavaScript (unpack) turns this back into one object per event.
+    """
+    columns = {}
+    for field in MAP_FIELDS:
+        values = [e[field] for e in events]
+        if field in ("latitude", "longitude"):
+            values = [round(v, 4) for v in values]   # 4 decimals is about 10 metres
+        distinct = sorted(set(values), key=lambda v: (v is None, str(v)))
+        if len(distinct) < len(values) / 4:
+            position = {v: i for i, v in enumerate(distinct)}
+            columns[field] = {"values": distinct, "index": [position[v] for v in values]}
+        else:
+            columns[field] = values
+    return {"count": len(events), "columns": columns}
+
+
 def to_js(data):
     """JSON that is safe to paste inside a <script> tag."""
-    return json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+    return json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
 
 def fill_template(mapped, unmapped):
     """Fill map_template.html with the events and settings; return the finished page as text."""
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         page = f.read()
-    page = (page.replace("__EVENTS_JSON__", to_js(mapped))
-                .replace("__UNMAPPED_JSON__", to_js(unmapped))
+    page = (page.replace("__EVENTS_JSON__", to_js(pack(mapped)))
+                .replace("__UNMAPPED_JSON__", to_js(pack(unmapped)))
                 .replace("__VERSION__", API_VERSION)
                 .replace("__CANDIDATES__", ", ".join(CANDIDATE_VERSIONS))
                 .replace("__PERIOD__", PERIOD)

@@ -193,8 +193,17 @@
 <div id="map" role="region" aria-label="Map of conflict events in __AREA__"></div>
 
 <script>
-const EVENTS = __EVENTS_JSON__;      // map-ready events
-const UNMAPPED = __UNMAPPED_JSON__;  // events whose location is too vague to plot
+// build_map.py stores the events column by column to keep the page small (see pack()).
+// unpack() turns that back into one object per event: {date_start: ..., country: ..., ...}
+function unpack({ count, columns }) {
+  const events = Array.from({ length: count }, () => ({}));
+  for (const [field, col] of Object.entries(columns)) {
+    events.forEach((e, i) => { e[field] = Array.isArray(col) ? col[i] : col.values[col.index[i]]; });
+  }
+  return events;
+}
+const EVENTS = unpack(__EVENTS_JSON__);      // map-ready events
+const UNMAPPED = unpack(__UNMAPPED_JSON__);  // events whose location is too vague to plot
 
 const TYPES = [
   { key: "state-based", name: "State-based", color: "--series-1",
