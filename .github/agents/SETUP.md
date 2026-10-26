@@ -6,10 +6,9 @@ checks again, for at most three review rounds. Everything they produce is kept
 on GitHub: a task branch, a draft pull request, comments, and JSON/Markdown
 records under `agent-tasks/<task>/record/`.
 
-> **Status: not yet proven.** The files have been checked offline (see
-> "What has been verified" below). Nothing has run on GitHub yet, because that
-> needs the credentials only you can add. Treat the first run on issue #25
-> ([TRIAL-ISSUE-25.md](TRIAL-ISSUE-25.md)) as the test.
+> **Status: working for one-round review tasks** (26 Oct 2026, trial runs 6-8 on
+> issue #25; see "What has been verified" below). Three-round runs, implement
+> mode and `/agent stop` have not been tried live yet.
 
 ## How it works
 
@@ -173,13 +172,25 @@ Checked without credentials, before the setup pull request:
   `anthropics/claude-code-action` v1.0.262 and `openai/codex-action` v1.13, both
   pinned by commit.
 
-Needs a live run to confirm (not claimed to work yet):
+Confirmed by live runs on issue #25 (26 Oct 2026, review mode, `rounds=1`):
 
-- Authentication with your secrets, and the actions accepting the inputs as
-  written (`--json-schema`, `--max-budget-usd`, Codex web search (`-c web_search="live"`), the
-  read-only `review-web` permission profile with an output schema).
-- Claude's structured output and usage numbers arriving through the action's
-  outputs, and Claude being able to fetch and read PDFs on the runner.
-- Draft PR creation, comments, labels, commit statuses and run cancellation
-  with the job permissions given.
-- The full chain of jobs, conditions and skips across three rounds.
+- Both credentials authenticate; the actions accept the inputs as written
+  (`--json-schema`, `--max-budget-usd`, Codex `-c web_search="live"`, the
+  `review-web` permission profile with an output schema).
+- Claude's structured output and usage arrive through the action's outputs
+  (about $0.45 to $0.65 for a draft, $0.10 to $0.15 for an answer round).
+- Claude reads PDFs (as page images) and its shell sandbox runs `curl`; Codex
+  re-opens web sources.
+- Draft PR creation, comments, commit statuses, and the chain authorize → Claude
+  → publish → Codex → publish → Claude → publish → checks → final report.
+- Earlier runs found and fixed: string job outputs into number inputs, apt
+  mirror failures, bubblewrap/socat and Ubuntu's user-namespace restriction for
+  Claude's sandbox, a GitHub 502 being read as "stop", Codex's `--search`
+  flag, and Codex having no network under `:read-only`.
+
+Not yet tried live:
+
+- Three rounds (Claude editing in rounds 1-2, then written answers only).
+- Implement mode, including the patch path check rejecting a real patch.
+- `/agent stop` cancelling a running task, and the `agent:awaiting-decision`
+  label.
