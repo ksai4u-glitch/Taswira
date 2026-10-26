@@ -54,7 +54,10 @@ jobs:
           persist-credentials: false
 
       - name: Install pdftotext (for reading PDF sources)
-        run: sudo apt-get install -y -qq poppler-utils > /dev/null
+        continue-on-error: true   # helpful for research, not required
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils > /dev/null
 
       - name: Prepare the prompt and limits
         id: prep
