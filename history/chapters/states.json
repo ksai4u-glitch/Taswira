@@ -10,35 +10,195 @@
       "count": 4,
       "count_note": "four regions, plus the Federal Territory of Lagos",
       "groups": [
-        {"name": "Northern Region", "members": ["NG-SO", "NG-KE", "NG-ZA", "NG-NI", "NG-KD", "NG-KT", "NG-KN", "NG-JI", "NG-BO", "NG-YO", "NG-BA", "NG-GO", "NG-AD", "NG-TA", "NG-BE", "NG-PL", "NG-NA", "NG-KW", "NG-KO", "NG-FC"]},
-        {"name": "Western Region", "members": ["NG-OY", "NG-OS", "NG-OG", "NG-ON", "NG-EK"]},
-        {"name": "Mid-Western Region", "members": ["NG-ED", "NG-DE"]},
-        {"name": "Eastern Region", "members": ["NG-AN", "NG-EN", "NG-EB", "NG-IM", "NG-AB", "NG-RI", "NG-BY", "NG-CR", "NG-AK"]}
+        {
+          "name": "Northern Region",
+          "members": [
+            "NG-SO",
+            "NG-KE",
+            "NG-ZA",
+            "NG-NI",
+            "NG-KD",
+            "NG-KT",
+            "NG-KN",
+            "NG-JI",
+            "NG-BO",
+            "NG-YO",
+            "NG-BA",
+            "NG-GO",
+            "NG-AD",
+            "NG-TA",
+            "NG-BE",
+            "NG-PL",
+            "NG-NA",
+            "NG-KW",
+            "NG-KO",
+            "NG-FC"
+          ]
+        },
+        {
+          "name": "Western Region",
+          "members": [
+            "NG-OY",
+            "NG-OS",
+            "NG-OG",
+            "NG-ON",
+            "NG-EK"
+          ]
+        },
+        {
+          "name": "Mid-Western Region",
+          "members": [
+            "NG-ED",
+            "NG-DE"
+          ]
+        },
+        {
+          "name": "Eastern Region",
+          "members": [
+            "NG-AN",
+            "NG-EN",
+            "NG-EB",
+            "NG-IM",
+            "NG-AB",
+            "NG-RI",
+            "NG-BY",
+            "NG-CR",
+            "NG-AK"
+          ]
+        }
       ],
       "split": {
-        "NG-LA": {"parents": ["Federal Territory of Lagos", "Western Region"], "note": "Today's Lagos State joins the old Federal Territory of Lagos with mainland divisions of the Western Region.", "evidence": "Secondary sources", "disputed": null}
-      }
+        "NG-LA": {
+          "parents": [
+            "Federal Territory of Lagos",
+            "Western Region"
+          ],
+          "note": "Today's Lagos State joins the old Federal Territory of Lagos with mainland divisions of the Western Region.",
+          "evidence": "Secondary sources",
+          "disputed": null
+        }
+      },
+      "unit": "regions"
     },
     "1967": {
       "label": "27 May 1967",
       "count": 12,
       "groups": [
-        {"name": "North-Western", "members": ["NG-SO", "NG-KE", "NG-ZA", "NG-NI"]},
-        {"name": "North-Central", "members": ["NG-KD", "NG-KT"]},
-        {"name": "Kano", "members": ["NG-KN", "NG-JI"]},
-        {"name": "North-Eastern", "members": ["NG-BO", "NG-YO", "NG-BA", "NG-GO", "NG-AD", "NG-TA"]},
-        {"name": "Benue-Plateau", "members": ["NG-BE", "NG-PL", "NG-NA"]},
-        {"name": "Kwara", "members": ["NG-KW"]},
-        {"name": "Lagos", "members": ["NG-LA"]},
-        {"name": "Western", "members": ["NG-OY", "NG-OS", "NG-OG", "NG-ON", "NG-EK"]},
-        {"name": "Mid-Western", "members": ["NG-ED", "NG-DE"]},
-        {"name": "East-Central", "members": ["NG-AN", "NG-EN", "NG-EB", "NG-IM", "NG-AB"]},
-        {"name": "South-Eastern", "members": ["NG-CR", "NG-AK"]},
-        {"name": "Rivers", "members": ["NG-RI", "NG-BY"]}
+        {
+          "name": "North-Western",
+          "members": [
+            "NG-SO",
+            "NG-KE",
+            "NG-ZA",
+            "NG-NI"
+          ]
+        },
+        {
+          "name": "North-Central",
+          "members": [
+            "NG-KD",
+            "NG-KT"
+          ]
+        },
+        {
+          "name": "Kano",
+          "members": [
+            "NG-KN",
+            "NG-JI"
+          ]
+        },
+        {
+          "name": "North-Eastern",
+          "members": [
+            "NG-BO",
+            "NG-YO",
+            "NG-BA",
+            "NG-GO",
+            "NG-AD",
+            "NG-TA"
+          ]
+        },
+        {
+          "name": "Benue-Plateau",
+          "members": [
+            "NG-BE",
+            "NG-PL",
+            "NG-NA"
+          ]
+        },
+        {
+          "name": "Kwara",
+          "members": [
+            "NG-KW"
+          ]
+        },
+        {
+          "name": "Lagos",
+          "members": [
+            "NG-LA"
+          ]
+        },
+        {
+          "name": "Western",
+          "members": [
+            "NG-OY",
+            "NG-OS",
+            "NG-OG",
+            "NG-ON",
+            "NG-EK"
+          ]
+        },
+        {
+          "name": "Mid-Western",
+          "members": [
+            "NG-ED",
+            "NG-DE"
+          ]
+        },
+        {
+          "name": "East-Central",
+          "members": [
+            "NG-AN",
+            "NG-EN",
+            "NG-EB",
+            "NG-IM",
+            "NG-AB"
+          ]
+        },
+        {
+          "name": "South-Eastern",
+          "members": [
+            "NG-CR",
+            "NG-AK"
+          ]
+        },
+        {
+          "name": "Rivers",
+          "members": [
+            "NG-RI",
+            "NG-BY"
+          ]
+        }
       ],
       "split": {
-        "NG-KO": {"parents": ["Kwara", "Benue-Plateau"], "note": "Kogi was later made from parts of Kwara and Benue. One secondary source also names Niger, which came from North-Western.", "evidence": "Secondary sources", "disputed": "Sources disagree on whether part of Kogi came from Niger (North-Western)."},
-        "NG-FC": {"parents": ["North-Western", "Benue-Plateau"], "note": "The FCT was later carved out of land in several northern states.", "evidence": "Secondary sources", "disputed": "Sources disagree on which states gave land: commonly Niger, Plateau and Kwara; one list says Benue-Plateau, North-Central and North-Western. The 1976 states decree places the Abuja area in Niger."}
+        "NG-KO": {
+          "parents": [
+            "Kwara",
+            "Benue-Plateau"
+          ],
+          "note": "Kogi was later made from parts of Kwara and Benue. One secondary source also names Niger, which came from North-Western.",
+          "evidence": "Secondary sources",
+          "disputed": "Sources disagree on whether part of Kogi came from Niger (North-Western)."
+        },
+        "NG-FC": {
+          "parents": [
+            "North-Western",
+            "Benue-Plateau"
+          ],
+          "note": "The FCT was later carved out of land in several northern states.",
+          "evidence": "Secondary sources",
+          "disputed": "Sources disagree on which states gave land: commonly Niger, Plateau and Kwara; one list says Benue-Plateau, North-Central and North-Western. The 1976 states decree places the Abuja area in Niger."
+        }
       }
     },
     "1976": {
@@ -46,145 +206,881 @@
       "count": 19,
       "count_note": "19 states, plus a Federal Capital Territory designated the same year",
       "groups": [
-        {"name": "Sokoto", "from": "North-Western", "members": ["NG-SO", "NG-KE", "NG-ZA"]},
-        {"name": "Niger", "from": "North-Western", "members": ["NG-NI"]},
-        {"name": "Kaduna", "from": "North-Central", "members": ["NG-KD", "NG-KT"]},
-        {"name": "Kano", "from": "Kano", "members": ["NG-KN", "NG-JI"]},
-        {"name": "Borno", "from": "North-Eastern", "members": ["NG-BO", "NG-YO"]},
-        {"name": "Bauchi", "from": "North-Eastern", "members": ["NG-BA", "NG-GO"]},
-        {"name": "Gongola", "from": "North-Eastern", "members": ["NG-AD", "NG-TA"]},
-        {"name": "Plateau", "from": "Benue-Plateau", "members": ["NG-PL", "NG-NA"]},
-        {"name": "Benue", "from": "Benue-Plateau", "members": ["NG-BE"]},
-        {"name": "Kwara", "from": "Kwara", "members": ["NG-KW"]},
-        {"name": "Lagos", "from": "Lagos", "members": ["NG-LA"]},
-        {"name": "Ogun", "from": "Western", "members": ["NG-OG"]},
-        {"name": "Oyo", "from": "Western", "members": ["NG-OY", "NG-OS"]},
-        {"name": "Ondo", "from": "Western", "members": ["NG-ON", "NG-EK"]},
-        {"name": "Bendel", "from": "Mid-Western", "members": ["NG-ED", "NG-DE"]},
-        {"name": "Anambra", "from": "East-Central", "members": ["NG-AN", "NG-EN"]},
-        {"name": "Imo", "from": "East-Central", "members": ["NG-IM", "NG-AB"]},
-        {"name": "Cross River", "from": "South-Eastern", "members": ["NG-CR", "NG-AK"]},
-        {"name": "Rivers", "from": "Rivers", "members": ["NG-RI", "NG-BY"]},
-        {"name": "Federal Capital Territory", "members": ["NG-FC"], "not_a_state": true}
+        {
+          "name": "Sokoto",
+          "from": "North-Western",
+          "members": [
+            "NG-SO",
+            "NG-KE",
+            "NG-ZA"
+          ]
+        },
+        {
+          "name": "Niger",
+          "from": "North-Western",
+          "members": [
+            "NG-NI"
+          ]
+        },
+        {
+          "name": "Kaduna",
+          "from": "North-Central",
+          "members": [
+            "NG-KD",
+            "NG-KT"
+          ]
+        },
+        {
+          "name": "Kano",
+          "from": "Kano",
+          "members": [
+            "NG-KN",
+            "NG-JI"
+          ]
+        },
+        {
+          "name": "Borno",
+          "from": "North-Eastern",
+          "members": [
+            "NG-BO",
+            "NG-YO"
+          ]
+        },
+        {
+          "name": "Bauchi",
+          "from": "North-Eastern",
+          "members": [
+            "NG-BA",
+            "NG-GO"
+          ]
+        },
+        {
+          "name": "Gongola",
+          "from": "North-Eastern",
+          "members": [
+            "NG-AD",
+            "NG-TA"
+          ]
+        },
+        {
+          "name": "Plateau",
+          "from": "Benue-Plateau",
+          "members": [
+            "NG-PL",
+            "NG-NA"
+          ]
+        },
+        {
+          "name": "Benue",
+          "from": "Benue-Plateau",
+          "members": [
+            "NG-BE"
+          ]
+        },
+        {
+          "name": "Kwara",
+          "from": "Kwara",
+          "members": [
+            "NG-KW"
+          ]
+        },
+        {
+          "name": "Lagos",
+          "from": "Lagos",
+          "members": [
+            "NG-LA"
+          ]
+        },
+        {
+          "name": "Ogun",
+          "from": "Western",
+          "members": [
+            "NG-OG"
+          ]
+        },
+        {
+          "name": "Oyo",
+          "from": "Western",
+          "members": [
+            "NG-OY",
+            "NG-OS"
+          ]
+        },
+        {
+          "name": "Ondo",
+          "from": "Western",
+          "members": [
+            "NG-ON",
+            "NG-EK"
+          ]
+        },
+        {
+          "name": "Bendel",
+          "from": "Mid-Western",
+          "members": [
+            "NG-ED",
+            "NG-DE"
+          ]
+        },
+        {
+          "name": "Anambra",
+          "from": "East-Central",
+          "members": [
+            "NG-AN",
+            "NG-EN"
+          ]
+        },
+        {
+          "name": "Imo",
+          "from": "East-Central",
+          "members": [
+            "NG-IM",
+            "NG-AB"
+          ]
+        },
+        {
+          "name": "Cross River",
+          "from": "South-Eastern",
+          "members": [
+            "NG-CR",
+            "NG-AK"
+          ]
+        },
+        {
+          "name": "Rivers",
+          "from": "Rivers",
+          "members": [
+            "NG-RI",
+            "NG-BY"
+          ]
+        },
+        {
+          "name": "Federal Capital Territory",
+          "members": [
+            "NG-FC"
+          ],
+          "not_a_state": true
+        }
       ],
       "split": {
-        "NG-KO": {"parents": ["Kwara", "Benue"], "note": "Kogi was made in 1991 from parts of Kwara and Benue (one source also names Niger), so in 1976 it is shown as split between them. The review of the 1976 decree on issue #25 noted the Kogi area under Kwara; how much of today's Kogi was in Benue has not been checked against the decree's schedule.", "evidence": "Secondary sources; 1976 decree read only in summary", "disputed": "Sources disagree on whether part of Kogi came from Niger, and the split line is not established."},
-        "NG-EB": {"parents": ["Anambra", "Imo"], "note": "Ebonyi was later made from parts of Enugu (then in Anambra) and Abia (then in Imo).", "evidence": "1996 announcement (primary), traced back", "disputed": null}
+        "NG-KO": {
+          "parents": [
+            "Kwara",
+            "Benue"
+          ],
+          "note": "Kogi was made in 1991 from parts of Kwara and Benue (one source also names Niger), so in 1976 it is shown as split between them. The review of the 1976 decree on issue #25 noted the Kogi area under Kwara; how much of today's Kogi was in Benue has not been checked against the decree's schedule.",
+          "evidence": "Secondary sources; 1976 decree read only in summary",
+          "disputed": "Sources disagree on whether part of Kogi came from Niger, and the split line is not established."
+        },
+        "NG-EB": {
+          "parents": [
+            "Anambra",
+            "Imo"
+          ],
+          "note": "Ebonyi was later made from parts of Enugu (then in Anambra) and Abia (then in Imo).",
+          "evidence": "1996 announcement (primary), traced back",
+          "disputed": null
+        }
       }
     },
     "1987": {
       "label": "23 September 1987",
       "count": 21,
       "groups": [
-        {"name": "Sokoto", "from": "Sokoto", "members": ["NG-SO", "NG-KE", "NG-ZA"]},
-        {"name": "Niger", "from": "Niger", "members": ["NG-NI"]},
-        {"name": "Kaduna", "from": "Kaduna", "members": ["NG-KD"]},
-        {"name": "Katsina", "from": "Kaduna", "members": ["NG-KT"]},
-        {"name": "Kano", "from": "Kano", "members": ["NG-KN", "NG-JI"]},
-        {"name": "Borno", "from": "Borno", "members": ["NG-BO", "NG-YO"]},
-        {"name": "Bauchi", "from": "Bauchi", "members": ["NG-BA", "NG-GO"]},
-        {"name": "Gongola", "from": "Gongola", "members": ["NG-AD", "NG-TA"]},
-        {"name": "Plateau", "from": "Plateau", "members": ["NG-PL", "NG-NA"]},
-        {"name": "Benue", "from": "Benue", "members": ["NG-BE"]},
-        {"name": "Kwara", "from": "Kwara", "members": ["NG-KW"]},
-        {"name": "Lagos", "from": "Lagos", "members": ["NG-LA"]},
-        {"name": "Ogun", "from": "Ogun", "members": ["NG-OG"]},
-        {"name": "Oyo", "from": "Oyo", "members": ["NG-OY", "NG-OS"]},
-        {"name": "Ondo", "from": "Ondo", "members": ["NG-ON", "NG-EK"]},
-        {"name": "Bendel", "from": "Bendel", "members": ["NG-ED", "NG-DE"]},
-        {"name": "Anambra", "from": "Anambra", "members": ["NG-AN", "NG-EN"]},
-        {"name": "Imo", "from": "Imo", "members": ["NG-IM", "NG-AB"]},
-        {"name": "Cross River", "from": "Cross River", "members": ["NG-CR"]},
-        {"name": "Akwa Ibom", "from": "Cross River", "members": ["NG-AK"]},
-        {"name": "Rivers", "from": "Rivers", "members": ["NG-RI", "NG-BY"]},
-        {"name": "Federal Capital Territory", "from": "Federal Capital Territory", "members": ["NG-FC"], "not_a_state": true}
+        {
+          "name": "Sokoto",
+          "from": "Sokoto",
+          "members": [
+            "NG-SO",
+            "NG-KE",
+            "NG-ZA"
+          ]
+        },
+        {
+          "name": "Niger",
+          "from": "Niger",
+          "members": [
+            "NG-NI"
+          ]
+        },
+        {
+          "name": "Kaduna",
+          "from": "Kaduna",
+          "members": [
+            "NG-KD"
+          ]
+        },
+        {
+          "name": "Katsina",
+          "from": "Kaduna",
+          "members": [
+            "NG-KT"
+          ]
+        },
+        {
+          "name": "Kano",
+          "from": "Kano",
+          "members": [
+            "NG-KN",
+            "NG-JI"
+          ]
+        },
+        {
+          "name": "Borno",
+          "from": "Borno",
+          "members": [
+            "NG-BO",
+            "NG-YO"
+          ]
+        },
+        {
+          "name": "Bauchi",
+          "from": "Bauchi",
+          "members": [
+            "NG-BA",
+            "NG-GO"
+          ]
+        },
+        {
+          "name": "Gongola",
+          "from": "Gongola",
+          "members": [
+            "NG-AD",
+            "NG-TA"
+          ]
+        },
+        {
+          "name": "Plateau",
+          "from": "Plateau",
+          "members": [
+            "NG-PL",
+            "NG-NA"
+          ]
+        },
+        {
+          "name": "Benue",
+          "from": "Benue",
+          "members": [
+            "NG-BE"
+          ]
+        },
+        {
+          "name": "Kwara",
+          "from": "Kwara",
+          "members": [
+            "NG-KW"
+          ]
+        },
+        {
+          "name": "Lagos",
+          "from": "Lagos",
+          "members": [
+            "NG-LA"
+          ]
+        },
+        {
+          "name": "Ogun",
+          "from": "Ogun",
+          "members": [
+            "NG-OG"
+          ]
+        },
+        {
+          "name": "Oyo",
+          "from": "Oyo",
+          "members": [
+            "NG-OY",
+            "NG-OS"
+          ]
+        },
+        {
+          "name": "Ondo",
+          "from": "Ondo",
+          "members": [
+            "NG-ON",
+            "NG-EK"
+          ]
+        },
+        {
+          "name": "Bendel",
+          "from": "Bendel",
+          "members": [
+            "NG-ED",
+            "NG-DE"
+          ]
+        },
+        {
+          "name": "Anambra",
+          "from": "Anambra",
+          "members": [
+            "NG-AN",
+            "NG-EN"
+          ]
+        },
+        {
+          "name": "Imo",
+          "from": "Imo",
+          "members": [
+            "NG-IM",
+            "NG-AB"
+          ]
+        },
+        {
+          "name": "Cross River",
+          "from": "Cross River",
+          "members": [
+            "NG-CR"
+          ]
+        },
+        {
+          "name": "Akwa Ibom",
+          "from": "Cross River",
+          "members": [
+            "NG-AK"
+          ]
+        },
+        {
+          "name": "Rivers",
+          "from": "Rivers",
+          "members": [
+            "NG-RI",
+            "NG-BY"
+          ]
+        },
+        {
+          "name": "Federal Capital Territory",
+          "from": "Federal Capital Territory",
+          "members": [
+            "NG-FC"
+          ],
+          "not_a_state": true
+        }
       ],
       "split": {
-        "NG-KO": {"parents": ["Kwara", "Benue"], "note": "Still divided between Kwara and Benue until 1991 (one source also names Niger).", "evidence": "Secondary sources", "disputed": "Sources disagree on whether part of Kogi came from Niger."},
-        "NG-EB": {"parents": ["Anambra", "Imo"], "note": "Still divided between Anambra and Imo.", "evidence": "1996 announcement (primary), traced back", "disputed": null}
+        "NG-KO": {
+          "parents": [
+            "Kwara",
+            "Benue"
+          ],
+          "note": "Still divided between Kwara and Benue until 1991 (one source also names Niger).",
+          "evidence": "Secondary sources",
+          "disputed": "Sources disagree on whether part of Kogi came from Niger."
+        },
+        "NG-EB": {
+          "parents": [
+            "Anambra",
+            "Imo"
+          ],
+          "note": "Still divided between Anambra and Imo.",
+          "evidence": "1996 announcement (primary), traced back",
+          "disputed": null
+        }
       }
     },
     "1991": {
       "label": "27 August 1991",
       "count": 30,
       "groups": [
-        {"name": "Sokoto", "from": "Sokoto", "members": ["NG-SO", "NG-ZA"]},
-        {"name": "Kebbi", "from": "Sokoto", "members": ["NG-KE"]},
-        {"name": "Niger", "from": "Niger", "members": ["NG-NI"]},
-        {"name": "Kaduna", "from": "Kaduna", "members": ["NG-KD"]},
-        {"name": "Katsina", "from": "Katsina", "members": ["NG-KT"]},
-        {"name": "Kano", "from": "Kano", "members": ["NG-KN"]},
-        {"name": "Jigawa", "from": "Kano", "members": ["NG-JI"]},
-        {"name": "Borno", "from": "Borno", "members": ["NG-BO"]},
-        {"name": "Yobe", "from": "Borno", "members": ["NG-YO"]},
-        {"name": "Bauchi", "from": "Bauchi", "members": ["NG-BA", "NG-GO"]},
-        {"name": "Adamawa", "from": "Gongola", "members": ["NG-AD"]},
-        {"name": "Taraba", "from": "Gongola", "members": ["NG-TA"]},
-        {"name": "Plateau", "from": "Plateau", "members": ["NG-PL", "NG-NA"]},
-        {"name": "Benue", "from": "Benue", "members": ["NG-BE"]},
-        {"name": "Kwara", "from": "Kwara", "members": ["NG-KW"]},
-        {"name": "Kogi", "from": "Kwara", "members": ["NG-KO"]},
-        {"name": "Lagos", "from": "Lagos", "members": ["NG-LA"]},
-        {"name": "Ogun", "from": "Ogun", "members": ["NG-OG"]},
-        {"name": "Oyo", "from": "Oyo", "members": ["NG-OY"]},
-        {"name": "Osun", "from": "Oyo", "members": ["NG-OS"]},
-        {"name": "Ondo", "from": "Ondo", "members": ["NG-ON", "NG-EK"]},
-        {"name": "Edo", "from": "Bendel", "members": ["NG-ED"]},
-        {"name": "Delta", "from": "Bendel", "members": ["NG-DE"]},
-        {"name": "Anambra", "from": "Anambra", "members": ["NG-AN"]},
-        {"name": "Enugu", "from": "Anambra", "members": ["NG-EN"]},
-        {"name": "Imo", "from": "Imo", "members": ["NG-IM"]},
-        {"name": "Abia", "from": "Imo", "members": ["NG-AB"]},
-        {"name": "Cross River", "from": "Cross River", "members": ["NG-CR"]},
-        {"name": "Akwa Ibom", "from": "Akwa Ibom", "members": ["NG-AK"]},
-        {"name": "Rivers", "from": "Rivers", "members": ["NG-RI", "NG-BY"]},
-        {"name": "Federal Capital Territory", "from": "Federal Capital Territory", "members": ["NG-FC"], "not_a_state": true}
+        {
+          "name": "Sokoto",
+          "from": "Sokoto",
+          "members": [
+            "NG-SO",
+            "NG-ZA"
+          ]
+        },
+        {
+          "name": "Kebbi",
+          "from": "Sokoto",
+          "members": [
+            "NG-KE"
+          ]
+        },
+        {
+          "name": "Niger",
+          "from": "Niger",
+          "members": [
+            "NG-NI"
+          ]
+        },
+        {
+          "name": "Kaduna",
+          "from": "Kaduna",
+          "members": [
+            "NG-KD"
+          ]
+        },
+        {
+          "name": "Katsina",
+          "from": "Katsina",
+          "members": [
+            "NG-KT"
+          ]
+        },
+        {
+          "name": "Kano",
+          "from": "Kano",
+          "members": [
+            "NG-KN"
+          ]
+        },
+        {
+          "name": "Jigawa",
+          "from": "Kano",
+          "members": [
+            "NG-JI"
+          ]
+        },
+        {
+          "name": "Borno",
+          "from": "Borno",
+          "members": [
+            "NG-BO"
+          ]
+        },
+        {
+          "name": "Yobe",
+          "from": "Borno",
+          "members": [
+            "NG-YO"
+          ]
+        },
+        {
+          "name": "Bauchi",
+          "from": "Bauchi",
+          "members": [
+            "NG-BA",
+            "NG-GO"
+          ]
+        },
+        {
+          "name": "Adamawa",
+          "from": "Gongola",
+          "members": [
+            "NG-AD"
+          ]
+        },
+        {
+          "name": "Taraba",
+          "from": "Gongola",
+          "members": [
+            "NG-TA"
+          ]
+        },
+        {
+          "name": "Plateau",
+          "from": "Plateau",
+          "members": [
+            "NG-PL",
+            "NG-NA"
+          ]
+        },
+        {
+          "name": "Benue",
+          "from": "Benue",
+          "members": [
+            "NG-BE"
+          ]
+        },
+        {
+          "name": "Kwara",
+          "from": "Kwara",
+          "members": [
+            "NG-KW"
+          ]
+        },
+        {
+          "name": "Kogi",
+          "from": "Kwara",
+          "members": [
+            "NG-KO"
+          ]
+        },
+        {
+          "name": "Lagos",
+          "from": "Lagos",
+          "members": [
+            "NG-LA"
+          ]
+        },
+        {
+          "name": "Ogun",
+          "from": "Ogun",
+          "members": [
+            "NG-OG"
+          ]
+        },
+        {
+          "name": "Oyo",
+          "from": "Oyo",
+          "members": [
+            "NG-OY"
+          ]
+        },
+        {
+          "name": "Osun",
+          "from": "Oyo",
+          "members": [
+            "NG-OS"
+          ]
+        },
+        {
+          "name": "Ondo",
+          "from": "Ondo",
+          "members": [
+            "NG-ON",
+            "NG-EK"
+          ]
+        },
+        {
+          "name": "Edo",
+          "from": "Bendel",
+          "members": [
+            "NG-ED"
+          ]
+        },
+        {
+          "name": "Delta",
+          "from": "Bendel",
+          "members": [
+            "NG-DE"
+          ]
+        },
+        {
+          "name": "Anambra",
+          "from": "Anambra",
+          "members": [
+            "NG-AN"
+          ]
+        },
+        {
+          "name": "Enugu",
+          "from": "Anambra",
+          "members": [
+            "NG-EN"
+          ]
+        },
+        {
+          "name": "Imo",
+          "from": "Imo",
+          "members": [
+            "NG-IM"
+          ]
+        },
+        {
+          "name": "Abia",
+          "from": "Imo",
+          "members": [
+            "NG-AB"
+          ]
+        },
+        {
+          "name": "Cross River",
+          "from": "Cross River",
+          "members": [
+            "NG-CR"
+          ]
+        },
+        {
+          "name": "Akwa Ibom",
+          "from": "Akwa Ibom",
+          "members": [
+            "NG-AK"
+          ]
+        },
+        {
+          "name": "Rivers",
+          "from": "Rivers",
+          "members": [
+            "NG-RI",
+            "NG-BY"
+          ]
+        },
+        {
+          "name": "Federal Capital Territory",
+          "from": "Federal Capital Territory",
+          "members": [
+            "NG-FC"
+          ],
+          "not_a_state": true
+        }
       ],
       "split": {
-        "NG-EB": {"parents": ["Enugu", "Abia"], "note": "Divided between Enugu and Abia until 1996.", "evidence": "1996 announcement (primary)", "disputed": null}
+        "NG-EB": {
+          "parents": [
+            "Enugu",
+            "Abia"
+          ],
+          "note": "Divided between Enugu and Abia until 1996.",
+          "evidence": "1996 announcement (primary)",
+          "disputed": null
+        }
       }
     },
     "1996": {
       "label": "1 October 1996",
       "count": 36,
       "groups": [
-        {"name": "Sokoto", "from": "Sokoto", "members": ["NG-SO"]},
-        {"name": "Zamfara", "from": "Sokoto", "members": ["NG-ZA"]},
-        {"name": "Kebbi", "from": "Kebbi", "members": ["NG-KE"]},
-        {"name": "Niger", "from": "Niger", "members": ["NG-NI"]},
-        {"name": "Kaduna", "from": "Kaduna", "members": ["NG-KD"]},
-        {"name": "Katsina", "from": "Katsina", "members": ["NG-KT"]},
-        {"name": "Kano", "from": "Kano", "members": ["NG-KN"]},
-        {"name": "Jigawa", "from": "Jigawa", "members": ["NG-JI"]},
-        {"name": "Borno", "from": "Borno", "members": ["NG-BO"]},
-        {"name": "Yobe", "from": "Yobe", "members": ["NG-YO"]},
-        {"name": "Bauchi", "from": "Bauchi", "members": ["NG-BA"]},
-        {"name": "Gombe", "from": "Bauchi", "members": ["NG-GO"]},
-        {"name": "Adamawa", "from": "Adamawa", "members": ["NG-AD"]},
-        {"name": "Taraba", "from": "Taraba", "members": ["NG-TA"]},
-        {"name": "Plateau", "from": "Plateau", "members": ["NG-PL"]},
-        {"name": "Nasarawa", "from": "Plateau", "members": ["NG-NA"]},
-        {"name": "Benue", "from": "Benue", "members": ["NG-BE"]},
-        {"name": "Kwara", "from": "Kwara", "members": ["NG-KW"]},
-        {"name": "Kogi", "from": "Kogi", "members": ["NG-KO"]},
-        {"name": "Lagos", "from": "Lagos", "members": ["NG-LA"]},
-        {"name": "Ogun", "from": "Ogun", "members": ["NG-OG"]},
-        {"name": "Oyo", "from": "Oyo", "members": ["NG-OY"]},
-        {"name": "Osun", "from": "Osun", "members": ["NG-OS"]},
-        {"name": "Ondo", "from": "Ondo", "members": ["NG-ON"]},
-        {"name": "Ekiti", "from": "Ondo", "members": ["NG-EK"]},
-        {"name": "Edo", "from": "Edo", "members": ["NG-ED"]},
-        {"name": "Delta", "from": "Delta", "members": ["NG-DE"]},
-        {"name": "Anambra", "from": "Anambra", "members": ["NG-AN"]},
-        {"name": "Enugu", "from": "Enugu", "members": ["NG-EN"]},
-        {"name": "Ebonyi", "from": "Enugu", "members": ["NG-EB"]},
-        {"name": "Imo", "from": "Imo", "members": ["NG-IM"]},
-        {"name": "Abia", "from": "Abia", "members": ["NG-AB"]},
-        {"name": "Cross River", "from": "Cross River", "members": ["NG-CR"]},
-        {"name": "Akwa Ibom", "from": "Akwa Ibom", "members": ["NG-AK"]},
-        {"name": "Rivers", "from": "Rivers", "members": ["NG-RI"]},
-        {"name": "Bayelsa", "from": "Rivers", "members": ["NG-BY"]},
-        {"name": "Federal Capital Territory", "from": "Federal Capital Territory", "members": ["NG-FC"], "not_a_state": true}
+        {
+          "name": "Sokoto",
+          "from": "Sokoto",
+          "members": [
+            "NG-SO"
+          ]
+        },
+        {
+          "name": "Zamfara",
+          "from": "Sokoto",
+          "members": [
+            "NG-ZA"
+          ]
+        },
+        {
+          "name": "Kebbi",
+          "from": "Kebbi",
+          "members": [
+            "NG-KE"
+          ]
+        },
+        {
+          "name": "Niger",
+          "from": "Niger",
+          "members": [
+            "NG-NI"
+          ]
+        },
+        {
+          "name": "Kaduna",
+          "from": "Kaduna",
+          "members": [
+            "NG-KD"
+          ]
+        },
+        {
+          "name": "Katsina",
+          "from": "Katsina",
+          "members": [
+            "NG-KT"
+          ]
+        },
+        {
+          "name": "Kano",
+          "from": "Kano",
+          "members": [
+            "NG-KN"
+          ]
+        },
+        {
+          "name": "Jigawa",
+          "from": "Jigawa",
+          "members": [
+            "NG-JI"
+          ]
+        },
+        {
+          "name": "Borno",
+          "from": "Borno",
+          "members": [
+            "NG-BO"
+          ]
+        },
+        {
+          "name": "Yobe",
+          "from": "Yobe",
+          "members": [
+            "NG-YO"
+          ]
+        },
+        {
+          "name": "Bauchi",
+          "from": "Bauchi",
+          "members": [
+            "NG-BA"
+          ]
+        },
+        {
+          "name": "Gombe",
+          "from": "Bauchi",
+          "members": [
+            "NG-GO"
+          ]
+        },
+        {
+          "name": "Adamawa",
+          "from": "Adamawa",
+          "members": [
+            "NG-AD"
+          ]
+        },
+        {
+          "name": "Taraba",
+          "from": "Taraba",
+          "members": [
+            "NG-TA"
+          ]
+        },
+        {
+          "name": "Plateau",
+          "from": "Plateau",
+          "members": [
+            "NG-PL"
+          ]
+        },
+        {
+          "name": "Nasarawa",
+          "from": "Plateau",
+          "members": [
+            "NG-NA"
+          ]
+        },
+        {
+          "name": "Benue",
+          "from": "Benue",
+          "members": [
+            "NG-BE"
+          ]
+        },
+        {
+          "name": "Kwara",
+          "from": "Kwara",
+          "members": [
+            "NG-KW"
+          ]
+        },
+        {
+          "name": "Kogi",
+          "from": "Kogi",
+          "members": [
+            "NG-KO"
+          ]
+        },
+        {
+          "name": "Lagos",
+          "from": "Lagos",
+          "members": [
+            "NG-LA"
+          ]
+        },
+        {
+          "name": "Ogun",
+          "from": "Ogun",
+          "members": [
+            "NG-OG"
+          ]
+        },
+        {
+          "name": "Oyo",
+          "from": "Oyo",
+          "members": [
+            "NG-OY"
+          ]
+        },
+        {
+          "name": "Osun",
+          "from": "Osun",
+          "members": [
+            "NG-OS"
+          ]
+        },
+        {
+          "name": "Ondo",
+          "from": "Ondo",
+          "members": [
+            "NG-ON"
+          ]
+        },
+        {
+          "name": "Ekiti",
+          "from": "Ondo",
+          "members": [
+            "NG-EK"
+          ]
+        },
+        {
+          "name": "Edo",
+          "from": "Edo",
+          "members": [
+            "NG-ED"
+          ]
+        },
+        {
+          "name": "Delta",
+          "from": "Delta",
+          "members": [
+            "NG-DE"
+          ]
+        },
+        {
+          "name": "Anambra",
+          "from": "Anambra",
+          "members": [
+            "NG-AN"
+          ]
+        },
+        {
+          "name": "Enugu",
+          "from": "Enugu",
+          "members": [
+            "NG-EN"
+          ]
+        },
+        {
+          "name": "Ebonyi",
+          "from": "Enugu",
+          "members": [
+            "NG-EB"
+          ]
+        },
+        {
+          "name": "Imo",
+          "from": "Imo",
+          "members": [
+            "NG-IM"
+          ]
+        },
+        {
+          "name": "Abia",
+          "from": "Abia",
+          "members": [
+            "NG-AB"
+          ]
+        },
+        {
+          "name": "Cross River",
+          "from": "Cross River",
+          "members": [
+            "NG-CR"
+          ]
+        },
+        {
+          "name": "Akwa Ibom",
+          "from": "Akwa Ibom",
+          "members": [
+            "NG-AK"
+          ]
+        },
+        {
+          "name": "Rivers",
+          "from": "Rivers",
+          "members": [
+            "NG-RI"
+          ]
+        },
+        {
+          "name": "Bayelsa",
+          "from": "Rivers",
+          "members": [
+            "NG-BY"
+          ]
+        },
+        {
+          "name": "Federal Capital Territory",
+          "from": "Federal Capital Territory",
+          "members": [
+            "NG-FC"
+          ],
+          "not_a_state": true
+        }
       ],
       "split": {}
     }
@@ -194,57 +1090,161 @@
       "id": "1963",
       "title": "Four regions",
       "snapshot": "1963",
-      "when": {"from": 1963, "to": 1967, "label": "1963 to 1967"},
-      "camera": {"center": [9.1, 8.6], "zoom": 6},
+      "when": {
+        "from": 1963,
+        "to": 1967,
+        "label": "1963 to 1967"
+      },
+      "camera": {
+        "center": [
+          9.1,
+          8.6
+        ],
+        "zoom": 6
+      },
       "text": "Before 1967, Nigeria's federation was made of large regions. A fourth, the Mid-Western Region, was carved out of the Western Region in 1963 (one source says 1964), and Lagos was a separate federal territory. The Northern Region alone covered about four-fifths of the country's land (79%, measured with today's state borders).",
-      "sources": ["forumfed"],
+      "sources": [
+        "forumfed"
+      ],
       "disputed": "The Mid-Western Region is usually dated to 1963; the Forum of Federations chapter gives 1964."
     },
     {
       "id": "1967",
       "title": "Twelve states",
       "snapshot": "1967",
-      "when": {"from": 1967, "to": 1976, "label": "27 May 1967"},
-      "camera": {"center": [9.1, 8.6], "zoom": 6},
+      "when": {
+        "from": 1967,
+        "to": 1976,
+        "label": "27 May 1967"
+      },
+      "camera": {
+        "center": [
+          9.1,
+          8.6
+        ],
+        "zoom": 6
+      },
       "text": "On 27 May 1967, General Yakubu Gowon's military government replaced the four regions with 12 states by decree. The decree described each state as a list of existing provinces, and set up a commission to settle boundaries.",
-      "sources": ["gazette-1967", "forumfed", "agent-check-25"]
+      "sources": [
+        "gazette-1967",
+        "forumfed",
+        "agent-check-25"
+      ]
     },
     {
       "id": "1976",
       "title": "Nineteen states and a new capital territory",
       "snapshot": "1976",
-      "when": {"from": 1976, "to": 1987, "label": "3 February 1976"},
-      "camera": {"center": [9.1, 8.6], "zoom": 6},
+      "when": {
+        "from": 1976,
+        "to": 1987,
+        "label": "3 February 1976"
+      },
+      "camera": {
+        "center": [
+          9.1,
+          8.6
+        ],
+        "zoom": 6
+      },
       "text": "In 1976 General Murtala Mohammed's government created seven more states, making 19, and designated a Federal Capital Territory for a new capital at Abuja. Lagos stayed the capital for now. Mid-Western was renamed Bendel.",
-      "sources": ["gazette-1976", "forumfed", "wiki-statehood"]
+      "sources": [
+        "gazette-1976",
+        "forumfed",
+        "wiki-statehood"
+      ],
+      "effects": [
+        {
+          "type": "pulse",
+          "state": "NG-FC",
+          "at": 0.5
+        }
+      ]
     },
     {
       "id": "1987",
       "title": "Twenty-one states",
       "snapshot": "1987",
-      "when": {"from": 1987, "to": 1991, "label": "23 September 1987"},
-      "camera": {"center": [9.1, 8.6], "zoom": 6},
+      "when": {
+        "from": 1987,
+        "to": 1991,
+        "label": "23 September 1987"
+      },
+      "camera": {
+        "center": [
+          9.1,
+          8.6
+        ],
+        "zoom": 6
+      },
       "text": "On 23 September 1987, General Ibrahim Babangida's government created Katsina, from Kaduna, and Akwa Ibom, from Cross River.",
-      "sources": ["dailytrust-1987", "wiki-akwaibom"]
+      "sources": [
+        "dailytrust-1987",
+        "wiki-akwaibom"
+      ]
     },
     {
       "id": "1991",
       "title": "Thirty states, and the capital moves",
       "snapshot": "1991",
-      "when": {"from": 1991, "to": 1996, "label": "27 August 1991"},
-      "camera": {"center": [9.1, 8.6], "zoom": 6},
+      "when": {
+        "from": 1991,
+        "to": 1996,
+        "label": "27 August 1991"
+      },
+      "camera": {
+        "center": [
+          9.1,
+          8.6
+        ],
+        "zoom": 6
+      },
       "text": "On 27 August 1991, nine more states were created: Abia, Delta, Edo, Jigawa, Kebbi, Kogi, Osun, Taraba and Yobe. Gongola was renamed Adamawa, and Bendel was split into Edo and Delta. Later the same year the federal capital officially moved from Lagos to Abuja.",
-      "sources": ["thisday-1991", "forumfed", "wiki-kogi", "wiki-statehood", "agent-check-25"],
-      "disputed": "Secondary sources give the 1991 decree as either No. 37 or No. 41, so no decree number is shown."
+      "sources": [
+        "thisday-1991",
+        "forumfed",
+        "wiki-kogi",
+        "wiki-statehood",
+        "agent-check-25"
+      ],
+      "disputed": "Secondary sources give the 1991 decree as either No. 37 or No. 41, so no decree number is shown.",
+      "effects": [
+        {
+          "type": "arc",
+          "from": [
+            6.455,
+            3.394
+          ],
+          "to": [
+            9.06,
+            7.4
+          ],
+          "from_label": "Lagos",
+          "to_label": "Abuja",
+          "at": 0.6
+        }
+      ]
     },
     {
       "id": "1996",
       "title": "Thirty-six states",
       "snapshot": "1996",
-      "when": {"from": 1996, "to": 2026, "label": "1 October 1996"},
-      "camera": {"center": [9.1, 8.6], "zoom": 6},
+      "when": {
+        "from": 1996,
+        "to": 2026,
+        "label": "1 October 1996"
+      },
+      "camera": {
+        "center": [
+          9.1,
+          8.6
+        ],
+        "zoom": 6
+      },
       "text": "On 1 October 1996, General Sani Abacha announced six new states: Bayelsa, Ebonyi, Ekiti, Gombe, Nasarawa and Zamfara. This is the map of 36 states and the FCT that Nigeria still has today.",
-      "sources": ["speech-1996"]
+      "sources": [
+        "speech-1996"
+      ]
     }
   ]
 }

@@ -28,6 +28,14 @@ Every **scene** has an `id` (used in links like `#chapter=nok&scene=iron`), a `t
 a `camera`, `sources`, and either `show` (feature ids, with `dim` for ones shown faintly) or a
 `snapshot`. An optional `disputed` adds a note to the scene.
 
+While a scene plays, things appear over time: a year counter runs from `when.from` to `when.to`,
+the narration appears sentence by sentence, places pulse in one after another, and on state maps
+the new borders draw themselves before the new states take their colours. Jumping to a scene shows
+it finished. Two optional extras: `furnace` (feature ids that glow, for iron working) and `effects`,
+a list of `{"type": "pulse", "state": "NG-FC", "at": 0.5}` or
+`{"type": "arc", "from": [lat, lon], "to": [lat, lon], "from_label": "...", "to_label": "...", "at": 0.6}`,
+where `at` is how far into the scene (0 to 1) it starts.
+
 A **snapshot** lists `groups` (the states at that date, each with the codes of today's states it
 covered, and `from`: the state it came from in the previous snapshot) and `split` for today's states
 that were divided between earlier states. The build stops if any of today's states is missing or

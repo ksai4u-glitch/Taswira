@@ -267,6 +267,18 @@ def check(chapters, sources, states, cited=None):
                 need(sc["snapshot"] in snapshots, f"{where}: unknown snapshot {sc['snapshot']!r}")
             cite(where, sc.get("sources"))
             need("{" not in sc.get("text", ""), f"{where}: text still has a {{placeholder}}")
+            for fid in sc.get("furnace", []):
+                need(fid in sc.get("show", []), f"{where}: furnace glow on {fid!r}, which the scene does not show")
+            for e in sc.get("effects", []):
+                need(e.get("type") in ("arc", "pulse") and isinstance(e.get("at"), (int, float)) and 0 <= e["at"] < 1,
+                     f"{where}: an effect needs type arc or pulse and at between 0 and 1 (part of the scene)")
+                if e.get("type") == "pulse":
+                    need(e.get("state") in states and sc.get("snapshot"), f"{where}: pulse needs a state on a state map")
+                if e.get("type") == "arc":
+                    for end in ("from", "to"):
+                        lat, lon = e.get(end, [0, 0])
+                        need(LAT_RANGE[0] <= lat <= LAT_RANGE[1] and LON_RANGE[0] <= lon <= LON_RANGE[1]
+                             and e.get(end + "_label"), f"{where}: arc {end} must be in Nigeria and have a {end}_label")
 
     return problems
 
@@ -294,6 +306,7 @@ def page_data(chapters, sources, states, arcs, users):
                      if len(u) == 1 or group_of[u[0]] != group_of[u[1]]]
             snap_out[key] = {
                 "label": snap["label"], "count": snap["count"], "count_note": snap.get("count_note"),
+                "unit": snap.get("unit", "states"),
                 "group_of": group_of, "colours": colours[key], "thick": thick,
                 "labels": [{"name": g["name"], "at": label_point(g["members"], states),
                             "not_a_state": bool(g.get("not_a_state"))} for g in snap["groups"]],
