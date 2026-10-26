@@ -90,6 +90,14 @@ Actions tab → "Update map with new UCDP releases" → Run workflow.
 The yearly stable release (for example 27.1) still needs a manual change of
 `API_VERSION` and the dates in `settings.py`.
 
+## History page (draft)
+
+`python build_history.py` builds `docs/history.html`, an animated map of chapters of Nigeria's
+history (so far: the Nok culture, and state creation from 1967 to 1996). It reads only the files in
+`history/`, makes no API requests and is separate from `publish.py`. See
+[`history/README.md`](history/README.md) for how chapters and sources are written. Tests:
+`python -m unittest discover -s tests`.
+
 ## Agent tasks (Claude + Codex)
 
 A comment such as `/agent review` plus a brief on an issue starts a task that
