@@ -10,7 +10,7 @@ API_VERSION = "26.1"          # stable yearly GED release (covers events up to t
 # monthly releases after it. The weekly GitHub Actions job (update_candidates.py) adds new
 # monthly versions here automatically; you can also add one by hand.
 # Set to [] to leave preliminary data out entirely.
-CANDIDATE_VERSIONS = ["26.01.26.06", "26.0.7", "26.0.8"]
+CANDIDATE_VERSIONS = ["26.01.26.06", "26.0.7", "26.0.8", "26.0.9"]
 
 # African countries by Gleditsch-Ward code (the codes the API's Country filter uses)
 AFRICA = [
