@@ -20,7 +20,7 @@ you: /agent review   (comment on an issue, with a brief)
      │            saves your brief as the task record, creates branch agent/issue-N-run-M
      Claude draft ─ read-only GitHub token; output leaves as a patch artifact
      publish ─ no AI: checks the patch's paths, commits to the task branch, opens a draft PR
-     Codex review 1 ─ reads the exact commit, read-only sandbox, returns numbered findings (JSON)
+     Codex review 1 ─ reads the exact commit, read-only files with web access, returns numbered findings (JSON)
      publish ─ records the review, marks that commit with status agent/codex-review
      Claude answers 1 ─ agree / partly agree / disagree per finding, with evidence; may correct
      publish ─ checks and commits
@@ -54,7 +54,8 @@ you: /agent review   (comment on an issue, with a brief)
   instruction. Untrusted text is never pasted into shell scripts. Claude's shell
   commands run with secrets stripped from their environment
   (`CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`); Codex runs under codex-action's
-  `drop-sudo` strategy with a read-only permission profile.
+  `drop-sudo` strategy with a permission profile that makes files read-only
+  but allows outbound network, so it can re-open the sources it checks.
 
 ## Limits
 
@@ -176,7 +177,7 @@ Needs a live run to confirm (not claimed to work yet):
 
 - Authentication with your secrets, and the actions accepting the inputs as
   written (`--json-schema`, `--max-budget-usd`, Codex web search (`-c web_search="live"`), the
-  `:read-only` permission profile with an output schema).
+  read-only `review-web` permission profile with an output schema).
 - Claude's structured output and usage numbers arriving through the action's
   outputs, and Claude being able to fetch and read PDFs on the runner.
 - Draft PR creation, comments, labels, commit statuses and run cancellation
