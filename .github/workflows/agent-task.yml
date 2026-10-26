@@ -194,7 +194,7 @@ jobs:
       edits_allowed: true
       sha: ${{ needs.authorize.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
     secrets:
@@ -212,7 +212,7 @@ jobs:
       edits_allowed: true
       sha: ${{ needs.authorize.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
 
@@ -226,7 +226,7 @@ jobs:
       round: 1
       sha: ${{ needs.publish_work.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
     secrets:
@@ -244,7 +244,7 @@ jobs:
       edits_allowed: false
       sha: ${{ needs.publish_work.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
 
@@ -259,7 +259,7 @@ jobs:
       edits_allowed: ${{ needs.publish_review_1.outputs.next == 'respond' }}
       sha: ${{ needs.publish_review_1.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
     secrets:
@@ -277,7 +277,7 @@ jobs:
       edits_allowed: ${{ needs.publish_review_1.outputs.next == 'respond' }}
       sha: ${{ needs.publish_review_1.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
 
@@ -291,7 +291,7 @@ jobs:
       round: 2
       sha: ${{ needs.publish_response_1.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
     secrets:
@@ -309,7 +309,7 @@ jobs:
       edits_allowed: false
       sha: ${{ needs.publish_response_1.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
 
@@ -324,7 +324,7 @@ jobs:
       edits_allowed: ${{ needs.publish_review_2.outputs.next == 'respond' }}
       sha: ${{ needs.publish_review_2.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
     secrets:
@@ -342,7 +342,7 @@ jobs:
       edits_allowed: ${{ needs.publish_review_2.outputs.next == 'respond' }}
       sha: ${{ needs.publish_review_2.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
 
@@ -356,7 +356,7 @@ jobs:
       round: 3
       sha: ${{ needs.publish_response_2.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
     secrets:
@@ -374,7 +374,7 @@ jobs:
       edits_allowed: false
       sha: ${{ needs.publish_response_2.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
 
@@ -390,7 +390,7 @@ jobs:
       edits_allowed: false
       sha: ${{ needs.publish_review_3.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
     secrets:
@@ -408,7 +408,7 @@ jobs:
       edits_allowed: false
       sha: ${{ needs.publish_review_3.outputs.sha }}
       mode: ${{ needs.authorize.outputs.mode }}
-      issue: ${{ needs.authorize.outputs.issue }}
+      issue: ${{ fromJSON(needs.authorize.outputs.issue) }}   # job outputs are strings; the input is a number
       task_dir: ${{ needs.authorize.outputs.task_dir }}
       branch: ${{ needs.authorize.outputs.branch }}
 

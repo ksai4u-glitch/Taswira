@@ -1,7 +1,10 @@
 # Weekly check for a new monthly UCDP GED Candidate release.
 # If there is one: add it to settings.py, download it, rebuild docs/index.html,
-# commit both to main and ask GitHub Pages to republish the map.
-# Needs a repository secret called UCDP_TOKEN (Settings -> Secrets and variables -> Actions).
+# and open a pull request with both. Nothing goes live until the maintainer
+# merges it (merging is a normal push, so GitHub Pages then republishes the map).
+# Needs a repository secret called UCDP_TOKEN (Settings -> Secrets and variables -> Actions)
+# and "Allow GitHub Actions to create and approve pull requests" in Settings -> Actions.
+# Policy: .github/agents/UPDATE-POLICY.md
 
 name: Update map with new UCDP releases
 
@@ -11,8 +14,8 @@ on:
   workflow_dispatch:         # plus a "Run workflow" button in the Actions tab
 
 permissions:
-  contents: write            # to commit settings.py and docs/index.html
-  pages: write               # to ask GitHub Pages to rebuild
+  contents: write            # to push the data/ged-... branch (never main)
+  pull-requests: write       # to open the pull request
 
 concurrency:
   group: ucdp-update
@@ -44,30 +47,63 @@ jobs:
         id: check
         run: python update_candidates.py
 
-      - name: Download, clean and rebuild the public page
+      # One data pull request at a time. Until it is merged, settings.py on main
+      # does not list the new version, so every weekly run would find it again.
+      - name: Skip if a data pull request is already waiting
+        id: open
         if: steps.check.outputs.new_versions != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          waiting=$(gh pr list --state open --json headRefName,url \
+            --jq '[.[] | select(.headRefName | startswith("data/ged-")) | .url] | first // ""')
+          echo "waiting=$waiting" >> "$GITHUB_OUTPUT"
+          if [ -n "$waiting" ]; then echo "Waiting for $waiting to be merged or closed; nothing to do."; fi
+
+      - name: Download, clean and rebuild the public page
+        if: steps.check.outputs.new_versions != '' && steps.open.outputs.waiting == ''
         run: |
           python save_events.py
           python clean_events.py
-          python publish.py
+          python publish.py | tee publish.log
 
       - name: Save events for next time
-        if: steps.check.outputs.new_versions != ''
+        if: steps.check.outputs.new_versions != '' && steps.open.outputs.waiting == ''
         uses: actions/cache/save@v4
         with:
           path: data/taswira.db
           key: taswira-db-${{ github.run_id }}
 
-      - name: Commit and republish
-        if: steps.check.outputs.new_versions != ''
+      - name: Open a pull request for review
+        if: steps.check.outputs.new_versions != '' && steps.open.outputs.waiting == ''
         env:
           GH_TOKEN: ${{ github.token }}
           NEW_VERSIONS: ${{ steps.check.outputs.new_versions }}
+          BASE: ${{ github.event.repository.default_branch || 'main' }}
         run: |
+          # Only these two files may change; anything else means something is wrong.
+          unexpected=$(git status --porcelain --untracked-files=no | awk '{print $2}' \
+                       | grep -vxE 'settings\.py|docs/index\.html' || true)
+          if [ -n "$unexpected" ]; then echo "Unexpected changes: $unexpected"; exit 1; fi
+
+          branch="data/ged-${NEW_VERSIONS// /-}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
           git add settings.py docs/index.html
           git commit -m "Add GED Candidate $NEW_VERSIONS"
-          git push
-          # Pushes made by this workflow don't start a Pages build on their own
-          gh api -X POST "repos/${{ github.repository }}/pages/builds"
+          git push --force origin "HEAD:refs/heads/$branch"   # a data/ branch only this workflow writes
+
+          {
+            echo "UCDP published GED Candidate **$NEW_VERSIONS** (preliminary data)."
+            echo
+            echo "This adds it to \`CANDIDATE_VERSIONS\` in \`settings.py\` and rebuilds \`docs/index.html\`."
+            echo "**Merging publishes it on the live map.** Closing it skips it for now (next Monday's run will offer it again)."
+            echo
+            echo "publish.py output:"
+            echo '```'
+            cat publish.log
+            echo '```'
+          } > pr-body.md
+          gh pr create --base "$BASE" --head "$branch" \
+            --title "Add GED Candidate $NEW_VERSIONS" --body-file pr-body.md
