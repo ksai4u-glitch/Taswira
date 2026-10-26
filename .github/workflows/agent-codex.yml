@@ -1,6 +1,7 @@
 # Runs one Codex review round of an agent task (called by agent-task.yml).
-# Codex reads the exact commit it is given, cannot write files (read-only
-# permission profile) and has no GitHub write access. Its JSON review leaves
+# Codex reads the exact commit it is given, cannot write files (a read-only
+# permission profile that allows outbound network, so it can re-open cited
+# sources) and has no GitHub write access. Its JSON review leaves
 # this workflow as an artifact; agent-publish.yml records and posts it.
 
 name: Agent stage (Codex review)
@@ -70,6 +71,19 @@ jobs:
             --set "repo=$REPO" --set "task_dir=$TASK_DIR" --set "mode=$MODE" --set "round=$ROUND" \
             --set "max_rounds=$max_rounds" --set "sha=$SHA" --set "base_sha=$base_sha"
 
+      # Written outside the checkout so nothing on the task branch can change it.
+      - name: Codex permission profile (read-only files, outbound network)
+        run: |
+          mkdir -p "$RUNNER_TEMP/codex-home"
+          cat > "$RUNNER_TEMP/codex-home/config.toml" <<'TOML'
+          [permissions.review-web]
+          description = "Read-only files; outbound network so cited sources can be re-opened"
+          extends = ":read-only"
+
+          [permissions.review-web.network]
+          enabled = true
+          TOML
+
       # Last step of the job, as codex-action's security guide recommends.
       - name: Run Codex
         id: codex
@@ -78,7 +92,8 @@ jobs:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           prompt-file: .agent-run/codex-prompt.md
           output-schema-file: .github/agents/schemas/codex-review.schema.json
-          permission-profile: ":read-only"
+          codex-home: ${{ runner.temp }}/codex-home
+          permission-profile: review-web
           safety-strategy: drop-sudo
           codex-args: '["-c", "web_search=\"live\""]'   # live web search (`--search` is not a `codex exec` flag)
           model: ${{ vars.AGENT_CODEX_MODEL }}
