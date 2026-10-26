@@ -8,6 +8,10 @@
   where the camera looks, and the text. Play shows each scene for long enough to
   read it, then moves on. Everything drawn for a scene is worked out from the scene
   alone, so playing, jumping back, pressing Next or opening a link all show the same thing.
+
+  On top of that sits a layer of effects (title cards, light sweeps, sparks, dust, ripples) drawn
+  on a <canvas>. They are decoration only: they never add places, borders or dates. They can be
+  switched off with the Effects button, and are off when the device asks for less motion.
 -->
 <html lang="en">
 <head>
@@ -132,9 +136,66 @@
   .group-label.old { color: #cfd8e3; font-style: italic; }
   .c-text .line { transition: opacity .6s; }
   .c-text .line.waiting { opacity: 0; }
+  .c-deco { font-size: 12px; color: var(--text-muted); }
+
+  /* Cinematic layer: decoration on top of the map, switched off by the Effects button */
+  #fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 470; pointer-events: none; }
+  #mapwrap.fx-on::after { content: ""; position: absolute; inset: 0; z-index: 465; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgb(0 0 0 / .55) 100%); }
+  #grain { position: absolute; inset: -50%; z-index: 466; pointer-events: none; opacity: 0; transition: opacity .8s;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  #mapwrap.cinema #grain { opacity: .14; animation: hxgrain .6s steps(4) infinite; }
+  @keyframes hxgrain { 25% { transform: translate(-4%, 3%); } 50% { transform: translate(3%, -4%); } 75% { transform: translate(-2%, -2%); } }
+  .lb { position: absolute; left: 0; right: 0; height: 0; z-index: 475; background: #000; pointer-events: none;
+        transition: height .8s cubic-bezier(.6, 0, .2, 1); }
+  .lb.top { top: 0; } .lb.bot { bottom: 0; }
+  #mapwrap.cinema .lb { height: 30px; }
+  #hud { transition: top .8s cubic-bezier(.6, 0, .2, 1), opacity .4s; }
+  #mapwrap.cinema #hud { top: 42px; }
+  #hud-sub { transform-origin: right center; }
+  #hud-sub.bump { animation: hxbump .5s ease-out; }
+  @keyframes hxbump { from { transform: scale(1.45); color: #fff; text-shadow: 0 0 14px var(--accent), 0 0 3px #000; } }
+  .leaflet-tile-pane { transition: filter 1.6s ease; }
+  #mapwrap.fx-on[data-grade="ancient"] .leaflet-tile-pane { filter: sepia(.6) saturate(1.5) hue-rotate(-10deg) brightness(.92); }
+  #mapwrap.fx-on[data-grade="iron"] .leaflet-tile-pane { filter: sepia(.9) saturate(2.4) hue-rotate(-22deg) brightness(.82); }
+  #mapwrap.fx-on[data-grade="decline"] .leaflet-tile-pane { filter: grayscale(1) brightness(.62) contrast(1.15); }
+  #mapwrap.fx-on[data-grade="modern"] .leaflet-tile-pane { filter: saturate(1.2) hue-rotate(10deg) brightness(1.05); }
+
+  /* Chapter title card, shown when a chapter starts playing */
+  #title-card { position: absolute; inset: 0; z-index: 455; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 24px; text-align: center; pointer-events: none; visibility: hidden; opacity: 0;
+    --tone: var(--accent);
+    background: radial-gradient(ellipse at 50% 55%, rgb(22 40 52 / .88), rgb(4 7 10 / .97) 72%); }
+  #title-card[data-tone="warm"] { --tone: #f0a060;
+    background: radial-gradient(ellipse at 50% 55%, rgb(60 34 18 / .88), rgb(8 5 3 / .97) 72%); }
+  #title-card p { margin: 0; }
+  .tc-kicker { font: 600 13px var(--mono); letter-spacing: .5em; text-transform: uppercase; color: var(--tone); }
+  .tc-title { margin-top: 12px !important; font: 800 clamp(48px, 10vw, 120px)/1 system-ui, sans-serif; color: #fff;
+    text-transform: uppercase; text-shadow: 0 0 40px color-mix(in srgb, var(--tone) 55%, transparent); }
+  .tc-title.long { font-size: clamp(28px, 5.4vw, 64px); }
+  .tc-title .w { display: inline-block; white-space: pre; }
+  .tc-sub { margin-top: 12px !important; font: 500 clamp(16px, 2.4vw, 26px)/1.3 system-ui, sans-serif; color: var(--text-primary); }
+  .tc-rule { display: block; width: min(440px, 70%); height: 2px; margin: 20px 0 14px; transform: scaleX(0);
+    background: linear-gradient(90deg, transparent, var(--tone), transparent); }
+  .tc-period { font: 13px var(--mono); letter-spacing: .24em; text-transform: uppercase; color: var(--text-secondary); }
+
+  /* Scene title that slides in over the map */
+  #lower { position: absolute; left: 16px; bottom: 44px; z-index: 480; max-width: min(560px, calc(100% - 32px));
+    padding: 4px 0 4px 16px; pointer-events: none; visibility: hidden; }
+  #lower p { margin: 0; }
+  .lt-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--accent);
+    box-shadow: 0 0 12px var(--accent); transform-origin: top; }
+  .lt-kicker { font: 600 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--accent);
+    text-shadow: 0 0 6px #000; }
+  .lt-title { font: 800 clamp(20px, 3vw, 34px)/1.15 system-ui, sans-serif; color: #fff;
+    text-shadow: 0 2px 14px #000, 0 0 3px #000; }
+  #fxbtn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+
   @media (prefers-reduced-motion: reduce) {
     .hx-flash, .hx-pulse, .hx-pop, .hx-ping, .hx-furnace, .hx-pop-label { animation: none; }
     .hx-state, .c-text .line, .group-label { transition: none; }
+    #fx, #grain, .lb, #title-card, #lower { display: none; }
   }
 
   /* Text version below the map */
@@ -165,6 +226,12 @@
     #ruler-wrap { flex-basis: 100%; order: -1; }
     #ruler .lab { font-size: 10px; }
     .leaflet-control-attribution { font-size: 9px; }
+    #mapwrap.cinema .lb { height: 16px; }
+    #mapwrap.cinema #hud { top: 24px; }
+    #lower { left: 10px; bottom: 30px; }
+    .lt-kicker { display: none; }
+    .lt-title { font-size: 18px; }
+    .tc-kicker { font-size: 11px; letter-spacing: .35em; }
   }
 </style>
 </head>
@@ -181,6 +248,12 @@
   <div id="stage">
     <div id="mapwrap">
       <div id="map" role="img" aria-label="Map for the current scene. The same information is in the panel and in the text version below."></div>
+      <div id="title-card" aria-hidden="true"><p class="tc-kicker"></p><p class="tc-title"></p><p class="tc-sub"></p>
+        <span class="tc-rule"></span><p class="tc-period"></p></div>
+      <div id="grain" aria-hidden="true"></div>
+      <canvas id="fx" aria-hidden="true"></canvas>
+      <div class="lb top" aria-hidden="true"></div><div class="lb bot" aria-hidden="true"></div>
+      <div id="lower" aria-hidden="true"><span class="lt-bar"></span><p class="lt-kicker"></p><p class="lt-title"></p></div>
       <div id="hud" aria-hidden="true"><div id="hud-year"></div><div id="hud-sub"></div><div id="hud-rewind"></div></div>
     </div>
     <aside id="card" aria-label="Current scene"></aside>
@@ -193,13 +266,16 @@
       <ol id="ruler" aria-label="Scenes in this chapter"></ol>
       <div id="ruler-note">Each block is one scene. Blocks are sized by reading time, not by years.</div>
     </div>
+    <button class="ctl" id="fxbtn" type="button" aria-pressed="true"
+      title="Sparks, light and title cards. Decoration only: they add no information.">Effects</button>
   </div>
 </div>
 <div id="announce" class="sr-only" aria-live="polite"></div>
 
 <main id="text">
   <h2>Text version</h2>
-  <p>Everything on the map, scene by scene, with its sources. Built {{BUILT}}.</p>
+  <p>Everything on the map, scene by scene, with its sources. Built {{BUILT}}. While the map plays,
+    moving sparks, dust, light and ripples are decoration: only the dots, lines, colours and text carry information.</p>
   {{TRANSCRIPT}}
   <p class="tr-sources">State borders: GRID3 Nigeria state boundaries via geoBoundaries (CC BY 4.0), simplified.
     Background map: Esri. This page is part of <a href="./">Taswira</a>.</p>
@@ -213,13 +289,35 @@ for (const st of Object.values(DATA.states)) {
     const pts = i >= 0 ? DATA.arcs[i] : DATA.arcs[~i].slice().reverse();
     return k ? pts.slice(1) : pts;
   }));
+  st.centre = centreOf(st.rings[0]);
+}
+// Area-weighted centre of a ring of [lat, lon] points (degrees treated as flat; fine at this scale)
+function centreOf(ring) {
+  let a = 0, x = 0, y = 0;
+  ring.forEach(([y1, x1], i) => {
+    const [y2, x2] = ring[(i + 1) % ring.length], c = x1 * y2 - x2 * y1;
+    a += c; x += (x1 + x2) * c; y += (y1 + y2) * c;
+  });
+  return a ? [y / (3 * a), x / (3 * a)] : ring[0];
 }
 const lessMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const clamp01 = v => Math.max(0, Math.min(1, v));
+const easeOut = u => 1 - (1 - u) ** 3;
+const easeInOut = u => (u < .5 ? 4 * u ** 3 : 1 - (-2 * u + 2) ** 3 / 2);
+const setText = (el, s) => { if (el.textContent !== s) el.textContent = s; };
+
+// Effects (title cards, light, sparks, dust) are decoration. People can switch them off,
+// and they are off when the device asks for less motion.
+const FX_KEY = "taswira-history-effects";
+let fxPref = true;
+try { fxPref = localStorage.getItem(FX_KEY) !== "off"; } catch (e) { /* storage blocked: keep the default */ }
+const fxOn = () => fxPref && !lessMotion.matches;
 
 // --- Map ---------------------------------------------------------------------------
-const map = L.map("map", { zoomSnap: 0.25, minZoom: 5, maxZoom: 11, attributionControl: true })
+// zoomSnap 0: the camera moves smoothly, and stopping it mid-flight does not jump to a rounded zoom
+const map = L.map("map", { zoomSnap: 0, minZoom: 5, maxZoom: 11, attributionControl: true })
   .setView([9.1, 8.6], 6);
 const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
 L.tileLayer(ESRI + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
@@ -229,6 +327,8 @@ L.tileLayer(ESRI + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
 const placeNames = L.tileLayer(ESRI + "World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16, opacity: .8 });
 const svg = L.svg({ padding: 0.5 }).addTo(map);   // one SVG layer, so striped fills can use <pattern>
 const sceneLayer = L.layerGroup().addTo(map);
+const WIDE = { center: [9.1, 8.3], zoom: 5.5 };      // the whole country, behind a chapter's title card
+const zoomFor = z => z - (map.getSize().x < 600 ? 1 : 0);   // a phone's small map shows the same area zoomed out
 let defs = null;
 function patternDefs() {
   if (!defs) {
@@ -254,10 +354,16 @@ function stripes(id, colours) {
 // --- Where we are ------------------------------------------------------------------
 // live: the scene is being played (or paused part-way), so things appear over time.
 // When someone jumps to a scene instead, it is shown complete straight away.
-const state = { c: 0, s: 0, t: 0, playing: false, last: 0, drawn: null, live: false };
+// navAt: when someone last jumped, so the short transition effects can play after a click.
+const state = { c: 0, s: 0, t: 0, playing: false, last: 0, drawn: null, drawnC: null, live: false,
+                navAt: 0, shownYear: null };
 const chapter = () => DATA.chapters[state.c];
 const scene = () => chapter().scenes[state.s];
 const isLive = () => state.live && !lessMotion.matches;
+
+// A chapter starts with a title card when it plays; its scenes start after the card
+const CARD = 3.6;
+const lead = () => (isLive() && state.s === 0 && fxOn() ? CARD : 0);
 
 // Everything in the current scene that changes with time, filled in by render()
 let fx = null;
@@ -284,6 +390,8 @@ function todaysBorders() {
     interactive: false }).addTo(sceneLayer);
 }
 
+const POINTS_FROM = 1.0;    // seconds into a scene when the first place appears
+
 function drawPoints(ch, sc) {
   todaysBorders();      // for orientation only: these borders did not exist then
   const dim = new Set(sc.dim || []), furnace = new Set(sc.furnace || []);
@@ -291,7 +399,7 @@ function drawPoints(ch, sc) {
   shown.forEach((id, k) => {
     const f = ch.features[id];
     const faded = dim.has(id);
-    const at = 0.6 + k * Math.min(1.2, (sc.duration * 0.4) / Math.max(1, shown.length));   // one after another
+    const at = POINTS_FROM + k * Math.min(1.2, (sc.duration * 0.4) / Math.max(1, shown.length));   // one after another
     const els = [];
     if (f.uncertainty_km) {
       els.push(L.circle(f.coordinates, { renderer: svg, radius: f.uncertainty_km * 1000, color: "#4cc9e0",
@@ -310,7 +418,8 @@ function drawPoints(ch, sc) {
     m.on("click", () => pickFeature(id));
     m.addTo(sceneLayer);
     els.push(m);
-    fx.points.push({ els: els.map(l => l.getElement()).concat(m.getTooltip().getElement()), at, shown: null });
+    fx.points.push({ els: els.map(l => l.getElement()).concat(m.getTooltip().getElement()), at, now: null,
+                     ll: f.coordinates, furnace: furnace.has(id), faded, seed: k + 1 });
   });
 }
 
@@ -318,6 +427,7 @@ function drawPoints(ch, sc) {
 function fillFor(snap, key, code) {
   return snap.split[code] ? stripes(`hx-${key}-${code}`, snap.split[code].colours) : snap.colours[snap.group_of[code]];
 }
+const rgbOf = c => (/^#[0-9a-f]{6}$/i.test(c) ? [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)) : [255, 255, 255]);
 
 // Timing of a state map, in seconds into the scene: new borders draw themselves,
 // then the new states take their colours one by one, north to south
@@ -334,16 +444,16 @@ function drawSnapshot(ch, sc) {
       ? `<b>${esc(st.name)}</b> (today)<br>Split between ${esc(split.parents.join(" and "))}`
       : `<b>${esc(group)}</b><br>Today's ${esc(st.name)}`;
     const newFill = fillFor(snap, sc.snapshot, code), oldFill = prev ? fillFor(prev, prevKey, code) : "#3a4654";
-    const poly = L.polygon(st.rings, { renderer: svg, stroke: false, fillColor: newFill, fillOpacity: .62,
+    const poly = L.polygon(st.rings, { renderer: svg, stroke: false, fillColor: oldFill, fillOpacity: .62,
       className: "hx-state" }).bindTooltip(tip, { sticky: true }).addTo(sceneLayer);
-    const item = { code, el: poly.getElement(), oldFill, newFill, at: 0, now: null,
-      north: Math.max(...st.rings[0].map(p => p[0])) };
+    const item = { code, el: poly.getElement(), oldFill, newFill, at: 0, now: null, ll: st.centre,
+      rgb: rgbOf(split ? split.colours[0] : newFill), north: Math.max(...st.rings[0].map(p => p[0])) };
     fx.states.push(item);
     if (oldFill !== newFill) changed.push(item);
   }
   changed.sort((a, b) => b.north - a.north);
   const step = Math.min(0.35, (sc.duration * 0.35) / Math.max(1, changed.length));
-  changed.forEach((it, k) => { it.at = COLOUR_FROM + k * step; });
+  changed.forEach((it, k) => { it.at = COLOUR_FROM + k * step; it.changed = true; });
 
   const thick = new Set(snap.thick), wasThick = new Set(prev ? prev.thick : []);
   DATA.arcs.forEach((arc, i) => {
@@ -358,7 +468,13 @@ function drawSnapshot(ch, sc) {
       if (isNew) {
         const el = line.getElement();
         el.setAttribute("pathLength", 1);      // lets the line "draw itself" whatever its real length
-        fx.newArcs.push({ el, now: null });
+        // How far along the line each point is, so the glowing tip can be placed while it draws
+        const cum = [0];
+        for (let k = 1; k < arc.length; k++) {
+          const dy = arc[k][0] - arc[k - 1][0], dx = (arc[k][1] - arc[k - 1][1]) * Math.cos(arc[k][0] * Math.PI / 180);
+          cum.push(cum[k - 1] + Math.hypot(dx, dy));
+        }
+        fx.newArcs.push({ el, now: null, arc, cum, seed: i });
       }
     }
   });
@@ -381,10 +497,15 @@ function drawSnapshot(ch, sc) {
   const last = changed.length ? changed[changed.length - 1].at : COLOUR_FROM;
   fx.count = { from: prev ? prev.count : 0, to: snap.count, start: COLOUR_FROM, end: last + 0.3,
                unit: snap.unit || "states", fromUnit: prev ? prev.unit || "states" : snap.unit || "states" };
+  // While the new states light up, the camera leans towards where they are
+  if (changed.length) {
+    const c = changed.reduce((m, it) => [m[0] + it.ll[0] / changed.length, m[1] + it.ll[1] / changed.length], [0, 0]);
+    fx.focus = { centre: c, from: COLOUR_FROM - 0.3, to: last };
+  }
 }
 
 // Extra moments a scene can ask for in its chapter file
-function drawEffects(sc) {
+function drawEffects(ch, sc) {
   for (const e of sc.effects || []) {
     const at = e.at * sc.duration;
     if (e.type === "arc") {
@@ -409,12 +530,15 @@ function drawEffects(sc) {
         extras: ends.flatMap(m => [m.getElement(), m.getTooltip().getElement()]), now: null });
     } else if (e.type === "pulse") {
       const st = fx.states.find(s => s.code === e.state);
-      if (st) fx.effects.push({ kind: "pulse", at, el: st.el, now: null });
+      if (st) fx.effects.push({ kind: "pulse", at, el: st.el, ll: st.ll, now: null });
+    } else if (e.type === "shatter") {
+      fx.effects.push({ kind: "shatter", at, lls: e.features.map(id => ch.features[id].coordinates) });
     }
   }
 }
 
 function legend(ch, sc) {
+  const deco = '<p class="c-deco">Moving sparks, dust, light and ripples are decoration. Only the dots, lines, colours and text carry information.</p>';
   if (sc.snapshot) {
     const snap = ch.snapshots[sc.snapshot];
     return `<h3>On the map</h3><p>${esc(snap.count_note || snap.count + " states")}, as at ${esc(snap.label)}.</p>
@@ -422,7 +546,7 @@ function legend(ch, sc) {
         <li><svg width="28" height="10" aria-hidden="true"><line x1="0" y1="5" x2="28" y2="5" stroke="#e8eef4" stroke-width="2.2"/></svg>Border between states at that date</li>
         <li><svg width="28" height="10" aria-hidden="true"><line x1="0" y1="5" x2="28" y2="5" stroke="#e8eef4" stroke-opacity=".5" stroke-dasharray="3 4"/></svg>Today's state border, for reference</li>
         <li><svg width="28" height="14" aria-hidden="true"><defs><pattern id="lg-str" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="4" height="8" fill="#c9a35b"/><rect x="4" width="4" height="8" fill="#5fa8a0"/></pattern></defs><rect width="28" height="14" fill="url(#lg-str)"/></svg>Today's state was split between earlier states</li>
-      </ul>` + splitList(snap) + (ch.method ? `<p class="c-method">${esc(ch.method)}</p>` : "");
+      </ul>` + splitList(snap) + (ch.method ? `<p class="c-method">${esc(ch.method)}</p>` : "") + deco;
   }
   const items = (sc.show || []).map(id => {
     const f = ch.features[id];
@@ -431,7 +555,7 @@ function legend(ch, sc) {
       (f.disputed ? `<div class="f-disputed"><b>Disputed.</b> ${esc(f.disputed)}</div>` : "") +
       `<div class="c-sources">Sources: ${f.sources.map(s => `<a href="${esc(DATA.sources[s].url)}">${esc(DATA.sources[s].title)}</a>`).join("; ")}</div></li>`;
   }).join("");
-  return items ? `<h3>On the map</h3><ul class="features">${items}</ul>` : "";
+  return items ? `<h3>On the map</h3><ul class="features">${items}</ul>${deco}` : "";
 }
 
 function splitList(snap) {
@@ -448,23 +572,75 @@ function pickFeature(id) {
   if (li) { li.classList.add("picked"); li.scrollIntoView({ block: "nearest", behavior: lessMotion.matches ? "auto" : "smooth" }); li.focus(); }
 }
 
+// The chapter's title card and the scene's title strip, filled in when a scene is drawn
+function titles(ch, sc) {
+  const [big, sub] = ch.title.includes(":") ? ch.title.split(/:\s*/, 2) : [ch.title, ""];
+  const units = big.includes(" ") ? big.split(" ").map((w, i, all) => (i < all.length - 1 ? w + " " : w))
+                                  : [...big];     // words, or letters for a single word
+  const card = $("title-card");
+  card.dataset.tone = ch.snapshots && Object.keys(ch.snapshots).length ? "cool" : "warm";
+  card.querySelector(".tc-kicker").textContent = `Chapter ${state.c + 1}`;
+  const t = card.querySelector(".tc-title");
+  t.classList.toggle("long", big.length > 12);
+  t.innerHTML = units.map(u => `<span class="w">${esc(u)}</span>`).join("");
+  card.querySelector(".tc-sub").textContent = sub ? sub[0].toUpperCase() + sub.slice(1) : "";
+  card.querySelector(".tc-period").textContent = ch.period;
+  $("lower").querySelector(".lt-kicker").textContent = `${state.s + 1} / ${ch.scenes.length} · ${sc.when.label}`;
+  $("lower").querySelector(".lt-title").textContent = sc.title;
+}
+
+// Where the camera goes while a scene plays, in seconds into the scene
+function cameraCues(sc) {
+  const { center, zoom } = sc.camera, out = [];
+  out.push(lead() ? { at: -1.1, center, zoom, dur: 2.2 } : { at: 0, center, zoom, dur: 1.4 });
+  const f = fx.focus;
+  if (f) {
+    const lean = [center[0] + (f.centre[0] - center[0]) * 0.4, center[1] + (f.centre[1] - center[1]) * 0.4];
+    out.push({ at: f.from, center: lean, zoom: zoom + 0.5, dur: Math.max(1.5, f.to - f.from + 0.5) });
+    out.push({ at: f.to + 1.2, center, zoom: zoom + 0.1, dur: 1.8 });
+    out.push({ at: f.to + 3.2, center, zoom: zoom + 0.3, dur: Math.max(2, sc.duration - f.to - 3.6) });
+  } else {
+    out.push({ at: 1.5, center, zoom: zoom + 0.35, dur: Math.max(2, sc.duration - 2) });   // slow drift in
+  }
+  return out;
+}
+function flyCue(c, t) {
+  fx.lastCue = c;
+  map.flyTo(c.center, zoomFor(c.zoom), { duration: Math.max(0.5, c.dur - Math.max(0, t - c.at)) });
+}
+function runCues(t) {
+  let due = null;
+  while (fx.cue < fx.cues.length && fx.cues[fx.cue].at <= t) due = fx.cues[fx.cue++];
+  if (due) flyCue(due, t);
+}
+
 // Draw the map and panel for the current scene. Only redraws when the scene changes.
 function render({ animate = true, announce = false } = {}) {
   const ch = chapter(), sc = scene(), key = `${state.c}/${state.s}`;
   if (state.drawn === key) return;
   state.drawn = key;
+  // The year counter rolls from the year last shown, within a chapter
+  const rollFrom = state.drawnC === state.c ? state.shownYear : null;
+  state.drawnC = state.c;
   sceneLayer.clearLayers();
-  fx = { points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [] };
+  fx = { points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
+         rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
+         card: { now: null }, lower: { now: null }, shownCount: { now: null } };
   if (sc.snapshot) { map.removeLayer(placeNames); drawSnapshot(ch, sc); }
   else { placeNames.addTo(map); drawPoints(ch, sc); }
-  drawEffects(sc);
+  drawEffects(ch, sc);
+  titles(ch, sc);
+  $("mapwrap").dataset.grade = sc.snapshot ? "modern"
+    : { iron: "iron", decline: "decline" }[sc.mood] || "ancient";
 
-  // A phone's small map needs to be zoomed out a little to show the same area
-  const zoom = sc.camera.zoom - (map.getSize().x < 600 ? 1 : 0);
   map.stop();
-  if (animate && !lessMotion.matches) map.flyTo(sc.camera.center, zoom, { duration: 1.2 });
-  else map.setView(sc.camera.center, zoom, { animate: false });
-  if (state.playing) drift();
+  const zoom = zoomFor(sc.camera.zoom);
+  if (isLive() && lead()) map.setView(WIDE.center, zoomFor(WIDE.zoom), { animate: false });
+  else if (!isLive()) {
+    if (animate && !lessMotion.matches) map.flyTo(sc.camera.center, zoom, { duration: 1.2 });
+    else map.setView(sc.camera.center, zoom, { animate: false });
+  }
+  fx.cues = cameraCues(sc);
 
   // The narration, one sentence per <span>, so it can appear line by line while playing
   const sentences = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
@@ -482,47 +658,84 @@ function render({ animate = true, announce = false } = {}) {
   document.querySelectorAll("#chapters button").forEach((b, i) => b.setAttribute("aria-current", i === state.c));
   drawRuler();
   writeLink();
-  frame();
+  frame(performance.now());
   // Screen readers hear a scene only when someone moves to it, not every few seconds during Play
   if (announce) $("announce").textContent = `${sc.when.label}: ${sc.title}. ${sc.text}`;
 }
 
-// After the camera arrives, keep it drifting slowly in while the scene plays
-function drift() {
-  const key = state.drawn, sc = scene();
-  map.once("moveend", () => {
-    if (!state.playing || state.drawn !== key || lessMotion.matches) return;
-    const zoom = sc.camera.zoom - (map.getSize().x < 600 ? 1 : 0) + 0.35;
-    map.flyTo(sc.camera.center, zoom, { duration: Math.max(2, sc.duration - state.t - 1), easeLinearity: 1 });
-  });
-}
-
 // --- Everything that changes with time inside a scene ----------------------------------
 // Worked out from the scene time alone, so pausing, resuming or replaying always matches.
+//   t: seconds into the scene's content (negative during a chapter's title card);
+//      Infinity when the scene was jumped to, which shows it finished.
+//   x: seconds into the scene's opening transition: scene time while playing,
+//      or time since the click when someone jumps.
+function times(now) {
+  const live = isLive(), t = live ? state.t - lead() : Infinity;
+  return { live, t, x: !fxOn() ? Infinity : live ? t : (now - state.navAt) / 1000 };
+}
 function setOnce(item, value, apply) {
   if (item.now !== value) { item.now = value; apply(value); }
 }
-function frame() {
-  if (!fx) return;
-  const ch = chapter(), sc = scene(), live = isLive();
-  const t = live ? state.t : Infinity;           // not live: show the finished scene
+const ROLL = 1.3;     // seconds the year counter takes to roll to a new scene's year
 
-  // Year counter: runs from the scene's start year to its end year while it plays
-  const approx = sc.when.from < 1800;
-  const p = live ? Math.min(1, state.t / (sc.duration * 0.85)) : 0;
-  $("hud-year").textContent = yearText(sc.when.from + (sc.when.to - sc.when.from) * p, approx);
-  const prevScene = ch.scenes[state.s - 1];
-  const rewind = live && prevScene && prevScene.when.to > sc.when.from + 50 && state.t < 2.5;
-  $("hud-rewind").textContent = rewind ? `↺ Back in time to ${yearText(sc.when.from, approx)}` : "";
+function frame(now) {
+  if (!fx) return;
+  const ch = chapter(), sc = scene(), { live, t, x } = times(now);
+
+  // Chapter title card
+  const cardT = lead() ? state.t : Infinity;
+  setOnce(fx.card, cardT < CARD ? Math.round(cardT * 40) : -1, v => showCard(v < 0 ? null : cardT));
+  $("hud").style.opacity = cardT < CARD ? 0 : "";
+
+  // Scene title strip: slides in, holds, slides away
+  setOnce(fx.lower, x >= 0 && x < 4.8 ? Math.round(x * 40) : -1, v => {
+    const el = $("lower");
+    el.style.visibility = v < 0 ? "hidden" : "visible";
+    if (v < 0) return;
+    const inU = easeOut(clamp01((x - 0.2) / 0.6)), outU = easeInOut(clamp01((x - 4.0) / 0.6));
+    el.style.clipPath = `inset(-20px ${(1 - inU) * 100}% -20px -20px)`;
+    el.style.opacity = 1 - outU;
+    el.style.transform = `translateX(${-outU * 24}px)`;
+    el.querySelector(".lt-bar").style.transform = `scaleY(${easeOut(clamp01(x / 0.35))})`;
+  });
+
+  // Year counter: rolls to the scene's start year, then runs to its end year while it plays
+  const from = sc.when.from, to = sc.when.to;
+  let year, blur = 0, approx = from < 1800;
+  if (fx.rollFrom != null && x < ROLL) {
+    const u = easeInOut(clamp01(x / ROLL));
+    year = fx.rollFrom + (from - fx.rollFrom) * u;
+    approx = approx || fx.rollFrom < 1800;
+    blur = Math.sin(u * Math.PI) * Math.min(3, Math.abs(fx.jump) / 400 + 0.8);
+  } else {
+    const start = fx.rollFrom != null && fxOn() ? ROLL : 0;
+    year = from + (to - from) * (live ? clamp01((t - start) / (sc.duration * 0.85 - start)) : 0);
+  }
+  state.shownYear = year;
+  setText($("hud-year"), yearText(year, approx));
+  $("hud-year").style.filter = blur > 0.05 ? `blur(${blur.toFixed(1)}px)` : "";
+  const jumpT = live ? t : x;
+  let jumpNote = "";
+  if (jumpT >= 0 && jumpT < 2.6 && Math.abs(fx.jump) >= 50) {
+    jumpNote = fx.jump < 0 ? `↺ Back in time to ${yearText(from, approx)}`
+                           : `↻ Forward ${Math.round(fx.jump).toLocaleString("en")} years`;
+  }
+  setText($("hud-rewind"), jumpNote);
   if (fx.count) {
-    const c = fx.count, q = Math.max(0, Math.min(1, (t - c.start) / Math.max(0.1, c.end - c.start)));
+    const c = fx.count, q = clamp01((t - c.start) / Math.max(0.1, c.end - c.start));
     const n = live ? Math.round(c.from + (c.to - c.from) * q) : c.to;
-    $("hud-sub").textContent = `${n} ${q > 0 || !live ? c.unit : c.fromUnit}`;
-  } else $("hud-sub").textContent = sc.title;
+    const unit = q > 0 || !live ? c.unit : c.fromUnit;
+    setText($("hud-sub"), `${n} ${n === 1 ? unit.replace(/s$/, "") : unit}`);
+    setOnce(fx.shownCount, n, () => {
+      if (!live || !fxOn() || !state.playing || t < c.start) return;
+      const el = $("hud-sub");
+      el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump");
+    });
+  } else setText($("hud-sub"), sc.title);
 
   // Narration appears sentence by sentence while playing; everything shows when paused
   const gap = (sc.duration * 0.55) / Math.max(1, fx.sentences.length);
-  fx.sentences.forEach((el, i) => el.classList.toggle("waiting", state.playing && live && state.t < i * gap));
+  fx.sentences.forEach((el, i) => el.classList.toggle("waiting", state.playing && live && t < i * gap));
 
   for (const pt of fx.points) {
     setOnce(pt, t >= pt.at, on => pt.els.forEach(el => {
@@ -538,7 +751,7 @@ function frame() {
       }
     });
   }
-  const drawn = Math.max(0, Math.min(1, (t - LINES_FROM) / (LINES_TO - LINES_FROM)));
+  const drawn = clamp01((t - LINES_FROM) / (LINES_TO - LINES_FROM));
   for (const a of fx.newArcs) setOnce(a, Math.round(drawn * 100), v => {
     a.el.style.strokeDasharray = v >= 100 ? "" : "1";
     a.el.style.strokeDashoffset = v >= 100 ? "" : String(1 - v / 100);
@@ -550,7 +763,7 @@ function frame() {
   for (const e of fx.effects) {
     if (e.kind === "pulse") setOnce(e, t >= e.at, on => e.el.classList.toggle("hx-pulse", on));
     if (e.kind === "arc") {
-      const u = Math.max(0, Math.min(1, (t - e.at) / 2.5));
+      const u = clamp01((t - e.at) / 2.5);
       setOnce(e, Math.round(u * 200), v => {
         const w = v / 200;
         e.line.style.strokeDasharray = "1";
@@ -561,6 +774,355 @@ function frame() {
       });
     }
   }
+  if (live && state.playing) runCues(t);
+}
+
+function showCard(ct) {
+  const card = $("title-card");
+  if (ct == null) { card.style.visibility = "hidden"; card.style.opacity = 0; return; }
+  card.style.visibility = "visible";
+  card.style.opacity = Math.min(clamp01(ct / 0.35), clamp01((CARD - ct) / 0.7));
+  const k = card.querySelector(".tc-kicker");
+  k.style.opacity = clamp01(ct / 0.6);
+  k.style.letterSpacing = `${1.1 - 0.6 * easeOut(clamp01(ct / 1.4))}em`;
+  card.querySelectorAll(".tc-title .w").forEach((w, i) => {
+    const u = easeOut(clamp01((ct - 0.3 - i * 0.12) / 0.7));
+    w.style.opacity = u;
+    w.style.transform = `translateY(${((1 - u) * 0.5).toFixed(3)}em) scale(${(1.3 - 0.3 * u).toFixed(3)})`;
+    w.style.filter = u < 1 ? `blur(${((1 - u) * 10).toFixed(1)}px)` : "";
+  });
+  card.querySelector(".tc-rule").style.transform = `scaleX(${easeInOut(clamp01((ct - 0.8) / 0.9))})`;
+  for (const el of card.querySelectorAll(".tc-sub, .tc-period")) {
+    const u = easeOut(clamp01((ct - 1.1) / 0.6));
+    el.style.opacity = u;
+    el.style.transform = `translateY(${(1 - u) * 10}px)`;
+  }
+  card.style.transform = `scale(${(1.04 - 0.04 * easeOut(clamp01(ct / CARD))).toFixed(4)})`;
+}
+
+// --- Effects canvas -------------------------------------------------------------------
+// Sparks, dust, light and ripples. Each is worked out from a time, like the rest of the scene:
+// one-off moments from the scene time, loops (embers, drifting dust) from the clock.
+const cv = $("fx"), g = cv.getContext("2d");
+let cvW = 1, cvH = 1;
+function sizeCanvas() {
+  const r = $("mapwrap").getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1);
+  cvW = Math.max(1, r.width); cvH = Math.max(1, r.height);
+  cv.width = Math.round(cvW * d); cv.height = Math.round(cvH * d);
+  g.setTransform(d, 0, 0, d, 0, 0);
+}
+addEventListener("resize", () => { sizeCanvas(); wake(); });
+sizeCanvas();
+
+const COL = { cyan: [76, 201, 224], gold: [255, 209, 102], ember: [255, 138, 40], white: [255, 255, 255],
+              clay: [214, 128, 80], green: [150, 214, 110], sand: [222, 190, 140], ash: [175, 170, 165] };
+const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${Math.max(0, Math.min(1, a)).toFixed(3)})`;
+// The same "random" number every time for the same inputs, so effects replay identically
+const rnd = (a, b = 0) => { const v = Math.sin(a * 127.1 + b * 311.7 + 0.5) * 43758.5453; return v - Math.floor(v); };
+const xy = ll => map.latLngToContainerPoint(ll);
+
+function dot(x, y, r, c, a) {
+  if (a <= 0.004) return;
+  g.fillStyle = rgba(c, a); g.beginPath(); g.arc(x, y, Math.max(0.3, r), 0, 6.2832); g.fill();
+}
+function glow(x, y, r, c, a) {
+  if (a <= 0.004 || r <= 1) return;
+  const gr = g.createRadialGradient(x, y, 0, x, y, r);
+  gr.addColorStop(0, rgba(c, a)); gr.addColorStop(0.35, rgba(c, a * 0.45)); gr.addColorStop(1, rgba(c, 0));
+  g.fillStyle = gr; g.fillRect(x - r, y - r, 2 * r, 2 * r);
+}
+// An expanding ring, like a shockwave
+function ring(x, y, age, { life = 1.2, r0 = 6, r1 = 60, c = COL.cyan, w = 2.5 } = {}) {
+  if (age < 0 || age > life) return;
+  const u = age / life;
+  g.strokeStyle = rgba(c, (1 - u) ** 1.5); g.lineWidth = w * (1 - u) + 0.5;
+  g.beginPath(); g.arc(x, y, r0 + (r1 - r0) * easeOut(u), 0, 6.2832); g.stroke();
+}
+// Sparks thrown out from a point, falling a little
+function burst(x, y, age, seed, { n = 16, speed = 90, life = 1, c = COL.gold, grav = 60, size = 2, streak = false, up = false } = {}) {
+  if (age < 0 || age > life) return;
+  g.lineCap = "round";
+  for (let i = 0; i < n; i++) {
+    const ang = up ? -Math.PI * (0.15 + 0.7 * rnd(seed, i)) : rnd(seed, i) * 6.2832;
+    const v = speed * (0.35 + 0.65 * rnd(seed, i + 50)), l = life * (0.5 + 0.5 * rnd(seed, i + 99));
+    if (age > l) continue;
+    const u = age / l, vx = Math.cos(ang) * v, vy = Math.sin(ang) * v;
+    const px = x + vx * age, py = y + vy * age + 0.5 * grav * age * age;
+    if (streak) {
+      g.strokeStyle = rgba(c, 1 - u); g.lineWidth = size * (1 - u * 0.5);
+      g.beginPath(); g.moveTo(px, py); g.lineTo(px - vx * 0.05, py - (vy + grav * age) * 0.05); g.stroke();
+    } else dot(px, py, size * (1 - u * 0.6), c, 1 - u);
+  }
+}
+// Small specks drifting across the whole map
+function motes(W, seed, { n = 60, c = COL.ash, speed = 18, a = 0.35, size = 1.4, rise = 0 } = {}) {
+  const w = cvW + 60, h = cvH + 60;
+  for (let i = 0; i < n; i++) {
+    const sp = speed * (0.5 + rnd(seed, i));
+    const px = (((rnd(seed, i + 7) * w + W * sp) % w) + w) % w - 30;
+    const py = (((rnd(seed, i + 13) * h - W * sp * rise + Math.sin(W * 0.7 + i) * 10) % h) + h) % h - 30;
+    dot(px, py, size * (0.5 + rnd(seed, i + 3)), c, a * (0.4 + 0.6 * rnd(seed, i + 5)) * (0.7 + 0.3 * Math.sin(W * 3 + i)));
+  }
+}
+// A band of light crossing the map, u from 0 to 1
+function sweep(u, c, a) {
+  if (u <= 0 || u >= 1) return;
+  const w = Math.max(120, cvW * 0.16), x = -0.4 * cvW + u * 1.8 * cvW;
+  const gr = g.createLinearGradient(x - w, 0, x + w, 0);
+  gr.addColorStop(0, rgba(c, 0)); gr.addColorStop(0.5, rgba(c, a * Math.sin(u * Math.PI))); gr.addColorStop(1, rgba(c, 0));
+  g.save(); g.transform(1, 0, -0.4, 1, cvH * 0.2, 0);
+  g.fillStyle = gr; g.fillRect(x - w, -10, 2 * w, cvH + 20); g.restore();
+}
+// Streaks of light flying past: outwards when going forward in time, inwards when going back
+function warp(u, dir, strength) {
+  if (u <= 0 || u >= 1) return;
+  const env = Math.sin(u * Math.PI), cx = cvW / 2, cy = cvH / 2, R = Math.hypot(cvW, cvH) / 2;
+  const c = dir > 0 ? COL.gold : COL.cyan;
+  g.lineCap = "round";
+  for (let i = 0; i < 120; i++) {
+    const ang = rnd(i, 1) * 6.2832;
+    let d = (rnd(i, 3) + u * (0.8 + rnd(i, 2)) * 2.4) % 1;
+    if (dir < 0) d = 1 - d;
+    const r1 = 24 + d * d * R, r0 = Math.max(8, r1 - (10 + d * 90 * strength));
+    g.strokeStyle = rgba(c, env * (0.2 + 0.7 * d) * strength); g.lineWidth = 0.8 + d * 2.2;
+    g.beginPath(); g.moveTo(cx + Math.cos(ang) * r0, cy + Math.sin(ang) * r0);
+    g.lineTo(cx + Math.cos(ang) * r1, cy + Math.sin(ang) * r1); g.stroke();
+  }
+  glow(cx, cy, R * 0.6, c, 0.16 * env * strength);
+}
+// Survey: a radar-like beam turning over the sites; each lights up as the beam passes
+function radar(sites, W) {
+  if (!sites.length) return;
+  const cx = sites.reduce((s, q) => s + q.p.x, 0) / sites.length, cy = sites.reduce((s, q) => s + q.p.y, 0) / sites.length;
+  const R = Math.max(120, ...sites.map(q => Math.hypot(q.p.x - cx, q.p.y - cy) + 60));
+  const a = (W * 1.2) % 6.2832;
+  for (let k = 0; k < 18; k++) {
+    g.fillStyle = rgba(COL.cyan, 0.11 * (1 - k / 18));
+    g.beginPath(); g.moveTo(cx, cy); g.arc(cx, cy, R, a - (k + 1) * 0.045, a - k * 0.045); g.closePath(); g.fill();
+  }
+  g.strokeStyle = rgba(COL.cyan, 0.55); g.lineWidth = 1.5;
+  g.beginPath(); g.moveTo(cx, cy); g.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R); g.stroke();
+  g.strokeStyle = rgba(COL.cyan, 0.12); g.lineWidth = 1;
+  for (let k = 1; k <= 3; k++) { g.beginPath(); g.arc(cx, cy, (R * k) / 3, 0, 6.2832); g.stroke(); }
+  for (const { p, pt } of sites) {
+    if (!pt.now) continue;
+    let d = (a - Math.atan2(p.y - cy, p.x - cx)) % 6.2832;
+    if (d < 0) d += 6.2832;
+    glow(p.x, p.y, 30, COL.cyan, 0.9 * Math.exp(-d * 2));
+    ring(p.x, p.y, d / 1.2, { r0: 6, r1: 34, life: 1, c: COL.cyan, w: 1.5 });
+  }
+}
+// Farming: small stalks growing and swaying around a site, each ending in a head of grain
+function sprouts(x, y, W, seed) {
+  g.lineCap = "round";
+  for (let i = 0; i < 16; i++) {
+    const per = 3 + rnd(seed, i) * 2, ph = (W / per + rnd(seed, i + 9)) % 1;
+    const ang = rnd(seed, i + 30) * 6.2832, dist = 16 + rnd(seed, i + 31) * 38;
+    const bx = x + Math.cos(ang) * dist, by = y + Math.sin(ang) * dist * 0.6 + 6;
+    const grow = easeOut(clamp01(ph * 2.2)), fade = 1 - clamp01((ph - 0.75) / 0.25);
+    const hgt = (9 + rnd(seed, i + 40) * 10) * grow, sway = Math.sin(W * 1.7 + i) * 3 * grow;
+    g.strokeStyle = rgba(COL.green, 0.85 * fade); g.lineWidth = 1.6;
+    g.beginPath(); g.moveTo(bx, by); g.quadraticCurveTo(bx, by - hgt * 0.6, bx + sway, by - hgt); g.stroke();
+    if (grow > 0.9) dot(bx + sway, by - hgt, 2.2, [232, 210, 120], fade);
+  }
+}
+// Sculpture: clay-coloured specks gathering in towards a site
+function swirl(x, y, W, seed) {
+  for (let i = 0; i < 20; i++) {
+    const per = 2.2 + rnd(seed, i), ph = (W / per + rnd(seed, i + 5)) % 1;
+    const r = 50 * (1 - easeInOut(ph)) + 4, a = rnd(seed, i + 11) * 6.2832 + ph * 3.2;
+    dot(x + Math.cos(a) * r, y + Math.sin(a) * r * 0.8, 1.9, COL.clay, Math.sin(ph * Math.PI) * 0.95);
+  }
+}
+// Fragments flying out and falling, for broken terracottas
+function shards(x, y, age, seed) {
+  if (age < 0 || age > 1.8) return;
+  for (let i = 0; i < 14; i++) {
+    const a = -Math.PI * (0.08 + 0.84 * rnd(seed, i)), v = 50 + 80 * rnd(seed, i + 3);
+    const px = x + Math.cos(a) * v * age, py = y + Math.sin(a) * v * age + 120 * age * age;
+    const s = 3 + 3.5 * rnd(seed, i + 8);
+    g.save(); g.translate(px, py); g.rotate(age * (5 + 9 * rnd(seed, i + 6)));
+    g.fillStyle = rgba(i % 3 ? COL.clay : [168, 92, 54], 1 - age / 1.8);
+    g.beginPath(); g.moveTo(-s, -s * 0.6); g.lineTo(s, -s * 0.2); g.lineTo(-s * 0.2, s); g.closePath(); g.fill();
+    g.restore();
+  }
+}
+// Iron: a furnace glow, embers rising, and sparks as if struck
+function forge(x, y, W, seed) {
+  glow(x, y, 50 + 7 * Math.sin(W * 7 + seed), COL.ember, 0.4);
+  for (let i = 0; i < 16; i++) {
+    const per = 1.5 + rnd(seed, i) * 1.8, ph = (W / per + rnd(seed, i + 20)) % 1;
+    const px = x + (rnd(seed, i + 40) - 0.5) * 22 + Math.sin(W * 2 + i) * 6 * ph;
+    const py = y - ph * 80 * (0.6 + 0.4 * rnd(seed, i + 60));
+    const flicker = 0.6 + 0.4 * Math.sin(W * 13 + i * 3);
+    dot(px, py, 1.2 + 1.4 * (1 - ph), [255, Math.round(120 + 100 * (1 - ph)), 40], Math.sin(ph * Math.PI) * flicker);
+  }
+  const per = 1.9, k = Math.floor((W + seed * 0.37) / per), a = (W + seed * 0.37) % per;
+  burst(x, y - 3, a, seed * 100 + k, { n: 14, speed: 120, life: 0.7, c: [255, 214, 120], grav: 240, size: 1.6, streak: true, up: true });
+  if (a < 0.15) glow(x, y, 70, [255, 230, 170], 0.55 * (1 - a / 0.15));
+}
+// Excavation: a searchlight wandering over the sites, with dust in its beam
+function searchlight(sites, W) {
+  if (!sites.length) return;
+  const xs = sites.map(q => q.p.x), ys = sites.map(q => q.p.y);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const ax = Math.max(40, (Math.max(...xs) - Math.min(...xs)) / 2 + 20), ay = Math.max(30, (Math.max(...ys) - Math.min(...ys)) / 2 + 20);
+  const sx = cx + Math.sin(W * 0.45) * ax, sy = cy + Math.sin(W * 0.31 + 1) * ay;
+  const R = Math.max(90, Math.min(cvW, cvH) * 0.2);
+  g.globalCompositeOperation = "source-over";
+  const gr = g.createRadialGradient(sx, sy, R * 0.3, sx, sy, R * 1.7);
+  gr.addColorStop(0, "rgba(0,0,0,0)"); gr.addColorStop(1, "rgba(0,0,0,0.5)");
+  g.fillStyle = gr; g.fillRect(0, 0, cvW, cvH);
+  g.globalCompositeOperation = "lighter";
+  glow(sx, sy, R, [255, 240, 205], 0.12);
+  for (let i = 0; i < 26; i++) {
+    const a = rnd(7, i) * 6.2832 + W * (0.1 + 0.2 * rnd(8, i)), r = R * 0.75 * Math.sqrt(rnd(9, i));
+    dot(sx + Math.cos(a) * r, sy + Math.sin(a) * r, 1 + rnd(10, i), COL.sand, 0.5 * (0.5 + 0.5 * Math.sin(W * 2 + i)));
+  }
+}
+
+// Paint one frame of effects. Returns true while something is still moving.
+function paint(now) {
+  g.clearRect(0, 0, cvW, cvH);
+  if (!fx || !fxOn()) return false;
+  const sc = scene(), { live, t, x } = times(now), W = now / 1000;
+  // A one-off moment: how long since it began. After a jump, everything new goes off together.
+  const age = at => (live ? t - at : x - 0.35);
+  const sites = fx.points.map(pt => ({ pt, p: xy(pt.ll) }));
+  const cardT = lead() ? state.t : Infinity;
+  const mood = cardT < CARD - 0.4 ? "" : sc.mood;     // nothing behind the chapter's title card
+  let moving = (!live && x < 6) || !!sc.mood;     // while playing, the loop runs anyway
+
+  // Darkening first, with normal blending
+  g.globalCompositeOperation = "source-over";
+  if (mood === "decline") {
+    const p = live ? clamp01(t / sc.duration) : 1;
+    g.fillStyle = rgba([0, 0, 0], 0.1 + 0.25 * p); g.fillRect(0, 0, cvW, cvH);
+  }
+  for (const e of fx.effects) {
+    if (e.kind === "shatter") e.lls.forEach((ll, k) => { const p = xy(ll); shards(p.x, p.y, age(e.at), 31 + k); });
+  }
+  if (mood === "excavation") searchlight(sites.filter(q => q.pt.now), W);
+
+  // Then light, added on top
+  g.globalCompositeOperation = "lighter";
+  if (cardT < CARD + 0.6) {
+    const tone = $("title-card").dataset.tone === "warm" ? COL.ember : COL.cyan;
+    motes(W, 3, { n: 90, c: tone, speed: 8, rise: 3, a: 0.8 * clamp01((CARD + 0.6 - cardT) / 0.8), size: 1.8 });
+  }
+  sweep(x / 0.9, COL.white, 0.14);
+  if (Math.abs(fx.jump) >= 150) warp(x / ROLL, Math.sign(fx.jump), Math.max(0.45, Math.min(1, Math.log10(Math.abs(fx.jump)) / 3.3)));
+
+  const shown = sites.filter(q => q.pt.now);
+  switch (mood) {
+    case "survey": radar(sites, W); break;
+    case "farming":
+      shown.forEach(q => { sprouts(q.p.x, q.p.y, W, q.pt.seed); glow(q.p.x, q.p.y, 46, COL.green, 0.16 + 0.06 * Math.sin(W * 2)); });
+      motes(W, 5, { n: 40, c: [232, 210, 120], speed: 6, rise: 2, a: 0.35 });
+      break;
+    case "sculpture": shown.forEach(q => { swirl(q.p.x, q.p.y, W, q.pt.seed); glow(q.p.x, q.p.y, 40, COL.clay, 0.25); }); break;
+    case "iron":
+      glow(cvW / 2, cvH / 2, Math.max(cvW, cvH) * 0.6, COL.ember, 0.06 + 0.02 * Math.sin(W * 1.3));
+      shown.filter(q => q.pt.furnace).forEach(q => forge(q.p.x, q.p.y, W, q.pt.seed));
+      break;
+    case "decline": {
+      motes(W, 11, { n: 110, c: COL.ash, speed: 26, rise: -0.4, a: 0.4, size: 1.5 });
+      const ember = live ? 1 - clamp01(t / (sc.duration * 0.8)) : 0.15;
+      shown.forEach(q => {
+        glow(q.p.x, q.p.y, 26, COL.ember, 0.5 * ember * (0.6 + 0.4 * Math.sin(W * 11 + q.pt.seed)));
+        for (let i = 0; i < 5; i++) {     // smoke rising and spreading
+          const ph = (W / 3.5 + i / 5 + q.pt.seed * 0.13) % 1;
+          glow(q.p.x + Math.sin(W + i) * 6 * ph, q.p.y - ph * 60, 6 + ph * 22, COL.ash, 0.16 * (1 - ph));
+        }
+      });
+      break;
+    }
+    case "excavation": break;    // the searchlight is drawn above
+  }
+
+  // Places arriving: a shockwave, a flash and sparks (dust and a camera flash when excavated)
+  const dig = sc.mood === "excavation";
+  sites.forEach(({ pt, p }) => {
+    const a = age(pt.at);
+    if (a < 0 || a > 1.6) return;
+    const c = pt.furnace ? COL.ember : dig ? COL.sand : sc.mood === "farming" ? COL.green
+            : sc.mood === "sculpture" ? COL.clay : COL.cyan, k = pt.faded ? 0.6 : 1;
+    ring(p.x, p.y, a, { r0: 4, r1: 48 * k, c, life: 1.1, w: 3 });
+    ring(p.x, p.y, a - 0.15, { r0: 4, r1: 86 * k, c, life: 1.4, w: 1.5 });
+    glow(p.x, p.y, 44 * (1 - a / 1.6), c, 0.7 * (1 - a / 1.6) * k);
+    burst(p.x, p.y, a, pt.seed * 7 + 1, { n: dig ? 22 : 14, speed: dig ? 60 : 80, c: dig ? COL.sand : c, life: 0.9, grav: dig ? 90 : 40 });
+    if (dig && live && a < 0.4) { g.fillStyle = rgba(COL.white, 0.5 * (1 - a / 0.4)); g.fillRect(0, 0, cvW, cvH); }
+  });
+
+  // State maps: new borders cut in with a glowing tip, new states light up, then a glint
+  const drawnU = (t - LINES_FROM) / (LINES_TO - LINES_FROM);
+  if (live && drawnU > 0 && drawnU < 1) {
+    for (const arcFx of fx.newArcs) {
+      const L1 = arcFx.cum[arcFx.cum.length - 1] * drawnU;
+      let k = 1;
+      while (k < arcFx.cum.length - 1 && arcFx.cum[k] < L1) k++;
+      const u = (L1 - arcFx.cum[k - 1]) / (arcFx.cum[k] - arcFx.cum[k - 1] || 1), A = arcFx.arc[k - 1], B = arcFx.arc[k];
+      const p = xy([A[0] + (B[0] - A[0]) * u, A[1] + (B[1] - A[1]) * u]);
+      glow(p.x, p.y, 24, COL.cyan, 0.85);
+      glow(p.x, p.y, 8, COL.white, 0.9);
+      dot(p.x, p.y, 2.4, COL.white, 1);
+      const ph = t / 0.35 + rnd(arcFx.seed), k2 = Math.floor(ph);     // a new spray of sparks every 0.35 s
+      burst(p.x, p.y, (ph - k2) * 0.35, arcFx.seed * 13 + k2,
+            { n: 4, speed: 70, life: 0.35, c: [200, 245, 255], grav: 120, size: 1.2, streak: true });
+    }
+  }
+  for (const st of fx.states) {
+    if (!st.changed) continue;
+    const a = age(st.at);
+    if (a < 0 || a > 1.4) continue;
+    const p = xy(st.ll);
+    ring(p.x, p.y, a, { r0: 3, r1: 54, c: st.rgb, life: 1.2, w: 3 });
+    glow(p.x, p.y, 60 * (1 - a / 1.4), st.rgb, 0.55 * (1 - a / 1.4));
+  }
+  if (fx.count && fx.newArcs.length) {
+    const a = live ? t - fx.count.end - 0.2 : x - 1.1;
+    sweep(a / 1.1, COL.gold, 0.22);
+  }
+
+  // Effects from the chapter file
+  for (const e of fx.effects) {
+    if (e.kind === "pulse") {        // a beacon of light rising from the place
+      const a = age(e.at);
+      if (a < 0) continue;
+      moving = true;
+      const p = xy(e.ll), k = clamp01(a / 0.6) * (0.6 + 0.25 * Math.sin(W * 3));
+      const gr = g.createLinearGradient(0, p.y, 0, 0);
+      gr.addColorStop(0, rgba(COL.white, 0.5 * k)); gr.addColorStop(1, rgba(COL.cyan, 0));
+      g.fillStyle = gr; g.fillRect(p.x - 6, 0, 12, p.y);
+      glow(p.x, p.y, 40, COL.white, 0.6 * k);
+      ring(p.x, p.y, a % 1.6, { r0: 4, r1: 70, c: COL.white, life: 1.6, w: 2 });
+      ring(p.x, p.y, (a + 0.8) % 1.6, { r0: 4, r1: 70, c: COL.cyan, life: 1.6, w: 1.5 });
+    }
+    if (e.kind === "arc") {          // a comet trail along the arc, a burst on arrival
+      const u = live ? clamp01((t - e.at) / 2.5) : 1;
+      const at = f => { const i = Math.min(39.999, Math.max(0, f * 40)), j = Math.floor(i), v = i - j;
+        return xy([e.pts[j][0] + (e.pts[j + 1][0] - e.pts[j][0]) * v, e.pts[j][1] + (e.pts[j + 1][1] - e.pts[j][1]) * v]); };
+      if (u > 0 && u < 1) {
+        for (let k = 0; k < 16; k++) {
+          const p = at(u - k * 0.012);
+          dot(p.x, p.y, 4.5 * (1 - k / 16), COL.gold, 0.8 * (1 - k / 16));
+        }
+        const h = at(u);
+        glow(h.x, h.y, 34, COL.gold, 0.8);
+        const ph = t / 0.4, k2 = Math.floor(ph);
+        burst(h.x, h.y, (ph - k2) * 0.4, 900 + k2, { n: 6, speed: 50, life: 0.4, c: COL.gold, grav: 40, size: 1.5 });
+      }
+      const s = xy(e.pts[0]);
+      ring(s.x, s.y, live ? t - e.at : -1, { r0: 4, r1: 50, c: COL.gold, life: 1.2, w: 2 });
+      const end = xy(e.pts[40]), arrive = age(e.at + 2.5);
+      ring(end.x, end.y, arrive, { r0: 4, r1: 100, c: COL.gold, life: 1.5, w: 4 });
+      ring(end.x, end.y, arrive - 0.2, { r0: 4, r1: 60, c: COL.white, life: 1.2, w: 2 });
+      glow(end.x, end.y, 90 * clamp01(1 - arrive / 1.5), COL.gold, arrive >= 0 ? 0.8 * (1 - arrive / 1.5) : 0);
+      burst(end.x, end.y, arrive, 77, { n: 26, speed: 120, life: 1.1, c: COL.gold, grav: 50, streak: true });
+    }
+  }
+  g.globalCompositeOperation = "source-over";
+  return moving;
 }
 
 // --- Timeline -------------------------------------------------------------------------
@@ -582,7 +1144,7 @@ function drawRuler() {
 function showProgress() {
   $("ruler").querySelectorAll(".fill").forEach((f, i) => {
     const d = chapter().scenes[i].duration;
-    f.style.width = (i < state.s ? 100 : i > state.s ? 0 : Math.min(100, state.t / d * 100)) + "%";
+    f.style.width = (i < state.s ? 100 : i > state.s ? 0 : clamp01((state.t - lead()) / d) * 100) + "%";
   });
 }
 
@@ -591,7 +1153,9 @@ function goTo(c, s, opts = {}) {
   state.s = Math.max(0, Math.min(chapter().scenes.length - 1, s));
   state.t = 0;
   state.live = !!opts.live;
+  if (!opts.live) state.navAt = performance.now();
   render(opts);
+  wake();
 }
 function step(dir) {
   const last = chapter().scenes.length - 1;
@@ -603,26 +1167,64 @@ function step(dir) {
 }
 
 // --- Play ------------------------------------------------------------------------------
+// One animation loop moves the scene clock while playing and paints the effects.
+// It stops when nothing is moving.
+let looping = false;
+function wake() {
+  if (looping) return;
+  looping = true;
+  state.last = performance.now();
+  requestAnimationFrame(loop);
+}
+function loop(now) {
+  const dt = Math.min(now - state.last, 100) / 1000;     // a background tab doesn't jump ahead
+  state.last = now;
+  if (state.playing) {
+    state.t += dt;
+    if (state.t >= scene().duration + lead()) {
+      // Play runs on into the next scene, and on into the next chapter
+      if (state.s < chapter().scenes.length - 1) goTo(state.c, state.s + 1, { live: true });
+      else if (state.c < DATA.chapters.length - 1) goTo(state.c + 1, 0, { live: true });
+      else { state.t = scene().duration + lead(); setPlaying(false); $("play").textContent = "Replay"; }
+    }
+    showProgress();
+  }
+  frame(now);
+  if (paint(now) || state.playing) requestAnimationFrame(loop);
+  else looping = false;
+}
 function setPlaying(on) {
-  if (on && !state.live) { state.live = true; state.t = 0; }     // a scene that was jumped to plays from its start
+  if (on && !state.live) {        // a scene that was jumped to plays from its start
+    state.live = true; state.t = 0;
+    if (fx) { fx.cues = cameraCues(scene()); fx.cue = 0; fx.lastCue = null; }
+    if (lead()) map.setView(WIDE.center, zoomFor(WIDE.zoom), { animate: false });
+  }
   state.playing = on;
   $("play").textContent = on ? "Pause" : (state.t > 0 ? "Resume" : "Play");
-  if (on) { state.last = performance.now(); drift(); map.fire("moveend"); requestAnimationFrame(tick); }
-  else map.stop();
-  frame();
+  $("mapwrap").classList.toggle("cinema", on && fxOn());
+  if (on) {
+    if (fx && fx.lastCue) flyCue(fx.lastCue, state.t - lead());    // carry on with an interrupted camera move
+    wake();
+  } else map.stop();
+  frame(performance.now());
 }
-function tick(now) {
-  if (!state.playing) return;
-  state.t += Math.min(now - state.last, 100) / 1000;     // a background tab doesn't jump ahead
-  state.last = now;
-  if (state.t >= scene().duration) {
-    if (state.s < chapter().scenes.length - 1) goTo(state.c, state.s + 1, { live: true });
-    else { state.t = scene().duration; showProgress(); setPlaying(false); $("play").textContent = "Replay"; return; }
-  }
-  showProgress();
-  frame();
-  requestAnimationFrame(tick);
+function applyEffects() {
+  const on = fxOn();
+  $("fxbtn").setAttribute("aria-pressed", on);
+  $("fxbtn").disabled = lessMotion.matches;
+  $("fxbtn").title = lessMotion.matches ? "Off because your device asks for less motion"
+    : "Sparks, light and title cards. Decoration only: they add no information.";
+  $("mapwrap").classList.toggle("fx-on", on);
+  $("mapwrap").classList.toggle("cinema", on && state.playing);
+  if (fx) { fx.card.now = fx.lower.now = undefined; }
+  wake();
 }
+$("fxbtn").onclick = () => {
+  fxPref = !fxPref;
+  try { localStorage.setItem(FX_KEY, fxPref ? "on" : "off"); } catch (e) { /* not remembered, still works */ }
+  applyEffects();
+};
+if (lessMotion.addEventListener) lessMotion.addEventListener("change", applyEffects);
 $("play").onclick = () => {
   if (!state.playing && $("play").textContent === "Replay") goTo(state.c, 0, { live: true });
   setPlaying(!state.playing);
@@ -641,7 +1243,7 @@ $("chapters").onclick = e => {
 };
 document.addEventListener("keydown", e => {
   if (e.target.closest("a, button, input, select, textarea") && e.key === " ") return;
-  if (e.key === " ") { e.preventDefault(); setPlaying(!state.playing); }
+  if (e.key === " ") { e.preventDefault(); $("play").click(); }      // same as the button, including Replay
   else if (e.key === "ArrowRight") { setPlaying(false); step(1); }
   else if (e.key === "ArrowLeft") { setPlaying(false); step(-1); }
   else if (e.key === "Escape") setPlaying(false);
@@ -661,6 +1263,7 @@ function readLink() {
   goTo(c, s, { animate: false });
 }
 addEventListener("hashchange", readLink);
+applyEffects();
 readLink();
 </script>
 </body>

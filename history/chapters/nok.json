@@ -106,7 +106,8 @@
       "text": "Archaeologists have found almost 500 Nok sites across central Nigeria and excavated 84 of them, with 270 radiocarbon dates. The four places on the map are ones named in the sources checked for this page. They are examples, not a full map of Nok sites.",
       "sources": [
         "dfg-nok"
-      ]
+      ],
+      "mood": "survey"
     },
     {
       "id": "farmers",
@@ -130,7 +131,8 @@
       "sources": [
         "dfg-nok",
         "scientia-breunig"
-      ]
+      ],
+      "mood": "farming"
     },
     {
       "id": "terracottas",
@@ -156,6 +158,16 @@
       "sources": [
         "dfg-nok",
         "scientia-breunig"
+      ],
+      "mood": "sculpture",
+      "effects": [
+        {
+          "type": "shatter",
+          "features": [
+            "kagarko-sites"
+          ],
+          "at": 0.22
+        }
       ]
     },
     {
@@ -185,7 +197,8 @@
       "furnace": [
         "taruga",
         "katsina-ala"
-      ]
+      ],
+      "mood": "iron"
     },
     {
       "id": "decline",
@@ -217,7 +230,8 @@
       "text": "After about 400 BCE, settlement activity fell sharply, and by the turn of the era the Nok culture disappears from the record. The sources checked do not give a settled explanation for why.",
       "sources": [
         "dfg-nok"
-      ]
+      ],
+      "mood": "decline"
     },
     {
       "id": "rediscovery",
@@ -243,7 +257,8 @@
       "sources": [
         "wiki-nok",
         "dfg-nok"
-      ]
+      ],
+      "mood": "excavation"
     }
   ]
 }

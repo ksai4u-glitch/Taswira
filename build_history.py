@@ -42,6 +42,10 @@ LAT_RANGE = (4.0, 14.0)
 LON_RANGE = (2.5, 15.0)
 SLUG = re.compile(r"^[a-z0-9-]+$")
 
+# Moods set the decoration while a scene with places plays (see history/README.md)
+MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation")
+EFFECTS = ("arc", "pulse", "shatter")
+
 # Hues for the 12 states of 1967, picked so neighbours look different.
 # Later states keep the hue of the state they came from.
 HUES_1967 = {
@@ -269,9 +273,14 @@ def check(chapters, sources, states, cited=None):
             need("{" not in sc.get("text", ""), f"{where}: text still has a {{placeholder}}")
             for fid in sc.get("furnace", []):
                 need(fid in sc.get("show", []), f"{where}: furnace glow on {fid!r}, which the scene does not show")
+            if "mood" in sc:
+                need(sc["mood"] in MOODS, f"{where}: mood must be one of {', '.join(MOODS)}")
             for e in sc.get("effects", []):
-                need(e.get("type") in ("arc", "pulse") and isinstance(e.get("at"), (int, float)) and 0 <= e["at"] < 1,
-                     f"{where}: an effect needs type arc or pulse and at between 0 and 1 (part of the scene)")
+                need(e.get("type") in EFFECTS and isinstance(e.get("at"), (int, float)) and 0 <= e["at"] < 1,
+                     f"{where}: an effect needs type {', '.join(EFFECTS)} and at between 0 and 1 (part of the scene)")
+                if e.get("type") == "shatter":
+                    need(e.get("features") and all(f in sc.get("show", []) for f in e["features"]),
+                         f"{where}: shatter needs features that the scene shows")
                 if e.get("type") == "pulse":
                     need(e.get("state") in states and sc.get("snapshot"), f"{where}: pulse needs a state on a state map")
                 if e.get("type") == "arc":

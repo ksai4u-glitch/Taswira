@@ -31,10 +31,30 @@ a `camera`, `sources`, and either `show` (feature ids, with `dim` for ones shown
 While a scene plays, things appear over time: a year counter runs from `when.from` to `when.to`,
 the narration appears sentence by sentence, places pulse in one after another, and on state maps
 the new borders draw themselves before the new states take their colours. Jumping to a scene shows
-it finished. Two optional extras: `furnace` (feature ids that glow, for iron working) and `effects`,
-a list of `{"type": "pulse", "state": "NG-FC", "at": 0.5}` or
-`{"type": "arc", "from": [lat, lon], "to": [lat, lon], "from_label": "...", "to_label": "...", "at": 0.6}`,
-where `at` is how far into the scene (0 to 1) it starts.
+it finished. Optional extras:
+
+- `furnace`: feature ids that glow, for iron working.
+- `mood`: the decoration while a scene with places plays. One of `survey` (a radar-like sweep over
+  the sites), `farming` (stalks growing), `sculpture` (clay-coloured specks gathering), `iron`
+  (embers and sparks at the `furnace` sites), `decline` (the map greys, ash drifts, the sites smoulder)
+  or `excavation` (a searchlight, dust and a camera flash as each site appears).
+- `effects`: a list of moments, where `at` is how far into the scene (0 to 1) each starts:
+  `{"type": "pulse", "state": "NG-FC", "at": 0.5}` (a beacon of light over a state),
+  `{"type": "arc", "from": [lat, lon], "to": [lat, lon], "from_label": "...", "to_label": "...", "at": 0.6}`
+  (a comet from one place to another), or `{"type": "shatter", "features": ["..."], "at": 0.2}`
+  (fragments flying from a site; only where the evidence is broken pieces, as at the Kagarko sites).
+
+### Effects
+
+On top of the map, a layer of effects plays at every change: a title card when a chapter starts,
+the scene's title sliding in, a band of light sweeping across, the year counter rolling to the new
+date (with streaks of light when it jumps far forward or back in time), shockwaves where places
+appear or new states take their colours, glowing tips on borders as they draw, and the camera leaning
+towards the new states. Play runs on from one chapter into the next.
+
+These are decoration and must stay that way: they never add a place, border or date that is not in
+the chapter file, and the panel says so. The Effects button switches them off (remembered in the
+browser), and they are off when the device asks for less motion.
 
 A **snapshot** lists `groups` (the states at that date, each with the codes of today's states it
 covered, and `from`: the state it came from in the previous snapshot) and `split` for today's states

@@ -83,6 +83,15 @@ class HistoryDataTests(unittest.TestCase):
         scene["effects"] = [{"type": "pulse", "state": "NG-FC", "at": 1.5}]
         self.assertTrue(any("between 0 and 1" in p for p in self.problems_with([states])))
 
+    def test_mood_and_shatter_are_checked(self):
+        nok = self.chapter("nok")
+        scene = next(s for s in nok["scenes"] if s["id"] == "terracottas")
+        scene["mood"] = "party"
+        scene["effects"] = [{"type": "shatter", "features": ["taruga"], "at": 0.2}]   # Taruga is not shown here
+        found = self.problems_with([nok])
+        self.assertTrue(any("mood must be one of" in p for p in found))
+        self.assertTrue(any("shatter needs features" in p for p in found))
+
     def test_outlines_follow_the_snapshot(self):
         data = bh.page_data(self.chapters, self.sources, self.states, self.arcs, self.users)
         snaps = next(c for c in data["chapters"] if c["id"] == "states")["snapshots"]
