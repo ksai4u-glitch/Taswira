@@ -53,11 +53,15 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install pdftotext (for reading PDF sources)
-        continue-on-error: true   # helpful for research, not required
+      - name: Install bubblewrap (required to strip secrets from Claude's shell commands)
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq poppler-utils > /dev/null
+          sudo apt-get install -y -qq bubblewrap > /dev/null
+          bwrap --version
+
+      - name: Install pdftotext (for reading PDF sources)
+        continue-on-error: true   # helpful for research, not required
+        run: sudo apt-get install -y -qq poppler-utils > /dev/null
 
       - name: Prepare the prompt and limits
         id: prep
