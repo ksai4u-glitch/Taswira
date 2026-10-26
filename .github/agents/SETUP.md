@@ -175,7 +175,7 @@ Checked without credentials, before the setup pull request:
 Needs a live run to confirm (not claimed to work yet):
 
 - Authentication with your secrets, and the actions accepting the inputs as
-  written (`--json-schema`, `--max-budget-usd`, Codex `--search`, the
+  written (`--json-schema`, `--max-budget-usd`, Codex web search (`-c web_search="live"`), the
   `:read-only` permission profile with an output schema).
 - Claude's structured output and usage numbers arriving through the action's
   outputs, and Claude being able to fetch and read PDFs on the runner.
