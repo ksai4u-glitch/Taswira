@@ -1,0 +1,134 @@
+{
+  "stage": "work",
+  "round": 0,
+  "base_sha": "2fa3df2329b54cf1455530c6b97a3a84a0a29b62",
+  "edits_allowed": true,
+  "files_changed": [
+    "agent-tasks/issue-25-run-6/work/state-creation-source-check.md"
+  ],
+  "result": {
+    "summary": "Checked the five leads. Two gazette scans (1976 Decree No. 12; 27 May 1967 Decree No. 14) were fetched and read page by page as images. They verify the 12 and 19 state counts, with schedules by province, division and district. The 1996 archivi.ng speech was read only through the fetch tool's extract. It gives six new states, Ebonyi from Abia and Enugu, and a deferral of boundary adjustments. policyvault (connection refused) and the UT map page (bot wall) could not be opened. The nigeriareposit lead was not found. The 21, 30 and 36 counts, Kogi, Ebonyi's full parents and the FCT have no primary-text support. The 1967 and 1976 schedules do not follow modern state lines, so building them from geoBoundaries ADM1 is not supported. This agrees with the finding of the earlier run (issue-25-run-5).",
+    "changes": [
+      {
+        "path": "agent-tasks/issue-25-run-6/work/state-creation-source-check.md",
+        "why": "Memo with one table per source, a table of counts, Kogi, Ebonyi, FCT and boundary adjustments, a table of Stage 0/1 scope points, and a list of what still needs a source."
+      }
+    ],
+    "responses": [],
+    "checks_run": [
+      {
+        "what": "Fetched the 1976 gazette PDF and read pages A55-A58 as images",
+        "result": "Decree No. 12 of 1976 read in full: 19 states, Schedule, s.4 Adjustment Commission, Kogi division in Kwara, Abuja in Niger. In force 3 Feb 1976; made 10 Mar 1976."
+      },
+      {
+        "what": "Fetched the 27 May 1967 gazette PDF and read pages A101-A107 as images",
+        "result": "Decree No. 14 of 1967 read in full: 12 states, province-level schedule, s.6 Delimitation Commission. Decrees 13 and 15 also read."
+      },
+      {
+        "what": "WebFetch of the archivi.ng 1996 speech",
+        "result": "Opened; only the tool extract was seen. Six new states, Ebonyi from Abia and Enugu, 30-state structure with an FCT, boundary adjustments deferred. Footer: all rights reserved."
+      },
+      {
+        "what": "WebFetch of the policyvault.africa 1987 page",
+        "result": "Failed with ECONNREFUSED. Not opened."
+      },
+      {
+        "what": "WebFetch of maps.lib.utexas.edu/maps/nigeria.html",
+        "result": "Anubis Access Denied page. No map content seen."
+      },
+      {
+        "what": "Web searches for the nigeriareposit 1967 item and for Kogi 1991",
+        "result": "No nigeriareposit item found. Secondary snippets only for Kogi (27 Aug 1991), unverified."
+      },
+      {
+        "what": "Bash commands (pdftotext, curl)",
+        "result": "Not run: the sandbox could not start (socat missing)."
+      }
+    ],
+    "sources": [
+      {
+        "title": "States (Creation and Transitional Provisions) Decree 1976, Decree No. 12 (Gazette Extraordinary No. 14, Vol. 63, 17 Mar 1976, Part A)",
+        "url": "https://archive.gazettes.africa/archive/ng/1976/ng-government-gazette-supplement-dated-1976-03-17-no-14-part-a.pdf",
+        "opened": true,
+        "what_was_checked": "All 4 pages read as images: sections 1-7, Schedule of 19 states with areas and capitals.",
+        "rights": "Unknown. The scan says 'Published by authority of the Federal Military Government'; no licence read."
+      },
+      {
+        "title": "States (Creation and Transitional Provisions) Decree 1967, Decree No. 14 (Gazette Extraordinary No. 37, Vol. 54, 27 May 1967, Part A)",
+        "url": "https://archive.gazettes.africa/archive/ng/1967/ng-government-gazette-supplement-dated-1967-05-27-no-37-part-a.pdf",
+        "opened": true,
+        "what_was_checked": "All 7 pages read as images: Decrees 13, 14, 15; Schedule of 12 states by province.",
+        "rights": "Unknown."
+      },
+      {
+        "title": "Abacha 1 October 1996 Independence Day speech (archivi.ng)",
+        "url": "https://archivi.ng/the-archivist/stories/issue-4/independence-day-speeches-nigeria/1996-independence-day-speech",
+        "opened": true,
+        "what_was_checked": "Fetch-tool extract only: six new states, Ebonyi parents, FCT mention, boundary adjustments deferred.",
+        "rights": "© Archivi.ng Dust to Digital Ltd/Gte, all rights reserved. Copyright in the original speech not stated."
+      },
+      {
+        "title": "State Creation and Transitional Provisions Act, 1987 (policyvault.africa)",
+        "url": "https://policyvault.africa/policy/state-creation-and-transitional-provisions-act-1987/",
+        "opened": false,
+        "what_was_checked": "Fetch failed (ECONNREFUSED).",
+        "rights": "Unknown."
+      },
+      {
+        "title": "Perry-Castañeda Library, Nigeria maps (UT Austin)",
+        "url": "https://maps.lib.utexas.edu/maps/nigeria.html",
+        "opened": false,
+        "what_was_checked": "Bot-protection Access Denied page; no map content.",
+        "rights": "Unknown (not seen)."
+      },
+      {
+        "title": "National Repository of Nigeria (nigeriareposit.nln.gov.ng)",
+        "url": "https://nigeriareposit.nln.gov.ng/",
+        "opened": false,
+        "what_was_checked": "A domain-restricted search found no decree item. Run 5 reported the home page showed none. I did not open the home page myself.",
+        "rights": "Unknown."
+      },
+      {
+        "title": "Kogi State (Wikipedia, via search snippet)",
+        "url": "https://en.wikipedia.org/wiki/Kogi_State",
+        "opened": false,
+        "what_was_checked": "Search snippet only: created 27 Aug 1991 from parts of Benue, Niger and Kwara. Not used as evidence.",
+        "rights": "CC BY-SA (general Wikipedia terms; not checked for this page)."
+      }
+    ],
+    "unverified_claims": [
+      "Decree numbers and dates for the 1987, 1991 and 1996 creations and for the FCT (Decree No. 6 of 1976).",
+      "The list of nine 1991 states and Kogi's parent areas (Kwara, Benue, and possibly Niger).",
+      "Ebonyi's full parent areas beyond Abia and Enugu.",
+      "The 1996 speech quotes, which were seen only in a fetch-tool extract.",
+      "Gazette transcriptions are from reading page images and need a copy check.",
+      "Contents and licence of the UT 1993 map.",
+      "Whether the 27 May 1967 supplement No. 21 Part A is relevant.",
+      "Reuse rights of the gazette archive and the Government Printer."
+    ],
+    "open_questions_for_maintainer": [
+      "Can you open the policyvault.africa and UT PCL pages in a browser and report what they contain and their reuse terms?",
+      "What was the original nigeriareposit item URL for the 1967 lead?",
+      "Should the chapter accept a province/division-level, approximate representation for 1967 and 1976 rather than ADM1-based geometry?",
+      "Is citing and describing the gazette scans enough, given unknown rights, or do you want to try to reproduce them?"
+    ],
+    "recommendation": "defer",
+    "recommendation_reason": "Only the 12 and 19 state counts are verified against primary text. Three of the five leads could not be opened or fully read, and the 21, 30 and 36 counts, Kogi, Ebonyi and the FCT still need sources. All rights are unknown or reserved."
+  },
+  "result_valid": true,
+  "usage": {
+    "available": true,
+    "num_turns": 19,
+    "duration_ms": 109256,
+    "total_cost_usd": 0.4111233,
+    "input_tokens": 20,
+    "output_tokens": 11257,
+    "cache_read_input_tokens": 421091,
+    "cache_creation_input_tokens": 53359,
+    "models": [
+      "claude-haiku-5-5",
+      "claude-sonnet-5-5"
+    ],
+    "subtype": "success"
+  }
+}
