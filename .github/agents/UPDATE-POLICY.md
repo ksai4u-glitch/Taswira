@@ -1,8 +1,10 @@
-# Weekly data update and human approval: proposal
+# Weekly data update and human approval
 
-**Nothing in `update.yml` has been changed.** This is a proposal for you to decide.
+**Decided 26 Oct 2026: option B.** `update.yml` now opens a pull request for each
+new Candidate release instead of pushing to `main`. The analysis and both options
+are kept below for the record.
 
-## What `update.yml` does today
+## What `update.yml` did before the change
 
 - Runs every Monday at 06:00 UTC, and on demand from the Actions tab.
 - Spends one UCDP request to see whether the next monthly GED Candidate
@@ -70,5 +72,4 @@ The cost is a monthly tap from you, and the map is only as fresh as your
 merge. In exchange, everything public has passed through you, which is the
 principle you set for the agents.
 
-If you choose B, I will prepare it as a separate pull request so the change to
-publishing is reviewed on its own.
+Implemented in its own pull request, separate from the agent workflow setup.

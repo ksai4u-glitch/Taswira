@@ -13,8 +13,8 @@ https://ksai4u-glitch.github.io/Taswira/. See `README.md` for the stages.
 - Never commit or print the UCDP token (`.env`, secret `UCDP_TOKEN`).
 - Any public page must credit UCDP, cite the dataset version and label
   Candidate (preliminary) data.
-- `docs/` is the live site. Only the maintainer, or the weekly update workflow
-  under the policy in `.github/agents/UPDATE-POLICY.md`, changes it.
+- `docs/` is the live site. It changes only through pull requests the maintainer
+  merges, including the weekly data update (`.github/agents/UPDATE-POLICY.md`).
 
 ## Agent tasks
 

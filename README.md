@@ -78,10 +78,13 @@ again: only the new version is downloaded.
 A GitHub Actions workflow (`.github/workflows/update.yml`) runs every Monday. It costs
 1 API request to check whether UCDP has published the next monthly Candidate release
 (`update_candidates.py`). If it has, the workflow adds it to `settings.py`, downloads it,
-rebuilds `docs/index.html`, commits both to `main` and republishes the map.
+rebuilds `docs/index.html` and opens a pull request ("Add GED Candidate …") with both.
+Nothing goes live until you merge it; merging republishes the map. While one data pull
+request is open, later runs wait for it instead of opening another.
 
 It needs your token as a repository secret: Settings → Secrets and variables → Actions →
-New repository secret, name `UCDP_TOKEN`. You can also start it any time from the
+New repository secret, name `UCDP_TOKEN`, and Settings → Actions → General → "Allow GitHub
+Actions to create and approve pull requests". You can also start it any time from the
 Actions tab → "Update map with new UCDP releases" → Run workflow.
 
 The yearly stable release (for example 27.1) still needs a manual change of

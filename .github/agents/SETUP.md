@@ -144,9 +144,9 @@ into Settings → Secrets and variables → Actions.
 6. **Recommended: protect `main`.** Settings → Rules → Rulesets → New branch
    ruleset for `main`: require a pull request before merging and block force
    pushes, with yourself as a bypass actor. This makes "agents never push to
-   main" a GitHub rule rather than only a workflow rule. It also blocks the
-   weekly data update's direct push, so decide that first: see
-   [UPDATE-POLICY.md](UPDATE-POLICY.md).
+   main" a GitHub rule rather than only a workflow rule. The weekly data update
+   now opens a pull request too ([UPDATE-POLICY.md](UPDATE-POLICY.md)), so the
+   ruleset does not block it.
 
 GitHub Actions minutes are free for this public repository on GitHub-hosted
 runners.
