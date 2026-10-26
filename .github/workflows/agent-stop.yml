@@ -1,0 +1,51 @@
+# Stop switch for agent tasks. A maintainer comments `/agent stop` on the issue:
+# the issue gets the `agent:stop` label (every stage checks for it before it
+# starts) and any running "Agent task on #N" run is cancelled. The final-report
+# job still runs and says the task was stopped.
+# To allow new tasks on that issue later, remove the label.
+# Kill switch for every issue: set the repository variable AGENT_AUTOMATION to off.
+
+name: Agent stop
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions: {}
+
+jobs:
+  stop:
+    if: github.event.issue.pull_request == null && startsWith(github.event.comment.body, '/agent stop')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write    # label and comment
+      actions: write   # cancel runs
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      ISSUE: ${{ github.event.issue.number }}
+      ACTOR: ${{ github.actor }}
+      MAINTAINERS: ${{ vars.AGENT_MAINTAINERS || github.repository_owner }}
+    steps:
+      - name: Check the person is a maintainer
+        run: |
+          perm=$(gh api "repos/$REPO/collaborators/$ACTOR/permission" --jq .permission 2>/dev/null || echo none)
+          listed=$(tr ',' '\n' <<<"$MAINTAINERS" | tr -d ' ' | grep -ixF -- "$ACTOR" || true)
+          if [ -z "$listed" ] || { [ "$perm" != admin ] && [ "$perm" != maintain ]; }; then
+            echo "$ACTOR may not stop agent tasks."; exit 1
+          fi
+
+      - name: Label the issue and cancel running tasks
+        run: |
+          gh label create "agent:stop" -R "$REPO" --color B60205 \
+            --description "Agent tasks on this issue are stopped; remove to allow new ones" --force
+          gh issue edit "$ISSUE" -R "$REPO" --add-label "agent:stop"
+          cancelled=""
+          for id in $(gh run list -R "$REPO" --workflow agent-task.yml --limit 50 \
+                        --json databaseId,displayTitle,status \
+                        --jq ".[] | select(.displayTitle == \"Agent task on #$ISSUE\")
+                                  | select(.status != \"completed\") | .databaseId"); do
+            gh run cancel "$id" -R "$REPO" && cancelled="$cancelled $id"
+          done
+          gh issue comment "$ISSUE" -R "$REPO" --body "Stopped agent tasks on this issue (cancelled runs:${cancelled:- none}). The \`agent:stop\` label blocks new tasks here until you remove it."

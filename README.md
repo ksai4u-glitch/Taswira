@@ -87,6 +87,15 @@ Actions tab → "Update map with new UCDP releases" → Run workflow.
 The yearly stable release (for example 27.1) still needs a manual change of
 `API_VERSION` and the dates in `settings.py`.
 
+## Agent tasks (Claude + Codex)
+
+A comment such as `/agent review` plus a brief on an issue starts a task that
+Claude drafts and Codex reviews, for up to three rounds, ending in a final
+report on the issue. Agents work only on `agent/…` branches and never merge,
+push to `main` or deploy. Setup, limits and the stop command (`/agent stop`) are
+in [`.github/agents/SETUP.md`](.github/agents/SETUP.md); the rules both agents
+follow are in [`.github/agents/INSTRUCTIONS.md`](.github/agents/INSTRUCTIONS.md).
+
 ## Planned build stages
 
 1. **Fetch:** one authenticated request for Nigeria events, inspect the JSON fields

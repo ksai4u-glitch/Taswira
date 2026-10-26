@@ -1,0 +1,204 @@
+# The privileged half of each agent stage (called by agent-task.yml).
+# No AI runs here and no AI credentials are present. It takes an agent's
+# output artifact, checks it with the trusted helper script from the default
+# branch, commits it to the task branch only, and posts the comment.
+
+name: Agent stage (publish)
+
+on:
+  workflow_call:
+    inputs:
+      kind: { type: string, required: true }            # claude | review
+      stage: { type: string, required: true }           # work | response | review
+      round: { type: number, required: true }
+      edits_allowed: { type: boolean, required: true }
+      sha: { type: string, required: true }             # commit the agent worked on / reviewed
+      mode: { type: string, required: true }
+      issue: { type: number, required: true }
+      task_dir: { type: string, required: true }
+      branch: { type: string, required: true }
+    outputs:
+      sha:
+        value: ${{ jobs.publish.outputs.sha }}
+      next:
+        value: ${{ jobs.publish.outputs.next }}
+      proceed:
+        value: ${{ jobs.publish.outputs.proceed }}
+
+permissions: {}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write        # push to the agent/ task branch only (checked below)
+      issues: write
+      pull-requests: write   # open the draft PR and comment on it
+      statuses: write        # mark the reviewed commit
+    outputs:
+      sha: ${{ steps.push.outputs.sha }}
+      next: ${{ steps.review.outputs.next }}
+      proceed: ${{ steps.claude.outputs.proceed }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      ISSUE: ${{ inputs.issue }}
+      TASK_DIR: ${{ inputs.task_dir }}
+      BRANCH: ${{ inputs.branch }}
+      MODE: ${{ inputs.mode }}
+      STAGE: ${{ inputs.stage }}
+      ROUND: ${{ inputs.round }}
+      SHA: ${{ inputs.sha }}
+      EDITS: ${{ inputs.edits_allowed }}
+      HELPER: ${{ github.workspace }}/trusted/.github/agents/scripts/agent_task.py
+    steps:
+      - name: Stop if the maintainer said stop
+        env:
+          AGENT_AUTOMATION: ${{ vars.AGENT_AUTOMATION }}
+        run: |
+          read -r state labels < <(gh api "repos/$REPO/issues/$ISSUE" --jq '"\(.state) \([.labels[].name] | join(","))"')
+          if [ "${AGENT_AUTOMATION,,}" = off ] || [ "$state" != open ] || [[ ",$labels," == *",agent:stop,"* ]]; then
+            echo "::error::Stopped: automation off, issue closed, or agent:stop label present."
+            exit 1
+          fi
+          case "$BRANCH" in agent/*) ;; *) echo "::error::refusing to work on $BRANCH"; exit 1 ;; esac
+
+      - name: Check out the trusted helper (default branch)
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          path: trusted
+          persist-credentials: false
+
+      - name: Check out the task branch
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.branch }}
+          path: work
+          fetch-depth: 0
+
+      - name: Make sure nobody else changed the branch meanwhile
+        working-directory: work
+        run: |
+          head=$(git rev-parse HEAD)
+          if [ "$head" != "$SHA" ]; then
+            echo "::error::Task branch is at $head, expected $SHA. Stopping rather than mixing changes."
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - uses: actions/download-artifact@v4
+        continue-on-error: ${{ inputs.kind == 'review' }}
+        with:
+          name: ${{ inputs.kind == 'claude' && format('claude-{0}-{1}', inputs.stage, inputs.round) || format('codex-review-{0}', inputs.round) }}
+          path: ${{ runner.temp }}/in
+
+      - name: Check and record Claude's work
+        id: claude
+        if: inputs.kind == 'claude'
+        working-directory: work
+        run: |
+          IN="$RUNNER_TEMP/in"
+          files=""; rejected=false; note=""
+          if [ -s "$IN/changes.patch" ]; then
+            if [ "$EDITS" != true ]; then
+              note="Claude changed files in a round where only written answers were allowed; the changes were discarded."
+            elif python3 -I "$HELPER" check-patch --patch "$IN/changes.patch" --mode "$MODE" --task-dir "$TASK_DIR" \
+                   > "$RUNNER_TEMP/check.log" 2>&1; then
+              git apply --index "$IN/changes.patch"
+              files=$(git diff --cached --name-only)
+            else
+              rejected=true
+              mkdir -p "$TASK_DIR/record"
+              cp "$RUNNER_TEMP/check.log" "$TASK_DIR/record/rejected-$STAGE-$ROUND.txt"
+              note="The workflow REJECTED Claude's changes because they touched files outside this task's authorization. Nothing was applied. Details: \`$TASK_DIR/record/rejected-$STAGE-$ROUND.txt\`."
+            fi
+            cat "$RUNNER_TEMP/check.log" 2>/dev/null || true
+          fi
+          [ -f "$IN/result.json" ] || echo null > "$IN/result.json"
+          [ -f "$IN/usage.json" ] || echo '{"available": false}' > "$IN/usage.json"
+          python3 -I "$HELPER" record-claude --task-dir "$TASK_DIR" --stage "$STAGE" --round "$ROUND" \
+            --base-sha "$SHA" --edits-allowed "$EDITS" --files "$files" \
+            --result "$IN/result.json" --usage "$IN/usage.json" --comment-out "$RUNNER_TEMP/comment.md"
+          if [ -n "$note" ]; then printf '\n**%s**\n' "$note" >> "$RUNNER_TEMP/comment.md"; fi
+          git add "$TASK_DIR/record"
+          if [ "$STAGE" = work ]; then msg="Claude: first draft"; else msg="Claude: answers to Codex round $ROUND"; fi
+          git commit -q -m "$msg ($TASK_DIR)"
+          valid=$(python3 -I -c 'import json,sys; r=json.load(open(sys.argv[1])); print(str(isinstance(r, dict)).lower())' "$IN/result.json")
+          if [ "$rejected" = false ] && { [ "$valid" = true ] || [ -n "$files" ]; }; then
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Record Codex's review
+        id: review
+        if: inputs.kind == 'review'
+        working-directory: work
+        env:
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          IN="$RUNNER_TEMP/in"
+          [ -f "$IN/review.txt" ] || : > "$IN/review.txt"
+          python3 -I "$HELPER" record-review --task-dir "$TASK_DIR" --round "$ROUND" --sha "$SHA" \
+            --message "$IN/review.txt" --repo-url "$REPO_URL" --comment-out "$RUNNER_TEMP/comment.md"
+          git add "$TASK_DIR/record"
+          git commit -q -m "Codex: review round $ROUND of ${SHA:0:10} ($TASK_DIR)"
+
+      - name: Push to the task branch
+        id: push
+        working-directory: work
+        run: |
+          git push origin "HEAD:refs/heads/$BRANCH"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Mark the reviewed commit
+        if: inputs.kind == 'review'
+        env:
+          STATE: ${{ steps.review.outputs.status_state }}
+          DESCRIPTION: ${{ steps.review.outputs.status_description }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh api "repos/$REPO/statuses/$SHA" -f state="$STATE" -f context="agent/codex-review" \
+            -f description="$DESCRIPTION" -f target_url="$RUN_URL" > /dev/null
+
+      - name: Open the draft pull request
+        if: inputs.kind == 'claude' && inputs.stage == 'work'
+        # Needs "Allow GitHub Actions to create ... pull requests" in the repository
+        # settings. Without it the task still runs and comments go to the issue.
+        continue-on-error: true
+        env:
+          BASE: ${{ github.event.repository.default_branch || 'main' }}
+        working-directory: work
+        run: |
+          if [ -z "$(gh pr list -R "$REPO" --head "$BRANCH" --state all --json number --jq '.[0].number // ""')" ]; then
+            {
+              echo "Draft opened by the agent-task workflow for #$ISSUE. **Not for merging until the maintainer decides.**"
+              echo
+              cat "$TASK_DIR/record/TASK.md"
+              echo
+              echo "Codex reviews and Claude's answers follow as comments. The final report comes last."
+            } > "$RUNNER_TEMP/pr-body.md"
+            gh pr create -R "$REPO" --draft --base "$BASE" --head "$BRANCH" \
+              --title "[agent $MODE] #$ISSUE: $TASK_DIR" --body-file "$RUNNER_TEMP/pr-body.md"
+          fi
+
+      - name: Post the comment
+        run: |
+          pr=$(gh pr list -R "$REPO" --head "$BRANCH" --state all --json number --jq '.[0].number // ""')
+          if [ -n "$pr" ]; then
+            gh pr comment "$pr" -R "$REPO" --body-file "$RUNNER_TEMP/comment.md"
+          else
+            gh issue comment "$ISSUE" -R "$REPO" --body-file "$RUNNER_TEMP/comment.md"
+          fi
+
+      - name: Fail the stage if the patch was rejected
+        if: inputs.kind == 'claude'
+        working-directory: work
+        run: |
+          if [ -f "$TASK_DIR/record/rejected-$STAGE-$ROUND.txt" ]; then
+            echo "::error::Claude's changes were rejected (outside the authorized paths)."
+            exit 1
+          fi

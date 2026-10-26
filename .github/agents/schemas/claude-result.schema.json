@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary", "changes", "responses", "checks_run", "sources", "unverified_claims", "open_questions_for_maintainer", "recommendation", "recommendation_reason"],
+  "properties": {
+    "summary": {"type": "string"},
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "why"],
+        "properties": {"path": {"type": "string"}, "why": {"type": "string"}}
+      }
+    },
+    "responses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding_id", "position", "evidence", "action_taken"],
+        "properties": {
+          "finding_id": {"type": "string"},
+          "position": {"type": "string", "enum": ["agree", "partly_agree", "disagree"]},
+          "evidence": {"type": "string"},
+          "action_taken": {"type": "string"}
+        }
+      }
+    },
+    "checks_run": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["what", "result"],
+        "properties": {"what": {"type": "string"}, "result": {"type": "string"}}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "url", "opened", "what_was_checked", "rights"],
+        "properties": {
+          "title": {"type": "string"},
+          "url": {"type": "string"},
+          "opened": {"type": "boolean"},
+          "what_was_checked": {"type": "string"},
+          "rights": {"type": "string"}
+        }
+      }
+    },
+    "unverified_claims": {"type": "array", "items": {"type": "string"}},
+    "open_questions_for_maintainer": {"type": "array", "items": {"type": "string"}},
+    "recommendation": {"type": "string", "enum": ["approve", "defer", "reject"]},
+    "recommendation_reason": {"type": "string"}
+  }
+}
