@@ -74,6 +74,15 @@ class HistoryDataTests(unittest.TestCase):
         nok["scenes"][1]["when"] = {"from": -900, "to": -1500, "label": "backwards"}
         self.assertTrue(any("from <= to" in p for p in self.problems_with([nok])))
 
+    def test_effects_are_checked(self):
+        states = self.chapter("states")
+        scene = next(s for s in states["scenes"] if s["id"] == "1991")
+        scene["effects"] = [{"type": "arc", "from": [6.4, 3.4], "to": [51.5, -0.1], "from_label": "Lagos",
+                             "to_label": "London", "at": 0.5}]
+        self.assertTrue(any("arc to" in p for p in self.problems_with([states])))
+        scene["effects"] = [{"type": "pulse", "state": "NG-FC", "at": 1.5}]
+        self.assertTrue(any("between 0 and 1" in p for p in self.problems_with([states])))
+
     def test_outlines_follow_the_snapshot(self):
         data = bh.page_data(self.chapters, self.sources, self.states, self.arcs, self.users)
         snaps = next(c for c in data["chapters"] if c["id"] == "states")["snapshots"]

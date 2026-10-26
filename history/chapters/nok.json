@@ -8,105 +8,242 @@
       "id": "nok-village",
       "kind": "point",
       "name": "Nok village (Jaba LGA, Kaduna State)",
-      "coordinates": [9.5, 8.017],
+      "coordinates": [
+        9.5,
+        8.017
+      ],
       "what": "The first known Nok terracotta was found here in 1928, about 7 m deep in a tin mine. A second head, found nearby in 1943, led Bernard Fagg to recognise a lost sculptural tradition, and the culture is named after the village.",
       "evidence": "Documented chance finds, later studied by archaeologists",
       "location": "Town location. The finds came from tin mines near the village.",
       "disputed": null,
-      "sources": ["wiki-nok", "wiki-places"]
+      "sources": [
+        "wiki-nok",
+        "wiki-places"
+      ]
     },
     {
       "id": "kagarko-sites",
       "kind": "point",
       "name": "Janruwa, Janjala and Akura, near Kagarko",
-      "coordinates": [9.45, 7.683],
+      "coordinates": [
+        9.45,
+        7.683
+      ],
       "label": "left",
       "what": "Three Nok sites about 1 km apart, excavated by the Frankfurt Nok project. They yielded pottery, terracotta fragments and plant remains used to study what Nok farmers grew.",
       "evidence": "Excavated (Frankfurt Nok project)",
       "location": "Placed at Kagarko town. The sites are near the town, not at this exact point.",
       "disputed": null,
-      "sources": ["antiquity-kagarko", "wiki-places"]
+      "sources": [
+        "antiquity-kagarko",
+        "wiki-places"
+      ]
     },
     {
       "id": "taruga",
       "kind": "point",
       "name": "Taruga",
-      "coordinates": [8.69, 7.79],
+      "coordinates": [
+        8.69,
+        7.79
+      ],
       "uncertainty_km": 25,
       "what": "A valley near the village of Takushara, excavated for eight days by Bernard Fagg in January 1961. Iron objects, slag, fragments of furnace blowpipes (tuyères) and pottery were found, and these finds led archaeologists to class the Nok culture as Iron Age.",
       "evidence": "Excavated (Fagg, 1961)",
       "location": "Rough. Placed 60 km south-east of Abuja from a written description, and could be 20 to 30 km out. The ring shows that uncertainty.",
       "disputed": "The date of Taruga's iron working is given as about 600 BCE in some histories, but Fagg's radiocarbon dates point to about the 4th to 3rd centuries BCE. The Frankfurt project places Nok iron working in the middle of the first millennium BCE.",
-      "sources": ["wiki-nok", "wiki-taruga", "dfg-nok"]
+      "sources": [
+        "wiki-nok",
+        "wiki-taruga",
+        "dfg-nok"
+      ]
     },
     {
       "id": "katsina-ala",
       "kind": "point",
       "name": "Katsina-Ala (Benue State)",
-      "coordinates": [7.167, 9.283],
+      "coordinates": [
+        7.167,
+        9.283
+      ],
       "what": "Terracotta heads and figures found here in the mid-20th century resemble Nok work. Fagg described them as a distinctive sub-style, far to the south-east of Nok village.",
       "evidence": "Chance finds described in secondary sources",
       "location": "Town location. The exact find spots are not given in the sources checked.",
       "disputed": "Whether these are Nok proper or a related tradition is not settled in the sources checked.",
-      "sources": ["wiki-places"]
+      "sources": [
+        "wiki-places"
+      ]
     }
   ],
   "scenes": [
     {
       "id": "where",
       "title": "Where the Nok lived",
-      "when": {"from": -1500, "to": 0, "label": "about 1500 BCE to 1 CE"},
-      "camera": {"center": [8.6, 8.2], "zoom": 7},
-      "show": ["nok-village", "kagarko-sites", "taruga", "katsina-ala"],
-      "dim": ["nok-village", "kagarko-sites", "taruga", "katsina-ala"],
+      "when": {
+        "from": -1500,
+        "to": 0,
+        "label": "about 1500 BCE to 1 CE"
+      },
+      "camera": {
+        "center": [
+          8.6,
+          8.2
+        ],
+        "zoom": 7
+      },
+      "show": [
+        "nok-village",
+        "kagarko-sites",
+        "taruga",
+        "katsina-ala"
+      ],
+      "dim": [
+        "nok-village",
+        "kagarko-sites",
+        "taruga",
+        "katsina-ala"
+      ],
       "text": "Archaeologists have found almost 500 Nok sites across central Nigeria and excavated 84 of them, with 270 radiocarbon dates. The four places on the map are ones named in the sources checked for this page. They are examples, not a full map of Nok sites.",
-      "sources": ["dfg-nok"]
+      "sources": [
+        "dfg-nok"
+      ]
     },
     {
       "id": "farmers",
       "title": "First farmers",
-      "when": {"from": -1500, "to": -900, "label": "about 1500 to 900 BCE"},
-      "camera": {"center": [9.2, 7.9], "zoom": 8},
-      "show": ["kagarko-sites"],
+      "when": {
+        "from": -1500,
+        "to": -900,
+        "label": "about 1500 to 900 BCE"
+      },
+      "camera": {
+        "center": [
+          9.2,
+          7.9
+        ],
+        "zoom": 8
+      },
+      "show": [
+        "kagarko-sites"
+      ],
       "text": "The earliest Nok communities were farmers who arrived around 1500 BCE and mainly grew millet. This phase is known from pottery and plant remains, not from sculpture: the terracottas came about six centuries later.",
-      "sources": ["dfg-nok", "scientia-breunig"]
+      "sources": [
+        "dfg-nok",
+        "scientia-breunig"
+      ]
     },
     {
       "id": "terracottas",
       "title": "Villages grow and sculpture begins",
-      "when": {"from": -900, "to": -400, "label": "about 900 to 400 BCE"},
-      "camera": {"center": [8.6, 8.2], "zoom": 7},
-      "show": ["nok-village", "kagarko-sites", "katsina-ala"],
+      "when": {
+        "from": -900,
+        "to": -400,
+        "label": "about 900 to 400 BCE"
+      },
+      "camera": {
+        "center": [
+          8.6,
+          8.2
+        ],
+        "zoom": 7
+      },
+      "show": [
+        "nok-village",
+        "kagarko-sites",
+        "katsina-ala"
+      ],
       "text": "Around 900 BCE settlements suddenly became much denser, and people began making large clay sculptures of human heads and figures. Many were deliberately broken and deposited, some near graves, at sites such as Pangwari and Ifana. Sculpture production seems to fall off sharply around 400 BCE.",
-      "sources": ["dfg-nok", "scientia-breunig"]
+      "sources": [
+        "dfg-nok",
+        "scientia-breunig"
+      ]
     },
     {
       "id": "iron",
       "title": "Iron smelting",
-      "when": {"from": -600, "to": -200, "label": "middle of the 1st millennium BCE"},
-      "camera": {"center": [8.3, 8.4], "zoom": 7},
-      "show": ["taruga", "katsina-ala"],
+      "when": {
+        "from": -600,
+        "to": -200,
+        "label": "middle of the 1st millennium BCE"
+      },
+      "camera": {
+        "center": [
+          8.3,
+          8.4
+        ],
+        "zoom": 7
+      },
+      "show": [
+        "taruga",
+        "katsina-ala"
+      ],
       "text": "In the later part of this phase, Nok people built furnaces and smelted iron, among the earliest iron working known in West Africa. Iron came a few centuries after the first terracottas, so the two should not be treated as one package. The exact dates are debated (see Taruga).",
-      "sources": ["dfg-nok", "scientia-breunig"]
+      "sources": [
+        "dfg-nok",
+        "scientia-breunig"
+      ],
+      "furnace": [
+        "taruga",
+        "katsina-ala"
+      ]
     },
     {
       "id": "decline",
       "title": "Decline",
-      "when": {"from": -400, "to": 0, "label": "about 400 BCE to the turn of the era"},
-      "camera": {"center": [8.6, 8.2], "zoom": 7},
-      "show": ["nok-village", "kagarko-sites", "taruga", "katsina-ala"],
-      "dim": ["nok-village", "kagarko-sites", "taruga", "katsina-ala"],
+      "when": {
+        "from": -400,
+        "to": 0,
+        "label": "about 400 BCE to the turn of the era"
+      },
+      "camera": {
+        "center": [
+          8.6,
+          8.2
+        ],
+        "zoom": 7
+      },
+      "show": [
+        "nok-village",
+        "kagarko-sites",
+        "taruga",
+        "katsina-ala"
+      ],
+      "dim": [
+        "nok-village",
+        "kagarko-sites",
+        "taruga",
+        "katsina-ala"
+      ],
       "text": "After about 400 BCE, settlement activity fell sharply, and by the turn of the era the Nok culture disappears from the record. The sources checked do not give a settled explanation for why.",
-      "sources": ["dfg-nok"]
+      "sources": [
+        "dfg-nok"
+      ]
     },
     {
       "id": "rediscovery",
       "title": "Rediscovery, and looting",
-      "when": {"from": 1928, "to": 2021, "label": "1928 to 2021"},
-      "camera": {"center": [8.9, 7.95], "zoom": 8},
-      "show": ["nok-village", "taruga", "kagarko-sites"],
+      "when": {
+        "from": 1928,
+        "to": 2021,
+        "label": "1928 to 2021"
+      },
+      "camera": {
+        "center": [
+          8.9,
+          7.95
+        ],
+        "zoom": 8
+      },
+      "show": [
+        "nok-village",
+        "taruga",
+        "kagarko-sites"
+      ],
       "text": "Tin miners found the first sculptures in 1928 and 1943. Fagg excavated Taruga in 1961, and the Frankfurt project worked systematically from 2005 to 2021. When German researchers began looking for Nok sites from 1989, most of the ones they found had already been looted.",
-      "sources": ["wiki-nok", "dfg-nok"]
+      "sources": [
+        "wiki-nok",
+        "dfg-nok"
+      ]
     }
   ]
 }
