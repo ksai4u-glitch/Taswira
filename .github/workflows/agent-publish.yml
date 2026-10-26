@@ -57,7 +57,14 @@ jobs:
         env:
           AGENT_AUTOMATION: ${{ vars.AGENT_AUTOMATION }}
         run: |
-          read -r state labels < <(gh api "repos/$REPO/issues/$ISSUE" --jq '"\(.state) \([.labels[].name] | join(","))"')
+          # Retry: a GitHub API hiccup (502) must not look like a stop.
+          info=""
+          for wait in 5 15 30 60; do
+            info=$(gh api "repos/$REPO/issues/$ISSUE" --jq '"\(.state) \([.labels[].name] | join(","))"') && break
+            info=""; sleep "$wait"
+          done
+          if [ -z "$info" ]; then echo "::error::Could not read issue #$ISSUE from the GitHub API (not a stop)."; exit 1; fi
+          read -r state labels <<< "$info"
           if [ "${AGENT_AUTOMATION,,}" = off ] || [ "$state" != open ] || [[ ",$labels," == *",agent:stop,"* ]]; then
             echo "::error::Stopped: automation off, issue closed, or agent:stop label present."
             exit 1
