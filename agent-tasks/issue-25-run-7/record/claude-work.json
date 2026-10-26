@@ -1,0 +1,135 @@
+{
+  "stage": "work",
+  "round": 0,
+  "base_sha": "df5ecd31687129554e19d265ca7228d29c17f70c",
+  "edits_allowed": true,
+  "files_changed": [
+    "agent-tasks/issue-25-run-7/work/state-creation-source-check.md"
+  ],
+  "result": {
+    "summary": "Checked the five leads. I opened the 1967 gazette (Decree No. 14, 12 states) and the 1976 gazette (Decree No. 12, 19 states) as page images and read them in full. The 1996 archivi.ng speech was seen only through a fetch-tool extract. policyvault (connection refused) and the UT map (bot wall) could not be opened. The nigeriareposit home page showed no 1967 decree item. Counts 21, 30 and 36, Kogi's 1991 creation, Ebonyi's decree and the FCT have no primary text read. The 1967 and 1976 schedules list provinces, divisions and districts, and both decrees set up boundary commissions, so the lines were not final. I did not compare the schedules with modern ADM1 units, so that question stays open. Reuse rights are unknown for every source, and the speech page says all rights reserved.",
+    "changes": [
+      {
+        "path": "agent-tasks/issue-25-run-7/work/state-creation-source-check.md",
+        "why": "Memo with a table per source, cross-cutting findings on Kogi, Ebonyi, the FCT and boundary adjustment, mapping to Stage 0/1 scope points, and the list of what still needs a source."
+      }
+    ],
+    "responses": [],
+    "checks_run": [
+      {
+        "what": "WebFetch of the 1976 gazette PDF, then Read of all 4 pages as images",
+        "result": "Opened. Decree No. 12 of 1976, 19 states, schedule by division and district, s.4 boundaries adjustment commission, Kogi division in Kwara, Abuja in Niger."
+      },
+      {
+        "what": "WebFetch of the 1967 gazette PDF, then Read of all 7 pages as images",
+        "result": "Opened. Decrees 13, 14 and 15 of 27 May 1967. Decree 14 creates 12 states, schedule by province, s.6 delimitation commission."
+      },
+      {
+        "what": "WebFetch of the archivi.ng 1996 speech",
+        "result": "Extract only: 30-state structure with an FCT, Ebonyi from Abia and Enugu, boundary adjustments deferred, all-rights-reserved footer."
+      },
+      {
+        "what": "WebFetch of policyvault.africa 1987 page",
+        "result": "ECONNREFUSED. Not opened."
+      },
+      {
+        "what": "WebFetch of maps.lib.utexas.edu/maps/nigeria.html (twice)",
+        "result": "Anubis Access Denied page. Not opened."
+      },
+      {
+        "what": "WebFetch of nigeriareposit.nln.gov.ng home page",
+        "result": "Opened as an extract. No 1967 decree item found. End User Agreement not read."
+      },
+      {
+        "what": "Web searches (nigeriareposit 1967, policyvault 1987, UT 1993 map)",
+        "result": "Snippets only. Used as secondary leads and labelled as such."
+      },
+      {
+        "what": "Bash (listing, local checks)",
+        "result": "Failed: sandbox could not start (bwrap uid map). Not retried. No scripts run."
+      }
+    ],
+    "sources": [
+      {
+        "title": "Decree No. 14 of 1967, States (Creation and Transitional Provisions), Gazette Extraordinary No. 37, Vol. 54, 27 May 1967, Part A",
+        "url": "https://archive.gazettes.africa/archive/ng/1967/ng-government-gazette-supplement-dated-1967-05-27-no-37-part-a.pdf",
+        "opened": true,
+        "what_was_checked": "All 7 pages read as images: Decrees 13, 14, 15; the 12-state schedule; s.6 commission.",
+        "rights": "Unknown. The scan says 'Published by authority of the Federal Military Government of Nigeria'. No archive licence read."
+      },
+      {
+        "title": "Decree No. 12 of 1976, States (Creation and Transitional Provisions), Gazette Extraordinary No. 14, Vol. 63, 17 March 1976, Part A",
+        "url": "https://archive.gazettes.africa/archive/ng/1976/ng-government-gazette-supplement-dated-1976-03-17-no-14-part-a.pdf",
+        "opened": true,
+        "what_was_checked": "All 4 pages read as images: s.1-7, 19-state schedule, Kogi in Kwara, Abuja in Niger, s.4 commission.",
+        "rights": "Unknown. The scan says 'Published by authority of the Federal Military Government of Nigeria'. No archive licence read."
+      },
+      {
+        "title": "1996 Independence Day speech (archivi.ng)",
+        "url": "https://archivi.ng/the-archivist/stories/issue-4/independence-day-speeches-nigeria/1996-independence-day-speech",
+        "opened": true,
+        "what_was_checked": "Fetch-tool extract only: 30-state structure with FCT, Ebonyi from Abia and Enugu, boundary adjustments deferred, copyright footer.",
+        "rights": "Footer: © 2026 Archivi.ng Dust to Digital Ltd/Gte, all rights reserved. Copyright in the original speech not stated."
+      },
+      {
+        "title": "National Repository of Nigeria (home page)",
+        "url": "https://nigeriareposit.nln.gov.ng/",
+        "opened": true,
+        "what_was_checked": "Home page extract: no 1967 decree item visible; items labelled Open Access; End User Agreement not read.",
+        "rights": "Unknown. Terms not read."
+      },
+      {
+        "title": "State Creation and Transitional Provisions Act, 1987 (policyvault.africa)",
+        "url": "https://policyvault.africa/policy/state-creation-and-transitional-provisions-act-1987/",
+        "opened": false,
+        "what_was_checked": "Fetch failed (ECONNREFUSED). Search snippet only: described as creating Katsina and Akwa Ibom.",
+        "rights": "Unknown. Page not seen."
+      },
+      {
+        "title": "Perry-Castañeda Library, Nigeria maps (UT Austin)",
+        "url": "https://maps.lib.utexas.edu/maps/nigeria.html",
+        "opened": false,
+        "what_was_checked": "Bot wall returned. Search snippet only: lists a 1993 political map, CIA-produced.",
+        "rights": "Unknown. The page's notice was not seen; the CIA-origin claim is from a snippet."
+      }
+    ],
+    "unverified_claims": [
+      "Gazette transcriptions are from reading page images and need a copy check against the PDFs.",
+      "Why the 1976 decree has commencement 3 Feb, made 10 Mar and gazetted 17 Mar is not explained in the text.",
+      "1987 decree or Act number, date (23 Sept 1987 from snippets only) and parents (Kaduna, Cross River) from snippets only.",
+      "Nothing opened for the 1991 states or Kogi's creation date and parents.",
+      "The 1996 speech was seen only as a tool extract; the full list of six states is not confirmed.",
+      "Ebonyi's parents beyond Abia and Enugu.",
+      "FCT decree and the capital transfer date: no source opened.",
+      "Contents, date and licence of the UT 1993 map (snippet only).",
+      "Whether any 1967 or 1976 schedule area cuts through a modern ADM1 unit: not compared.",
+      "Whether the 27 May 1967 supplement No. 21 Part A is relevant (not opened).",
+      "Reuse rights for all five sources and for the gazette archive."
+    ],
+    "open_questions_for_maintainer": [
+      "Can you open policyvault.africa and the UT PCL page in a browser and report contents and reuse terms?",
+      "What was the original nigeriareposit item URL for the 1967 lead? The gazette archive copy may replace it.",
+      "Should the 1967 and 1976 snapshots be shown at province/division level (table or named areas) instead of ADM1 geometry?",
+      "Is citing and describing the gazette scans enough, given unknown rights, or do you want to reproduce them?",
+      "Do you want a follow-up task to compare the 1967 and 1976 schedule areas with modern ADM1 units, and to find primary texts for 1987, 1991, 1996 and the FCT?"
+    ],
+    "recommendation": "defer",
+    "recommendation_reason": "The 12 and 19 state counts are supported by primary text I read. The 21, 30 and 36 counts, Kogi, Ebonyi's decree and the FCT are not. Two leads were unreachable and rights are unknown for all five, so the chapter should wait for more sources."
+  },
+  "result_valid": true,
+  "usage": {
+    "available": true,
+    "num_turns": 22,
+    "duration_ms": 111919,
+    "total_cost_usd": 0.4534069,
+    "input_tokens": 20,
+    "output_tokens": 11490,
+    "cache_read_input_tokens": 426833,
+    "cache_creation_input_tokens": 60521,
+    "models": [
+      "claude-haiku-5-5",
+      "claude-sonnet-5-5"
+    ],
+    "subtype": "success"
+  }
+}
