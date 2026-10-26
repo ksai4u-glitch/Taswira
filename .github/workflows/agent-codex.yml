@@ -80,7 +80,7 @@ jobs:
           output-schema-file: .github/agents/schemas/codex-review.schema.json
           permission-profile: ":read-only"
           safety-strategy: drop-sudo
-          codex-args: '["--search"]'
+          codex-args: '["-c", "web_search=\"live\""]'   # live web search (`--search` is not a `codex exec` flag)
           model: ${{ vars.AGENT_CODEX_MODEL }}
           effort: ${{ vars.AGENT_CODEX_EFFORT }}
 
