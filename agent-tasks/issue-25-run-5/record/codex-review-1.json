@@ -1,0 +1,23 @@
+{
+  "round": 1,
+  "reviewed_sha": "72fd65e0ec6e847aae9fa43a830648df0603db13",
+  "usable": false,
+  "review": {
+    "summary": "",
+    "findings": [],
+    "checks_performed": [],
+    "unverified_claims": [],
+    "recommendation": "defer",
+    "recommendation_reason": "Codex review unusable: Codex did not return JSON",
+    "raw": "",
+    "reviewed_sha_claimed": "",
+    "reviewed_sha": "72fd65e0ec6e847aae9fa43a830648df0603db13",
+    "round": 1
+  },
+  "decision": {
+    "next": "stop",
+    "reason": "Codex review unusable: Codex did not return JSON",
+    "open": [],
+    "disputed": []
+  }
+}
