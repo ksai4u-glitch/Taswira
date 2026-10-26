@@ -1,0 +1,12 @@
+{
+  "stage": "work",
+  "round": 0,
+  "base_sha": "ff851df266bb4a9004947f720c77714901da5660",
+  "edits_allowed": true,
+  "files_changed": [],
+  "result": null,
+  "result_valid": false,
+  "usage": {
+    "available": false
+  }
+}
