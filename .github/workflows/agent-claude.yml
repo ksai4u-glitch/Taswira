@@ -60,11 +60,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install bubblewrap (required to strip secrets from Claude's shell commands)
+      - name: Install bubblewrap and socat (Claude's shell sandbox needs both)
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq bubblewrap > /dev/null
-          bwrap --version
+          sudo apt-get install -y -qq bubblewrap socat > /dev/null
+          bwrap --version && socat -V | head -1
 
       - name: Install pdftotext (for reading PDF sources)
         continue-on-error: true   # helpful for research, not required
