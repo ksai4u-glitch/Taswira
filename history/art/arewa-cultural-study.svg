@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Original interlace study for a Hausa cultural frame">
+<title>Original interlace study; cultural/editorial use, not a historical flag</title>
+<g fill="none" stroke-linejoin="round" stroke-linecap="round">
+<path d="M80 10 119 49Q138 68 119 87L80 126 41 87Q22 68 41 49Z" stroke="#d4b57a" stroke-width="10"/>
+<path d="M10 80 49 41Q68 22 87 41L126 80 87 119Q68 138 49 119Z" stroke="#88a88e" stroke-width="10"/>
+<path d="M80 10 119 49Q138 68 119 87L80 126 41 87Q22 68 41 49Z" stroke="#08120e" stroke-width="3"/>
+<path d="M10 80 49 41Q68 22 87 41L126 80 87 119Q68 138 49 119Z" stroke="#08120e" stroke-width="3"/>
+<path d="m49 41 12-12m38 10 12 12M49 119l-12-12m62 12 12-12" stroke="#d4b57a" stroke-width="10"/>
+<path d="m49 41 12-12m38 10 12 12M49 119l-12-12m62 12 12-12" stroke="#08120e" stroke-width="3"/>
+</g></svg>

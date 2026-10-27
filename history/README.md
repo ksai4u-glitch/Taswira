@@ -320,3 +320,75 @@ The dependency directory also needs `leaflet-heat.js` (0.2.0). The revised stand
 viewing copy is 23 seconds, 1920×1080 at 60 fps, with a green serif opening, camera flights,
 sampled CSS animation, moving particles and short dissolves. Its source manifest and captions
 are alongside `previews/history-video-pilot.html`. It supersedes the earlier 21-second 30 fps copy.
+
+
+## Act 1: Africa overview
+
+The `africa` chapter plays between `deep` and `nok`: eleven dated snapshots, five geographic
+zoom stages, then an explicit rewind into Nok. Three original architectural schematics rise
+only in their documented periods; they are neither actor emblems nor scale reconstructions.
+The Africa area has its own bounded validator; existing Nigerian chapters keep their narrower
+validation. `clock: "ago"` and `clock: "label"` are optional scene overrides. A label clock
+marks the geographic interlude, avoiding a false shared date for sites from different periods.
+`when.approx: false` preserves sourced exact years such as 1324 and 1495.
+
+A point may set `monument: {type, from, to, note, sources}`: type is pyramid, stele or tower;
+its documented interval must cover every scene showing that schematic. Overview scenes set
+`monuments: false` and retain ordinary site markers. `kind: "line", type: "river"` uses
+mapped coordinate geometry with no arrows or migration/trade particles. The Niger locator
+uses Natural Earth 1:50m vertices and small joins between its generalised segments. It is
+explicitly a modern physical locator, not reconstructed ancient channels or reservoir outlines.
+
+Optional `camera_path` cues have ordered scene-content times (`at`), `center`, `zoom` and
+positive `dur`, finishing before the scene ends. Both live playback and video sampling use them.
+The previous path's terminal camera is retained when the following video scene begins.
+
+Source checks and unresolved claims are preserved in `history/research/act1-*-evidence.json`.
+Tié's exact coordinate is unverified: Kanem is a regional view without a fabricated capital pin.
+No new trans-Saharan caravan route is drawn without source geometry.
+
+Build an offline preview (starts directly in Act 1):
+
+```
+python build_history.py --output <scratch-history.html>
+python previews/build_act1_preview.py <scratch-history.html> <local-dependency-directory>
+```
+
+Open `previews/act1.html`. It bundles the actual player and checked dependencies with their
+notices; only explicit modern reference scenes request external Esri tiles.
+
+## Zomo, architectural settings and Cinema
+
+Saifu selected an original hare guide, working name Zomo. The history build embeds the
+transparent illustration atlas in `art/`; motion follows the same scene clock as the map.
+The guide can be hidden independently. Sensitive passages use a still solemn pose.
+The atlas is a prototype: its walking pose is omitted pending repair. No voice is recorded.
+
+**Details** hides/restores the information panel. **Cinema** also hides chapter navigation,
+while retaining narration, date, uncertainty, timeline and transport controls. **Full screen**
+requests browser fullscreen; Cinema works if it is unavailable. Escape leaves Cinema.
+The conflict map has its own panel toggle and keeps the active filter context visible.
+
+An optional monument `setting` selects `royal-cemetery`, `stelae-field` or `stone-enclosure`.
+These assemble multiple local SVG components. They are architectural illustrations with
+schematic arrangements/counts, not measured plans or complete reconstructed city skylines.
+Their settings inherit the monument's dated evidence gate; effects add no historical sites.
+
+Review the actual motion in `previews/storycraft.html` (opens Great Zimbabwe in Cinema).
+`previews/site-theme.html` includes both updated players with the existing conflict-data
+snapshot, its original build date, dataset version and preliminary labels. It is not a data update.
+`previews/motif-catalogue.html` introduces eight researched cultural directions, with their
+distinct permitted uses. The supplied Hausa knot is not silently promoted to a medieval flag.
+
+```
+python previews/build_act1_preview.py <built-history> <local-dependencies> --output storycraft.html --scene zimbabwe --cinema
+python previews/build_motif_catalogue.py
+node capture_history.cjs <built-history> <local-dependencies> <new-output.mp4> 60 8 history/cuts/storycraft-pilot.json
+python previews/build_storycraft_video.py <new-output.mp4>
+```
+
+The reviewed three-shot manifest produces a silent 35-second, 1080p60 proof, including credits.
+The viewing HTML embeds that actual MP4; its source manifest and captions are alongside it.
+The previous four-shot pilot remains the export default when no shot manifest is supplied.
+See [the creative handoff](research/creative/CLAUDE-HANDOFF-2026-10-27.md) for the character
+bible, source inventories, whole-project review and the next Hausa city sequence.

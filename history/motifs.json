@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "status": "Research and original design proposals; separate from dated actor emblems",
+  "records": [
+    {
+      "id": "hausa-interlace",
+      "name": "Dagin Arewa / Hausa interlace",
+      "community": "Hausa; northern Nigeria",
+      "role": "Cultural/editorial identifier",
+      "evidence_date": "Mid-20th-century shoes; a robe catalogued Before 1910?; political adoption in the 1950s",
+      "meaning": "A named cultural design vocabulary with older knot contexts and a separate modern political history.",
+      "application": "Original braid can frame a Hausa cultural chapter or an attributed design vignette. Distinct Hausa cities remain distinct actors.",
+      "limit": "No checked source establishes the supplied raster variants as medieval kingdom flags or seals. No invented meaning for each loop.",
+      "drawing": "art/arewa-cultural-study.svg",
+      "sources": [
+        {
+          "title": "Lam Museum: Contexts",
+          "url": "https://lammuseum.wfu.edu/exhibits/virtual/cultures-contexts-collectors/contexts/"
+        },
+        {
+          "title": "UBC Museum: baban riga",
+          "url": "https://collection-online.moa.ubc.ca/search/item?place_made%5B0%5D=62129&row=18&tab=more"
+        },
+        {
+          "title": "Moses Ochonu,2008",
+          "url": "https://quod.lib.umich.edu/j/jii/4750978.0015.206/--unity-in-diversity-palace-art-in-nigeria?rgn=main;view=fulltext"
+        }
+      ],
+      "asset_policy": "Facts paraphrased. Source-specific image rights and limitations are recorded in history/research/creative; no linked museum photographs are copied into this catalogue."
+    },
+    {
+      "id": "edo-leopard",
+      "name": "Edo / Benin court leopard",
+      "community": "Edo, Kingdom of Benin",
+      "role": "Documented court motif; original interpretation",
+      "evidence_date": "Checked object 1550–1680; no invention date claimed",
+      "meaning": "Royal art associates the leopard with the oba’s authority.",
+      "application": "Source-gated leopard profile or rosette in the Benin story.",
+      "limit": "A royal motif does not establish a standardized coat of arms or flag. Distinguish Kingdom of Benin from modern Republic of Benin.",
+      "sources": [
+        {
+          "title": "Met Leopard 1978.412.321",
+          "url": "https://www.metmuseum.org/art/collection/search/310764"
+        },
+        {
+          "title": "Kathy Curnow: Kingdom-based art",
+          "url": "https://pressbooks.ulib.csuohio.edu/bright-continent/chapter/chapter-4-6-kingdom-based-art/"
+        }
+      ],
+      "asset_policy": "Facts paraphrased. Source-specific image rights and limitations are recorded in history/research/creative; no linked museum photographs are copied into this catalogue."
+    },
+    {
+      "id": "yoruba-royal-beads",
+      "name": "Yoruba royal beadwork and birds",
+      "community": "Specific Yoruba royal traditions",
+      "role": "Dated object vocabulary; sacred kingship context",
+      "evidence_date": "Checked crown: late 19th–early 20th century",
+      "meaning": "Crown, veil, faces and birds have distinct relationships to sacred authority and lineage.",
+      "application": "Research a particular court and period before making an original crown-based identifier.",
+      "limit": "No universal Yoruba flag or medieval date follows from this late object. Restricted object photograph is not reused.",
+      "sources": [
+        {
+          "title": "Met Adéńlá2025.97.1",
+          "url": "https://www.metmuseum.org/art/collection/search/844643"
+        }
+      ],
+      "asset_policy": "Facts paraphrased. Source-specific image rights and limitations are recorded in history/research/creative; no linked museum photographs are copied into this catalogue."
+    },
+    {
+      "id": "igbo-ikenga",
+      "name": "Ikenga: achievement and the right hand",
+      "community": "Specific Igbo communities and shrine traditions",
+      "role": "Religious/material-culture interpretation",
+      "evidence_date": "Checked figure: late 19th–mid-20th century",
+      "meaning": "The checked shrine record relates right hand, achievement and horn imagery; forms vary.",
+      "application": "An attributed material-culture vignette with source and local context.",
+      "limit": "Not an all-Igbo state seal. A generic horn logo would erase the shrine context. Restricted photograph not copied.",
+      "sources": [
+        {
+          "title": "Met Ìkéǹgà1978.412.628",
+          "url": "https://www.metmuseum.org/art/collection/search/311087"
+        }
+      ],
+      "asset_policy": "Facts paraphrased. Source-specific image rights and limitations are recorded in history/research/creative; no linked museum photographs are copied into this catalogue."
+    },
+    {
+      "id": "cross-river-nsibidi",
+      "name": "Nsibidi / ukara",
+      "community": "Cross River region across southeastern Nigeria and southwestern Cameroon",
+      "role": "Regional graphic communication and association context",
+      "evidence_date": "Checked textile c. 1975–1985; this is not an origin date",
+      "meaning": "Graphic communication crosses spoken-language boundaries; public use coexists with restricted knowledge.",
+      "application": "Explain communication and cloth with attributed public evidence.",
+      "limit": "Do not label it an exclusively Igbo alphabet, invent translations or reveal claimed secret meanings.",
+      "sources": [
+        {
+          "title": "Birmingham Museum: Textile ukara 1986.2",
+          "url": "https://www.artsbma.org/collection/textile-ukara/"
+        }
+      ],
+      "asset_policy": "Facts paraphrased. Source-specific image rights and limitations are recorded in history/research/creative; no linked museum photographs are copied into this catalogue."
+    },
+    {
+      "id": "akan-sankofa",
+      "name": "Sankofa: looking back to learn",
+      "community": "Akan; Ghana",
+      "role": "Documented proverbial visual form",
+      "evidence_date": "Checked gold weight: 18th–19th century",
+      "meaning": "A bird turning toward its tail supports a particular Akan idea of reflection and learning.",
+      "application": "An attributed optional Akan vignette; original composition or precisely licensed object asset.",
+      "limit": "Not a generic African seal or evidence that this gold weight is an adinkra stamp.",
+      "sources": [
+        {
+          "title": "Met Sankofa gold weight 1994.312.16",
+          "url": "https://www.metmuseum.org/art/collection/search/317688"
+        }
+      ],
+      "asset_policy": "Facts paraphrased. Source-specific image rights and limitations are recorded in history/research/creative; no linked museum photographs are copied into this catalogue."
+    },
+    {
+      "id": "asante-adinkra",
+      "name": "Adinkra: a specific textile vocabulary",
+      "community": "Asante-Akan",
+      "role": "Stamped textile design and moral expression",
+      "evidence_date": "Checked cloth mid–late 20th century",
+      "meaning": "Repeated blocks and individually documented motifs have particular uses and meanings.",
+      "application": "Use researched motifs with their names and contexts.",
+      "limit": "Do not combine signs into a fabricated universal pan-African crest.",
+      "sources": [
+        {
+          "title": "Saint Louis Art Museum Cloth 56:1997",
+          "url": "https://www.slam.org/collection/objects/29199/"
+        }
+      ],
+      "asset_policy": "Facts paraphrased. Source-specific image rights and limitations are recorded in history/research/creative; no linked museum photographs are copied into this catalogue."
+    },
+    {
+      "id": "zomo-taswira",
+      "name": "Zomo, Taswira’s fictional hare guide",
+      "community": "Original brand character, informed by Hausa storytelling research",
+      "role": "Original editorial character; never a political emblem",
+      "evidence_date": "Saifu selected hare direction on 27 October 2026",
+      "meaning": "Proposed personality: curious, attentive and quick-witted. These are creative choices, not a fixed traditional meaning.",
+      "application": "Guide viewer attention, open questions, acknowledge uncertainty, become still during suffering.",
+      "limit": "Do not copy modern illustrated retellings or treat Zomo as an ancient eyewitness. Credit particular tellers when adapting actual tales.",
+      "sources": [
+        {
+          "title": "Yusuf Mohammed,2014, Hausa tricksters",
+          "url": "https://kubanni-backend.abu.edu.ng/server/api/core/bitstreams/98490b9f-0911-4f65-b2bd-ec2597c5cfa6/content"
+        },
+        {
+          "title": "Tremearne 1913 original collection",
+          "url": "https://archive.org/details/hausasuperstitio00tremuoft"
+        }
+      ],
+      "asset_policy": "Facts paraphrased. Source-specific image rights and limitations are recorded in history/research/creative; no linked museum photographs are copied into this catalogue."
+    }
+  ]
+}

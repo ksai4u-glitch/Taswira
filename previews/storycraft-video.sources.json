@@ -1,0 +1,203 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "clips": [
+    {
+      "chapter": "africa",
+      "scene": "meroe",
+      "duration": 18,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "meroe-unesco",
+        "meroe-nomination",
+        "meroe-booklet"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "meroe-kush",
+          "name": "Meroe · royal cemeteries",
+          "location": "Representative point of the royal cemetery complex, separate from the royal city. It does not locate an individual pyramid footprint.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "meroe-unesco",
+            "meroe-nomination",
+            "meroe-booklet"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 10,
+      "seconds": 10
+    },
+    {
+      "chapter": "africa",
+      "scene": "aksum",
+      "duration": 18,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "aksum-unesco",
+        "aksum-map"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "aksum",
+          "name": "Aksum · stone stelae",
+          "location": "UNESCO Aksum property representative point",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "aksum-unesco",
+            "aksum-map"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 10,
+      "seconds": 10
+    },
+    {
+      "chapter": "africa",
+      "scene": "zimbabwe",
+      "duration": 18,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "unesco-great-zimbabwe",
+        "unesco-great-zimbabwe-map"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "great-zimbabwe",
+          "name": "Great Zimbabwe · enclosure",
+          "location": "Representative site coordinate, rounded for an overview; not a surveyed boundary or a precise building footprint. Display halo is illustrative, not a measured confidence interval.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "unesco-great-zimbabwe",
+            "unesco-great-zimbabwe-map",
+            "nmmz-great-zimbabwe",
+            "mukwende-great-zimbabwe"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 12,
+      "seconds": 12
+    }
+  ],
+  "sources": {
+    "merdith-2021": {
+      "title": "Extending full-plate tectonic models into deep time: plate model, version 1.2.4",
+      "author": "Andrew S. Merdith, Simon E. Williams, Alan S. Collins, Michael G. Tetley, Jacob A. Mulder, Morgan L. Blades, Alexander Young, Sheree E. Armistead, John Cannon, Sabin Zahirovic and R. Dietmar Müller",
+      "year": "2021 (Earth-Science Reviews 214); data version 1.2.4, 2022",
+      "url": "https://doi.org/10.5281/zenodo.13635864",
+      "kind": "plate model (scientific data)",
+      "rights": "CC BY 4.0 (Zenodo record). Continent outlines simplified and plate positions sampled every 10 million years for this page.",
+      "checked": "Zenodo record (text and file list sent by the maintainer on 27 Oct 2026, as zenodo.org could not be reached from the build machine): CC BY 4.0. The zip Merdith_etal_2021_ESR_v1.2.4.zip matches the record's MD5 (181ab32d1d235a923ee343568731e64a). It holds the rotation file Rotations/1000_0_rotfile_Merdith_etal.rot and the continent outlines Continents/shapes_continents.gpml used here, covering the last 1,000 million years."
+    },
+    "natural-earth": {
+      "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+      "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+      "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+      "url": "https://www.naturalearthdata.com/",
+      "kind": "background map data",
+      "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+      "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+    },
+    "meroe-unesco": {
+      "title": "Archaeological Sites of the Island of Meroe",
+      "author": "UNESCO World Heritage Centre",
+      "year": "checked 2026-10-27",
+      "url": "https://whc.unesco.org/en/list/1336/",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Short description has a CC-BY-SA IGO 3.0 label; no blanket licence assumed for photographs, maps, nomination documents or the entire page. Facts paraphrased.",
+      "checked": "Opened 27 Oct 2026. Brief synthesis, retrieved lines 47-53 Meroe's royal importance, third-century BCE royal burials and Kushite funerary pyramids."
+    },
+    "meroe-nomination": {
+      "title": "Archaeological Sites of the Island of Meroe — Nomination Text",
+      "author": "State Party nomination hosted by UNESCO",
+      "year": "2010-01-25",
+      "url": "https://whc.unesco.org/document/168998",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Source used for factual geometry and dating; no illustrations copied and no asset licence established.",
+      "checked": "Opened 27 Oct 2026. PDF page index 5 (coordinates); page indices 35-36 (burial chronology and form); page index 42 (pyramid-topped third-century royal burials) Separate city and cemetery coordinates; third-century BCE royal funerary phase; square steep-sided superstructures and east-side chapels."
+    },
+    "meroe-booklet": {
+      "title": "Sudanese Cultural Heritage Sites",
+      "author": "Abdelrahman Ali Mohamed",
+      "year": "2017",
+      "url": "https://sudan.un.org/en/download/3749/19905",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Publication carries copyright notices for author, NCAM and UNESCO; no photographs, plans or illustrations cleared for reuse.",
+      "checked": "Opened 27 Oct 2026. PDF page indices 30-32, printed pages 29-31 Steep-sided sandstone pyramid exteriors, independent underground burial chambers, east-side offering chapels; third-century BCE royal burial-ground shift."
+    },
+    "aksum-unesco": {
+      "title": "Aksum",
+      "author": "UNESCO World Heritage Centre",
+      "year": "checked 2026-10-27",
+      "url": "https://whc.unesco.org/en/list/15/",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Short-description licence does not clear all page images or linked assets. Use original prose and schematic geometry only.",
+      "checked": "Opened 27 Oct 2026. Brief Synthesis, retrieved lines 44-51 Third/fourth-century stelae and architectural carving. The standing example is described as representing a nine-storey building; another large stele lies fallen."
+    },
+    "aksum-map": {
+      "title": "Aksum — Maps / geographical data",
+      "author": "UNESCO World Heritage Centre",
+      "year": "checked 2026-10-27",
+      "url": "https://whc.unesco.org/en/list/15/maps/",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Coordinate facts only; no map copied.",
+      "checked": "Opened 27 Oct 2026. Geographical data table, retrieved lines 10-13 Property representative coordinates."
+    },
+    "unesco-great-zimbabwe": {
+      "title": "Great Zimbabwe National Monument",
+      "author": "UNESCO World Heritage Centre",
+      "year": "checked 2026-10-27",
+      "url": "https://whc.unesco.org/en/list/364/",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Page explicitly licenses its short description CC BY-SA IGO3.0. This is not blanket clearance for images or every page component. Original fact-based prose and original schematic proposed.",
+      "checked": "Opened 27 Oct 2026. Outstanding Universal Value / Brief synthesis: lines52–55 and61 in retrieved page. Construction interval; Hill/Enclosure/Valley division; enclosure date, material and tower form; trade evidence. "
+    },
+    "unesco-great-zimbabwe-map": {
+      "title": "Great Zimbabwe National Monument — Maps / Geographical data",
+      "author": "UNESCO World Heritage Centre",
+      "year": "checked 2026-10-27",
+      "url": "https://whc.unesco.org/en/list/364/maps/",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Coordinate fact cited. No map artwork copied; map-layer reuse terms not verified.",
+      "checked": "Opened 27 Oct 2026. Geographical data table, property364, lines9–12: DMS coordinate recorded above. "
+    },
+    "nmmz-great-zimbabwe": {
+      "title": "Southern Region, Masvingo: Great Zimbabwe",
+      "author": "National Museums and Monuments of Zimbabwe",
+      "url": "https://www.nmmz.co.zw/southern-region-masvingo/",
+      "year": "checked 2026-10-27",
+      "kind": "national heritage authority",
+      "rights": "No source images copied; original geometry and prose based on facts. Image reuse licence not established.",
+      "checked": "Opened 27 Oct 2026. Components include hill, enclosure, valley and peripheral settlements; dry-stone enclosures and dhaka houses/granaries; flourishing1290–1450. No exact inventory or roof reconstruction copied."
+    },
+    "mukwende-great-zimbabwe": {
+      "title": "Great Zimbabwe",
+      "author": "Tawanda Mukwende, Great Zimbabwe University, Metropolitan Museum of Art",
+      "url": "https://www.metmuseum.org/essays/great-zimbabwe",
+      "year": "2025-05-27",
+      "kind": "specialist architectural/historical essay",
+      "rights": "Facts paraphrased, original schematic. Photographs credited to Sosena Solomon are not reused.",
+      "checked": "Opened 27 Oct 2026. Hilltop enclosures, terraced habitation, valley clusters, dhaka building and house floors inside Great Enclosure. Broad occupancy11th–17thcenturies, prominence12th–15th. Assembly is a selected later-phase illustration, not exact building plans or contemporaneous counts."
+    }
+  },
+  "status": "Unreviewed draft; rights and historian review required before publication",
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 35,
+  "frames": 2100
+}

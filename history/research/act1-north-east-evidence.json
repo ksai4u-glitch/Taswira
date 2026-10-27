@@ -1,0 +1,132 @@
+{
+  "research_date": "2026-10-27",
+  "scope": "Research evidence for five Act 1 stops; no implementation or publication.",
+  "coordinate_order": "longitude, latitude (GeoJSON); source DMS retained separately",
+  "global_reuse_policy": "Use original narration and original geometric schematics. No source images, drawings, maps or long quotations were acquired as reusable assets. A source being public or institutional does not establish asset reuse permission.",
+  "records": [
+    {
+      "id": "jebel-irhoud",
+      "name": "Jebel Irhoud",
+      "feature_type": "archaeological site",
+      "scene_date": {
+        "display": "About 300,000 years ago",
+        "time_system": "years ago, as reported by the archaeological study; do not convert into an exact BCE year",
+        "source_estimate": {"central_years_ago": 315000, "plus_minus_years": 34000},
+        "arithmetic_endpoints_years_ago": [281000, 349000],
+        "qualification": "Endpoints are arithmetic around the published estimate, not a claim that occupation lasted throughout this interval. The abstract does not define the uncertainty confidence level."
+      },
+      "location": {
+        "coordinates": [-8.87, 31.87],
+        "precision": "approximate locality only",
+        "source_coordinates": [-8.87444, 31.8692],
+        "coordinate_source_id": "irhoud-mindat",
+        "qualification": "Rounded from a fossil-locality record explicitly derived from a nearby landmark. It is not a verified excavation coordinate. Only a broad overview marker/halo is justified; gate any close-up pin until a primary site survey is checked.",
+        "certainty": "General locality supported; exact excavation point unresolved."
+      },
+      "narration": [
+        {"text": "At Jebel Irhoud in present-day Morocco, early Homo sapiens remains occur with Middle Stone Age tools dated to about 300,000 years ago.", "source_ids": ["irhoud-mpg", "irhoud-dating"]},
+        {"text": "This is one part of a much wider African story of human origins.", "source_ids": ["irhoud-mpg"], "qualification": "Do not depict a unique birthplace or a documented route from this site to all later populations."}
+      ],
+      "visual": {"allowed": "Archaeological site symbol or locality halo", "monument": null, "avoid": ["royal seat", "migration arrows", "a definitive ancestral portrait"]},
+      "sources": [
+        {"id": "irhoud-mpg", "title": "The first of our kind", "publisher": "Max Planck Society", "url": "https://www.mpg.de/11322481/oldest-homo-sapiens-fossils-at-jebel-irhoud-morocco", "opened": true, "published": "2017-06-07", "locator": "Main article, paragraphs on fossils, heated-flint dating and continent-wide evolution (retrieved lines 117-129)", "supports": "Early Homo sapiens fossils, stone tools, approximately 300,000-year date; interpretation extending beyond one African locality.", "reuse": "Facts paraphrased; no image or text asset rights established."},
+        {"id": "irhoud-dating", "title": "The age of the hominin fossils from Jebel Irhoud, Morocco, and the origins of the Middle Stone Age", "publisher": "Nature; abstract opened at US National Library of Medicine / PubMed", "url": "https://pubmed.ncbi.nlm.nih.gov/28593967/", "doi": "10.1038/nature22335", "opened": true, "published": "2017-06-07", "locator": "Abstract, retrieved lines 254-258", "supports": "Thermoluminescence estimate of 315 ± 34 thousand years for heated flints associated with the fossils.", "reuse": "Bibliographic abstract checked for facts; no asset reuse permission inferred."},
+        {"id": "irhoud-mindat", "title": "Djebel Irhoud fossil locality 82672", "publisher": "Mindat", "url": "https://www.mindat.org/paleo_loc.php?id=82672", "opened": true, "locator": "Locality coordinates and derivation, retrieved lines 29-40", "supports": "Approximate fossil locality coordinates, explicitly based on a nearby landmark.", "limitations": "Database labels fossil records experimental; not a primary excavation survey. Its broad taxonomic age field is not used for scene dating.", "reuse": "Coordinates recorded as facts; no maps or photographs reused."}
+      ],
+      "unused_or_unverified": ["Unqualified current 'oldest human' ranking", "Unique birthplace of humanity", "Exact excavation coordinate", "Earlier 90-190 thousand-year estimates on the stale Max Planck field-project page"],
+      "retrieval_notes": [
+        {"url": "https://www.sciencedirect.com/science/article/abs/pii/S0033589413000884", "result": "403 Forbidden. Search surfaced 31°53.93′N, 8°51.88′W, but the page was not readable and those precise coordinates are NOT adopted."},
+        {"url": "https://www.cambridge.org/core/journals/quaternary-research/article/abs/rodents-from-the-late-middle-pleistocene-hominidbearing-site-of-jbel-irhoud-morocco-and-their-chronological-and-paleoenvironmental-implications/3AD9EBB2EDF4E1469E970412AD753C30", "result": "Opened abstract/reference page; coordinate-bearing introduction was not accessible. Full paper not read."},
+        {"url": "https://www.mdpi.com/2071-1050/18/10/4934", "result": "429 Too Many Requests; PDF endpoint inaccessible. Search coordinate in geosite figure caption is NOT adopted."},
+        {"url": "https://link.springer.com/article/10.1007/s12371-024-00927-z", "result": "Opened subscription preview; full text and coordinate evidence not read."},
+        {"url": "https://www.eva.mpg.de/evolution/field-projects/africa-and-the-origins-of-modern-humans/", "result": "Opened. General location about 100 km west of Marrakech supports locality, but page retains pre-2017 chronological estimates and is not used for dating."}
+      ]
+    },
+    {
+      "id": "memphis-egypt",
+      "name": "Memphis / early Egyptian unification",
+      "feature_type": "city and royal administrative centre",
+      "scene_date": {"display": "Around 3100 BCE", "approximate_year_bce": 3100, "interval": null, "qualification": "An approximate historical moment within a gradual process, not a precisely bounded unification event. No numerical uncertainty interval is supplied by the ministry."},
+      "location": {"coordinates": [31.2610555556, 29.8555], "source_dms": "N29 51 19.8; E31 15 39.8", "coordinate_source_id": "memphis-map", "precision": "UNESCO property component 86-001 representative point", "certainty": "Site of Memphis identified; coordinate does not identify the palace of Narmer or the exact earliest city centre."},
+      "narration": [
+        {"text": "Around 3100 BCE, the gradual unification of Upper and Lower Egypt reached a major stage.", "source_ids": ["egypt-ministry"]},
+        {"text": "Memphis became a capital between the two regions.", "source_ids": ["egypt-ministry"]}
+      ],
+      "visual": {"allowed": "City marker; qualified capital label", "monument": null, "avoid": ["Giza pyramids in a 3100 BCE scene", "instantaneous conquest flash", "modern Egyptian outline", "exact Narmer palace footprint"]},
+      "sources": [
+        {"id": "egypt-ministry", "title": "Early Dynastic Period", "publisher": "Egyptian Ministry of Tourism and Antiquities", "url": "https://egymonuments.gov.eg/historical-periods/early-dynastic-period/", "opened": true, "locator": "Historical summary, retrieved lines 133-135", "supports": "Approximate 3100 BCE unification chronology, explicitly gradual process, Memphis as a new capital.", "reuse": "Page states all rights reserved; facts only in original prose."},
+        {"id": "memphis-map", "title": "Memphis and its Necropolis — Maps / geographical data", "publisher": "UNESCO World Heritage Centre", "url": "https://whc.unesco.org/en/list/86/maps/", "opened": true, "locator": "Component 86-001, Site of Memphis, retrieved lines 9-14", "supports": "Coordinates for Memphis separately from component 86-002, the pyramid fields.", "reuse": "Coordinate facts used; cadastral maps not copied."}
+      ],
+      "unused_or_unverified": ["A single exact unification year/day", "Unqualified account of Narmer conquering the whole country at once", "Giza coordinate as Memphis", "Any monument silhouette for this early moment"],
+      "retrieval_notes": []
+    },
+    {
+      "id": "meroe-kush",
+      "name": "Meroe / Kush",
+      "feature_type": "royal city with separate funerary landscape",
+      "scene_date": {"display": "3rd century BCE", "approximate_interval_bce": [300, 201], "qualification": "Use a generic royal-pyramid scene in the documented third-century burial phase. This is not the beginning or duration of Kush. Do not assign a precise construction year to an unnamed pyramid."},
+      "location": {
+        "coordinates": [33.75705, 16.9373833333],
+        "source_dms": "N16°56.243′; E33°45.423′",
+        "coordinate_source_id": "meroe-nomination",
+        "precision": "North and South cemeteries, Meroe 2 component representative point",
+        "certainty": "Cemetery complex identified; not an individual pyramid footprint.",
+        "city_coordinates": [33.7142, 16.9351833333],
+        "city_source_dms": "N16°56.111′; E33°42.852′",
+        "qualification": "Keep city label/seat and cemetery schematic distinct at close zoom. UNESCO maps page rounds points to [33.7166667,16.9333333] and [33.75,16.9333333]; nomination gives more specific component points, not survey guarantees."
+      },
+      "narration": [
+        {"text": "Meroe was a major centre of Kush. From the third century BCE, most Kushite rulers were buried here.", "source_ids": ["meroe-unesco"]},
+        {"text": "Its royal cemeteries used steep-sided pyramids above tombs cut into the ground.", "source_ids": ["meroe-nomination"]}
+      ],
+      "visual": {
+        "allowed": "Original generic Kushite funerary pyramid schematic",
+        "monument": {"form": "Square-based, steep-sided pyramid with a small chapel on its eastern side; no copied relief, photograph or reconstructed specific tomb.", "form_source_ids": ["meroe-nomination", "meroe-booklet"], "dating_source_id": "meroe-nomination", "dating_locator": "PDF pages 35 and 42; third-century BCE royal burials with pyramid superstructures", "qualification": "Construction interval belongs to the class/phase. Render as a schematic example, not a measured reconstruction or a dated named pyramid."},
+        "avoid": ["Meroe pyramids appearing at 800 BCE merely because Kush already existed", "Egyptian pyramid proportions", "empty triangular outline implying a chamber inside the pyramid", "unverified early iron-smelting diffusion routes", "filled empire boundary"]
+      },
+      "sources": [
+        {"id": "meroe-unesco", "title": "Archaeological Sites of the Island of Meroe", "publisher": "UNESCO World Heritage Centre", "url": "https://whc.unesco.org/en/list/1336/", "opened": true, "locator": "Brief synthesis, retrieved lines 47-53", "supports": "Meroe's royal importance, third-century BCE royal burials and Kushite funerary pyramids.", "reuse": "Short description has a CC-BY-SA IGO 3.0 label; no blanket licence assumed for photographs, maps, nomination documents or the entire page. Facts paraphrased."},
+        {"id": "meroe-nomination", "title": "Archaeological Sites of the Island of Meroe — Nomination Text", "publisher": "State Party nomination hosted by UNESCO", "url": "https://whc.unesco.org/document/168998", "opened": true, "published": "2010-01-25", "locator": "PDF page index 5 (coordinates); page indices 35-36 (burial chronology and form); page index 42 (pyramid-topped third-century royal burials)", "supports": "Separate city and cemetery coordinates; third-century BCE royal funerary phase; square steep-sided superstructures and east-side chapels.", "reuse": "Source used for factual geometry and dating; no illustrations copied and no asset licence established."},
+        {"id": "meroe-booklet", "title": "Sudanese Cultural Heritage Sites", "author": "Abdelrahman Ali Mohamed", "publisher": "NCAM / UNESCO, hosted by United Nations Sudan", "url": "https://sudan.un.org/en/download/3749/19905", "opened": true, "published": "2017", "locator": "PDF page indices 30-32, printed pages 29-31", "supports": "Steep-sided sandstone pyramid exteriors, independent underground burial chambers, east-side offering chapels; third-century BCE royal burial-ground shift.", "reuse": "Publication carries copyright notices for author, NCAM and UNESCO; no photographs, plans or illustrations cleared for reuse."}
+      ],
+      "unused_or_unverified": ["Exact one-day transfer of the capital from Napata", "A precise construction date for an unnamed pyramid", "Earliest iron-smelting claim", "All tombs having identical forms or no exceptional internal chamber"],
+      "retrieval_notes": [{"url": "https://whc.unesco.org/en/list/1336/maps/", "result": "Opened. Meroe 1 and 2 representative coordinates are rounded in the table; detailed component identification and coordinates are available in opened nomination PDF."}]
+    },
+    {
+      "id": "aksum",
+      "name": "Aksum",
+      "feature_type": "urban archaeological site and royal funerary monuments",
+      "scene_date": {"display": "3rd–4th centuries CE", "approximate_interval_ce": [201, 400], "qualification": "Interval dates the stelae class. It is not the duration of the kingdom or every ruin in the city. No exact erection year established."},
+      "location": {"coordinates": [38.71861, 14.13019], "source_dms": "N14 7 48.684; E38 43 6.996", "coordinate_source_id": "aksum-map", "precision": "UNESCO Aksum property representative point", "certainty": "City/property location verified; individual stele base not independently surveyed here."},
+      "narration": [
+        {"text": "Aksum's great stone stelae were carved in the third and fourth centuries CE.", "source_ids": ["aksum-unesco"]},
+        {"text": "Some turned a single block of stone into the image of a many-storeyed building.", "source_ids": ["aksum-unesco"]}
+      ],
+      "visual": {"allowed": "Original generic monolithic stele schematic", "monument": {"form": "Tall upright monolith with stacked architectural panels suggesting a multi-storey building", "source_id": "aksum-unesco", "dating_locator": "Brief Synthesis and criterion (i), retrieved lines 47 and 51", "qualification": "Generic schematic; do not reproduce a source drawing or imply every stele stood successfully. Rounded cap or fine door/window reconstruction requires another form check."}, "avoid": ["stela rising at first-century kingdom origin", "all stelae standing simultaneously", "later church silhouette at the same early date", "filled political borders"]},
+      "sources": [
+        {"id": "aksum-unesco", "title": "Aksum", "publisher": "UNESCO World Heritage Centre", "url": "https://whc.unesco.org/en/list/15/", "opened": true, "locator": "Brief Synthesis, retrieved lines 44-51", "supports": "Third/fourth-century stelae and architectural carving. The standing example is described as representing a nine-storey building; another large stele lies fallen.", "reuse": "Short-description licence does not clear all page images or linked assets. Use original prose and schematic geometry only."},
+        {"id": "aksum-map", "title": "Aksum — Maps / geographical data", "publisher": "UNESCO World Heritage Centre", "url": "https://whc.unesco.org/en/list/15/maps/", "opened": true, "locator": "Geographical data table, retrieved lines 10-13", "supports": "Property representative coordinates.", "reuse": "Coordinate facts only; no map copied."}
+      ],
+      "unused_or_unverified": ["First–thirteenth-century ruins range as a single continuous kingdom", "An exact individual stele erection year", "Precise summit profile without another source"],
+      "retrieval_notes": []
+    },
+    {
+      "id": "kilwa",
+      "name": "Kilwa Kisiwani",
+      "feature_type": "Swahili trading city / port",
+      "scene_date": {"display": "13th–14th centuries CE", "approximate_interval_ce": [1201, 1400], "qualification": "Chosen prosperity phase, supported by UNESCO; not the entire ninth–nineteenth-century occupation or a coast-wide kingdom lifetime."},
+      "location": {"coordinates": [39.5227777778, -8.9577777778], "source_dms": "S8 57 28.00; E39 31 22.00", "coordinate_source_id": "kilwa-map", "precision": "Kilwa Kisiwani component 144-001 representative point", "certainty": "Individual island-city component verified, distinct from Songo Mnara."},
+      "narration": [
+        {"text": "Kilwa Kisiwani was a Swahili trading city, especially prosperous in the thirteenth and fourteenth centuries.", "source_ids": ["kilwa-unesco"]},
+        {"text": "Its merchants connected African hinterland goods with Indian Ocean markets in Arabia, India and China.", "source_ids": ["kilwa-unesco"]}
+      ],
+      "visual": {"allowed": "Port/city point and abstract maritime trade motif", "monument": null, "avoid": ["one kingdom covering the entire Swahili coast", "claiming every coastal city shared Kilwa's dates", "precisely routed trade lines without route evidence", "Portuguese fort in a thirteenth-century scene"]},
+      "sources": [
+        {"id": "kilwa-unesco", "title": "Ruins of Kilwa Kisiwani and Ruins of Songo Mnara", "publisher": "UNESCO World Heritage Centre", "url": "https://whc.unesco.org/en/list/144/", "opened": true, "locator": "Brief synthesis, retrieved lines 50-54", "supports": "Swahili trading cities, Kilwa's thirteenth/fourteenth-century prosperity, Indian Ocean exchange, distinct architectural phases.", "reuse": "Short description carries a CC-BY-SA IGO 3.0 label; no photograph, map or entire-page licence inferred. Facts paraphrased."},
+        {"id": "kilwa-map", "title": "Kilwa Kisiwani and Songo Mnara — Maps / geographical data", "publisher": "UNESCO World Heritage Centre", "url": "https://whc.unesco.org/en/list/144/maps/", "opened": true, "locator": "Component 144-001, retrieved lines 9-14", "supports": "Kilwa-specific coordinates, separate from Songo Mnara.", "reuse": "Coordinate facts only; no source map copied."}
+      ],
+      "unused_or_unverified": ["A single Swahili coastal state", "An exact ocean route geometry", "Any fully reconstructed Kilwa building footprint"],
+      "retrieval_notes": []
+    }
+  ]
+}

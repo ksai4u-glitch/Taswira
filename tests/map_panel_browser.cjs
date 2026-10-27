@@ -1,0 +1,10 @@
+/* built conflict map HTML + local Leaflet/heat dependencies */
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),{chromium}=require('playwright');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox']});try{
+const p=await b.newPage({viewport:{width:1440,height:900}}),errors=[];p.on('pageerror',e=>errors.push(e.message));
+await p.route('**/*',r=>{const u=r.request().url(),n=u.includes('leaflet-heat')?'leaflet-heat.js':u.includes('leaflet.css')?'leaflet.css':u.includes('leaflet.js')?'leaflet.js':null;return n?r.fulfill({contentType:n.endsWith('css')?'text/css':'application/javascript',body:fs.readFileSync(path.join(process.argv[3],n))}):r.abort();});
+await p.setContent(fs.readFileSync(process.argv[2],'utf8'));await p.waitForFunction(()=>typeof map!=='undefined'&&typeof anim!=='undefined');
+assert.equal(await p.locator('#map-panel-toggle').count(),1);
+const width=await p.locator('#map').evaluate(el=>el.clientWidth);await p.locator('#map-panel-toggle').click();assert.equal(await p.locator('#panel').isVisible(),false);assert.ok(await p.locator('#map').evaluate(el=>el.clientWidth)>width+300);assert.match(await p.locator('#map-context').textContent(),/Filters/);await p.evaluate(()=>{active.delete('non-state');showPrelim=false;draw();});assert.match(await p.locator('#map-context').textContent(),/Stable release only/);assert.doesNotMatch(await p.locator('#map-context').textContent(),/All violence types/);
+await p.locator('#map-panel-toggle').click();assert.equal(await p.locator('#panel').isVisible(),true);await p.setViewportSize({width:390,height:844});await p.locator('#map-panel-toggle').click();assert.equal(await p.locator('#panel').isVisible(),false);assert.equal(await p.locator('#map-panel-toggle').getAttribute('aria-expanded'),'false');assert.ok(await p.locator('.leaflet-control-attribution').isVisible());assert.deepEqual(errors,[]);console.log('PASS: desktop/phone conflict-map panel toggles, restored controls, filter context and attribution.');
+}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

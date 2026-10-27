@@ -1,0 +1,164 @@
+{
+  "status": "research_only",
+  "checked_at": "2026-10-27",
+  "method": "Opened the cited pages through search_service_web_run. Claims below are original paraphrases, with passage locations for review. No source artwork is included.",
+  "features": [
+    {
+      "id": "great-zimbabwe",
+      "label": "Great Zimbabwe",
+      "type": "archaeological_city",
+      "coordinate": {
+        "latitude": -20.27117,
+        "longitude": 30.9332688889,
+        "source_dms": "S20 16 16.212 E30 55 59.768",
+        "source": "unesco-great-zimbabwe-map",
+        "meaning": "UNESCO property reference point; not surveyed coordinates of the conical tower",
+        "uncertainty": "Source gives no positional accuracy; decimal conversion adds no accuracy."
+      },
+      "construction_interval_ce": [1100, 1450],
+      "enclosure_date_label": "14th century CE",
+      "recommended_snapshot_ce": 1400,
+      "snapshot_status": "Editorial snapshot within the documented building period, after the enclosure's stated century; not an exact construction date.",
+      "form": "An oval Great Enclosure of coursed, cut granite, with a narrow passage toward a conical tower.",
+      "architecture_gate": "An original enclosure-and-tower schematic may represent this later phase. Do not animate the complete enclosure at 1100. The tower itself has no separately verified construction date here; do not give it its own exact-year event.",
+      "narration": "In southern Africa, Great Zimbabwe grew into a major trading city. Its fourteenth-century Great Enclosure still expresses the skill of its stone builders.",
+      "sources": ["unesco-great-zimbabwe", "unesco-great-zimbabwe-map"],
+      "excluded_claims": ["Queen of Sheba legend as history", "A single certain cause of abandonment", "Modern national boundary as medieval extent"]
+    },
+    {
+      "id": "kanem",
+      "label": "Kanem, east of Lake Chad",
+      "type": "historical_region",
+      "coordinate": null,
+      "site_coordinate_gate": "No exact Tié coordinate verified in the opened sources. Do not substitute a similarly named modern locality or interpolate a site point from a small map. Use an explicitly labelled regional view east of Lake Chad; do not render that camera anchor as Njimi.",
+      "capital_identification": {"site": "Tié", "proposed_identity": "Njimi", "status": "probable, not demonstrated certainty"},
+      "chronology_source": "magnavita-2025",
+      "dated_features_ce": {"main_enclosure_model2": [1092, 1179], "elite_building_model2": [1130, 1194]},
+      "date_interpretation": "Modelled two-sigma intervals, not exact years or the founding date of Kanem.",
+      "recommended_snapshot_label": "13th century CE",
+      "snapshot_status": "Conservative regional snapshot; the project reports flourishing eleventh–fourteenth-century evidence and the earlier building remained in use into the fourteenth–early fifteenth centuries.",
+      "narration": "East of Lake Chad, Kanem linked communities across the Sahara. Archaeologists now consider Tié a probable location of Njimi, its early Islamic capital.",
+      "architecture_gate": "If depicting Tié at regional scale, use only a generic original fired-brick enclosure or building schematic. Its excavated elite building has plastered interior walls and a courtyard; a fully reconstructed palace skyline would exceed the checked evidence.",
+      "sources": ["frobenius-kanem", "magnavita-2025", "dai-tie-2020"],
+      "excluded_claims": ["Kanem founded in one exact year", "Tié certainly equals Njimi", "The early state and surviving brick enclosure began together"]
+    },
+    {
+      "id": "niger-geography",
+      "type": "river_orientation",
+      "coordinate": null,
+      "verified_route_description": "From Guinea's highlands near Sierra Leone, the Niger runs northeast through Mali and its inland delta, bends southeast into Niger, follows the Niger–Benin border, and enters Nigeria. The Benue joins at Lokoja; the lower Niger then runs south into a branching delta on the Gulf of Guinea.",
+      "narration": "The Niger begins in Guinea's highlands, arcs through the western Sahel, and turns toward the Atlantic. At Lokoja, the Benue joins its waters.",
+      "approximate_length_label": "about 4,200 km",
+      "length_note": "Editorial rounding: opened FAO page says about 4,100 km and ESA says 4,180 km. Avoid false exactness.",
+      "geometry_gate": "These passages verify orientation and confluence, not an animation polyline, historical channel geometry, or exact confluence coordinates. A separate licensed geometry source remains necessary for drawing the route.",
+      "sources": ["fao-niger", "esa-niger"]
+    },
+    {
+      "id": "lake-chad-locator",
+      "type": "geographic_reference",
+      "coordinate": {
+        "latitude": 14.3333333333,
+        "longitude": 13.6166666667,
+        "source_dms": "14°20'N 13°37'E",
+        "source": "ramsar-lake-chad",
+        "meaning": "Reference point of the Chadian Lake Chad Ramsar wetland, site1134; not the centre of the entire lake or a medieval shoreline",
+        "uncertainty": "Site-level reference at minute precision; no accuracy statement."
+      },
+      "narration": "Around Lake Chad, water and trade sustained societies across the central Sahel.",
+      "source_supported_geographic_claim": "Lake Chad is shared by Chad, Niger, Nigeria and Cameroon. Its extent varies over time.",
+      "representation_gate": "Use a locator label or qualified background water shape. The opened modern sources do not establish a thirteenth-century shoreline. The broad narration's trade clause comes from the Kanem sources, not Ramsar or NASA.",
+      "sources": ["ramsar-lake-chad", "nasa-lake-chad", "frobenius-kanem"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "unesco-great-zimbabwe",
+      "title": "Great Zimbabwe National Monument",
+      "publisher": "UNESCO World Heritage Centre",
+      "url": "https://whc.unesco.org/en/list/364/",
+      "opened": true,
+      "checked_passages": "Outstanding Universal Value / Brief synthesis: lines52–55 and61 in retrieved page. Construction interval; Hill/Enclosure/Valley division; enclosure date, material and tower form; trade evidence.",
+      "rights": "Page explicitly licenses its short description CC BY-SA IGO3.0. This is not blanket clearance for images or every page component. Original fact-based prose and original schematic proposed."
+    },
+    {
+      "id": "unesco-great-zimbabwe-map",
+      "title": "Great Zimbabwe National Monument — Maps / Geographical data",
+      "publisher": "UNESCO World Heritage Centre",
+      "url": "https://whc.unesco.org/en/list/364/maps/",
+      "opened": true,
+      "checked_passages": "Geographical data table, property364, lines9–12: DMS coordinate recorded above.",
+      "rights": "Coordinate fact cited. No map artwork copied; map-layer reuse terms not verified."
+    },
+    {
+      "id": "frobenius-kanem",
+      "title": "The Lake Chad Region as a Crossroads: first archaeological and oral historical investigations into early Kanem-Borno and its intra-African connections",
+      "publisher": "Frobenius Institute",
+      "url": "https://www.frobenius-institut.de/en/research/beendete-projekte/the-lake-chad-region-as-a-crossroads-first-archaeological-and-oral-historical-investigations-into-early-kanem-borno-and-its-intra-african-connections",
+      "opened": true,
+      "checked_passages": "Project results, lines12–16: eastern Lake Chad study region; uncertain formative archaeology; later flourishing; Tié/Njimi hypothesis and excavated building attributes.",
+      "rights": "No reusable asset licence established. Cite facts in original prose; no images copied."
+    },
+    {
+      "id": "magnavita-2025",
+      "title": "New Luminescence and Radiocarbon Dates for Kanem-Borno Fired-Brick Elite Sites in Kanem, Chad: Bayesian Chronological Modelling of Settlement Construction",
+      "authors": ["Carlos Magnavita", "Susanne Lindauer", "Adoum Casimir Adjbane"],
+      "published": "2025-01-25",
+      "journal": "African Archaeological Review42:1–23",
+      "doi": "10.1007/s10437-025-09611-1",
+      "url": "https://link.springer.com/article/10.1007/s10437-025-09611-1",
+      "pdf": "https://link.springer.com/content/pdf/10.1007/s10437-025-09611-1.pdf",
+      "opened": true,
+      "checked_passages": "HTML Introduction68–81; Sites101–112; Model2 discussion230–250; Rights393–395. Full article and23-page PDF opened. Figure1 caption checked; no exact coordinate extracted.",
+      "method_limit": "Model1 failed agreement checks; reported dates above use accepted Model2 after exclusion of two probable intrusive charcoal samples. Model-dependent probability ranges remain revisable.",
+      "rights": "Article CC BY4.0 verified. Third-party credit-line exceptions apply. No figure asset selected or copied."
+    },
+    {
+      "id": "dai-tie-2020",
+      "title": "Publication: Archaeological research in Tié, Chad",
+      "publisher": "German Archaeological Institute / Entangled Africa project",
+      "url": "https://www.dainst.blog/entangled-africa/en/publication_2021_07/",
+      "opened": true,
+      "checked_passages": "Lines35–42 reproduce abstract of Magnavita/Bouimon2020, Afrique: Archéologie & Arts16:77–96: enclosure and multiroom building; period of later use; uncertain building function.",
+      "retrieval_limit": "Full2020 OpenEdition English2863 and French2938 pages blocked by Anubis. DAI-hosted abstract was read; do not claim full2020 paper reviewed.",
+      "rights": "Unknown for reuse; no copied text or artwork proposed."
+    },
+    {
+      "id": "fao-niger",
+      "title": "The Niger River basin",
+      "publisher": "Food and Agriculture Organization of the United Nations",
+      "url": "https://www.fao.org/4/w4347e/w4347e0i.htm",
+      "opened": true,
+      "checked_passages": "Rivers and discharges / upper, middle and lower Niger systems: lines123–144. Source region, inland delta, loop, Niger–Benin reach, Lokoja confluence, maritime delta.",
+      "rights": "Unknown for assets. Original prose only; no source map copied."
+    },
+    {
+      "id": "esa-niger",
+      "title": "Earth from Space: The Niger delta",
+      "publisher": "European Space Agency",
+      "published": "2008-02-01",
+      "url": "https://www.esa.int/Applications/Observing_the_Earth/Earth_from_Space_The_Niger_delta",
+      "opened": true,
+      "checked_passages": "Lines9–14: southern Guinea origin,4180km length, Benue joins at Lokoja, subsequent southward flow to Gulf of Guinea.",
+      "rights": "Image reuse not checked; satellite image not copied."
+    },
+    {
+      "id": "ramsar-lake-chad",
+      "title": "Annotated List of Wetlands of International Importance — Chad",
+      "publisher": "Ramsar Sites Information Service",
+      "url": "https://rsis.ramsar.org/sites/default/files/rsiswp_search/exports/Ramsar-Sites-annotated-summary-Chad.pdf",
+      "opened": true,
+      "checked_passages": "PDF page1, site1134 entry, lines2–18: Chadian wetland reference coordinate and lake's shared setting. Entry states most recent RIS information2001.",
+      "rights": "Unknown for source maps and assets. Coordinate fact cited; no artwork copied."
+    },
+    {
+      "id": "nasa-lake-chad",
+      "title": "Lake Chad’s Water, Wetlands, and Dunes",
+      "publisher": "NASA Earth Observatory",
+      "published": "2025-06-08",
+      "url": "https://science.nasa.gov/earth/earth-observatory/lake-chads-water-wetlands-and-dunes-154407/",
+      "opened": true,
+      "checked_passages": "Lines269–273: four-country setting, feeding rivers and variation in lake extent, including long-term wet/dry history.",
+      "rights": "No image selected. Component-specific reuse terms not independently checked."
+    }
+  ]
+}
