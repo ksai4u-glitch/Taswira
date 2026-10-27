@@ -8,6 +8,7 @@
       "id": "nok-village",
       "kind": "point",
       "name": "Nok village (Jaba LGA, Kaduna State)",
+      "short": "Nok village",
       "coordinates": [
         9.5,
         8.017
@@ -15,6 +16,7 @@
       "what": "The first known Nok terracotta was found here in 1928, about 7 m deep in a tin mine. A second head, found nearby in 1943, led Bernard Fagg to recognise a lost sculptural tradition, and the culture is named after the village.",
       "evidence": "Documented chance finds, later studied by archaeologists",
       "location": "Town location. The finds came from tin mines near the village.",
+      "status": "firm",
       "disputed": null,
       "sources": [
         "wiki-nok",
@@ -25,6 +27,7 @@
       "id": "kagarko-sites",
       "kind": "point",
       "name": "Janruwa, Janjala and Akura, near Kagarko",
+      "short": "Kagarko sites",
       "coordinates": [
         9.45,
         7.683
@@ -33,6 +36,7 @@
       "what": "Three Nok sites about 1 km apart, excavated by the Frankfurt Nok project. They yielded pottery, terracotta fragments and plant remains used to study what Nok farmers grew.",
       "evidence": "Excavated (Frankfurt Nok project)",
       "location": "Placed at Kagarko town. The sites are near the town, not at this exact point.",
+      "status": "firm",
       "disputed": null,
       "sources": [
         "antiquity-kagarko",
@@ -51,6 +55,7 @@
       "what": "A valley near the village of Takushara, excavated for eight days by Bernard Fagg in January 1961. Iron objects, slag, fragments of furnace blowpipes (tuyères) and pottery were found, and these finds led archaeologists to class the Nok culture as Iron Age.",
       "evidence": "Excavated (Fagg, 1961)",
       "location": "Rough. Placed 60 km south-east of Abuja from a written description, and could be 20 to 30 km out. The ring shows that uncertainty.",
+      "status": "disputed",
       "disputed": "The date of Taruga's iron working is given as about 600 BCE in some histories, but Fagg's radiocarbon dates point to about the 4th to 3rd centuries BCE. The Frankfurt project places Nok iron working in the middle of the first millennium BCE.",
       "sources": [
         "wiki-nok",
@@ -62,6 +67,7 @@
       "id": "katsina-ala",
       "kind": "point",
       "name": "Katsina-Ala (Benue State)",
+      "short": "Katsina-Ala",
       "coordinates": [
         7.167,
         9.283
@@ -69,6 +75,7 @@
       "what": "Terracotta heads and figures found here in the mid-20th century resemble Nok work. Fagg described them as a distinctive sub-style, far to the south-east of Nok village.",
       "evidence": "Chance finds described in secondary sources",
       "location": "Town location. The exact find spots are not given in the sources checked.",
+      "status": "disputed",
       "disputed": "Whether these are Nok proper or a related tradition is not settled in the sources checked.",
       "sources": [
         "wiki-places"

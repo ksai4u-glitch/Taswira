@@ -24,15 +24,20 @@ class HistoryDataTests(unittest.TestCase):
         cls.states, cls.arcs, cls.users = bh.load_states()
         cls.background = bh.load_background()
         cls.chapters, cls.sources = load()
+        cls.emblems = bh.load_emblems()
 
     def chapter(self, cid):
         return copy.deepcopy(next(c for c in self.chapters if c["id"] == cid))
 
-    def problems_with(self, chapters):
-        return bh.check(chapters, self.sources, self.states)
+    def problems_with(self, chapters, emblems=None):
+        return bh.check(chapters, self.sources, self.states, set(), emblems or self.emblems)
+
+    def emblem_problems(self, emblems):
+        return bh.check_emblems(emblems, self.sources, set())
 
     def test_real_data_passes(self):
         self.assertEqual(self.problems_with(self.chapters), [])
+        self.assertEqual(self.emblem_problems(self.emblems), [])
 
     def test_borders_have_37_areas(self):
         self.assertEqual(len(self.states), 37)          # 36 states and the FCT
@@ -44,10 +49,10 @@ class HistoryDataTests(unittest.TestCase):
         nok["scenes"][0]["sources"] = ["no-such-source"]
         self.assertTrue(any("unknown source" in p for p in self.problems_with([nok])))
 
-    def test_point_outside_nigeria_is_caught(self):
+    def test_point_outside_the_map_is_caught(self):
         nok = self.chapter("nok")
         nok["features"][1]["coordinates"] = [51.5, -0.1]     # London
-        self.assertTrue(any("outside Nigeria" in p for p in self.problems_with([nok])))
+        self.assertTrue(any("outside the map area" in p for p in self.problems_with([nok])))
 
     def test_state_placed_twice_is_caught(self):
         states = self.chapter("states")
@@ -93,6 +98,117 @@ class HistoryDataTests(unittest.TestCase):
         self.assertTrue(any("mood must be one of" in p for p in found))
         self.assertTrue(any("shatter needs features" in p for p in found))
 
+    # --- The map vocabulary: status, emblems, links, moves and control ---------------
+
+    def test_every_feature_has_a_status(self):
+        nok = self.chapter("nok")
+        del nok["features"][0]["status"]
+        self.assertTrue(any("status must be one of" in p for p in self.problems_with([nok])))
+
+    def test_status_is_disputed_exactly_when_disputed_is_explained(self):
+        key = self.chapter("key")
+        daura = next(f for f in key["features"] if f["id"] == "daura")
+        daura["status"] = "disputed"                       # but disputed is still null
+        self.assertTrue(any("key/daura: status must be 'disputed'" in p for p in self.problems_with([key])))
+        emblems = copy.deepcopy(self.emblems)
+        emblems["biafra"]["disputed"] = "Someone disagrees."   # but status is still firm
+        self.assertTrue(any("emblem biafra: status" in p for p in self.emblem_problems(emblems)))
+
+    def test_a_flag_or_symbol_needs_a_source(self):
+        emblems = copy.deepcopy(self.emblems)
+        emblems["benin-leopard"]["sources"] = []
+        self.assertTrue(any("emblem benin-leopard: a symbol needs a source" in p
+                            for p in self.emblem_problems(emblems)))
+
+    def test_nothing_is_drawn_when_nothing_is_documented(self):
+        emblems = copy.deepcopy(self.emblems)
+        emblems["sokoto-caliphate"]["drawing"] = "leopard"
+        self.assertTrue(any("nothing may be drawn" in p for p in self.emblem_problems(emblems)))
+        emblems = copy.deepcopy(self.emblems)
+        emblems["aro"]["note"] = None
+        self.assertTrue(any("emblem aro: say what was looked for" in p for p in self.emblem_problems(emblems)))
+
+    def test_drawings_are_plain_shapes(self):
+        self.assertTrue(self.emblems["benin-leopard"]["svg"].startswith("<svg"))
+        emblems = copy.deepcopy(self.emblems)
+        emblems["benin-leopard"]["svg"] = '<svg onload="alert(1)"><path d="M0 0"/></svg>'
+        self.assertTrue(any("plain shapes" in p for p in self.emblem_problems(emblems)))
+        emblems["benin-leopard"]["svg"] = None             # the drawing file is missing
+        self.assertTrue(any("no drawing" in p for p in self.emblem_problems(emblems)))
+
+    def test_unknown_emblem_is_caught(self):
+        key = self.chapter("key")
+        next(f for f in key["features"] if f["id"] == "edo")["emblem"] = "no-such-emblem"
+        self.assertTrue(any("unknown emblem" in p for p in self.problems_with([key])))
+
+    def test_emblem_must_fit_the_scene_years(self):
+        key = self.chapter("key")
+        # The Royal Niger Company's flag (1887 to 1899) on Kano in the 15th-century scene
+        next(f for f in key["features"] if f["id"] == "kano")["emblem"] = "royal-niger-company"
+        self.assertTrue(any("scene hausa: shows the royal-niger-company emblem outside its documented years" in p
+                            for p in self.problems_with([key])))
+
+    def test_unchecked_items_need_the_scene_to_say_so(self):
+        key = self.chapter("key")
+        next(f for f in key["features"] if f["id"] == "daura")["status"] = "to-check"
+        self.assertTrue(any("scene hausa: shows daura, still marked to-check" in p
+                            for p in self.problems_with([key])))
+        next(s for s in key["scenes"] if s["id"] == "hausa")["unchecked"] = "Daura's place is not yet checked."
+        self.assertEqual(self.problems_with([key]), [])
+
+    def test_unchecked_emblem_needs_the_scene_to_say_so(self):
+        emblems = copy.deepcopy(self.emblems)
+        emblems["benin-leopard"]["status"] = "to-check"
+        found = self.problems_with([self.chapter("key")], emblems)
+        self.assertTrue(any("scene benin: shows benin-leopard, still marked to-check" in p for p in found))
+
+    def test_a_link_shows_both_its_places(self):
+        key = self.chapter("key")
+        next(s for s in key["scenes"] if s["id"] == "hausa")["show"].remove("ngazargamu")
+        self.assertTrue(any("kano-tribute joins ngazargamu, which the scene does not show" in p
+                            for p in self.problems_with([key])))
+
+    def test_links_and_moves_join_places_in_the_chapter(self):
+        key = self.chapter("key")
+        next(f for f in key["features"] if f["id"] == "kano-tribute")["to"] = "timbuktu"
+        next(f for f in key["features"] if f["id"] == "conquest-1903")["dates"]["lokoja"] = "1900"
+        found = self.problems_with([key])
+        self.assertTrue(any("'timbuktu' is not a place in this chapter" in p for p in found))
+        self.assertTrue(any("a date for 'lokoja', which is not on the path" in p for p in found))
+
+    def test_taken_needs_a_campaign_that_reaches_the_place(self):
+        key = self.chapter("key")
+        next(s for s in key["scenes"] if s["id"] == "taken")["show"].remove("conquest-1903")
+        self.assertTrue(any("sokoto is taken, but no campaign in the scene reaches it" in p
+                            for p in self.problems_with([key])))
+
+    def test_vocabulary_values_are_checked(self):
+        key = self.chapter("key")
+        next(f for f in key["features"] if f["id"] == "edo")["form"] = "empire"
+        next(f for f in key["features"] if f["id"] == "kano-tribute")["type"] = "friendship"
+        next(f for f in key["features"] if f["id"] == "fulani-east")["period"] = None
+        next(s for s in key["scenes"] if s["id"] == "claimed")["control"]["sokoto"] = "owned"
+        found = self.problems_with([key])
+        for message in ("form must be one of", "type must be one of", "a migration needs a period",
+                        "control must be one of"):
+            self.assertTrue(any(message in p for p in found), message)
+
+    def test_a_halo_says_what_its_size_rests_on(self):
+        key = self.chapter("key")
+        next(f for f in key["features"] if f["id"] == "edo")["reach_note"] = None
+        self.assertTrue(any("key/edo: a halo or field needs reach_km" in p for p in self.problems_with([key])))
+
+    def test_short_name_is_shorter(self):
+        nok = self.chapter("nok")
+        nok["features"][0]["short"] = nok["features"][0]["name"] + " and more"
+        self.assertTrue(any("short must be a shorter name" in p for p in self.problems_with([nok])))
+
+    def test_emblem_years_overlap(self):
+        e = self.emblems["royal-niger-company"]           # 1887 to 1899
+        self.assertTrue(bh.emblem_fits(e, {"from": 1899, "to": 1903}))
+        self.assertFalse(bh.emblem_fits(e, {"from": 1900, "to": 1903}))
+        self.assertTrue(bh.emblem_fits(self.emblems["nigeria-1960"], {"from": 1996, "to": 1996}))   # no end year
+
     def test_outlines_follow_the_snapshot(self):
         data = bh.page_data(self.chapters, self.sources, self.states, self.arcs, self.users, self.background)
         snaps = next(c for c in data["chapters"] if c["id"] == "states")["snapshots"]
@@ -136,8 +252,10 @@ class HistoryDataTests(unittest.TestCase):
 
     def test_page_is_built_with_credits_and_text_version(self):
         page, data = bh.build()
-        for must in ("Unreviewed draft", "GRID3", "geoBoundaries", "CC BY 4.0", "Natural Earth", "Text version"):
+        for must in ("Unreviewed draft", "GRID3", "geoBoundaries", "CC BY 4.0", "Natural Earth", "Text version",
+                     "Flags, emblems and symbols", "Nothing documented"):
             self.assertIn(must, page)
+        self.assertEqual(set(data["emblems"]), set(self.emblems))
         for ch in data["chapters"]:
             for sc in ch["scenes"]:
                 self.assertIn(sc["title"].replace("'", "&#x27;"), page)

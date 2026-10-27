@@ -1,0 +1,150 @@
+{
+  "royal-niger-company": {
+    "actor": "Royal Niger Company",
+    "tier": "flag",
+    "from": 1887,
+    "to": 1899,
+    "description": "Badge: a black Y for the Niger, the Benue and their joined course to the sea, with ARS, JUS and PAX in yellow on its arms, inside a red ring on white. Flown on a White Ensign from 2 June 1887, then on a Blue Ensign from 1 February 1888.",
+    "status": "approx",
+    "disputed": null,
+    "note": "Its use until 1899 is presumed, not documented.",
+    "sources": ["fotw-rnc"],
+    "drawing": null
+  },
+  "colonial-badges": {
+    "actor": "Lagos Colony, the Oil Rivers and Niger Coast Protectorates, Northern and Southern Nigeria",
+    "tier": "none",
+    "description": "Badges existed and are listed by flag reference sites.",
+    "status": "to-check",
+    "disputed": null,
+    "note": "No source checked so far describes them, so none is drawn yet.",
+    "sources": [],
+    "drawing": null
+  },
+  "nigeria-1914": {
+    "actor": "Colony and Protectorate of Nigeria",
+    "tier": "flag",
+    "from": 1914,
+    "to": 1952,
+    "description": "Blue Ensign with a red disc holding a green six-pointed star around a crown, with \"Nigeria\" below. Lugard wrote in 1940 that he first suggested the star design, for Northern Nigeria.",
+    "status": "firm",
+    "disputed": null,
+    "note": "A change to St Edward's Crown after 1953 is a theory, and one writer is not sure those versions flew, so they are not used.",
+    "sources": ["wiki-nigerian-flags", "fotw-ng-gb"],
+    "drawing": null
+  },
+  "nana-olomu": {
+    "actor": "Nana Olomu (Itsekiri), at Ebrohimi",
+    "tier": "flag",
+    "to": 1894,
+    "description": "Two personal flags, both made before 1894. One is red with a printed Union Flag in the corner and NANNA in white. The other is yellow with an upside-down Union Flag, NANNA in blue and a painted man shooting a leopard; it was captured in 1894.",
+    "status": "firm",
+    "disputed": null,
+    "note": "Local images next to a printed Union Flag: the mix says something about delta politics in the 1880s.",
+    "sources": ["rmg-556", "rmg-555"],
+    "drawing": null
+  },
+  "unidentified-1897": {
+    "actor": "Unknown owner, probably Itsekiri",
+    "tier": "flag",
+    "description": "Red, with white figures of one man beheading another. Said to have been brought back from the 1897 Benin expedition.",
+    "status": "disputed",
+    "disputed": "Its maker, owner and meaning are unknown. It is shown only as an unidentified flag, never as Benin's.",
+    "note": null,
+    "sources": ["rmg-557", "wiki-unidentified-flag"],
+    "drawing": null
+  },
+  "benin-leopard": {
+    "actor": "Kingdom of Benin",
+    "tier": "symbol",
+    "description": "The leopard, one of the principal symbols of the Oba in Benin court art. Coral-bead regalia, mudfish and ivory trumpets also mark kingship.",
+    "status": "approx",
+    "disputed": null,
+    "note": "A royal symbol, not a flag: no flag of the kingdom is documented. Drawn as a plain silhouette, not copied from objects taken in 1897. The source checked does not date the leopard imagery.",
+    "sources": ["wiki-benin-art"],
+    "drawing": "leopard"
+  },
+  "yoruba-knot": {
+    "actor": "Yoruba kingdoms (Ife, Oyo and their successors)",
+    "tier": "symbol",
+    "description": "The interlaced Solomon's knot, commonly viewed as a royal symbol among the Yoruba.",
+    "status": "firm",
+    "disputed": null,
+    "note": "No flag is documented.",
+    "sources": ["wiki-nigerian-heraldry"],
+    "drawing": null
+  },
+  "dagin-arewa": {
+    "actor": "Hausa states",
+    "tier": "symbol",
+    "description": "The Dagin Arewa, a star-shaped northern knot used in building, design and embroidery.",
+    "status": "to-check",
+    "disputed": null,
+    "note": "Its age is not known from the sources checked, so it is not yet placed in any century. No city flags are documented.",
+    "sources": ["wiki-nigerian-heraldry"],
+    "drawing": null
+  },
+  "sokoto-caliphate": {
+    "actor": "Sokoto Caliphate",
+    "tier": "none",
+    "description": "Flags circulate online, but no source for any design has been found.",
+    "status": "to-check",
+    "disputed": null,
+    "note": "Nothing is drawn until a description from the time or a surviving banner is found, for example in travellers' accounts such as Clapperton's or Barth's.",
+    "sources": [],
+    "drawing": null
+  },
+  "kanem-bornu": {
+    "actor": "Kanem and Bornu",
+    "tier": "none",
+    "description": "Flags shown online for Kanem and Bornu have no source.",
+    "status": "firm",
+    "disputed": null,
+    "note": "The palm-tree flag shown for Kanem traces to the imaginary kingdom of \"Organa\" on 14th-century European maps. It is never used.",
+    "sources": ["wiki-nigerian-flags", "wiki-catalan-atlas"],
+    "drawing": null
+  },
+  "aro": {
+    "actor": "Aro Confederacy",
+    "tier": "none",
+    "description": "A flag with crowns, a musket and a lance is shown online without a source.",
+    "status": "to-check",
+    "disputed": null,
+    "note": "It may be a modern community flag. Nothing is drawn until its origin is checked.",
+    "sources": ["wiki-nigerian-flags"],
+    "drawing": null
+  },
+  "nri-igbo": {
+    "actor": "Nri and Igbo communities",
+    "tier": "none",
+    "description": "No state emblems, because there were no states.",
+    "status": "firm",
+    "disputed": null,
+    "note": "Ichi facial marks showed status, not political rule, and are not used as decoration.",
+    "sources": ["wiki-nri"],
+    "drawing": null
+  },
+  "biafra": {
+    "actor": "Biafra",
+    "tier": "flag",
+    "from": 1967,
+    "to": 1970,
+    "description": "Red, black and green stripes with a golden rising sun of eleven rays, one for each province, over a gold bar. First raised on 30 May 1967, taken from the Eastern Region's arms.",
+    "status": "firm",
+    "disputed": null,
+    "note": null,
+    "sources": ["wiki-flag-biafra"],
+    "drawing": null
+  },
+  "nigeria-1960": {
+    "actor": "Nigeria",
+    "tier": "flag",
+    "from": 1960,
+    "description": "Green-white-green, designed by Michael Taiwo Akinkunmi and chosen in 1959 from almost 3,000 entries. His red sun was removed. Raised at midnight on 1 October 1960.",
+    "status": "firm",
+    "disputed": null,
+    "note": null,
+    "sources": ["wiki-flag-nigeria"],
+    "drawing": null
+  }
+}

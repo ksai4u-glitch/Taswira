@@ -6,12 +6,15 @@ Everything it shows comes from three kinds of files in history/:
 
   history/chapters/<id>.json   the scenes, what is on the map in each, and the text
   history/sources.json         every source a scene or map feature cites
+  history/emblems.json         flags and symbols, and which are documented
+  history/drawings/*.svg       the emblems that are drawn, redrawn from written descriptions
   history/geo/*.topojson       today's state borders (simplified, see history/geo/README.md)
   history/geo/natural-earth-background.json
                                land, lakes and rivers for scenes before 1914
 
-This script checks those files (dates, places, sources, which state belonged to
-which at each date), fills in history/template.html and writes docs/history.html.
+This script checks those files (dates, places, sources, how sure each thing is,
+which state belonged to which at each date), fills in history/template.html and
+writes docs/history.html.
 It makes no API requests and is separate from publish.py, so the history page
 does not change when the UCDP data does.
 
@@ -33,12 +36,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 HISTORY_DIR = os.path.join(HERE, "history")
 TEMPLATE_PATH = os.path.join(HISTORY_DIR, "template.html")
 SOURCES_PATH = os.path.join(HISTORY_DIR, "sources.json")
+EMBLEMS_PATH = os.path.join(HISTORY_DIR, "emblems.json")
+DRAWINGS_DIR = os.path.join(HISTORY_DIR, "drawings")
 STATES_PATH = os.path.join(HISTORY_DIR, "geo", "nga-states-2022.topojson")
 BACKGROUND_PATH = os.path.join(HISTORY_DIR, "geo", "natural-earth-background.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
-CHAPTERS = ["nok", "states"]
+CHAPTERS = ["nok", "key", "states"]
 
 # Scenes that start before this year are drawn on the period background (land, lakes and
 # rivers only), never on today's map with its borders, roads and town names
@@ -46,14 +51,29 @@ PERIOD_BEFORE = 1914
 # Map data credited on the map itself rather than by a scene
 MAP_SOURCES = {"grid3-states", "esri-tiles", "natural-earth"}
 
-# Rough box around Nigeria, to catch swapped or mistyped coordinates
-LAT_RANGE = (4.0, 14.0)
-LON_RANGE = (2.5, 15.0)
+# Rough box around the lower Niger and Lake Chad basin, out to Bilma on the Sahara salt road,
+# to catch swapped or mistyped coordinates
+LAT_RANGE = (2.0, 20.0)
+LON_RANGE = (0.0, 18.0)
 SLUG = re.compile(r"^[a-z0-9-]+$")
+UNSAFE_SVG = re.compile(r"<script|<foreignObject|\son\w+\s*=|href", re.I)
 
 # Moods set the decoration while a scene with places plays (see history/README.md)
-MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation")
+MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation", "calm")
 EFFECTS = ("arc", "pulse", "shatter")
+
+# The map vocabulary (see history/README.md). How sure each thing on the map is:
+STATUSES = ("firm", "approx", "disputed", "to-check")
+# How a place's political order is drawn. No form: a plain dot, as for archaeological sites.
+FORMS = ("kingdom", "city-state", "network", "caliphate", "emirate", "communities")
+# Ties between two places, and movements along a path of places
+LINKS = ("allegiance", "tribute", "alliance", "trade", "ritual")
+MOVES = ("migration", "campaign", "trade")
+UNCERTAIN = ("start", "end", "whole")
+# A colonial claim on a place: on paper only, occupied, or taken during the scene by a campaign it shows
+CONTROL = ("claimed", "held", "taken")
+# What is documented about an actor's emblem: a flag, a symbol that is not a flag, or nothing
+TIERS = ("flag", "symbol", "none")
 
 # Hues for the 12 states of 1967, picked so neighbours look different.
 # Later states keep the hue of the state they came from.
@@ -105,6 +125,62 @@ def load_background(path=BACKGROUND_PATH):
 def base_for(scene):
     """Which background a scene sits on: "period" before 1914, "modern" (today's map) after."""
     return "period" if scene["when"]["from"] < PERIOD_BEFORE else "modern"
+
+
+# --- Emblems ------------------------------------------------------------------------
+
+def load_emblems(path=EMBLEMS_PATH, drawings_dir=DRAWINGS_DIR):
+    """Read the emblem list and add each drawing's SVG text (None for emblems that are not drawn)."""
+    emblems = read_json(path)
+    for e in emblems.values():
+        drawing = os.path.join(drawings_dir, f"{e['drawing']}.svg") if e.get("drawing") else None
+        if drawing and os.path.exists(drawing):
+            with open(drawing, encoding="utf-8") as f:
+                e["svg"] = f.read().strip()
+        else:
+            e["svg"] = None
+    return emblems
+
+
+def check_emblems(emblems, sources, cited):
+    """An emblem is drawn only from a cited description. "none" says that nothing is documented."""
+    problems = []
+
+    def need(cond, msg):
+        if not cond:
+            problems.append(msg)
+
+    for eid, e in emblems.items():
+        where = f"emblem {eid}"
+        need(SLUG.match(eid), f"{where}: id must be a-z 0-9 -")
+        for field in ("actor", "description"):
+            need(e.get(field), f"{where}: missing {field}")
+        need(e.get("tier") in TIERS, f"{where}: tier must be one of {', '.join(TIERS)}")
+        need(e.get("status") in STATUSES, f"{where}: status must be one of {', '.join(STATUSES)}")
+        need((e.get("status") == "disputed") == bool(e.get("disputed")),
+             f"{where}: status must be 'disputed' exactly when disputed explains the disagreement")
+        if e.get("tier") in ("flag", "symbol"):
+            need(e.get("sources"), f"{where}: a {e['tier']} needs a source, or it is not shown")
+        else:
+            need(e.get("note"), f"{where}: say what was looked for in note")
+            need(not e.get("drawing"), f"{where}: nothing is documented, so nothing may be drawn")
+        for sid in e.get("sources", []):
+            need(sid in sources, f"{where}: unknown source {sid!r}")
+            cited.add(sid)
+        if e.get("drawing"):
+            svg = e.get("svg") or ""
+            need(svg.startswith("<svg"), f"{where}: no drawing history/drawings/{e['drawing']}.svg")
+            # The drawing goes into the public page as it is, so it may hold shapes only
+            need(not UNSAFE_SVG.search(svg), f"{where}: a drawing must be plain shapes, with no scripts or links")
+        years = [e[k] for k in ("from", "to") if k in e]
+        need(all(isinstance(y, int) for y in years) and years == sorted(years),
+             f"{where}: from and to must be whole years, from <= to")
+    return problems
+
+
+def emblem_fits(e, when):
+    """Whether an emblem's documented years overlap a scene's years."""
+    return e.get("from", -10**6) <= when["to"] and e.get("to", 10**6) >= when["from"]
 
 
 # --- Today's state borders -------------------------------------------------------
@@ -211,11 +287,12 @@ def snapshot_colours(snapshots):
 
 # --- Checks ------------------------------------------------------------------------
 
-def check(chapters, sources, states, cited=None):
+def check(chapters, sources, states, cited=None, emblems=None):
     """Return a list of problems. An empty list means the page can be built.
     Pass a set as cited to collect the ids of the sources that are used."""
     problems = []
     cited = set() if cited is None else cited
+    emblems = {} if emblems is None else emblems
 
     def need(cond, msg):
         if not cond:
@@ -244,19 +321,56 @@ def check(chapters, sources, states, cited=None):
         for f in ch.get("features", []):
             fid = f.get("id", "?")
             where = f"{cid}/{fid}"
-            need(fid not in features, f"{where}: duplicate feature id")
+            need(SLUG.match(fid) and fid not in features, f"{where}: feature id must be unique, a-z 0-9 -")
             features[fid] = f
-            for field in ("name", "what", "evidence", "location"):
+            for field in ("name", "what", "evidence"):
                 need(f.get(field), f"{where}: missing {field}")
             need("disputed" in f, f"{where}: say disputed: null or explain the disagreement")
+            need(f.get("status") in STATUSES, f"{where}: status must be one of {', '.join(STATUSES)}")
+            need((f.get("status") == "disputed") == bool(f.get("disputed")),
+                 f"{where}: status must be 'disputed' exactly when disputed explains the disagreement")
             cite(where, f.get("sources"))
-            if f.get("kind") == "point":
+            kind = f.get("kind")
+            if kind in ("point", "move"):
+                need(f.get("location"), f"{where}: missing location (how precise the place or route is)")
+            if kind == "point":
                 lat, lon = f.get("coordinates", [None, None])
                 need(isinstance(lat, (int, float)) and LAT_RANGE[0] <= lat <= LAT_RANGE[1]
                      and isinstance(lon, (int, float)) and LON_RANGE[0] <= lon <= LON_RANGE[1],
-                     f"{where}: coordinates [lat, lon] are outside Nigeria")
+                     f"{where}: coordinates [lat, lon] are outside the map area")
+                if "form" in f:
+                    need(f["form"] in FORMS, f"{where}: form must be one of {', '.join(FORMS)}")
+                if "reach_km" in f or f.get("form") == "communities":
+                    need(isinstance(f.get("reach_km"), (int, float)) and 5 <= f["reach_km"] <= 600
+                         and f.get("reach_note"), f"{where}: a halo or field needs reach_km (5 to 600) and a "
+                                                  f"reach_note saying what its size rests on")
+                if "emblem" in f:
+                    need(f["emblem"] in emblems, f"{where}: unknown emblem {f['emblem']!r}")
+                if "short" in f:
+                    need(isinstance(f["short"], str) and 0 < len(f["short"]) < len(f.get("name", "")),
+                         f"{where}: short must be a shorter name for the map on a phone")
+            elif kind == "link":
+                need(f.get("type") in LINKS, f"{where}: type must be one of {', '.join(LINKS)}")
+            elif kind == "move":
+                need(f.get("type") in MOVES, f"{where}: type must be one of {', '.join(MOVES)}")
+                need(len(f.get("path", [])) >= 2, f"{where}: a path needs two or more places")
+                need(f.get("uncertain") in UNCERTAIN + (None,),
+                     f"{where}: uncertain must be null or one of {', '.join(UNCERTAIN)}")
+                need(f.get("type") != "migration" or f.get("period"),
+                     f"{where}: a migration needs a period, such as \"by the 15th century\"")
+                need(f.get("type") != "trade" or f.get("goods"), f"{where}: trade needs goods")
+                for k in f.get("dates", {}):
+                    need(k in f.get("path", []), f"{where}: a date for {k!r}, which is not on the path")
             else:
-                need(False, f"{where}: unknown kind {f.get('kind')!r}")
+                need(False, f"{where}: unknown kind {kind!r}")
+        # Links and paths join places of the same chapter
+        is_point = lambda x: features.get(x, {}).get("kind") == "point"
+        for fid, f in features.items():
+            ends = [f.get("from"), f.get("to")] if f.get("kind") == "link" else f.get("path", [])
+            for end in ends:
+                need(is_point(end), f"{cid}/{fid}: {end!r} is not a place in this chapter")
+            if f.get("kind") == "link":
+                need(f.get("from") != f.get("to"), f"{cid}/{fid}: a link needs two different places")
 
         snapshots = ch.get("snapshots", {})
         previous = None
@@ -304,8 +418,32 @@ def check(chapters, sources, states, cited=None):
             lat, lon = cam.get("center", [0, 0])
             need(LAT_RANGE[0] <= lat <= LAT_RANGE[1] and LON_RANGE[0] <= lon <= LON_RANGE[1]
                  and 4 <= cam.get("zoom", 0) <= 11, f"{where}: camera centre or zoom out of range")
-            for fid in sc.get("show", []) + sc.get("dim", []):
+            shown = sc.get("show", [])
+            for fid in shown + sc.get("dim", []):
                 need(fid in features, f"{where}: shows unknown feature {fid!r}")
+            for fid in shown:
+                f = features.get(fid, {})
+                ends = [f.get("from"), f.get("to")] if f.get("kind") == "link" else f.get("path", [])
+                missing = [e for e in ends if e not in shown]
+                need(not missing, f"{where}: {fid} joins {', '.join(map(str, missing))}, which the scene does not show")
+                e = emblems.get(f.get("emblem"))
+                if e and e["tier"] != "none" and when.get("from") is not None and when.get("to") is not None:
+                    need(emblem_fits(e, when), f"{where}: shows the {f['emblem']} emblem outside its documented years")
+            for fid, how in sc.get("control", {}).items():
+                need(fid in shown and features.get(fid, {}).get("kind") == "point",
+                     f"{where}: control of {fid!r}, which is not a place the scene shows")
+                need(how in CONTROL, f"{where}: control must be one of {', '.join(CONTROL)}")
+                if how == "taken":
+                    need(any(features.get(m, {}).get("type") == "campaign" and fid in features[m]["path"]
+                             for m in shown), f"{where}: {fid} is taken, but no campaign in the scene reaches it")
+            # Anything still marked to-check may only be shown if the scene says so
+            unchecked = [fid for fid in shown if features.get(fid, {}).get("status") == "to-check"]
+            unchecked += [features[fid]["emblem"] for fid in shown if features.get(fid, {}).get("emblem") in emblems
+                          and emblems[features[fid]["emblem"]]["tier"] != "none"
+                          and emblems[features[fid]["emblem"]]["status"] == "to-check"]
+            need(not unchecked or sc.get("unchecked"),
+                 f"{where}: shows {', '.join(unchecked)}, still marked to-check; check them, "
+                 f"or say what is unchecked in the scene's unchecked note")
             if sc.get("snapshot"):
                 need(sc["snapshot"] in snapshots, f"{where}: unknown snapshot {sc['snapshot']!r}")
             cite(where, sc.get("sources"))
@@ -326,7 +464,7 @@ def check(chapters, sources, states, cited=None):
                     for end in ("from", "to"):
                         lat, lon = e.get(end, [0, 0])
                         need(LAT_RANGE[0] <= lat <= LAT_RANGE[1] and LON_RANGE[0] <= lon <= LON_RANGE[1]
-                             and e.get(end + "_label"), f"{where}: arc {end} must be in Nigeria and have a {end}_label")
+                             and e.get(end + "_label"), f"{where}: arc {end} must be inside the map area and have a {end}_label")
 
     return problems
 
@@ -338,8 +476,9 @@ def reading_seconds(text):
     return max(8, round(len(text.split()) * 0.33 + 4))
 
 
-def page_data(chapters, sources, states, arcs, users, background):
+def page_data(chapters, sources, states, arcs, users, background, emblems=None):
     out = {"chapters": [], "sources": sources, "built": date.today().isoformat(), "background": background,
+           "emblems": emblems or {},
            # Each state as lists of arc numbers (negative: walk the arc backwards); the page rebuilds the rings
            "states": {c: {"name": s["name"], "rings": s["arc_refs"]} for c, s in states.items()},
            "arcs": arcs}
@@ -376,10 +515,67 @@ def source_links(ids, sources):
                      for s in ids)
 
 
-def transcript(chapters, sources, states):
-    """The whole page as plain HTML text: every scene, map feature and source.
+STATUS_WORDS = {"firm": "Firm", "approx": "Approximate", "disputed": "Disputed", "to-check": "To check"}
+TIER_WORDS = {"flag": "Flag", "symbol": "Symbol, not a flag", "none": "Nothing documented"}
+FORM_WORDS = {"kingdom": "Kingdom", "city-state": "City-state", "network": "Centre of a network",
+              "caliphate": "Seat of the caliphate", "emirate": "Emirate", "communities": "Self-governing communities"}
+LINK_WORDS = {"allegiance": "Allegiance", "tribute": "Tribute", "alliance": "Alliance", "trade": "Trade",
+              "ritual": "Ritual authority"}
+MOVE_WORDS = {"migration": "Migration", "campaign": "Military campaign", "trade": "Trade route"}
+CONTROL_WORDS = {"claimed": "claimed on paper (hatched)", "held": "held (solid)",
+                 "taken": "claimed, then taken during this scene"}
+
+
+def emblem_text(e, sources):
+    """One emblem in words: what is documented, how sure, and where it comes from."""
+    esc = html.escape
+    years = (f" ({e['from'] if 'from' in e else ''} to {e['to'] if 'to' in e else 'today'})"
+             if "from" in e or "to" in e else "")
+    return (f"<em>{esc(TIER_WORDS[e['tier']])}{esc(years)}:</em> {esc(e['description'])}"
+            + (f" {esc(e['note'])}" if e.get("note") else "")
+            + (f" <em>Disputed:</em> {esc(e['disputed'])}" if e.get("disputed") else "")
+            + f" <em>How sure:</em> {STATUS_WORDS[e['status']]}."
+            + (f" <em>Sources:</em> {source_links(e['sources'], sources)}." if e.get("sources") else ""))
+
+
+def feature_text(f, sc, features, sources, emblems):
+    """One thing on the map in words, for the text version."""
+    e = html.escape
+    kind = f["kind"]
+    if kind == "link":
+        head = (f"<strong>{e(f['name'])}.</strong> {e(LINK_WORDS[f['type']])}, from "
+                f"{e(features[f['from']]['name'])} to {e(features[f['to']]['name'])}. {e(f['what'])}")
+    elif kind == "move":
+        stops = " to ".join(features[p]["name"] + (f" ({f['dates'][p]})" if p in f.get("dates", {}) else "")
+                            for p in f["path"])
+        extra = "".join(f" <em>{label}:</em> {e(f[k])}." for k, label in (("period", "When"), ("goods", "Goods"))
+                        if f.get(k))
+        head = f"<strong>{e(f['name'])}.</strong> {e(MOVE_WORDS[f['type']])}: {e(stops)}. {e(f['what'])}{extra}"
+        if f.get("uncertain"):
+            head += f" <em>Uncertain part of the route:</em> {e(f['uncertain'])}."
+    else:
+        form = f" ({FORM_WORDS[f['form']]})" if f.get("form") else ""
+        head = f"<strong>{e(f['name'])}{e(form)}.</strong> {e(f['what'])}"
+        if f.get("reach_note"):
+            head += f" <em>Halo or field:</em> {e(f['reach_note'])}"
+        how = sc.get("control", {}).get(f["id"])
+        if how:
+            head += f" <em>Colonial claim:</em> {e(CONTROL_WORDS[how])}."
+    out = (f"<li>{head} <em>Evidence:</em> {e(f['evidence'])}."
+           + (f" <em>Location:</em> {e(f['location'])}" if f.get("location") else "")
+           + (f" <em>Disputed:</em> {e(f['disputed'])}" if f.get("disputed") else "")
+           + f" <em>How sure:</em> {STATUS_WORDS[f['status']]}."
+           + f" <em>Sources:</em> {source_links(f['sources'], sources)}.")
+    if f.get("emblem"):
+        out += f" <em>Emblem:</em> {emblem_text(emblems[f['emblem']], sources)}"
+    return out + "</li>"
+
+
+def transcript(chapters, sources, states, emblems=None):
+    """The whole page as plain HTML text: every scene, map feature, emblem and source.
     It works without JavaScript and is what screen readers read."""
     e = html.escape
+    emblems = emblems or {}
     parts = []
     for ch in chapters:
         parts.append(f'<section class="tr-chapter" id="text-{e(ch["id"])}">')
@@ -392,14 +588,9 @@ def transcript(chapters, sources, states):
             parts.append(f'<h4>{e(sc["when"]["label"])}: {e(sc["title"])}</h4><p>{e(sc["text"])}</p>')
             if sc.get("disputed"):
                 parts.append(f'<p class="tr-disputed"><strong>Disputed:</strong> {e(sc["disputed"])}</p>')
-            items = []
-            for fid in sc.get("show", []):
-                f = features[fid]
-                items.append(
-                    f"<li><strong>{e(f['name'])}.</strong> {e(f['what'])} "
-                    f"<em>Evidence:</em> {e(f['evidence'])}. <em>Location:</em> {e(f['location'])}"
-                    + (f" <em>Disputed:</em> {e(f['disputed'])}" if f.get("disputed") else "")
-                    + f" <em>Sources:</em> {source_links(f['sources'], sources)}.</li>")
+            if sc.get("unchecked"):
+                parts.append(f'<p class="tr-disputed"><strong>Not yet checked:</strong> {e(sc["unchecked"])}</p>')
+            items = [feature_text(features[fid], sc, features, sources, emblems) for fid in sc.get("show", [])]
             if sc.get("snapshot"):
                 snap = ch["snapshots"][sc["snapshot"]]
                 for g in snap["groups"]:
@@ -414,6 +605,13 @@ def transcript(chapters, sources, states):
                 parts.append('<ul class="tr-features">' + "".join(items) + "</ul>")
             parts.append(f'<p class="tr-sources">Sources: {source_links(sc["sources"], sources)}.</p>')
         parts.append("</section>")
+    if emblems:
+        parts.append('<section class="tr-chapter" id="text-emblems"><h3>Flags, emblems and symbols</h3>'
+                     "<p>What is documented for each actor. A flag or symbol is drawn only from a cited description; "
+                     "where nothing is documented, nothing is invented.</p><ul class=\"tr-features\">")
+        for em in emblems.values():
+            parts.append(f"<li><strong>{e(em['actor'])}.</strong> {emblem_text(em, sources)}</li>")
+        parts.append("</ul></section>")
     parts.append('<section class="tr-chapter" id="text-sources"><h3>All sources</h3><ul class="tr-all-sources">')
     for sid, s in sources.items():
         parts.append(f'<li id="src-{e(sid)}"><a href="{e(s["url"])}">{e(s["title"])}</a>. {e(s.get("author", ""))}, '
@@ -427,20 +625,21 @@ def build():
     sources = read_json(SOURCES_PATH)
     chapters = [read_json(os.path.join(HISTORY_DIR, "chapters", f"{c}.json")) for c in CHAPTERS]
     states, arcs, users = load_states()
+    emblems = load_emblems()
     cited = set()
-    problems = check(chapters, sources, states, cited)
+    problems = check_emblems(emblems, sources, cited) + check(chapters, sources, states, cited, emblems)
     if problems:
         sys.exit("Not building the history page:\n  - " + "\n  - ".join(problems))
     for sid in sorted(set(sources) - cited - MAP_SOURCES):
-        print(f"Note: source {sid} is not cited by any scene or feature.")
+        print(f"Note: source {sid} is not cited by any scene, feature or emblem.")
 
-    data = page_data(chapters, sources, states, arcs, users, load_background())
+    data = page_data(chapters, sources, states, arcs, users, load_background(), emblems)
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         template = f.read()
     # "</" inside the JSON would end the <script> block early
     data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     page = (template.replace("{{DATA}}", data_json)
-                    .replace("{{TRANSCRIPT}}", transcript(chapters, sources, states))
+                    .replace("{{TRANSCRIPT}}", transcript(chapters, sources, states, emblems))
                     .replace("{{BUILT}}", data["built"]))
 
     # The page must say it is an unreviewed draft and credit the boundary and background data
