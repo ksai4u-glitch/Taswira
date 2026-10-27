@@ -239,6 +239,41 @@ It checks all scenes at 1440×900 and 390×844, jumped to, playing and with redu
 Historical scenes must leave the modern layer detached; only labelled modern-reference scenes
 may create Esri tiles. The text and all dated scene overlays remain available without tile service.
 
+### What sits on top of the map
+
+Outside video export, everything drawn over the map lives in one of two zones, so nothing can
+cover anything else however long a caption is or however small the screen:
+
+- **Top zone:** the view buttons with any notes under them (draft and uncertainty, architecture
+  caveat) on the left, the year on the right. On a phone the buttons take the whole first row.
+- **Bottom zone:** one lower third on the left and Zomo on the right (above it on a phone). It
+  sits above the credit line, however many lines that wraps onto.
+
+Which lower third shows is one rule per layout. Normal: the Africa tour strip, or in other
+chapters the title strip that slides in; the narration is in the side panel. Details hidden or
+Cinema: only the narration caption, whose first line carries the date and place. While playing,
+the caption shows one beat at a time; paused, it holds the whole narration and scrolls inside a
+box of at most about a third of the map. Zomo takes at most a quarter of the map's height and
+steps out on a map too short to share (under 300 px, or 420 px on a phone). Video export keeps
+its own fixed 1080p layout.
+
+Place names never pile up: in the scene's order, each name takes the first free spot beside its
+point, a line above or below, or on the other side, with a short sideways step if something only
+clips one end. A name with no room is hidden until there is room again; it is still in the panel.
+
+Architectural settings follow the map. At the scene's camera they are a close-up (never larger
+than the map); each zoom step out halves them with the land, and once they would be smaller than
+about a third of the close-up they become the site's small glyph, so they never cover the
+continent.
+
+```
+node tests/history_layout_browser.cjs /tmp/history.html /tmp/history-deps
+```
+
+checks every scene in the normal, details-hidden and Cinema layouts at 1440×900, 1024×700 and
+390×844, jumped to and at five moments while playing, for overlays that overlap or leave the map,
+and that the three settings shrink and turn into glyphs as the map zooms out (about 4 minutes).
+
 ## Video pilot and exact-time capture
 
 A downloadable, offline viewing copy is in `previews/history-video-pilot.html`, with its caption

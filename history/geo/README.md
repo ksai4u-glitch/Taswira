@@ -33,11 +33,19 @@ lakes and rivers only, with no borders, roads or towns. Made by `make_background
   - `ne_10m_lakes.geojson` `2d036f53dedec578001c5c30c2959ee7d4eebc1306900fa4367c49929ec8f2d9`
   - `ne_10m_rivers_lake_centerlines.geojson` `bb854a900ecbd3b408df46d5e16e3e0f974ba55993f9d8b5c26e855273c0905a`
 - **Licence:** public domain ("Crediting the authors is unnecessary"). The page credits it anyway.
-- **What the script does:** keeps detailed (1:10m) land and rivers between 6° W and 20° E, 0° and
-  18° N, and coarser (1:50m) land and only the biggest rivers out to the edge of what the map can
-  show (40° W to 65° E, 40° S to 45° N). It simplifies the lines and stores them as whole numbers.
-  Reservoirs are left out because they are 20th-century (Kainji 1968, Lake Volta 1965); the river
-  lines through them are kept. To remake the file, download the four files into a folder and run:
+- **What the script does:** covers the whole world, so the map never ends in a straight edge
+  however far the camera pulls back, with detail rising towards Nigeria in three rings:
+  - 6° W to 20° E, 0° to 18° N: detailed (1:10m) land and rivers;
+  - out to 40° W to 65° E, 40° S to 45° N (Africa, Europe, Arabia): 1:50m land, rivers down to
+    Natural Earth's rank 5;
+  - the rest of the world: 1:50m land, simplified more, and only the largest rivers (rank 3).
+
+  Lakes are never cut: a lake that reaches the middle ring is kept whole, and elsewhere only the
+  largest lakes are kept. The script simplifies the lines and stores them as whole numbers (about
+  250 KB). Reservoirs are left out because they are 20th-century (Kainji 1968, Lake Volta 1965); the
+  river lines through them are kept. The page draws the land a second time 360° to each side, so a
+  very wide screen at the farthest zoom shows the world wrapping round instead of empty sea. To
+  remake the file, download the four files into a folder and run:
 
   ```
   python history/geo/make_background.py <that folder>
