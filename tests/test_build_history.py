@@ -179,10 +179,10 @@ class HistoryDataTests(unittest.TestCase):
     def test_links_and_moves_join_places_in_the_chapter(self):
         key = self.chapter("key")
         next(f for f in key["features"] if f["id"] == "kano-tribute")["to"] = "timbuktu"
-        next(f for f in key["features"] if f["id"] == "conquest-1903")["dates"]["lokoja"] = "1900"
+        next(f for f in key["features"] if f["id"] == "conquest-1903")["stops"]["lokoja"] = {"date": "1900", "precision": "year"}
         found = self.problems_with([key])
         self.assertTrue(any("'timbuktu' is not a place in this chapter" in p for p in found))
-        self.assertTrue(any("a date for 'lokoja', which is not on the path" in p for p in found))
+        self.assertTrue(any("no extra stops" in p for p in found))
 
     def test_taken_needs_a_campaign_that_reaches_the_place(self):
         key = self.chapter("key")
