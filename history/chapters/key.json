@@ -1,5 +1,6 @@
 {
   "id": "key",
+  "reference": true,
   "title": "Map key: how power and movement are drawn",
   "period": "examples from about 700 to 1903",
   "intro": "A short preview of the map styles the later chapters will use. Before borders were surveyed, the region held kingdoms, walled city-states, trading networks, a caliphate of emirates and many self-governing communities, and each is drawn its own way rather than as coloured land. Trade, migration and war each move differently too. Every example is real and cited, but this is a key, not a story: the full chapters will add more places and checks.",
@@ -23,7 +24,7 @@
       "name": "Kanem",
       "coordinates": [14.119, 15.313],
       "uncertainty_km": 120,
-      "what": "A kingdom whose heartland lay north-east of Lake Chad. It controlled trade routes to the north and exported salt, ivory, slaves and animal products.",
+      "what": "A kingdom whose heartland lay north-east of Lake Chad. It controlled trade routes to the north and exported salt, ivory, enslaved people and animal products.",
       "evidence": "Secondary sources (encyclopedia)",
       "location": "Rough. Kanem's first capital, probably Njimi, has never been located, so the marker sits at Mao, the main town of today's Kanem region of Chad, with a ring for the uncertainty.",
       "status": "disputed",
@@ -38,7 +39,7 @@
       "name": "Salt road from Bilma to Kanem",
       "path": ["bilma", "kanem"],
       "goods": "rock salt",
-      "what": "Caravans carried rock salt south from Bilma to the savanna north of Lake Chad, and slaves and ivory went north in exchange. It was the shortest crossing of the Sahara, part of the road from Tripoli by way of Murzuk.",
+      "what": "Caravans carried rock salt south from Bilma to the savanna north of Lake Chad, and enslaved people and ivory went north in exchange. It was the shortest crossing of the Sahara, part of the road from Tripoli by way of Murzuk.",
       "evidence": "Secondary sources (encyclopedia)",
       "location": "A line between the two places. The caravans' track across the dunes is not drawn.",
       "status": "firm",
@@ -366,7 +367,11 @@
       "type": "campaign",
       "name": "British campaign from Zaria to Kano and Sokoto",
       "path": ["zazzau-emirate", "kano-emirate", "sokoto"],
-      "dates": {"zazzau-emirate": "taken 1901", "kano-emirate": "3 Feb 1903", "sokoto": "15 Mar 1903"},
+      "stops": {
+        "zazzau-emirate": {"date": "1901", "precision": "year", "approximate": true, "label": "taken 1901"},
+        "kano-emirate": {"date": "1903-02-03", "precision": "day", "label": "3 Feb 1903"},
+        "sokoto": {"date": "1903-03-15", "precision": "day", "label": "15 Mar 1903"}
+      },
       "what": "British forces took Zaria in 1901. A force under Colonel Thomas Morland left Zaria at the end of January 1903 and took Kano on 3 February. British forces under Kemball and Morland then took Sokoto after a battle on 15 March.",
       "evidence": "Secondary sources (encyclopedia)",
       "location": "Straight lines join the towns in the order they were taken. The columns' routes are not shown, and the line from Kano to Sokoto stands for the British advance, not one column's march.",
@@ -378,11 +383,12 @@
   "scenes": [
     {
       "id": "salt",
+      "sensitive": true,
       "title": "Trade: salt across the Sahara",
       "when": {"from": 700, "to": 1380, "label": "about 700 to 1380"},
       "camera": {"center": [16.3, 13.9], "zoom": 6.3},
       "show": ["bilma", "kanem", "salt-road"],
-      "text": "Trade is drawn as a dotted route with the goods travelling along it. Caravans carried rock salt south from Bilma, in the Kawar oases, to the savanna north of Lake Chad, where Kanem's heartland lay. In return, slaves and ivory went north. This was the shortest crossing of the Sahara, on the road from Tripoli by way of Murzuk. Regular caravan routes across the desert grew from the 7th and 8th centuries. Around 1380 Kanem's rulers lost their capital and moved west across the lake to Bornu.",
+      "text": "Trade is drawn as a dotted route with the goods travelling along it. Caravans carried rock salt south from Bilma, in the Kawar oases, to the savanna north of Lake Chad, where Kanem's heartland lay. In return, enslaved people and ivory went north. This was the shortest crossing of the Sahara, on the road from Tripoli by way of Murzuk. Regular caravan routes across the desert grew from the 7th and 8th centuries. Around 1380 Kanem's rulers lost their capital and moved west across the lake to Bornu.",
       "sources": ["wiki-trans-saharan", "wiki-kanem"]
     },
     {
@@ -406,6 +412,7 @@
     },
     {
       "id": "benin",
+      "sensitive": true,
       "title": "A kingdom: Benin",
       "when": {"from": 1440, "to": 1600, "label": "1440 to about 1600"},
       "camera": {"center": [6.6, 5.3], "zoom": 7},
@@ -415,6 +422,7 @@
     },
     {
       "id": "aro",
+      "sensitive": true,
       "title": "A network: the Aro",
       "when": {"from": 1640, "to": 1901, "label": "about 1640 to 1901"},
       "camera": {"center": [5.35, 7.3], "zoom": 8},
@@ -434,15 +442,17 @@
     },
     {
       "id": "sokoto",
+      "sensitive": true,
       "title": "A caliphate of emirates: Sokoto",
       "when": {"from": 1809, "to": 1903, "label": "1809 to 1903"},
       "camera": {"center": [12.1, 6.6], "zoom": 7},
       "show": ["sokoto", "gwandu", "katsina-emirate", "kano-emirate", "zazzau-emirate", "katsina-sokoto", "kano-sokoto", "zazzau-sokoto"],
-      "text": "A caliphate is drawn as the caliph's seat with a line from each emirate, showing allegiance rather than one border. The jihad that began in 1804 brought the Hausa states under new emirates: Zaria was captured in 1805 and Kano in 1807. Sokoto was founded as a military camp in 1809 and became the caliph's seat, and Gwandu became a co-capital from which the western and southern lands were overseen. Each emir was appointed by the caliph and governed with wide self-rule, travelling every year to pledge allegiance and bring tribute in crops, cowries and slaves.",
+      "text": "A caliphate is drawn as the caliph's seat with a line from each emirate, showing allegiance rather than one border. The jihad that began in 1804 brought the Hausa states under new emirates: Zaria was captured in 1805 and Kano in 1807. Sokoto was founded as a military camp in 1809 and became the caliph's seat, and Gwandu became a co-capital from which the western and southern lands were overseen. Each emir was appointed by the caliph and governed with wide self-rule, travelling every year to pledge allegiance and bring tribute in crops, cowries and enslaved people.",
       "sources": ["wiki-sokoto", "wiki-places-key"]
     },
     {
       "id": "claimed",
+      "sensitive": true,
       "title": "Claimed on paper: the protectorates of 1900",
       "when": {"from": 1900, "to": 1900, "label": "1 January 1900"},
       "camera": {"center": [11.9, 6.9], "zoom": 7},
@@ -453,15 +463,17 @@
     },
     {
       "id": "taken",
+      "sensitive": true,
       "title": "A campaign: Zaria, Kano and Sokoto taken",
       "when": {"from": 1901, "to": 1903, "label": "1901 to March 1903"},
       "camera": {"center": [11.9, 6.9], "zoom": 7},
       "show": ["zazzau-emirate", "kano-emirate", "sokoto", "conquest-1903"],
       "control": {"zazzau-emirate": "taken", "kano-emirate": "taken", "sokoto": "taken"},
-      "text": "A military campaign is drawn as a hard arrow with a pulse at each dated stop. As each town is taken, its hatching turns solid. British forces took Zaria in 1901. A force under Colonel Thomas Morland left Zaria at the end of January 1903 and took Kano on 3 February after heavy fighting. In March British forces reached Sokoto, which fell after a battle on 15 March. Caliph Attahiru I left the city, and was killed later in 1903.",
+      "text": "A military campaign is drawn as a hard arrow, timed to each dated stop. As each town is taken, its hatching turns solid. British forces took Zaria in 1901. A force under Colonel Thomas Morland left Zaria at the end of January 1903 and took Kano on 3 February after heavy fighting. In March British forces reached Sokoto, which fell after a battle on 15 March. Caliph Attahiru I left the city, and was killed later in 1903.",
       "disputed": "Attahiru I's death is dated to June 1903 in one source and to the Battle of Burmi on 27 July 1903 in others.",
       "sources": ["wiki-battle-kano", "wiki-battle-sokoto", "wiki-sokoto", "wiki-places-key"],
       "mood": "decline"
     }
   ]
 }
+
