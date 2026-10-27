@@ -293,6 +293,31 @@
     .lt-title { font-size: 18px; }
     .tc-kicker { font-size: 11px; letter-spacing: .35em; }
   }
+  /* Export layout: preserve draft, uncertainty and credits inside the captured map. */
+  #video-caption, #video-caution, #video-credit, #exit-video, #video-tools { display: none; }
+  body.video-mode #app, body.video-mode #stage { display: block; height: 100svh; min-height: 0; }
+  body.video-mode :is(header, #draft, #card, #controls, #text) { display: none; }
+  body.video-mode #mapwrap { width: 100%; height: 100svh; min-height: 0; }
+  body.video-mode #mapwrap *, body.video-mode #mapwrap::after { animation: none !important; transition: none !important; }
+  body.video-mode #hud { top: 62px !important; right: 64px; }
+  body.video-mode #hud-year { font-size: 64px; }
+  body.video-mode #hud-year.long { font-size: 44px; }
+  body.video-mode #hud-sub { font-size: 20px; }
+  body.video-mode :is(.site-label, .group-label) { font-size: 20px; }
+  body.video-mode #video-caption { display: block; position: absolute; z-index: 700; left: 64px; right: 180px;
+    bottom: 82px; margin: 0; padding: 16px 22px; border-left: 3px solid #4cc9e0; font-size: 28px;
+    line-height: 1.5; color: #f3f6f7; background: rgb(4 10 15 / .9); }
+  body.video-mode #video-caution { display: block; position: absolute; z-index: 701; left: 64px; top: 22px;
+    max-width: 72%; margin: 0; color: #ffcf80; font-size: 16px; background: rgb(4 10 15 / .85); padding: 6px 10px; }
+  body.video-mode #video-credit { display: block; position: absolute; z-index: 701; left: 64px; bottom: 20px;
+    max-width: 70%; margin: 0; font-size: 14px; color: #ccd9e4; background: rgb(4 10 15 / .85); padding: 5px 8px; }
+  body.video-mode #globe-credit { display: none; }
+  body.video-mode #lower, body.video-mode .leaflet-control-zoom { display: none !important; }
+  body.video-mode #mapwrap:not([data-base="modern"]) .leaflet-control-container { display: none; }
+  body.video-mode #exit-video { display: block; position: fixed; top: 8px; right: 8px; z-index: 2000;
+    border: 1px solid #456; background: #08121c; color: #fff; padding: 7px 12px; }
+  body.video-mode #video-tools { display: flex; align-items: center; gap: 10px; position: fixed; z-index: 2000;
+    right: 8px; bottom: 8px; max-width: 90vw; padding: 8px 12px; background: #08121c; color: #fff; border: 1px solid #456; }
 </style>
 </head>
 <body>
@@ -317,6 +342,9 @@
       <div class="lb top" aria-hidden="true"></div><div class="lb bot" aria-hidden="true"></div>
       <div id="lower" aria-hidden="true"><span class="lt-bar"></span><p class="lt-kicker"></p><p class="lt-title"></p></div>
       <div id="hud" aria-hidden="true"><div id="hud-year"></div><div id="hud-sub"></div><div id="hud-rewind"></div></div>
+      <p id="video-caption"></p>
+      <p id="video-caution"></p>
+      <p id="video-credit"></p>
     </div>
     <aside id="card" aria-label="Current scene"></aside>
   </div>
@@ -330,8 +358,11 @@
     </div>
     <button class="ctl" id="fxbtn" type="button" aria-pressed="true"
       title="Sparks, light and title cards. Decoration only: they add no information.">Effects</button>
+    <button class="ctl" id="videobtn" type="button">Video preview</button>
   </div>
 </div>
+<button id="exit-video" type="button">Exit video preview</button>
+<div id="video-tools"><label for="video-time">Scene time</label><input id="video-time" type="range" min="0" step="0.1"><output id="video-seconds" for="video-time"></output></div>
 <div id="announce" class="sr-only" aria-live="polite"></div>
 
 <main id="text">
@@ -363,6 +394,7 @@ function centreOf(ring) {
   return a ? [y / (3 * a), x / (3 * a)] : ring[0];
 }
 const lessMotion = matchMedia("(prefers-reduced-motion: reduce)");
+let captureClock = null;  // milliseconds on the explicit export clock, or normal interactive mode
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const clamp01 = v => Math.max(0, Math.min(1, v));
@@ -375,7 +407,7 @@ const setText = (el, s) => { if (el.textContent !== s) el.textContent = s; };
 const FX_KEY = "taswira-history-effects";
 let fxPref = true;
 try { fxPref = localStorage.getItem(FX_KEY) !== "off"; } catch (e) { /* storage blocked: keep the default */ }
-const fxOn = () => fxPref && !lessMotion.matches;
+const fxOn = () => captureClock !== null || fxPref && !lessMotion.matches;
 
 // --- Period background --------------------------------------------------------------
 // Land, lakes and rivers from Natural Earth, for historical scenes (see history/geo/README.md).
@@ -424,7 +456,7 @@ const svg = L.svg({ padding: 0.5 }).addTo(map);   // one SVG layer, so striped f
 const sceneLayer = L.layerGroup().addTo(map);
 const WIDE = { center: [9.1, 8.3], zoom: 5.5 };      // the whole country, behind a chapter's title card
 const small = () => map.getSize().x < 600;
-const mapName = f => small() && f.short || f.name;   // a phone's map labels a place by its short name, if it has one
+const mapName = f => (small() || captureClock !== null) && f.short || f.name;
 const zoomFor = z => z - (small() ? 1 : 0);   // a phone's small map shows the same area zoomed out
 let defs = null;
 function patternDefs() {
@@ -456,7 +488,7 @@ const state = { c: 0, s: 0, t: 0, playing: false, last: 0, drawn: null, drawnC: 
                 navAt: 0, shownYear: null };
 const chapter = () => DATA.chapters[state.c];
 const scene = () => chapter().scenes[state.s];
-const isLive = () => state.live && !lessMotion.matches;
+const isLive = () => state.live && (captureClock !== null || !lessMotion.matches);
 
 // A chapter starts with a title card when it plays; its scenes start after the card
 const CARD = 3.6;
@@ -1086,6 +1118,13 @@ new ResizeObserver(() => {
   const size = map.getSize(), changed = !size.equals(mapSize);
   mapSize = size;
   sizeGlobe(); sizeCanvas();          // the effects canvas too, or sparks would land off their places
+  if (captureClock !== null && fx) {
+    if (scene().base !== "deep") {
+      const cam = captureCamera(state.t - lead()); map.setView(cam.center, cam.zoom, { animate: false, reset: true });
+    }
+    frame(captureClock); paint(captureClock);
+    return;
+  }
   if (fx) wake();
   if (!changed || !fx || scene().snapshot || scene().base === "deep") return;
   fx.cues = cameraCues(scene());
@@ -1235,9 +1274,10 @@ function drawGlobe(now) {
   globeSetup();
   const ma = maOf(state.shownYear), cam = sc.camera;
   const [lon, lat] = moved(cam.plate, ma, ...cam.center);
-  const u = !gcam.set || lessMotion.matches ? 1 : 1 - Math.exp(-Math.min(0.1, (now - gcam.at) / 1000) * 3.2);
+  const u = captureClock !== null || !gcam.set || lessMotion.matches ? 1 : 1 - Math.exp(-Math.min(0.1, (now - gcam.at) / 1000) * 3.2);
   const dLon = ((lon - gcam.lon + 540) % 360) - 180;
-  gcam.lat += (lat - gcam.lat) * u; gcam.lon += dLon * u; gcam.k += (cam.zoom - gcam.k) * u;
+  if (captureClock !== null) { gcam.lat = lat; gcam.lon = lon; gcam.k = cam.zoom; }
+  else { gcam.lat += (lat - gcam.lat) * u; gcam.lon += dLon * u; gcam.k += (cam.zoom - gcam.k) * u; }
   gcam.at = now; gcam.set = true;
   const busy = Math.abs(lat - gcam.lat) + Math.abs(dLon) * (1 - u) + Math.abs(cam.zoom - gcam.k) > 0.02;
 
@@ -1355,6 +1395,7 @@ function campaignYear(clock, t) {
 
 function frame(now) {
   if (!fx) return;
+  if (captureClock !== null) now = captureClock;
   const ch = chapter(), sc = scene(), { live, t, x } = times(now);
 
   // Chapter title card
@@ -1787,6 +1828,7 @@ function paintVocab(live, t, W, age) {
 
 // Paint one frame of effects. Returns true while something is still moving.
 function paint(now) {
+  if (captureClock !== null) now = captureClock;
   g.clearRect(0, 0, cvW, cvH);
   if (!fx || !fxOn()) return false;
   if (scene().sensitive || scene().campaign_clock) return false; // no bursts, shockwaves or victory glows over violence
@@ -2008,6 +2050,7 @@ function wake() {
   requestAnimationFrame(loop);
 }
 function loop(now) {
+  if (captureClock !== null) { looping = false; return; }
   const dt = Math.min(now - state.last, 100) / 1000;     // a background tab doesn't jump ahead
   state.last = now;
   if (state.playing) {
@@ -2074,12 +2117,101 @@ $("chapters").onclick = e => {
   if (b) { setPlaying(false); goTo(+b.dataset.i, 0, { announce: true }); }
 };
 document.addEventListener("keydown", e => {
+  if (captureClock !== null) {
+    if (e.key === "Escape") { e.preventDefault(); window.taswira.exitVideo(); }
+    return;
+  }
   if (e.target.closest("a, button, input, select, textarea") && e.key === " ") return;
   if (e.key === " ") { e.preventDefault(); $("play").click(); }      // same as the button, including Replay
   else if (e.key === "ArrowRight") { setPlaying(false); step(1); }
   else if (e.key === "ArrowLeft") { setPlaying(false); step(-1); }
   else if (e.key === "Escape") setPlaying(false);
 });
+
+// --- Deterministic video preview -----------------------------------------------------------
+function captureCamera(t) {
+  const sc = scene(), cam = cameraOf(chapter(), sc);
+  let position = lead() ? { center: WIDE.center, zoom: zoomFor(WIDE.zoom) } : cam;
+  let active = null;
+  const sample = (move, at) => {
+    const u = easeInOut(clamp01((at - move.at) / move.dur));
+    const a = L.latLng(move.from.center), b = L.latLng(move.to.center);
+    return { center: [a.lat + (b.lat - a.lat) * u, a.lng + (b.lng - a.lng) * u],
+             zoom: move.from.zoom + (move.to.zoom - move.from.zoom) * u };
+  };
+  for (const cue of cameraCues(sc)) {
+    if (cue.at > t) break;
+    if (active) position = sample(active, cue.at);
+    active = { at: cue.at, dur: cue.dur, from: position, to: cue };
+  }
+  return active ? sample(active, t) : position;
+}
+function resolveCapture(c, s) {
+  const ci = typeof c === "string" ? DATA.chapters.findIndex(ch => ch.id === c) : c;
+  const ch = Number.isInteger(ci) && DATA.chapters[ci];
+  const si = typeof s === "string" && ch ? ch.scenes.findIndex(sc => sc.id === s) : s;
+  if (!ch || !Number.isInteger(si) || !ch.scenes[si]) throw new RangeError("Unknown chapter or scene");
+  return [ci, si];
+}
+function captureInfo(c, s) {
+  const [ci, si] = resolveCapture(c, s), sc = DATA.chapters[ci].scenes[si];
+  return { chapter: DATA.chapters[ci].id, scene: sc.id, duration: sc.duration + (si === 0 ? CARD : 0),
+           contentStart: si === 0 ? CARD : 0, base: sc.base, sources: sc.sources,
+           disputed: sc.disputed || null, unchecked: sc.unchecked || null,
+           features: (sc.show || []).map(id => ({ id, name: DATA.chapters[ci].features[id].name,
+             location: DATA.chapters[ci].features[id].location || null,
+             status: DATA.chapters[ci].features[id].status,
+             disputed: DATA.chapters[ci].features[id].disputed || null,
+             sources: DATA.chapters[ci].features[id].sources })) };
+}
+window.taswira = {
+  info: captureInfo,
+  seek(c, s, seconds) {
+    const [ci, si] = resolveCapture(c, s), info = captureInfo(ci, si);
+    if (!Number.isFinite(seconds) || seconds < 0) throw new RangeError("Time must be finite, non-negative seconds");
+    setPlaying(false);
+    captureClock = Math.min(seconds, info.duration) * 1000;
+    document.body.classList.add("video-mode");
+    map.invalidateSize({ animate: false }); sizeCanvas(); sizeGlobe();
+    state.drawn = null;
+    goTo(ci, si, { live: true, animate: false });
+    state.t = captureClock / 1000;
+    fx.rollFrom = null; fx.jump = 0; // no dependence on the previously visited scene
+    map.stop();
+    if (scene().base !== "deep") {
+      const cam = captureCamera(state.t - lead());
+      map.setView(cam.center, cam.zoom, { animate: false, reset: true });
+    }
+    $("mapwrap").classList.add("fx-on");
+    const sc = scene(), t = state.t - lead();
+    const sentences = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
+    const gap = sc.duration * .55 / sentences.length;
+    $("video-caption").textContent = t < 0 ? "" : sentences[Math.min(sentences.length - 1, Math.floor(t / gap))].trim();
+    const disputed = sc.disputed || (sc.show || []).some(id => chapter().features[id]?.status === "disputed");
+    $("video-caution").textContent = "Unreviewed draft · " + (disputed ? "Disputed evidence · " : "")
+      + (sc.unchecked ? "Not yet checked · " : "")
+      + (sc.base === "deep" ? "Model reconstruction; modern outlines, not ancient coastlines"
+        : sc.base === "modern" ? "Modern reference map, not a period reconstruction" : "Approximate physical geography");
+    $("video-credit").textContent = sc.base === "deep"
+      ? "Continents: Merdith et al. (2021), model v1.2.4 · CC BY 4.0 · simplified and sampled"
+      : sc.base === "modern" ? "Esri, HERE, Garmin, OpenStreetMap · modern reference map"
+      : "Natural Earth · public domain" + (sc.snapshot ? " | Borders: GRID3 via geoBoundaries · CC BY 4.0 · simplified, approximate" : "");
+    $("video-time").max = info.duration; $("video-time").value = state.t;
+    $("video-seconds").textContent = `${state.t.toFixed(1)} / ${info.duration.toFixed(1)} s`;
+    frame(captureClock); paint(captureClock); showProgress();
+    $("video-time").setAttribute("aria-valuetext", `${state.t.toFixed(1)} seconds · ${$("hud-year").textContent} · ${sc.title}`);
+    return { ...info, elapsed: state.t, year: state.shownYear };
+  },
+  exitVideo() {
+    captureClock = null; document.body.classList.remove("video-mode");
+    gcam.set = false; gcam.at = performance.now(); // return from export seconds to the browser clock
+    state.drawn = null; map.invalidateSize({ animate: false }); applyEffects();
+    goTo(state.c, state.s, { animate: false }); $("videobtn").focus();
+  }
+};
+$("videobtn").onclick = () => { window.taswira.seek(state.c, state.s, 0); $("video-time").focus(); };
+$("exit-video").onclick = () => window.taswira.exitVideo();
+$("video-time").oninput = () => window.taswira.seek(state.c, state.s, +$("video-time").value);
 
 // --- Links like #chapter=nok&scene=iron -------------------------------------------------------
 function writeLink() {
