@@ -1783,17 +1783,81 @@
         "great-zimbabwe"
       ],
       "dim": [],
-      "text": "Far to the south, Great Zimbabwe grew into a major trading city. Its fourteenth-century Great Enclosure shows the skill of its stone builders. The enclosure and conical tower form part of the site’s later architectural ensemble.",
+      "text": "What makes a city? Look beyond its most famous tower. Above the settlement, stone enclosures and terraces follow the granite hill. Below it, the Great Enclosure reveals the skill of its stone builders. An inner wall creates a narrow passage toward the conical tower. Around these monuments were spaces for living, including dhaka houses and granaries. A city was more than its monuments. People made it a place to live.",
       "sources": [
         "unesco-great-zimbabwe",
-        "unesco-great-zimbabwe-map"
+        "unesco-great-zimbabwe-map",
+        "nmmz-great-zimbabwe",
+        "mukwende-great-zimbabwe"
       ],
       "disputed": null,
       "unchecked": null,
       "mood": "calm",
-      "duration": 18,
+      "duration": 32,
       "scale": "Southern Africa · Great Zimbabwe",
-      "focus_label": "Great Zimbabwe · stone city"
+      "focus_label": "Great Zimbabwe · stone city",
+      "beats": [
+        {
+          "at": 0,
+          "text": "What makes a city? Look beyond its most famous tower.",
+          "pose": 1,
+          "focus": [
+            220,
+            180,
+            0.85
+          ]
+        },
+        {
+          "at": 5,
+          "text": "Above the settlement, stone enclosures and terraces follow the granite hill.",
+          "pose": 6,
+          "focus": [
+            112,
+            150,
+            1.4
+          ]
+        },
+        {
+          "at": 11,
+          "text": "Below it, the Great Enclosure reveals the skill of its stone builders.",
+          "pose": 1,
+          "focus": [
+            190,
+            208,
+            1.35
+          ]
+        },
+        {
+          "at": 17,
+          "text": "An inner wall creates a narrow passage toward the conical tower.",
+          "pose": 5,
+          "focus": [
+            218,
+            212,
+            1.65
+          ]
+        },
+        {
+          "at": 23,
+          "text": "Around these monuments were spaces for living, including dhaka houses and granaries.",
+          "pose": 6,
+          "focus": [
+            305,
+            210,
+            1.3
+          ]
+        },
+        {
+          "at": 28,
+          "text": "A city was more than its monuments. People made it a place to live.",
+          "pose": 0,
+          "focus": [
+            220,
+            180,
+            0.85
+          ]
+        }
+      ]
     },
     {
       "id": "kilwa",

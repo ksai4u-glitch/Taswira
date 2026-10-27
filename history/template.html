@@ -342,6 +342,9 @@
   #view-tools button { min-height:36px; padding:5px 9px; border:1px solid #48604e; border-radius:6px; color:#f0eee2; background:#08120eea; font:12px system-ui; cursor:pointer; }
   #view-tools button[aria-pressed="true"], #view-tools button[aria-expanded="true"] { color:#d4b57a; border-color:#d4b57a; }
   #viewer-status { display:none; position:absolute; top:56px; left:16px; z-index:800; padding:5px 8px; max-width:calc(100% - 32px); color:#d4b57a; background:#08120ee8; font:11px/1.4 system-ui; }
+  #culture-notes { width:min(850px,calc(100% - 24px)); max-height:85svh; overflow:auto; border:1px solid #48604e; border-radius:12px; padding:28px; background:#081a12; color:#f0eee2; }
+  #culture-notes::backdrop { background:#030a07d9; } #culture-notes h2,#culture-notes h3 { font-family:Georgia,serif; color:#d4b57a; } #culture-notes h2 { font-size:32px; margin:0 0 12px; }
+  #culture-notes article { border-top:1px solid #304b3d; padding:16px 0; } #culture-notes p { line-height:1.6; } #culture-notes small { color:#a9beb0; } #culture-notes a { color:#d4b57a; } #culture-notes button { float:right; background:#173b27; color:#f0eee2; padding:8px 15px; border:1px solid #48604e; border-radius:6px; } #culture-notes .culture-mark { float:right; width:100px; margin:0 0 12px 16px; }
   #story-caption { display:none; position:absolute; z-index:790; bottom:42px; left:16px; right:168px; padding:12px 16px; color:#f0eee2; background:linear-gradient(95deg,#08120ef5,#08120ed9); border-left:2px solid #d4b57a; pointer-events:none; }
   #story-caption p { margin:0; } #story-caption .story-kicker { color:#d4b57a; font:11px/1.5 system-ui; letter-spacing:.08em; margin-bottom:5px; }
   #story-caption .story-line { font:19px/1.45 system-ui; }
@@ -437,6 +440,7 @@
         <button id="details-toggle" type="button" aria-expanded="true" aria-controls="card" title="Hide scene details">Details</button>
         <button id="cinema-toggle" type="button" aria-pressed="false" aria-controls="app">Cinema</button>
         <button id="fullscreen-toggle" type="button" aria-label="Full screen" title="Full screen">⛶</button>
+        <button id="culture-toggle" type="button" aria-haspopup="dialog" aria-controls="culture-notes">Lore</button>
         <button id="guide-toggle" type="button" aria-pressed="true" title="Show or hide Zomo">Zomo</button>
       </div>
       <p id="viewer-status" role="note"></p>
@@ -474,6 +478,7 @@
     <button class="ctl" id="videobtn" type="button">Video preview</button>
   </div>
 </div>
+<dialog id="culture-notes" aria-labelledby="culture-title"><button id="culture-close" type="button">Close</button><h2 id="culture-title">Zomo’s cultural notebook</h2><p>Specific traditions, people and objects. Cultural motifs are distinct from dated political flags. Dates below describe checked evidence, not the invention of a tradition.</p><p>In documented Hausa storytelling, Zomo the hare and Gizo the spider are distinct recurring characters. Taswira’s Zomo is a new fictional guide. When adapting a tale, name its telling and its teller; do not turn it into a dated historical event. <a href="https://archive.org/stream/hausasuperstitio00tremuoft/hausasuperstitio00tremuoft_djvu.txt" target="_blank" rel="noopener">Tremearne, 1913: hare telling credited to Umoru Gombe</a>.</p><div id="culture-records"></div></dialog>
 <button id="exit-video" type="button">Exit video preview</button>
 <div id="video-tools"><label for="video-time">Scene time</label><input id="video-time" type="range" min="0" step="0.1"><output id="video-seconds" for="video-time"></output></div>
 <div id="announce" class="sr-only" aria-live="polite"></div>
@@ -786,6 +791,9 @@ function assemblageSvg(kind) {
     add('residential-enclosures',4.65,wall('M296 199 331 182 373 200 365 226 329 236 294 217Z','#a18d64',7),237);
     add('domestic-structures',5.1,house(320,204,12)+house(349,214,11)+house(297,242,9),246);
     add('granary-group',5.55,house(274,163,8)+house(294,174,8),180);
+    add('settlement-west',7.1,house(75,223,9)+house(95,235,8)+house(117,251,8),255);
+    add('settlement-east',7.8,house(337,249,9)+house(363,239,8)+house(383,226,8),258);
+    add('settlement-front',8.4,house(198,266,8)+house(225,274,8)+house(255,267,9),280);
     add('passage-reveal',6.1,line('M119 237 146 230 M268 230 289 223','#d4b57a',3),240,'draw',.8);
   } else if(kind==='royal-cemetery') {
     const pyramid=(x,y,h,w)=>`<path d="M${x-w} ${y} ${x} ${y-h} ${x+w*.7} ${y}Z" fill="#d8bb79"/><path d="M${x} ${y-h} ${x+w*1.25} ${y-w*.32} ${x+w*.7} ${y}Z" fill="#987541"/>`+`<path d="M${x+w*.65} ${y}v-14l12-4 8 5v13Z" fill="#b69760"/>`;
@@ -810,20 +818,37 @@ function assemblageSvg(kind) {
     add('paths',5.2,line('M71 228 105 215 M301 181 331 194','#d4b57a',1.2),230,'draw');
     add('surface-courses',5.8,line('M138 234 169 246 M277 224 302 235','#d4c38a',1),246,'draw');
   }
-  return `<svg class="set-svg" viewBox="0 0 440 300" aria-hidden="true"><defs><pattern id="set-stone-face" width="12" height="8" patternUnits="userSpaceOnUse"><rect width="12" height="8" fill="#8d9277"/><path d="M0 0h12M0 4h12M6 0v4M2 4v4" fill="none" stroke="#4f6453" stroke-width=".65"/></pattern></defs>${parts.join('')}</svg>`;
+  return `<svg class="set-svg" viewBox="0 0 440 300" aria-hidden="true"><defs><pattern id="set-stone-face" width="12" height="8" patternUnits="userSpaceOnUse"><rect width="12" height="8" fill="#8d9277"/><path d="M0 0h12M0 4h12M6 0v4M2 4v4" fill="none" stroke="#4f6453" stroke-width=".65"/></pattern></defs><g data-set-camera>${parts.join('')}</g></svg>`;
+}
+function directedBeat(sc,t,complete=false) {
+  if(!sc.beats?.length)return null;
+  const index=complete?sc.beats.length-1:Math.max(0,sc.beats.findLastIndex(b=>b.at<=t));
+  return {beat:sc.beats[index],next:sc.beats[index+1],index};
+}
+function architecturalFocus(sc,t,live) {
+  const cue=directedBeat(sc,t,!live);if(!cue)return "";
+  const a=sc.beats[Math.max(0,cue.index-1)].focus,b=cue.beat.focus;
+  const u=live?easeInOut(clamp01((t-cue.beat.at)/2.8)):1;
+  const f=a.map((v,i)=>v+(b[i]-v)*u);
+  return `translate(220,180) scale(${f[2]}) translate(${-f[0]},${-f[1]})`;
 }
 function assemblyFrame(t,live) {
   for(const set of fx.sets) {
     const cinematic=captureClock!==null||theatreOn;
-    const width=Math.min(small()?(cinematic?280:200):(cinematic?700:430),map.getSize().x*(cinematic?.7:.48)),height=width*300/440;
+    const directed=!!scene().beats?.length;
+    const width=Math.min(small()?(cinematic?320:200):(cinematic?(directed?1000:700):430),map.getSize().x*(cinematic?.82:.48)),height=width*300/440;
     if(set.width!==width){
       set.width=width;const node=set.marker.getElement(),inner=node.querySelector(".hx-in");
       node.style.width=width+"px";node.style.height=height+"px";node.style.marginLeft=-width/2+"px";node.style.marginTop=-height*.75+"px";
       inner.style.setProperty("--set-width",width+"px");inner.style.setProperty("--set-height",height+"px");
       const tip=set.marker.getTooltip();tip.options.direction="bottom";tip.options.offset=L.point(0,height*.25+7);tip.update();
     }
+    const camera=set.marker.getElement().querySelector('[data-set-camera]');
+    camera.setAttribute('transform',architecturalFocus(scene(),t,live));
     for(const el of set.parts) {
-    const u=live?clamp01((t-set.at-Number(el.dataset.at))/Number(el.dataset.duration)):1;
+    const authored=scene().beats?.length;
+    const start=Number(el.dataset.at)*(authored?2.8:1);
+    const u=live?clamp01((t-set.at-start)/Number(el.dataset.duration)):1;
     const v=easeOut(u),base=Number(el.dataset.base),draw=el.dataset.motion==='draw';
     el.style.opacity=String(draw?v:u>0?Math.min(1,u*4):0);
     el.setAttribute('transform',draw?'':`translate(0,${18*(1-v)}) translate(220,${base}) scale(1,${.06+.94*v}) translate(-220,${-base})`);
@@ -1399,7 +1424,7 @@ function render({ animate = true, announce = false } = {}) {
   fx.cues = cameraCues(sc);
 
   // The narration, one sentence per <span>, so it can appear line by line while playing
-  const sentences = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
+  const sentences = sc.beats?.map(b=>b.text) || sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
   $("card").innerHTML =
     `<p class="c-chapter">${esc(ch.title)} · ${esc(ch.period)}</p>
      <p class="c-when">${esc(sc.when.label)}</p>
@@ -1688,13 +1713,13 @@ function frame(now) {
 
   const storyLines = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
   const storyGap = sc.duration*.55/storyLines.length;
-  const storyLine = !live ? sc.text : storyLines[Math.min(storyLines.length-1,Math.max(0,Math.floor(t/storyGap)))].trim();
+  const storyLine = !live ? sc.text : directedBeat(sc,t)?.beat.text || storyLines[Math.min(storyLines.length-1,Math.max(0,Math.floor(t/storyGap)))].trim();
   setText($("story-caption").querySelector(".story-line"),storyLine);
   setText($("story-caption").querySelector(".story-kicker"),[sc.when.label,sc.scale||sc.title].join(" · "));
   setText($("viewer-status"),sceneCaution(sc));
   // Narration appears sentence by sentence while playing; everything shows when paused
   const gap = (sc.duration * 0.55) / Math.max(1, fx.sentences.length);
-  fx.sentences.forEach((el, i) => el.classList.toggle("waiting", state.playing && live && t < i * gap));
+  fx.sentences.forEach((el, i) => el.classList.toggle("waiting", state.playing && live && t < (sc.beats?.[i]?.at ?? i * gap)));
 
   assemblyFrame(t,live);
   guideFrame(t,live);
@@ -2362,6 +2387,7 @@ $("chapters").onclick = e => {
   if (b) { setPlaying(false); goTo(+b.dataset.i, 0, { announce: true }); }
 };
 document.addEventListener("keydown", e => {
+  if($("culture-notes").open)return;
   if (captureClock !== null) {
     if (e.key === "Escape") { e.preventDefault(); window.taswira.exitVideo(); }
     return;
@@ -2494,7 +2520,7 @@ window.taswira = {
     const sc = scene(), t = state.t - lead();
     const sentences = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
     const gap = sc.duration * .55 / sentences.length;
-    $("video-caption").textContent = t < 0 ? "" : sentences[Math.min(sentences.length - 1, Math.floor(t / gap))].trim();
+    $("video-caption").textContent = t < 0 ? "" : directedBeat(sc,t)?.beat.text || sentences[Math.min(sentences.length - 1, Math.floor(t / gap))].trim();
     $("video-caution").textContent=sceneCaution(sc);
     $("video-credit").textContent = sc.base === "deep"
       ? "Continents: Merdith et al. (2021), model v1.2.4 · CC BY 4.0 · simplified and sampled"
@@ -2532,7 +2558,7 @@ function guideFrame(t,live) {
   const intro=captureOpening()>0;
   const visible=guideOn&&!intro&&(!live||t>=.25);
   el.hidden=!visible;if(!visible)return;
-  const pose=quiet?7:sc.disputed?3:!live?0:time<2?0:time<5?1:time<8?6:time<10?5:time<14?3:6;
+  const pose=quiet?7:directedBeat(sc,time,!live)?.beat.pose??(sc.disputed?3:!live?0:time<2?0:time<5?1:time<8?6:time<10?5:time<14?3:6);
   el.dataset.pose=pose;
   el.querySelector(".guide-sprite").style.clipPath=pose===5?"inset(0 0 0 18%)":"none";
   el.querySelector(".guide-sprite").style.backgroundPosition=((pose%4)/3*100)+'% '+(pose<4?0:100)+'%';
@@ -2544,6 +2570,12 @@ $("guide-toggle").onclick=()=>{guideOn=!guideOn;$("guide-toggle").setAttribute("
 $("guide-toggle").setAttribute("aria-pressed",guideOn);
 window.taswira.ready=()=>guideReady;
 
+// The notebook is a modern editorial layer, never a dated political emblem.
+let cultureWasPlaying=false;
+$("culture-records").innerHTML=(DATA.motifs||[]).map(r=>`<article>${r.id==="hausa-interlace"?`<img class="culture-mark" src="${DATA.cultural_mark}" alt="Original interlace study for a cultural frame; not a historical flag">`:""}<h3>${esc(r.name)}</h3><small>${esc(r.community)} · ${esc(r.role)}</small><p>${esc(r.meaning)}</p><p>${esc(r.evidence_date)}</p><p>${esc(r.limit)}</p><p>${r.sources.map(source=>`<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}</a>`).join(" · ")}</p></article>`).join("");
+$("culture-toggle").onclick=()=>{cultureWasPlaying=state.playing;setPlaying(false);$("culture-notes").showModal();$("culture-close").focus();};
+$("culture-close").onclick=()=>$("culture-notes").close();
+$("culture-notes").addEventListener("close",()=>{if(cultureWasPlaying)setPlaying(true);$("culture-toggle").focus();});
 // --- Reversible viewing controls -----------------------------------------------------------
 let detailsHidden = false, theatreOn = false, fullscreenFromTheatre = false;
 try { detailsHidden = localStorage.getItem("taswira-history-details") === "hidden"; } catch {}

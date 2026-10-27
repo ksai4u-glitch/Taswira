@@ -14,20 +14,26 @@ function validateShotPlan(plan){
   for(const shot of plan.shots)if(!shot||!['chapter','scene'].every(k=>typeof shot[k]==='string'&&/^[a-z0-9-]+$/.test(shot[k]))||!Number.isFinite(shot.from)||!Number.isFinite(shot.to)||shot.from<0||shot.to<=shot.from||shot.to-shot.from>60)throw Error('Each shot needs chapter, scene and finite in/out times spanning at most60seconds');
   return plan.shots;
 }
-async function renderCredits(page,title="Taswira · History video pilot"){
-    await page.evaluate(title=>{
+function creditLines(manifest){
+  const lines=['Unreviewed draft · Original Taswira guide and schematic architecture.',
+    'Physical geography: Natural Earth · public domain.',
+    'Historical sources and reuse notes: see the companion source manifest.',
+    'No recorded narration or music.'];
+  if(manifest.clips.some(clip=>clip.base==='deep'))lines.splice(2,0,
+    'Plate model: Merdith et al. (2021), v1.2.4 · simplified and interpolated.',
+    'Model: doi.org/10.5281/zenodo.13635864',
+    'CC BY 4.0: creativecommons.org/licenses/by/4.0/');
+  return lines;
+}
+const creditSeconds=manifest=>manifest.clips.some(clip=>clip.base==='deep')?16:10;
+async function renderCredits(page,title="Taswira · History video pilot",manifest={clips:[{base:'deep'}]}){
+    await page.evaluate(({title,lines})=>{
       const card=document.createElement('div');card.style.cssText='position:absolute;inset:0;z-index:1900;background:#08120e;color:#f0eee2;padding:100px 120px;font:26px/1.7 system-ui';
       const heading=document.createElement('h1');heading.textContent=title;heading.style.cssText='font:48px Georgia,serif;color:#d4b57a';card.append(heading);
-      for(const text of ['Unreviewed draft · No voice-over or music',
-        'Guide and architectural illustrations: original Taswira studies. City arrangements and counts are schematic.',
-        'Plate model: Merdith et al. (2021), version 1.2.4. Outlines simplified; rotations sampled and interpolated.',
-        'Model: https://doi.org/10.5281/zenodo.13635864 · CC BY 4.0: https://creativecommons.org/licenses/by/4.0/',
-        'Physical geography: Natural Earth · public domain · https://www.naturalearthdata.com/',
-        'Historical research and reuse notes: see the companion .sources.json and the player’s full text transcript.',
-        'Modern outlines are not ancient coastlines. Review sources and reuse rights before publication.']){
+      for(const text of lines){
         const p=document.createElement('p');p.textContent=text;card.append(p);
       }document.getElementById('mapwrap').append(card);
-    },title);
+    },{title,lines:creditLines(manifest)});
 }
 async function capture(htmlFile,deps,output,fps=30,shotSeconds=8,shotPlan=null){
   const planned=shotPlan?validateShotPlan(shotPlan):null;
@@ -53,7 +59,7 @@ async function capture(htmlFile,deps,output,fps=30,shotSeconds=8,shotPlan=null){
     await page.evaluate(()=>document.fonts.ready);
     await page.evaluate(()=>window.taswira.ready?.());
     await page.addStyleTag({content:'#exit-video,#video-tools{visibility:hidden!important}'});
-    const manifest={width:1920,height:1080,fps,clips:[],sources:{},status:'Unreviewed draft; rights and historian review required before publication'};
+    const manifest={title:shotPlan?.title||'Taswira · History video pilot',width:1920,height:1080,fps,clips:[],sources:{},status:'Unreviewed draft; rights and historian review required before publication'};
     for(const shot of planned||SHOTS.map(([chapter,scene])=>({chapter,scene}))){
       const {chapter,scene}=shot;
       const info=await page.evaluate(([c,s])=>taswira.info(c,s),[chapter,scene]);
@@ -63,7 +69,7 @@ async function capture(htmlFile,deps,output,fps=30,shotSeconds=8,shotPlan=null){
       if(to>info.duration)throw Error('Shot exceeds scene duration: '+chapter+'/'+scene);
       manifest.clips.push({...info,from,to,seconds:planned?to-from:shotSeconds});
     }
-    const creditsFrames=3*fps;
+    const creditsFrames=creditSeconds(manifest)*fps;
     temporary=fs.mkdtempSync(path.join(path.dirname(path.resolve(output)),'.taswira-capture-'));
     const temporaryVideo=path.join(temporary,'video.mp4');
     encoder=spawn(process.env.FFMPEG_PATH||'ffmpeg',['-n','-loglevel','error','-f','image2pipe','-vcodec','png','-r',String(fps),'-i','pipe:0','-an','-c:v','libx264','-preset','veryfast','-crf','24','-pix_fmt','yuv420p','-movflags','+faststart',temporaryVideo],{stdio:['pipe','ignore','pipe']});
@@ -100,11 +106,12 @@ async function capture(htmlFile,deps,output,fps=30,shotSeconds=8,shotPlan=null){
     }
     recordCaption('',frame/fps);
     manifest.sources=await page.evaluate(shots=>{
-      const ids=new Set(['merdith-2021','natural-earth']);
+      const ids=new Set(['natural-earth']);
+      if(shots.some(([c,s])=>DATA.chapters.find(ch=>ch.id===c).scenes.find(sc=>sc.id===s).base==='deep'))ids.add('merdith-2021');
       for(const [c,s] of shots){const ch=DATA.chapters.find(ch=>ch.id===c),sc=ch.scenes.find(sc=>sc.id===s);sc.sources.forEach(id=>ids.add(id));for(const id of sc.show||[])for(const source of ch.features[id].sources||[])ids.add(source);}
       return Object.fromEntries([...ids].map(id=>[id,DATA.sources[id]]));
     },manifest.clips.map(c=>[c.chapter,c.scene]));
-    await renderCredits(page,shotPlan?.title||"Taswira · History video pilot");
+    await renderCredits(page,shotPlan?.title||"Taswira · History video pilot",manifest);
     const creditImage=await page.locator('#mapwrap').screenshot();
     for(let i=0;i<creditsFrames;i++){await write(creditImage);frame++;}
     encoder.stdin.end();await done;
@@ -121,4 +128,4 @@ async function capture(htmlFile,deps,output,fps=30,shotSeconds=8,shotPlan=null){
   }
 }
 if(require.main===module)capture(process.argv[2],process.argv[3],process.argv[4],Number(process.argv[5]||30),Number(process.argv[6]||8),process.argv[7]?JSON.parse(fs.readFileSync(process.argv[7],'utf8')):null).catch(e=>{console.error(e.message);process.exitCode=1;});
-module.exports={capture,timestamp,renderCredits,validateShotPlan};
+module.exports={capture,timestamp,renderCredits,validateShotPlan,creditLines,creditSeconds};

@@ -26,6 +26,7 @@ Uses only the Python standard library.
 """
 
 import base64
+from pathlib import Path
 import struct
 import colorsys
 import html
@@ -601,6 +602,25 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                     f = features.get(fid, {})
                     need((f.get("kind") != "line" or f.get("type") == "river") and f.get("form") != "landmass",
                          f"{where}: {fid} can only be shown on the globe")
+            previous_beat = -1
+            beats = sc.get("beats", [])
+            need(isinstance(beats, list), f"{where}: beats must be a list")
+            for beat in beats if isinstance(beats, list) else []:
+                at = beat.get("at") if isinstance(beat, dict) else None
+                focus = beat.get("focus") if isinstance(beat, dict) else None
+                valid = (isinstance(at, (int, float)) and previous_beat < at
+                         < sc.get("duration", reading_seconds(sc.get("text", "")))
+                         and isinstance(beat.get("text"), str) and bool(beat["text"].strip())
+                         and beat.get("pose") in (0, 1, 3, 5, 6, 7)
+                         and isinstance(focus, list) and len(focus) == 3
+                         and all(isinstance(v, (int, float)) for v in focus)
+                         and 0 <= focus[0] <= 440 and 0 <= focus[1] <= 300 and .6 <= focus[2] <= 2)
+                need(valid, f"{where}: beats need ordered finite times, text, supported guide poses and bounded architectural focus")
+                if valid:
+                    previous_beat = at
+            if isinstance(beats, list) and beats:
+                need(isinstance(beats[0], dict) and beats[0].get("at") == 0,
+                     f"{where}: beats must begin at zero")
             previous_cue = -1
             for cue in sc.get("camera_path", []):
                 valid = isinstance(cue, dict) and placed(cue.get("center"))
@@ -771,6 +791,9 @@ def page_data(chapters, sources, states, arcs, users, background, emblems=None, 
     globe = plates is not None and any(sc.get("view") == "globe" for ch in chapters for sc in ch["scenes"])
     out = {"chapters": [], "sources": sources, "built": date.today().isoformat(), "background": background,
            "emblems": emblems or {}, "plates": plates if globe else None, "guide": guide_art(),
+           "motifs": read_json(os.path.join(HISTORY_DIR, "motifs.json"))["records"],
+           "cultural_mark": "data:image/svg+xml;base64," + base64.b64encode(
+               Path(HISTORY_DIR, "art", "arewa-cultural-study.svg").read_bytes()).decode("ascii"),
            # Each state as lists of arc numbers (negative: walk the arc backwards); the page rebuilds the rings
            "states": {c: {"name": s["name"], "rings": s["arc_refs"]} for c, s in states.items()},
            "arcs": arcs}

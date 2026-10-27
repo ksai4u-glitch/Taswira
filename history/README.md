@@ -392,3 +392,21 @@ The viewing HTML embeds that actual MP4; its source manifest and captions are al
 The previous four-shot pilot remains the export default when no shot manifest is supplied.
 See [the creative handoff](research/creative/CLAUDE-HANDOFF-2026-10-27.md) for the character
 bible, source inventories, whole-project review and the next Hausa city sequence.
+
+## Directed story pass
+
+`previews/directed-story.html` opens the revised 32-second Great Zimbabwe scene in Cinema.
+Its authored `beats` contain ordered scene seconds (`at`), caption text (`text`), a supported
+Zomo pose (`pose`) and schematic local focus `[x,y,scale]` (`focus`). They begin at zero;
+focus stays inside the 440×300 illustration, with scale 0.6–2. Caption, guide and local
+architectural camera use the same clock in playback and export. Other scenes retain their
+existing behavior. Assembly is an illustrative reveal, never a claim of known construction order.
+
+The **Lore** button opens Zomo’s cultural notebook with eight checked traditions/objects,
+source links and the original Hausa interlace study. It pauses playback; closing restores
+playback and focus. It is a modern editorial reference, not an automatic historical emblem layer.
+
+`history/cuts/directed-zimbabwe.json` selects the 32-second sequence. The revised exporter
+adds ten seconds of concise credits, or sixteen when a plate model needs its attribution.
+`previews/build_storycraft_video.py <video.mp4> directed-video.html` packages a separate
+viewing copy so the earlier three-setting proof remains available.
