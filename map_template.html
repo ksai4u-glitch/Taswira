@@ -20,7 +20,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 <script>
-  // Dark "ops" look unless this browser picked the light map before (the button at the top of the panel).
+  // Forest atlas look unless this browser picked the light map before (the button at the top of the panel).
   // Set before the page draws, so it doesn't flash light first.
   try { document.documentElement.dataset.theme = localStorage.getItem("taswira-theme") === "light" ? "light" : "dark"; }
   catch { document.documentElement.dataset.theme = "dark"; }
@@ -28,12 +28,12 @@
 <style>
   :root {
     color-scheme: light;
-    --surface-1: #fcfcfb;
-    --surface-2: #f2f1ee;
-    --border: #dcdbd6;
-    --text-primary: #0b0b0b;
-    --text-secondary: #52514e;
-    --text-muted: #77766f;
+    --surface-1: #f5f2e8;
+    --surface-2: #e8ecdf;
+    --border: #c2cfbd;
+    --text-primary: #183425;
+    --text-secondary: #425d4c;
+    --text-muted: #526b59;
     /* violence types: first three categorical slots, fixed order */
     --series-1: #2a78d6;   /* state-based */
     --series-2: #eb6834;   /* non-state */
@@ -42,43 +42,56 @@
     --level-severe: #c62f2f;
     --level-high: #c76a00;
     --level-elevated: #8f7a00;
-    --accent: #1d6f86;
+    --accent: #70511c;
+    --display: Georgia, "Times New Roman", serif;
     --mono: ui-monospace, "Cascadia Mono", Consolas, "SFMono-Regular", Menlo, monospace;
   }
-  /* Dark "ops" look: blue-black surfaces, cyan monospace headings, a vignette and faint grid on the map */
+  /* Forest atlas look: forest surfaces, ivory type and gold editorial headings, a vignette and faint grid on the map */
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --surface-1: #0a0f14;
-    --surface-2: #131c25;
-    --border: #243241;
-    --text-primary: #e8eef4;
-    --text-secondary: #a9b7c5;
-    --text-muted: #8a9bab;
+    --surface-1: #08120e;
+    --surface-2: #12271e;
+    --border: #304b3d;
+    --text-primary: #f0eee2;
+    --text-secondary: #b5c4b8;
+    --text-muted: #95ab9c;
     --series-1: #3f8de8;
     --series-2: #e0632f;
     --series-3: #1fae7c;
     --level-severe: #f06a6a;
     --level-high: #f0a040;
     --level-elevated: #d9c23a;
-    --accent: #4cc9e0;
+    --accent: #d4b57a;
   }
-  [data-theme="dark"] h1 { font-family: var(--mono); font-size: 17px; letter-spacing: .08em;
-                           text-transform: uppercase; color: var(--accent); }
-  [data-theme="dark"] h2 { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; color: var(--accent); }
-  [data-theme="dark"] .stat { border: 1px solid var(--border); }
-  [data-theme="dark"] .stat b, [data-theme="dark"] #year-label,
-  [data-theme="dark"] .play-box .pb-month { font-family: var(--mono); }
+  h1 { font-family: var(--display); font-weight: 400; font-size: 28px; line-height: 1.12;
+       letter-spacing: -.025em; color: var(--text-primary); }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 19px; text-transform: none;
+       letter-spacing: 0; color: var(--accent); }
+  .stat { border: 1px solid var(--border); }
+  .stat b, #year-label, .play-box .pb-month { font-family: var(--display); font-weight: 400; }
+  [data-theme="dark"] #panel { background: linear-gradient(160deg, #12271e, #08120e 55%); }
+  [data-theme="dark"] .leaflet-tile-pane { filter: sepia(.2) hue-rotate(45deg) saturate(.65); }
   [data-theme="dark"] #map::after {
     content: ""; position: absolute; inset: 0; z-index: 401; pointer-events: none;
     background:
       radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / .55) 100%),
-      repeating-linear-gradient(0deg, rgb(76 201 224 / .05) 0 1px, transparent 1px 96px),
-      repeating-linear-gradient(90deg, rgb(76 201 224 / .05) 0 1px, transparent 1px 96px);
+      repeating-linear-gradient(0deg, rgb(212 181 122 / .035) 0 1px, transparent 1px 96px),
+      repeating-linear-gradient(90deg, rgb(212 181 122 / .035) 0 1px, transparent 1px 96px);
   }
-  [data-theme="dark"] .leaflet-control-attribution { background: rgb(10 15 20 / .8); color: var(--text-secondary); }
+  [data-theme="dark"] .leaflet-control-attribution { background: rgb(8 18 14 / .8); color: var(--text-secondary); }
   [data-theme="dark"] .leaflet-control-attribution a { color: var(--accent); }
   /* Leaflet's own white boxes follow the theme */
   .leaflet-container { background: var(--surface-2); }
+  a { color: var(--accent); }
+  input { accent-color: var(--accent); }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  button:hover { border-color: var(--accent); }
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface-1); color: var(--text-primary); }
+  .leaflet-popup-content { font: 13px/1.5 system-ui, sans-serif; }
+  .leaflet-popup-content b { color: var(--accent); }
+  .leaflet-popup-content a, .leaflet-container a.leaflet-popup-close-button { color: var(--accent); }
+  button, select { color-scheme: inherit; }
+
   .leaflet-bar a, .leaflet-bar a:hover { background: var(--surface-2); color: var(--text-primary); border-bottom-color: var(--border); }
   .leaflet-tooltip { background: var(--surface-1); color: var(--text-primary); border-color: var(--border); }
   .leaflet-tooltip-top::before { border-top-color: var(--surface-1); }
@@ -100,14 +113,13 @@
     padding: 20px 16px; border-right: 1px solid var(--border);
   }
   #map { flex: 1; min-height: 100%; }
-  h1 { font-size: 20px; margin: 0; }
+  h1 { margin: 0; }
   .sub { color: var(--text-secondary); margin: 2px 0 16px; }
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
   .stat { background: var(--surface-2); border-radius: 8px; padding: 8px; }
-  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat b { display: block; font-size: 26px; font-variant-numeric: tabular-nums; }
   .stat span { color: var(--text-secondary); font-size: 12px; }
-  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em;
-       color: var(--text-muted); margin: 18px 0 6px; }
+  h2 { margin: 20px 0 8px; }
   label { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
   #types label { align-items: flex-start; }
   #types .swatch, #types input { margin-top: 4px; }
@@ -202,10 +214,11 @@
   /* Phones: the map fills the screen and the panel is a drawer at the bottom.
      Closed, it shows the title and the three numbers; "Filters" opens the rest. */
   @media (max-width: 720px) {
-    :root { --peek: 232px; }
+    :root { --peek: 248px; }
+    h1 { font-size: 25px; }
     #map { position: fixed; inset: 0; }
     #panel {
-      position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000; width: auto;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 1100; width: auto;
       max-height: var(--peek); overflow: hidden; padding: 0 16px 16px;
       background: var(--surface-1); border: 0; border-top: 1px solid var(--border);
       border-radius: 14px 14px 0 0; box-shadow: 0 -4px 16px rgb(0 0 0 / .15);
@@ -225,6 +238,7 @@
     /* keep Leaflet's credit line and buttons above the closed drawer */
     .leaflet-bottom { bottom: var(--peek); }
   }
+  @media (prefers-reduced-motion: reduce) { #panel { transition: none; } }
 </style>
 </head>
 <body>
@@ -1503,7 +1517,7 @@ function writeLink() {
   if (!document.getElementById("show-zones").checked) link.set("zones", "off");
   const hash = link.toString();
   // replaceState changes the address without adding a Back-button step for every click
-  history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
+  history.replaceState(null, "", hash ? "#" + hash : location.href.split("#")[0]);
 }
 
 function readLink() {
@@ -1538,3 +1552,4 @@ readLink();
 </script>
 </body>
 </html>
+

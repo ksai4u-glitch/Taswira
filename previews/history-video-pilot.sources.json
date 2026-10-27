@@ -1,0 +1,318 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "clips": [
+    {
+      "chapter": "deep",
+      "scene": "gondwana",
+      "duration": 25.6,
+      "contentStart": 3.6,
+      "base": "deep",
+      "sources": [
+        "wiki-gondwana",
+        "merdith-2021"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "africa",
+          "name": "Africa",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "south-america",
+          "name": "South America",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "antarctica",
+          "name": "Antarctica",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "india",
+          "name": "India",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "australia",
+          "name": "Australia",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "nigeria-today",
+          "name": "Where Nigeria is today",
+          "location": "A point in central Nigeria, moved with its plate.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 5,
+      "seconds": 5
+    },
+    {
+      "chapter": "deep",
+      "scene": "south-atlantic",
+      "duration": 25,
+      "contentStart": 0,
+      "base": "deep",
+      "sources": [
+        "wiki-gondwana",
+        "merdith-2021"
+      ],
+      "disputed": "Sources disagree on when the last land link broke: dinosaur footprints suggest some connection until about 120 million years ago, while rifting north of the equator went on until about 100 to 96 million years ago. The page shows the whole range.",
+      "unchecked": null,
+      "features": [
+        {
+          "id": "africa",
+          "name": "Africa",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "south-america",
+          "name": "South America",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "nigeria-today",
+          "name": "Where Nigeria is today",
+          "location": "A point in central Nigeria, moved with its plate.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 5,
+      "seconds": 5
+    },
+    {
+      "chapter": "nok",
+      "scene": "terracottas",
+      "duration": 19,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "dfg-nok",
+        "scientia-breunig"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "nok-village",
+          "name": "Nok village (Jaba LGA, Kaduna State)",
+          "location": "Town location. The finds came from tin mines near the village.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-nok",
+            "wiki-places"
+          ]
+        },
+        {
+          "id": "kagarko-sites",
+          "name": "Janruwa, Janjala and Akura, near Kagarko",
+          "location": "Placed at Kagarko town. The sites are near the town, not at this exact point.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "antiquity-kagarko",
+            "wiki-places"
+          ]
+        },
+        {
+          "id": "katsina-ala",
+          "name": "Katsina-Ala (Benue State)",
+          "location": "Town location. The exact find spots are not given in the sources checked.",
+          "status": "disputed",
+          "disputed": "Whether these are Nok proper or a related tradition is not settled in the sources checked.",
+          "sources": [
+            "wiki-places"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 5,
+      "seconds": 5
+    },
+    {
+      "chapter": "nok",
+      "scene": "iron",
+      "duration": 20,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "dfg-nok",
+        "scientia-breunig"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "taruga",
+          "name": "Taruga",
+          "location": "Rough. Placed 60 km south-east of Abuja from a written description, and could be 20 to 30 km out. The ring shows that uncertainty.",
+          "status": "disputed",
+          "disputed": "The date of Taruga's iron working is given as about 600 BCE in some histories, but Fagg's radiocarbon dates point to about the 4th to 3rd centuries BCE. The Frankfurt project places Nok iron working in the middle of the first millennium BCE.",
+          "sources": [
+            "wiki-nok",
+            "wiki-taruga",
+            "dfg-nok"
+          ]
+        },
+        {
+          "id": "katsina-ala",
+          "name": "Katsina-Ala (Benue State)",
+          "location": "Town location. The exact find spots are not given in the sources checked.",
+          "status": "disputed",
+          "disputed": "Whether these are Nok proper or a related tradition is not settled in the sources checked.",
+          "sources": [
+            "wiki-places"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 5,
+      "seconds": 5
+    }
+  ],
+  "sources": {
+    "merdith-2021": {
+      "title": "Extending full-plate tectonic models into deep time: plate model, version 1.2.4",
+      "author": "Andrew S. Merdith, Simon E. Williams, Alan S. Collins, Michael G. Tetley, Jacob A. Mulder, Morgan L. Blades, Alexander Young, Sheree E. Armistead, John Cannon, Sabin Zahirovic and R. Dietmar M\u00fcller",
+      "year": "2021 (Earth-Science Reviews 214); data version 1.2.4, 2022",
+      "url": "https://doi.org/10.5281/zenodo.13635864",
+      "kind": "plate model (scientific data)",
+      "rights": "CC BY 4.0 (Zenodo record). Continent outlines simplified and plate positions sampled every 10 million years for this page.",
+      "checked": "Zenodo record (text and file list sent by the maintainer on 27 Oct 2026, as zenodo.org could not be reached from the build machine): CC BY 4.0. The zip Merdith_etal_2021_ESR_v1.2.4.zip matches the record's MD5 (181ab32d1d235a923ee343568731e64a). It holds the rotation file Rotations/1000_0_rotfile_Merdith_etal.rot and the continent outlines Continents/shapes_continents.gpml used here, covering the last 1,000 million years."
+    },
+    "natural-earth": {
+      "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+      "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+      "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+      "url": "https://www.naturalearthdata.com/",
+      "kind": "background map data",
+      "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+      "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+    },
+    "wiki-gondwana": {
+      "title": "Gondwana (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Gondwana",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Assembly c. 800 to 650 Ma (East African Orogeny) to c. 600 to 530 Ma (Brasiliano and Kuunga orogenies); remnants include South America, Africa, Antarctica, Australia, Zealandia, Arabia and India; Pangaea's break-up began with the Central Atlantic magmatic province, peaking c. 200 Ma; Africa and Antarctica began to part c. 180 to 160 Ma; South Atlantic rifting propagated north c. 150 or 140 Ma, spreading c. 135 to 130 Ma, rifting north of the equator after 120.4 Ma until c. 100 to 96 Ma; footprints suggest a land link as late as the early Aptian (c. 120 Ma); 'considerable debate over the exact timing'."
+    },
+    "dfg-nok": {
+      "title": "Development of complex societies in sub-Saharan Africa: The Nigerian Nok Culture (project results)",
+      "author": "Goethe University Frankfurt, Nok project led by Peter Breunig; summary on the DFG GEPRIS project page",
+      "year": "2005-2021",
+      "url": "https://gepris.dfg.de/gepris/projekt/107422281/ergebnisse",
+      "kind": "research project summary (primary for the project's own findings)",
+      "rights": "Facts and dates cited; no text, images or maps reproduced.",
+      "checked": "Opened 26 Oct 2026. Phases 1500-900 BC, 900-400 BC, 400 BC to the turn of the era; almost 500 sites, 84 excavations, 270 radiocarbon dates; iron in the later part of phase 2."
+    },
+    "scientia-breunig": {
+      "title": "Professor Peter Breunig: The Significance of Nok Culture Sculptures in Nigerian Prehistory",
+      "author": "Scientia (science communication article about Breunig's research)",
+      "year": "undated (accessed 2026)",
+      "url": "https://scientia.global/?p=25493",
+      "kind": "science communication, not peer reviewed",
+      "rights": "CC BY 4.0 (stated on the page). Facts cited only.",
+      "checked": "Opened 26 Oct 2026. Start about 1500 BCE; terracottas from the 9th century BCE; sculpture production falls off around 400 BCE; Pangwari and Ifana named."
+    },
+    "wiki-nok": {
+      "title": "Nok culture (Wikipedia)",
+      "author": "Wikipedia contributors; the facts used cite Shaw 1981 (Scientific American) and Fagg 1969 (World Archaeology)",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Nok_people",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 26 Oct 2026. First terracotta found near Nok village in 1928 in a tin mine; 1943 find recognised by Bernard Fagg; Taruga excavated in January 1961; systematic fieldwork 2005-2021."
+    },
+    "wiki-places": {
+      "title": "Coordinates of Nok (Jaba LGA), Kagarko and Katsina-Ala (Wikipedia place articles)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Katsina-Ala",
+      "kind": "gazetteer coordinates of modern towns, not of excavated sites",
+      "rights": "Coordinates are facts; no text reused.",
+      "checked": "Opened 26 Oct 2026. Nok 9.500 N 8.017 E; Kagarko 9.450 N 7.683 E; Katsina-Ala 7.167 N 9.283 E. Katsina-Ala terracottas described as a Nok sub-style (Fagg, cited via Werness 2003)."
+    },
+    "antiquity-kagarko": {
+      "title": "Exploring the Nok enigma",
+      "author": "Nicole Rupp, Peter Breunig and Stefanie Kahlheber, Antiquity Project Gallery 82 (316)",
+      "year": "2008",
+      "url": "https://www.antiquity.ac.uk/projgall/kahlheber316/",
+      "kind": "peer-reviewed project report",
+      "rights": "Facts cited only.",
+      "checked": "Opened 26 Oct 2026. Janruwa, Janjala and Akura sites near Kagarko, about 1 km apart; Taruga named as the source of iron smelting evidence."
+    },
+    "wiki-taruga": {
+      "title": "Taruga (Wikipedia)",
+      "author": "Wikipedia contributors; cites Clark (Cambridge History of Africa vol. 2), Isichei 1997, Rupp, Breunig and Kahlheber 2008",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Taruga",
+      "kind": "encyclopedia (secondary)",
+      "rights": "CC BY-SA 4.0 text; facts cited only.",
+      "checked": "Opened 26 Oct 2026. Location given only as about 60 km south-east of Abuja. Iron dates disagree: 'firmly dated' to 600 BC (Isichei) versus radiocarbon dates of about the 4th-3rd centuries BC (Fagg's excavation)."
+    }
+  },
+  "status": "Unreviewed draft; rights and historian review required before publication",
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 23,
+  "frames": 1380,
+  "viewing_copy": "Compressed H.264; green credits card rendered with renderCredits(page); no audio."
+}
