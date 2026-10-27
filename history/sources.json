@@ -159,6 +159,15 @@
     "url": "https://www.arcgis.com/home/item.html?id=a284a9b99b3446a3910d4144a50990f6",
     "kind": "background map",
     "rights": "Esri terms of use; attribution shown on the map.",
-    "checked": "Same background as the main Taswira map."
+    "checked": "Same background as the main Taswira map. It draws today's borders, roads and towns, so the history page uses it only for scenes from 1914 on."
+  },
+  "natural-earth": {
+    "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+    "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+    "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+    "url": "https://www.naturalearthdata.com/",
+    "kind": "background map data",
+    "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+    "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
   }
 }

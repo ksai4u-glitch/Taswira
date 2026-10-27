@@ -28,6 +28,13 @@ Every **scene** has an `id` (used in links like `#chapter=nok&scene=iron`), a `t
 a `camera`, `sources`, and either `show` (feature ids, with `dim` for ones shown faintly) or a
 `snapshot`. An optional `disputed` adds a note to the scene.
 
+**Background.** The build picks it from `when.from`. A scene that starts before 1914 sits on a
+plain map of land, lakes and rivers from Natural Earth, with no borders, roads or modern town
+names, because none of those existed then. From 1914 (the year the outline of Nigeria first
+existed) a scene uses today's map tiles, and scenes with places also show today's state borders
+faintly, for reference. The two backgrounds cross-fade when the story crosses that line, as it does
+in the Nok chapter's last scene about the 20th-century digs. See `geo/README.md` for the data.
+
 While a scene plays, things appear over time: a year counter runs from `when.from` to `when.to`,
 the narration appears sentence by sentence, places pulse in one after another, and on state maps
 the new borders draw themselves before the new states take their colours. Jumping to a scene shows
@@ -65,6 +72,7 @@ placed twice, if the number of states does not match `count`, or if a `from` doe
 
 1. Draw what the evidence supports: dated points for archaeology, legal snapshots for state creation.
    No made-up borders for times before surveyed boundaries, and no shapes that morph between dates.
+   Never show today's borders, roads or town names under a scene set before 1914.
 2. Say how sure each thing is, and where sources disagree, say so instead of picking one quietly.
 3. Cite every scene and feature, and record what we may reuse. Sources with unknown rights are cited
    and described, never copied.
