@@ -1,0 +1,225 @@
+{
+  "title": "Taswira · Who lived inside the walls",
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "clips": [
+    {
+      "chapter": "hausa",
+      "scene": "kano-people",
+      "duration": 58,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "kano-chronicle-wiki",
+        "last-1980-kano-chronicle",
+        "kano-chronicle-burja",
+        "kano-chronicle-yakubu",
+        "kano-chronicle-rumfa",
+        "wiki-kingdom-kano",
+        "wiki-bornu",
+        "lovejoy-1978-wangara",
+        "leo-africanus-wiki",
+        "kano-city-leo",
+        "wiki-kakaki",
+        "unesco-kano-walls",
+        "wiki-kurmi-market",
+        "archnet-gidan-rumfa",
+        "verskin-maghili"
+      ],
+      "disputed": "Did Leo Africanus see Kano? Fisher (1978) doubts that he visited Hausaland at all, so his description is given as his account, not as an eyewitness record. Yakubu's reign is 1452–1463 by the Chronicle's eleven years; one summary starts it in 1432.",
+      "unchecked": null,
+      "features": [
+        {
+          "id": "kano-life",
+          "name": "Kano · the people inside",
+          "location": "Representative point for the old walled city, rounded; not a survey of the walls or gates.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-wiki",
+            "kano-chronicle-burja",
+            "kano-chronicle-yakubu",
+            "kano-chronicle-rumfa",
+            "unesco-kano-walls",
+            "kano-city-leo"
+          ]
+        },
+        {
+          "id": "katsina",
+          "name": "Katsina",
+          "location": "Today's city centre, rounded. The fifteenth-century town's extent is not drawn.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-rumfa"
+          ]
+        },
+        {
+          "id": "bornu",
+          "name": "Bornu",
+          "location": "Drawn at Ngazargamu, which became Bornu's capital about 1472. The point stands for the kingdom, not a city.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-bornu",
+            "kano-chronicle-burja"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 58,
+      "seconds": 58
+    }
+  ],
+  "sources": {
+    "natural-earth": {
+      "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+      "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+      "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+      "url": "https://www.naturalearthdata.com/",
+      "kind": "background map data",
+      "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+      "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+    },
+    "kano-chronicle-wiki": {
+      "title": "Kano Chronicle",
+      "author": "Wikipedia contributors (describes and links H. R. Palmer, \"The Kano Chronicle\", Journal of the Royal Anthropological Institute 38, 1908, pp. 58-98)",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Kano_Chronicle",
+      "kind": "encyclopedia overview of a primary source; used only to describe the Chronicle and Palmer's translation",
+      "rights": "Facts cited; no text reproduced beyond short names.",
+      "checked": "Opened 27 Oct 2026. The Chronicle is a compilation of oral tradition and older documents; the copy Palmer translated (1908) was written down in the late nineteenth century. It gives reigns by length, so calendar years are reckoned by later editors."
+    },
+    "last-1980-kano-chronicle": {
+      "title": "Historical Metaphors in the Kano Chronicle",
+      "author": "Murray Last, History in Africa 7 (1980), pp. 161-178",
+      "year": "1980",
+      "url": "https://www.cambridge.org/core/journals/history-in-africa/article/abs/historical-metaphors-in-the-kano-chronicle/16DE46AEC5C9D1713D0C1F81F301A068",
+      "kind": "peer-reviewed historiography (first page and abstract read; full text paywalled)",
+      "rights": "Argument summarised; no text reproduced.",
+      "checked": "Opened 27 Oct 2026 (first page only). Last reads the Chronicle as intellectual history as well as a source of facts, and argues its first edition was completed in the mid-seventeenth century from materials developed in the fifteenth and sixteenth centuries."
+    },
+    "kano-chronicle-burja": {
+      "title": "Abdullahi Burja (with the Kano Chronicle passage on his reign, Palmer 1908)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Abdullahi_Burja",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts and short phrases cited.",
+      "checked": "Opened 27 Oct 2026. Ruled 1438-1452 by later reckoning. The first in Hausaland to give Bornu tribute (tsare or gaisua); the first to own camels in Hausaland; he opened roads from Bornu to Gwanja. His Galadima Dauda raided to the south for captives and founded 21 towns of them. The Chronicle's numbers of people are not repeated on the map."
+    },
+    "kano-chronicle-yakubu": {
+      "title": "Yakubu (with the Kano Chronicle passage on his reign, Palmer 1908)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Yakubu_(sultan)",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts and short phrases cited.",
+      "checked": "Opened 27 Oct 2026. In his time the Fulani came to Hausaland from Mele (Mali) with books on divinity and etymology, and salt became common in Hausaland. He ruled 11 years, before Rumfa (1452-1463 by later reckoning); the article's opening line gives 1432, which does not fit the 11 years."
+    },
+    "kano-chronicle-rumfa": {
+      "title": "Muhammad Rumfa (with the Kano Chronicle passage on his reign, Palmer 1908)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Muhammad_Rumfa",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts and short phrases cited.",
+      "checked": "Opened 27 Oct 2026. In order: he built the Dakin Rimfa; the next year he entered his house; the next year he extended the walls from Kofan Dagachi towards Kofan Mata, on to Kofan Gertawasa and Kofan Kawayi, and from Kofan Naissa to Kofan Kansakali; he established the Kurmi market. Among his 12 innovations (opened again 27 Oct 2026, evening): the custom of Kulle; giving eunuchs the offices of state; the first to have Kakaki and Figinni and ostrich-feather sandals; the Tara-ta-Kano. First war with Katsina, 11 years, neither side winning. Ruled 37 years (1463-1499 by later reckoning). The article adds that his reign saw a wave of scholars and traders. The Chronicle itself gives no calendar years and does not name al-Maghili."
+    },
+    "wiki-kingdom-kano": {
+      "title": "Kingdom of Kano (Wikipedia)",
+      "author": "Wikipedia contributors (citing Palmer 1908 and M. Adamu, UNESCO General History of Africa vol. 4, 1984)",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Kingdom_of_Kano",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Burja's reign (1438-52) saw Kano begin paying tribute to Bornu; Rumfa (1463-99) gave state offices to eunuchs, and his first war with Katsina lasted 11 years and ended inconclusively. Its uncited sentence on 15th-century exports and imports is not used."
+    },
+    "wiki-bornu": {
+      "title": "Bornu Empire (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Bornu_Empire",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Ngazargamu founded c. 1472 on the Yobe; captured and destroyed by the Fulani in 1808; mai Idris III recognised as suzerain of Kano and paid tribute."
+    },
+    "lovejoy-1978-wangara": {
+      "title": "The Role of the Wangara in the Economic Transformation of the Central Sudan in the Fifteenth and Sixteenth Centuries",
+      "author": "Paul E. Lovejoy, Journal of African History 19:2 (1978), pp. 173-193",
+      "year": "1978",
+      "url": "https://www.cambridge.org/core/journals/journal-of-african-history/article/abs/role-of-the-wangara-in-the-economic-transformation-of-the-central-sudan-in-the-fifteenth-and-sixteenth-centuries/1DB11290A76E4158CE5E60EB0CB0E4B9",
+      "kind": "peer-reviewed article (abstract and notes read; full text paywalled)",
+      "rights": "Facts cited; no text reproduced.",
+      "checked": "Opened 27 Oct 2026. Wangara merchants probably introduced new products such as kola nuts to the Central Sudan in the late fifteenth and sixteenth centuries. A note warns that Gonja was not founded in the fifteenth century, so a fifteenth-century mention of it cannot be taken literally."
+    },
+    "leo-africanus-wiki": {
+      "title": "Leo Africanus (Wikipedia)",
+      "author": "Wikipedia contributors (citing H. J. Fisher 1978 and P. Masonen 2001)",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Leo_Africanus",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Reached Timbuktu about 1510; completed his Description of Africa in 1526; printed by Ramusio in 1550. It is doubtful whether he visited Hausaland and Bornu (Fisher 1978), and possible that he never crossed the Sahara."
+    },
+    "kano-city-leo": {
+      "title": "Kano (Wikipedia), on Leo Africanus's description",
+      "author": "Wikipedia contributors (citing H. J. Fisher, \"Leo Africanus and the Songhay Conquest of Hausaland\", International Journal of African Historical Studies 11:1, 1978, pp. 86-112)",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Kano_(city)",
+      "kind": "encyclopedia (secondary, used as a pointer to the work it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Leo's description of Kano is believed to be of Rumfa's era: wealthy merchants and skilled craftsmen, the ruler's cavalry, and plenty of rice, corn, cotton and citrus. Leo's own text was not opened."
+    },
+    "wiki-kakaki": {
+      "title": "Kakaki (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Kakaki",
+      "kind": "encyclopedia article; secondary",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. A long metal trumpet, up to about three metres, played only by men and tied to royalty: in Hausa societies it is played only at a king's or sultan's palace."
+    },
+    "unesco-kano-walls": {
+      "title": "Ancient Kano City Walls and Associated Sites (Tentative List)",
+      "author": "UNESCO World Heritage Centre; submitted by Nigeria's National Commission for Museums and Monuments, 8 Oct 2007",
+      "year": "2007",
+      "url": "https://whc.unesco.org/en/tentativelists/5171/",
+      "kind": "heritage nomination file (the state party's own description, not yet evaluated)",
+      "rights": "Facts cited; no text or images reproduced.",
+      "checked": "Opened 27 Oct 2026. Dala hill: settlement site \"dating back to the 10th century AD\". Wall foundation laid by Gijimasu 1095-1134; completed in the middle of the 14th century under Zamnagawa; extended to its present position in the 16th century. Gates as old as the walls. Kurmi among the oldest markets. Palace built by Muhammadu Rumfa (1463-1499)."
+    },
+    "wiki-kurmi-market": {
+      "title": "Kurmi Market",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Kurmi_Market",
+      "kind": "encyclopedia article; secondary",
+      "rights": "Facts cited.",
+      "checked": "Opened 27 Oct 2026. Founded under Muhammad Rumfa in the fifteenth century and still trading in Kano's old city. Its later slave market is not part of this scene."
+    },
+    "archnet-gidan-rumfa": {
+      "title": "Gidan Rumfa",
+      "author": "ArchNet (Aga Khan Trust for Culture and MIT Libraries), with bibliography (Dmochowski 1990, Saad 1981)",
+      "year": "checked 2026-10-27",
+      "url": "https://archnet.org/sites/3778",
+      "kind": "architectural history database entry",
+      "rights": "Facts cited; no images reproduced.",
+      "checked": "Opened 27 Oct 2026. Built in the fifteenth century by Sarkin Rumfa, about 1480; its grounds occupy the highest space in Kano. Many gates were originally circular entrance vestibules and became rectangular in an early twentieth-century change; the bold painted designs probably date from the 1930s and 1940s. Gates set up a hierarchy of space through a series of courtyards (processional access)."
+    },
+    "verskin-maghili": {
+      "title": "al-Maghili",
+      "author": "Alan Verskin, Encyclopaedia of Islam, Third Edition (2019), author's copy",
+      "year": "2019",
+      "url": "https://www.academia.edu/39085373",
+      "kind": "scholarly reference work",
+      "rights": "Facts cited; no text reproduced.",
+      "checked": "Opened 27 Oct 2026. Muhammad al-Maghili wrote Taj al-din, advice on the duties of kings, for Muhammad Rumfa of Kano (translated by Bedri and Starratt, Kano Studies, 1974)."
+    }
+  },
+  "status": "Unreviewed draft; rights and historian review required before publication",
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 68,
+  "frames": 4080
+}
