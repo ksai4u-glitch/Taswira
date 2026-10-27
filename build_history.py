@@ -10,7 +10,7 @@ Everything it shows comes from three kinds of files in history/:
   history/drawings/*.svg       the emblems that are drawn, redrawn from written descriptions
   history/geo/*.topojson       today's state borders (simplified, see history/geo/README.md)
   history/geo/natural-earth-background.json
-                               land, lakes and rivers for scenes before 1914
+                               neutral land, lakes and rivers for historical scenes
   history/geo/plates.json      the continents of a plate model, for scenes in deep time
 
 This script checks those files (dates, places, sources, how sure each thing is,
@@ -48,8 +48,8 @@ OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 # Chapters in the order the page plays them
 CHAPTERS = ["deep", "nok", "key", "states"]
 
-# Scenes that start before this year are drawn on the period background (land, lakes and
-# rivers only), never on today's map with its borders, roads and town names
+# Modern reference maps are never allowed before this year. Later historical scenes also
+# use the neutral background unless a modern locator is explicitly requested and explained.
 PERIOD_BEFORE = 1914
 # Map data credited on the map itself rather than by a scene
 MAP_SOURCES = {"grid3-states", "esri-tiles", "natural-earth", "merdith-2021"}
@@ -142,11 +142,12 @@ def load_background(path=BACKGROUND_PATH):
 
 
 def base_for(scene):
-    """Which background a scene sits on: "deep" (the globe) for deep time, "period" before 1914,
-    "modern" (today's map) after."""
+    """Historical scenes default to neutral geography; modern maps are explicit locators."""
     if scene.get("view") == "globe":
         return "deep"
-    return "period" if scene["when"]["from"] < PERIOD_BEFORE else "modern"
+    if scene.get("background") == "modern-reference" and scene["when"]["from"] >= PERIOD_BEFORE:
+        return "modern"
+    return "period"
 
 
 # --- Plates ------------------------------------------------------------------------
@@ -251,8 +252,9 @@ def check_emblems(emblems, sources, cited):
 
 
 def emblem_fits(e, when):
-    """Whether an emblem's documented years overlap a scene's years."""
-    return e.get("from", -10**6) <= when["to"] and e.get("to", 10**6) >= when["from"]
+    """An emblem is visible throughout a scene, so its dates must cover that scene."""
+    return (("from" not in e or e["from"] <= when["from"])
+            and ("to" not in e or e["to"] >= when["to"]))
 
 
 # --- Today's state borders -------------------------------------------------------
@@ -513,6 +515,15 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                  and when["from"] <= when["to"] <= date.today().year,
                  f"{where}: when.from and when.to must be whole years (BCE negative), from <= to")
             need(when.get("label"), f"{where}: when.label missing")
+            need(sc.get("background") in (None, "period", "modern-reference"),
+                 f"{where}: background must be period or modern-reference, or left out")
+            if sc.get("background") == "modern-reference":
+                note = sc.get("background_note")
+                need(isinstance(note, str) and bool(note.strip()),
+                     f"{where}: modern-reference needs a background_note explaining that this is today's map")
+                need(sc.get("view") != "globe" and isinstance(when.get("from"), int)
+                     and when["from"] >= PERIOD_BEFORE,
+                     f"{where}: modern-reference is only for map scenes from 1914 onward")
             cam = sc.get("camera", {})
             shown = sc.get("show", [])
             for fid in shown + sc.get("dim", []):
@@ -738,6 +749,8 @@ def transcript(chapters, sources, states, emblems=None):
                 parts.append(f'<p class="tr-disputed"><strong>Disputed:</strong> {e(sc["disputed"])}</p>')
             if sc.get("unchecked"):
                 parts.append(f'<p class="tr-disputed"><strong>Not yet checked:</strong> {e(sc["unchecked"])}</p>')
+            if sc.get("background") == "modern-reference":
+                parts.append(f'<p class="tr-method"><strong>Modern reference map:</strong> {e(sc["background_note"])}</p>')
             items = [feature_text(features[fid], sc, features, sources, emblems) for fid in sc.get("show", [])]
             if sc.get("snapshot"):
                 snap = ch["snapshots"][sc["snapshot"]]
@@ -822,3 +835,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

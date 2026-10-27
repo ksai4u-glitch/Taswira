@@ -211,11 +211,20 @@ class HistoryDataTests(unittest.TestCase):
         nok["features"][0]["short"] = nok["features"][0]["name"] + " and more"
         self.assertTrue(any("short must be a shorter name" in p for p in self.problems_with([nok])))
 
-    def test_emblem_years_overlap(self):
+    def test_emblem_must_cover_the_whole_scene(self):
         e = self.emblems["royal-niger-company"]           # 1887 to 1899
-        self.assertTrue(bh.emblem_fits(e, {"from": 1899, "to": 1903}))
+        self.assertTrue(bh.emblem_fits(e, {"from": 1887, "to": 1899}))
+        self.assertFalse(bh.emblem_fits(e, {"from": 1886, "to": 1887}))
+        self.assertFalse(bh.emblem_fits(e, {"from": 1899, "to": 1903}))
         self.assertFalse(bh.emblem_fits(e, {"from": 1900, "to": 1903}))
         self.assertTrue(bh.emblem_fits(self.emblems["nigeria-1960"], {"from": 1996, "to": 1996}))   # no end year
+
+    def test_scene_rejects_an_emblem_that_expires_during_it(self):
+        key = self.chapter("key")
+        self.feature(key, "sokoto")["emblem"] = "biafra"
+        self.scene(key, "taken")["when"] = {"from": 1967, "to": 1971, "label": "1967 to 1971"}
+        self.assertTrue(any("scene taken: shows the biafra emblem outside its documented years" in p
+                            for p in self.problems_with([key])))
 
     def test_outlines_follow_the_snapshot(self):
         data = bh.page_data(self.chapters, self.sources, self.states, self.arcs, self.users, self.background)
@@ -234,15 +243,47 @@ class HistoryDataTests(unittest.TestCase):
         self.assertEqual(colours["1976"]["Kano"], colours["1967"]["Kano"])
         self.assertNotEqual(colours["1991"]["Jigawa"], colours["1991"]["Kano"])
 
-    def test_scenes_before_1914_get_the_period_background(self):
+    def test_historical_scenes_default_to_a_neutral_background(self):
         data = bh.page_data(self.chapters, self.sources, self.states, self.arcs, self.users, self.background)
         bases = {sc["id"]: sc["base"] for ch in data["chapters"] for sc in ch["scenes"]}
         for ancient in ("where", "farmers", "terracottas", "iron", "decline"):
             self.assertEqual(bases[ancient], "period")   # Nok before 1 CE: never on today's map
         self.assertEqual(bases["rediscovery"], "modern")  # the digs of 1928 to 2021 happened in today's Nigeria
-        self.assertEqual(bases["1963"], "modern")
+        self.assertEqual(bases["1963"], "period")   # later roads and towns are not a 1963 reconstruction
         self.assertEqual(bh.base_for({"when": {"from": 1913}}), "period")
-        self.assertEqual(bh.base_for({"when": {"from": 1914}}), "modern")
+        self.assertEqual(bh.base_for({"when": {"from": 1914}}), "period")
+        self.assertEqual(bh.base_for({"when": {"from": 1967}}), "period")
+
+    def test_modern_reference_background_requires_an_explanation(self):
+        nok = self.chapter("nok")
+        sc = self.scene(nok, "rediscovery")
+        sc["background"] = "modern-reference"
+        sc.pop("background_note", None)
+        self.assertTrue(any("modern-reference needs a background_note" in p for p in self.problems_with([nok])))
+        sc["background_note"] = "Today's map locates the digs; it does not reconstruct their period."
+        self.assertEqual(self.problems_with([nok]), [])
+        self.assertEqual(bh.base_for(sc), "modern")
+
+    def test_pre_1914_scene_cannot_use_modern_reference_background(self):
+        nok = self.chapter("nok")
+        sc = self.scene(nok, "farmers")
+        sc["background"] = "modern-reference"
+        sc["background_note"] = "A modern locator."
+        self.assertTrue(any("modern-reference is only for map scenes from 1914 onward" in p
+                            for p in self.problems_with([nok])))
+
+    def test_unknown_background_is_rejected(self):
+        nok = self.chapter("nok")
+        self.scene(nok, "rediscovery")["background"] = "modern-refernce"
+        self.assertTrue(any("background must be" in p for p in self.problems_with([nok])))
+
+    def test_reference_background_note_is_in_the_text_version(self):
+        nok = self.chapter("nok")
+        sc = self.scene(nok, "rediscovery")
+        sc["background"] = "modern-reference"
+        sc["background_note"] = "Today's roads are not a reconstruction of <1928>."
+        text = bh.transcript([nok], self.sources, self.states, self.emblems)
+        self.assertIn("Today's roads are not a reconstruction of &lt;1928&gt;.", text.replace("&#x27;", "'"))
 
     def test_background_is_land_lakes_and_rivers_only(self):
         self.assertEqual(set(self.background), {"land", "lakes", "rivers"})
@@ -348,3 +389,4 @@ class HistoryDataTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

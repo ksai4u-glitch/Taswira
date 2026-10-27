@@ -22,7 +22,7 @@ every state map.
 
 # Period background
 
-`natural-earth-background.json` is the map background for scenes that start before 1914: land,
+`natural-earth-background.json` is the default background for historical map scenes in any era: land,
 lakes and rivers only, with no borders, roads or towns. Made by `make_background.py` in this folder.
 
 - **Source:** [Natural Earth](https://www.naturalearthdata.com/), version 5.2.0-pre, from
@@ -90,3 +90,4 @@ period and is left for later chapters.
   right for most of the past: the delta has grown out over the last 56 million years or so.
 - Pieces under 15,000 km² (small islands and slivers) are left out, and each outline is simplified
   on its own, so the page widens the land's edges a little to close the cracks between neighbours.
+
