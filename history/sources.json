@@ -745,5 +745,50 @@
     "kind": "licensed generalised geographic vector data",
     "rights": "Public domain (Natural Earth). Only mapped river/lake centreline coordinates are reused.",
     "checked": "Read GeoJSON and selected NAME Niger/Benue. Blob 6f9d88ea3498448c7f29f458ce42a771a36bd6be. Main-stem segments concatenated at coincident or near-coincident endpoints (largest join about 240m at this generalised scale). Physical locator only, not historical channel reconstruction or trade/migration route."
+  },
+  "nmmz-great-zimbabwe": {
+    "title": "Southern Region, Masvingo: Great Zimbabwe",
+    "author": "National Museums and Monuments of Zimbabwe",
+    "url": "https://www.nmmz.co.zw/southern-region-masvingo/",
+    "year": "checked 2026-10-27",
+    "kind": "national heritage authority",
+    "rights": "No source images copied; original geometry and prose based on facts. Image reuse licence not established.",
+    "checked": "Opened 27 Oct 2026. Components include hill, enclosure, valley and peripheral settlements; dry-stone enclosures and dhaka houses/granaries; flourishing1290–1450. No exact inventory or roof reconstruction copied."
+  },
+  "mukwende-great-zimbabwe": {
+    "title": "Great Zimbabwe",
+    "author": "Tawanda Mukwende, Great Zimbabwe University, Metropolitan Museum of Art",
+    "url": "https://www.metmuseum.org/essays/great-zimbabwe",
+    "year": "2025-05-27",
+    "kind": "specialist architectural/historical essay",
+    "rights": "Facts paraphrased, original schematic. Photographs credited to Sosena Solomon are not reused.",
+    "checked": "Opened 27 Oct 2026. Hilltop enclosures, terraced habitation, valley clusters, dhaka building and house floors inside Great Enclosure. Broad occupancy11th–17thcenturies, prominence12th–15th. Assembly is a selected later-phase illustration, not exact building plans or contemporaneous counts."
+  },
+  "lam-hausa-knot": {
+    "title": "Contexts: Hausa shoes and knot motifs",
+    "author": "Andrew Gurstelle, Timothy S. Y. Lam Museum of Anthropology",
+    "url": "https://lammuseum.wfu.edu/exhibits/virtual/cultures-contexts-collectors/contexts/",
+    "year": "checked 2026-10-27",
+    "kind": "museum object interpretation",
+    "rights": "Facts paraphrased. Photograph licence not established; no source image reused.",
+    "checked": "Opened 27 Oct 2026. Mid20thcentury Hausa shoes, accession2018.07.E.08; tentative13th–16th-century connections for knot traditions, present dagin arewa cultural identity. This is not evidence of medieval state flags."
+  },
+  "ochonu-palace-art": {
+    "title": "Unity in Diversity: Palace Art in Nigeria",
+    "author": "Moses Ochonu, Journal of the International Institute15(2)",
+    "url": "https://quod.lib.umich.edu/j/jii/4750978.0015.206/--unity-in-diversity-palace-art-in-nigeria?rgn=main;view=fulltext",
+    "year": "2008",
+    "kind": "Nigerian historian, palace art and modern political identity",
+    "rights": "Article linked and facts paraphrased; no text or photographs reproduced.",
+    "checked": "Opened full article and one-page PDF27Oct2026. Political adoption of Northern Knot in1950s under Ahmadu Bello; One North and authority seal context. Does not date every interlace or supply a medieval kingdom flag."
+  },
+  "met-benin-leopard": {
+    "title": "Leopard, Court of Benin, object1978.412.321",
+    "author": "The Metropolitan Museum of Art; Ìgùn Ẹ́rọ̀nwwọ̀n brass-casting guild attribution",
+    "url": "https://www.metmuseum.org/art/collection/search/310764",
+    "year": "1550–1680 object; checked2026-10-27",
+    "kind": "dated museum object and curatorial record",
+    "rights": "Image labelled Public Domain; project uses original silhouette, no photograph copied.",
+    "checked": "Opened object interpretation, date/material/culture and rights. Concrete dated support for Edo court leopard imagery1550–1680. This dates the checked object, not the motif’s invention or a standardized flag."
   }
 }

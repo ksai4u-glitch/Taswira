@@ -64,6 +64,12 @@ class AfricaHistoryTests(unittest.TestCase):
         sc['clock'] = 'yesterday'
         self.assertTrue(any('clock' in p for p in self.problems(ch)))
 
+    def test_architectural_setting_requires_supported_type(self):
+        ch, f, sc = self.sample()
+        f['monument'] = {'type':'tower','from':1300,'to':1450,'note':'Schematic enclosure',
+                         'sources':f['sources'],'setting':'fantasy-castle'}
+        self.assertTrue(any('setting' in p for p in self.problems(ch)))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -98,6 +98,11 @@
   .leaflet-tooltip-bottom::before { border-bottom-color: var(--surface-1); }
   .leaflet-tooltip-left::before { border-left-color: var(--surface-1); }
   .leaflet-tooltip-right::before { border-right-color: var(--surface-1); }
+  #map-panel-toggle { position:fixed; top:12px; right:12px; z-index:1200; min-height:38px; padding:7px 12px; font:13px system-ui; border:1px solid var(--border); border-radius:7px; color:var(--text-primary); background:var(--surface-1); cursor:pointer; }
+  #map-context { display:none; position:fixed; top:58px; right:12px; z-index:1100; max-width:calc(100vw - 82px); padding:5px 8px; margin:0; background:var(--surface-1); color:var(--text-secondary); border:1px solid var(--border); font-size:12px; pointer-events:none; }
+  body.panel-hidden #panel { display:none; }
+  body.panel-hidden #map-context { display:block; }
+  @media(max-width:720px) { body.panel-hidden .leaflet-bottom { bottom:0; } }
   .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
   .title-row button { flex: none; margin-top: 1px; }
   * { box-sizing: border-box; }
@@ -242,6 +247,8 @@
 </style>
 </head>
 <body>
+<button id="map-panel-toggle" type="button" aria-controls="panel" aria-expanded="true">Hide panel</button>
+<p id="map-context" role="status"></p>
 <aside id="panel">
   <button id="drawer" type="button" aria-expanded="false" aria-controls="panel">Show filters and years &#9650;</button>
   <div class="title-row">
@@ -686,6 +693,19 @@ function setDrawer(open) {
   if (!open && phone.matches) panel.scrollTop = 0;   // on a computer, keep the panel where it was
 }
 drawer.addEventListener("click", () => setDrawer(!panel.classList.contains("open")));
+let mapPanelHidden=false;
+try{mapPanelHidden=localStorage.getItem("taswira-map-panel")==="hidden";}catch{}
+const mapPanelToggle=document.getElementById("map-panel-toggle");
+function applyMapPanel(){
+  if(mapPanelHidden&&panel.contains(document.activeElement))mapPanelToggle.focus();
+  document.body.classList.toggle("panel-hidden",mapPanelHidden);
+  mapPanelToggle.setAttribute("aria-expanded",!mapPanelHidden);
+  mapPanelToggle.textContent=mapPanelHidden?"Show panel":"Hide panel";
+  requestAnimationFrame(()=>map.invalidateSize({animate:false}));
+}
+mapPanelToggle.onclick=()=>{mapPanelHidden=!mapPanelHidden;try{localStorage.setItem("taswira-map-panel",mapPanelHidden?"hidden":"shown");}catch{}applyMapPanel();};
+applyMapPanel();
+
 
 // Fit the map to some bounds, leaving room for the closed drawer on phones
 function fitTo(bounds, pad = 0) {
@@ -744,6 +764,8 @@ function heatLook() {
 }
 
 function draw() {
+  const kindLabel=active.size===TYPES.length?"All violence types":TYPES.filter(t=>active.has(t.key)).map(t=>t.name).join(" / ")||"No violence types";
+  document.getElementById("map-context").textContent="Filters: "+(country||"__AREA__")+" · "+(month||year||"All years")+" · "+kindLabel+" · "+(showPrelim?"Preliminary included":"Stable release only")+(group?" · "+groupName(group):"");
   const basic = e => active.has(e.violence_label) && inCountry(e) && (showPrelim || !e.preliminary);
   const filters = e => basic(e) && inGroup(e);
   const keep = e => filters(e) && inTime(e);

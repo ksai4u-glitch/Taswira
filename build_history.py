@@ -25,6 +25,8 @@ does not change when the UCDP data does.
 Uses only the Python standard library.
 """
 
+import base64
+import struct
 import colorsys
 import html
 import argparse
@@ -443,6 +445,8 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                     m = f["monument"]
                     need(isinstance(m, dict), f"{where}: monument must be an object")
                     if isinstance(m, dict):
+                        need(m.get("setting") in (None, "royal-cemetery", "stelae-field", "stone-enclosure"),
+                             f"{where}: unsupported architectural setting")
                         need(m.get("type") in ("pyramid", "stele", "tower") and m.get("note"),
                              f"{where}: monument needs a known schematic type and note")
                         need(all(type(m.get(k)) is int for k in ("from", "to")) and m.get("from", 1) <= m.get("to", 0),
@@ -750,10 +754,23 @@ def campaign_clock(scene, features, duration):
     return {"knots": [[stop["at"], stop["year"]] for stop in anchors], "campaigns": campaigns}
 
 
+def guide_art():
+    path = os.path.join(HISTORY_DIR, "art", "zomo-poses.png")
+    with open(path, "rb") as f:
+        png = f.read()
+    if png[:8] != b"\x89PNG\r\n\x1a\n" or len(png) > 8_000_000:
+        raise ValueError("Zomo pose atlas must be a PNG smaller than 8 MB")
+    width, height = struct.unpack(">II", png[16:24])
+    if width % 4 or height % 2 or not width or not height:
+        raise ValueError("Zomo pose atlas must have a four-column, two-row grid")
+    return {"name": "Zomo", "columns": 4, "rows": 2, "width": width, "height": height,
+            "image": "data:image/png;base64," + base64.b64encode(png).decode("ascii")}
+
+
 def page_data(chapters, sources, states, arcs, users, background, emblems=None, plates=None):
     globe = plates is not None and any(sc.get("view") == "globe" for ch in chapters for sc in ch["scenes"])
     out = {"chapters": [], "sources": sources, "built": date.today().isoformat(), "background": background,
-           "emblems": emblems or {}, "plates": plates if globe else None,
+           "emblems": emblems or {}, "plates": plates if globe else None, "guide": guide_art(),
            # Each state as lists of arc numbers (negative: walk the arc backwards); the page rebuilds the rings
            "states": {c: {"name": s["name"], "rings": s["arc_refs"]} for c, s in states.items()},
            "arcs": arcs}

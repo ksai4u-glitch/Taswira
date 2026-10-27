@@ -302,6 +302,21 @@
   .hx-monument { background: none; border: 0; }
   .hx-monument svg { width: 76px; height: 96px; overflow: visible; filter: drop-shadow(0 8px 8px #0008); }
   .hx-monument .hx-in { transform-origin: 50% 100%; }
+  .hx-monument.hx-assemblage svg { width:var(--set-width); height:var(--set-height); overflow:visible; }
+  #story-guide { position:absolute; z-index:795; right:18px; bottom:42px; width:128px; margin:0; pointer-events:none; transform-origin:50% 100%; }
+  #story-guide .guide-sprite { width:128px; height:171px; background-size:400% 200%; background-repeat:no-repeat; }
+  #story-guide figcaption { text-align:center; color:#d4b57a; font:13px Georgia,serif; text-shadow:0 1px 8px #08120e; }
+  body.video-mode #story-guide { right:42px; bottom:230px; width:180px; }
+  body.video-mode #story-guide .guide-sprite { width:180px; height:240px; }
+  body.video-mode #story-guide figcaption { font-size:18px; }
+  body.video-mode #tour-strip { display:none!important; }
+  body.video-mode #video-caption { right:260px; }
+  @media(max-width:760px) {
+    #story-guide { right:6px; bottom:190px; width:90px; }
+    #story-guide .guide-sprite { width:90px; height:120px; }
+    body:not(.details-hidden):not(.theatre-mode):not(.video-mode) #story-guide { display:none; }
+    body.video-mode #story-guide { right:12px; bottom:280px; }
+  }
   #tour-strip { display:none; position:absolute; z-index:480; left:16px; bottom:42px; max-width:min(460px,calc(100% - 32px)); padding:12px 16px;
     background:linear-gradient(100deg,#08120ef0,#08120ec9); border-left:2px solid #d4b57a; pointer-events:none; }
   #mapwrap[data-tour="true"] #tour-strip { display:block; }
@@ -321,6 +336,36 @@
     #tour-strip .tour-date { font-size:15px; margin-top:3px; }
     body.video-mode #tour-strip { left:16px; top:auto; bottom:240px; }
     body.video-mode #tour-strip .tour-focus { display:block; font-size:20px; }
+  }
+  /* Reversible cinema layout: keep story, dates, caveats and navigation in view. */
+  #view-tools { position:absolute; z-index:810; top:10px; left:58px; display:flex; gap:5px; flex-wrap:wrap; max-width:calc(100% - 72px); }
+  #view-tools button { min-height:36px; padding:5px 9px; border:1px solid #48604e; border-radius:6px; color:#f0eee2; background:#08120eea; font:12px system-ui; cursor:pointer; }
+  #view-tools button[aria-pressed="true"], #view-tools button[aria-expanded="true"] { color:#d4b57a; border-color:#d4b57a; }
+  #viewer-status { display:none; position:absolute; top:56px; left:16px; z-index:800; padding:5px 8px; max-width:calc(100% - 32px); color:#d4b57a; background:#08120ee8; font:11px/1.4 system-ui; }
+  #story-caption { display:none; position:absolute; z-index:790; bottom:42px; left:16px; right:168px; padding:12px 16px; color:#f0eee2; background:linear-gradient(95deg,#08120ef5,#08120ed9); border-left:2px solid #d4b57a; pointer-events:none; }
+  #story-caption p { margin:0; } #story-caption .story-kicker { color:#d4b57a; font:11px/1.5 system-ui; letter-spacing:.08em; margin-bottom:5px; }
+  #story-caption .story-line { font:19px/1.45 system-ui; }
+  body.details-hidden #card, body.theatre-mode :is(header,#draft,#card), body.details-hidden #tour-strip, body.theatre-mode #tour-strip { display:none; }
+  body.details-hidden #story-caption, body.theatre-mode #story-caption { display:block; }
+  body.theatre-mode #viewer-status { display:block; }
+  body.theatre-mode { overflow:hidden; }
+  body.theatre-mode #mapwrap { min-height:0; }
+  #ruler { overflow-x:auto; scrollbar-width:thin; scrollbar-color:#48604e #08120e; padding-bottom:4px; }
+  #ruler li { min-width:70px; }
+  #assembly-note { position:absolute; z-index:780; top:98px; left:16px; margin:0; color:#b5c4b8; background:#08120ec9; padding:4px 7px; font:10px/1.4 system-ui; max-width:250px; pointer-events:none; }
+  #assembly-note[hidden] { display:none; }
+  body.video-mode :is(#view-tools,#story-caption,#viewer-status) { display:none!important; }
+  @media(max-width:760px) {
+    #ruler li { min-width:100px; }
+    #view-tools { gap:4px; } #view-tools button { padding:5px 7px; }
+    #story-caption { bottom:40px; left:12px; right:12px; padding:9px 12px; }
+    #story-caption .story-line { font-size:15px; }
+    #story-caption .story-kicker { font-size:10px; }
+    #mapwrap[data-assembly="true"] #tour-strip { display:none; }
+    #assembly-note { top:52px; font-size:9px; max-width:220px; }
+    body.theatre-mode #assembly-note { top:90px; }
+    body.theatre-mode:not(.video-mode) #story-guide { top:135px; bottom:auto; }
+    body.details-hidden #mapwrap, body.theatre-mode #mapwrap { flex:1 1 auto; min-height:320px; }
   }
   /* Export layout: preserve draft, uncertainty and credits inside the captured map. */
   #video-caption, #video-caution, #video-credit, #exit-video, #video-tools { display: none; }
@@ -388,6 +433,16 @@
     and each scene says how sure it is.</span> <a href="https://github.com/ksai4u-glitch/Taswira/issues/new?title=History%20page%3A%20correction">Suggest a correction</a>.</p>
   <div id="stage">
     <div id="mapwrap">
+      <div id="view-tools" role="group" aria-label="Viewing options">
+        <button id="details-toggle" type="button" aria-expanded="true" aria-controls="card" title="Hide scene details">Details</button>
+        <button id="cinema-toggle" type="button" aria-pressed="false" aria-controls="app">Cinema</button>
+        <button id="fullscreen-toggle" type="button" aria-label="Full screen" title="Full screen">⛶</button>
+        <button id="guide-toggle" type="button" aria-pressed="true" title="Show or hide Zomo">Zomo</button>
+      </div>
+      <p id="viewer-status" role="note"></p>
+      <p id="assembly-note" hidden>Architectural illustration · arrangement and counts schematic</p>
+      <div id="story-caption"><p class="story-kicker"></p><p class="story-line"></p></div>
+      <figure id="story-guide" aria-label="Zomo, Taswira’s fictional hare guide"><div class="guide-sprite"></div><figcaption>Zomo</figcaption></figure>
       <div id="tour-strip" role="note"><p class="tour-scale"></p><p class="tour-focus"></p><p class="tour-date"></p><p class="tour-note"></p><div class="tour-rail"><span></span></div></div>
       <div id="map" role="img" aria-label="Map for the current scene. The same information is in the panel and in the text version below."></div>
       <canvas id="globe" aria-hidden="true"></canvas>
@@ -412,7 +467,7 @@
     <button class="ctl" id="next" type="button" aria-label="Next scene">&#9654;</button>
     <div id="ruler-wrap">
       <ol id="ruler" aria-label="Scenes in this chapter"></ol>
-      <div id="ruler-note">Each block is one scene. Blocks are sized by reading time, not by years.</div>
+      <div id="ruler-note">Scenes in story order. Progress follows playback, not proportional years.</div>
     </div>
     <button class="ctl" id="fxbtn" type="button" aria-pressed="true"
       title="Sparks, light and title cards. Decoration only: they add no information.">Effects</button>
@@ -708,6 +763,74 @@ function monumentSvg(type) {
   }[type];
   return '<svg viewBox="0 0 76 96" aria-hidden="true">'+shape+'<path d="M8 86h60" stroke="#d4b57a" stroke-width="1" opacity=".4"/></svg>';
 }
+// Original symbolic architectural stage sets. Counts/layout are illustrative, never site plans.
+function assemblageSvg(kind) {
+  const parts=[];
+  const add=(id,at,body,base=235,motion='rise',dur=1.15)=>parts.push(`<g data-set-part="${id}" data-at="${at}" data-base="${base}" data-motion="${motion}" data-duration="${dur}">${body}</g>`);
+  const line=(d,c='#d4b57a',w=2)=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const ellipse=(x,y,rx,ry,fill)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${fill}"/>`;
+  const wall=(d,colour='#bda16f',width=11)=>'<g transform="translate(0,8)">'+line(d,'#101d17',width+8)+line(d,'url(#set-stone-face)',width+3)+'</g>'+line(d,colour,width*.55)+line(d,'#e0d2a2',.9);
+  const house=(x,y,r=15)=>ellipse(x,y,r,r*.36,'#715c3b')+`<path d="M${x-r} ${y}v-16a${r} ${r*.36} 0 0 1 ${r*2} 0v16" fill="#a58a59"/>`+ellipse(x,y-16,r,r*.36,'#d4b57a')+ellipse(x,y-16,r-4,r*.22,'#635b3c');
+  add('ground',0,`<path d="M29 214 201 109 414 200 229 282Z" fill="#173128" stroke="#47604b"/>`+line('M45 214 203 119 397 201 229 270','#6a7955',.7),250,'draw',1.5);
+  add('ground-lines',.35,line('M74 212 204 135 360 201 226 254Z','#d4b57a',1.1)+line('M128 195 287 227 M166 174 326 210','#607a5f',.7),240,'draw',1.6);
+  if(kind==='stone-enclosure') {
+    add('hill',.65,`<path d="M44 177 78 110 99 88 135 119 163 174 105 199Z" fill="#486451"/><path d="M78 110 99 88 110 139 105 199 44 177Z" fill="#64715a"/>`+line('M78 131 120 148 150 172','#d5c79c',1),200);
+    add('hill-enclosures',1.25,wall('M65 148 Q95 118 131 149L119 166 90 174 65 159Z','#9d9f78',8),174);
+    add('terraces',1.8,wall('M50 176 92 192 148 170 M60 166 93 181 139 163','#82916b',5),196);
+    add('enclosure-west',2.0,wall('M132 223C100 207 114 179 163 170L209 174','#b6a16f',13),235);
+    add('enclosure-east',2.5,wall('M209 174C269 179 287 218 246 240L201 251','#c2aa77',13),250);
+    add('enclosure-front',3.0,wall('M201 251C164 249 135 237 132 223','#dec58b',15),251);
+    add('inner-passage',3.35,wall('M151 218C141 202 169 186 202 190L230 203 238 223','#9f9163',6),231);
+    add('house-floors',3.65,house(172,213,12)+house(202,221,10),235);
+    add('tower',4.25,`<path d="M219 219 225 159h14l10 60Z" fill="#dec48b"/><path d="M239 159 249 219h-12l-5-60Z" fill="#a08859"/>`+line('M224 176h18 M222 191h22 M220 206h26','#8d7b53',.8),222);
+    add('residential-enclosures',4.65,wall('M296 199 331 182 373 200 365 226 329 236 294 217Z','#a18d64',7),237);
+    add('domestic-structures',5.1,house(320,204,12)+house(349,214,11)+house(297,242,9),246);
+    add('granary-group',5.55,house(274,163,8)+house(294,174,8),180);
+    add('passage-reveal',6.1,line('M119 237 146 230 M268 230 289 223','#d4b57a',3),240,'draw',.8);
+  } else if(kind==='royal-cemetery') {
+    const pyramid=(x,y,h,w)=>`<path d="M${x-w} ${y} ${x} ${y-h} ${x+w*.7} ${y}Z" fill="#d8bb79"/><path d="M${x} ${y-h} ${x+w*1.25} ${y-w*.32} ${x+w*.7} ${y}Z" fill="#987541"/>`+`<path d="M${x+w*.65} ${y}v-14l12-4 8 5v13Z" fill="#b69760"/>`;
+    add('tomb-foundations',1,`<g fill="#758365">${[0,1,2,3].map(i=>`<path d="M${127+i*52} ${184+i*10}l20-9 23 10-20 9Z"/>`).join('')}</g>`,235,'draw');
+    add('pyramid-back',1.7,pyramid(206,168,66,25),168);
+    add('pyramid-left',2.25,pyramid(138,199,75,29),199);
+    add('pyramid-right',2.8,pyramid(295,199,69,26),199);
+    add('pyramid-front',3.4,pyramid(230,235,104,38),235);
+    add('offering-chapels',4.1,`<path d="M161 206v-16l13-5 12 7v18Z M257 245v-22l16-6 13 9v23Z M319 211v-15l11-4 9 5v18Z" fill="#a78f5d"/>`,249);
+    add('tomb-access',4.7,line('M80 220 103 210 127 221 M310 240 327 228 351 238','#7e8e68',4),240,'draw');
+    add('paths',5.3,line('M139 249 169 231 194 242 M267 171 252 181','#d4b57a',1.2),249,'draw');
+    add('ground-details',5.8,ellipse(101,240,8,2,'#b5a16c')+ellipse(330,181,7,2,'#b5a16c'),240);
+  } else {
+    add('tomb-platforms',1,`<path d="M105 206 193 154 310 202 222 255Z" fill="#64715b" stroke="#c1b786"/>`,254);
+    add('access-steps',1.6,line('M112 218 135 227 163 212 M119 225 139 233 166 219 M127 233 144 240 172 226','#b9ad7e',4),242);
+    const stele=(x,y,h,w)=>`<path d="M${x-w/2} ${y}v-${h}h${w}v${h}Z" fill="#d2be8a"/><path d="M${x+w/2} ${y}l8-5v-${h}l-8 5Z" fill="#8a815d"/>`+Array.from({length:Math.floor(h/13)},(_,i)=>line(`M${x-w/2+4} ${y-h+11+i*13}h${w-8}`,'#8c815a',2)).join('');
+    add('stele-small',2.0,stele(149,207,75,17),207);
+    add('stele-tall',2.7,stele(210,214,142,28),214);
+    add('stele-medium',3.4,stele(274,215,105,22),215);
+    add('tomb-door',4,`<path d="M191 248v-20l16-10 17 8v22Z" fill="#897d58"/><path d="M200 248v-16l10-5v21Z" fill="#15291f"/>`,249);
+    add('stone-slabs',4.6,`<path d="M293 226 316 213 340 223 318 236Z M99 194 115 185 130 192 115 202Z" fill="#a5a07a"/>`,236);
+    add('paths',5.2,line('M71 228 105 215 M301 181 331 194','#d4b57a',1.2),230,'draw');
+    add('surface-courses',5.8,line('M138 234 169 246 M277 224 302 235','#d4c38a',1),246,'draw');
+  }
+  return `<svg class="set-svg" viewBox="0 0 440 300" aria-hidden="true"><defs><pattern id="set-stone-face" width="12" height="8" patternUnits="userSpaceOnUse"><rect width="12" height="8" fill="#8d9277"/><path d="M0 0h12M0 4h12M6 0v4M2 4v4" fill="none" stroke="#4f6453" stroke-width=".65"/></pattern></defs>${parts.join('')}</svg>`;
+}
+function assemblyFrame(t,live) {
+  for(const set of fx.sets) {
+    const cinematic=captureClock!==null||theatreOn;
+    const width=Math.min(small()?(cinematic?280:200):(cinematic?700:430),map.getSize().x*(cinematic?.7:.48)),height=width*300/440;
+    if(set.width!==width){
+      set.width=width;const node=set.marker.getElement(),inner=node.querySelector(".hx-in");
+      node.style.width=width+"px";node.style.height=height+"px";node.style.marginLeft=-width/2+"px";node.style.marginTop=-height*.75+"px";
+      inner.style.setProperty("--set-width",width+"px");inner.style.setProperty("--set-height",height+"px");
+      const tip=set.marker.getTooltip();tip.options.direction="bottom";tip.options.offset=L.point(0,height*.25+7);tip.update();
+    }
+    for(const el of set.parts) {
+    const u=live?clamp01((t-set.at-Number(el.dataset.at))/Number(el.dataset.duration)):1;
+    const v=easeOut(u),base=Number(el.dataset.base),draw=el.dataset.motion==='draw';
+    el.style.opacity=String(draw?v:u>0?Math.min(1,u*4):0);
+    el.setAttribute('transform',draw?'':`translate(0,${18*(1-v)}) translate(220,${base}) scale(1,${.06+.94*v}) translate(-220,${-base})`);
+    }
+  }
+}
+
 function drawPlaces(ch, sc) {
   // Today's state borders are only a locator in an explicitly labelled modern reference scene.
   if (sc.base === "modern") todaysBorders();
@@ -747,8 +870,9 @@ function drawPlaces(ch, sc) {
     const left = f.label === "left";       // set in the chapter file when two labels would overlap
     const marked = form && form !== "lake", c = furnace.has(id) ? "#ff9a3c" : form === "lake" ? hex(VOCAB.lake) : "#d4b57a";
     if (f.monument && sc.monuments !== false) {
-      m = L.marker(f.coordinates, {keyboard:false, title:f.name, icon:L.divIcon({className:"hx-monument",
-        html:'<div class="hx-in">'+monumentSvg(f.monument.type)+'</div>',iconSize:[76,96],iconAnchor:[38,86]})});
+      const setting=f.monument.setting,w=setting?(small()?218:430):76,h=setting?w*300/440:96;
+      m = L.marker(f.coordinates, {keyboard:false, title:f.name, icon:L.divIcon({className:"hx-monument"+(setting?" hx-assemblage":""),
+        html:'<div class="hx-in" style="--set-width:'+w+'px;--set-height:'+h+'px">'+(setting?assemblageSvg(setting):monumentSvg(f.monument.type))+'</div>',iconSize:[w,h],iconAnchor:[w/2,setting?h*.75:86]})});
     } else if (form === "communities") {
       raw.push(textLabel(f.coordinates, "self-governing communities", "field-label"));
     } else if (marked) {
@@ -771,6 +895,7 @@ function drawPlaces(ch, sc) {
       m.addTo(sceneLayer);
       els.push(m);
       raw.push(m.getTooltip().getElement());
+      if(f.monument?.setting && sc.monuments!==false) fx.sets.push({marker:m,at,parts:[...m.getElement().querySelectorAll("[data-set-part]")]});
     }
     // A documented flag or symbol, as a small badge above the place. Nothing is drawn when none is documented.
     const em = f.emblem && DATA.emblems[f.emblem];
@@ -1016,6 +1141,13 @@ const badge = st => `<span class="st st-${esc(st)}">${esc(STATUS_WORDS[st])}</sp
 const sourceLinks = ids => ids.map(s => `<a href="${esc(DATA.sources[s].url)}">${esc(DATA.sources[s].title)}</a>`).join("; ");
 
 // One thing on the map, in the panel: what it is, how sure, what it rests on and where it comes from
+function sceneCaution(sc) {
+  const shown=(sc.show||[]).map(id=>chapter().features[id]);
+  const disputed=sc.disputed||shown.some(f=>f.status==="disputed");
+  const unchecked=sc.unchecked||shown.some(f=>f.status==="to-check");
+  return "Unreviewed draft · "+(disputed?"Disputed evidence · ":"")+(unchecked?"Not yet checked · ":"")+
+    (sc.base==="deep"?"Model reconstruction; modern outlines, not ancient coastlines":sc.base==="modern"?"Modern reference map, not a period reconstruction":"Approximate physical geography");
+}
 function featureItem(ch, sc, id) {
   const f = ch.features[id], name = p => esc(ch.features[p].name), rows = [];
   let tag = "";
@@ -1106,6 +1238,8 @@ function splitList(snap) {
 }
 
 function pickFeature(id) {
+  if (theatreOn) setTheatre(false);
+  if (detailsHidden) setDetailsHidden(false);
   document.querySelectorAll(".features li.picked").forEach(li => li.classList.remove("picked"));
   const li = $("f-" + id);
   if (li) { li.classList.add("picked"); li.scrollIntoView({ block: "nearest", behavior: lessMotion.matches ? "auto" : "smooth" }); li.focus(); }
@@ -1221,12 +1355,13 @@ function render({ animate = true, announce = false } = {}) {
   const rollFrom = ch.area !== "africa" && state.drawnC === state.c ? state.shownYear : null;
   state.drawnC = state.c;
   sceneLayer.clearLayers();
-  fx = { points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
+  fx = { sets: [], points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
          timed: [], draws: [], flips: [], ties: [], arrivals: [], heads: [], drifts: [], goods: [], globeLines: [],
          rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
          card: { now: null }, lower: { now: null }, shownCount: { now: null } };
   $("mapwrap").dataset.base = sc.base;
   $("mapwrap").dataset.tour = ch.area === "africa";
+  $("assembly-note").hidden = !fx.sets.length;
   if (ch.area === "africa") {
     const strip = $("tour-strip");
     setText(strip.querySelector(".tour-scale"), sc.scale || "Africa · dated snapshots");
@@ -1240,6 +1375,8 @@ function render({ animate = true, announce = false } = {}) {
   else modernTiles.remove();
   if (sc.snapshot) drawSnapshot(ch, sc);
   else if (sc.base !== "deep") drawPlaces(ch, sc);
+  $("assembly-note").hidden = !fx.sets.length;
+  $("mapwrap").dataset.assembly=!!fx.sets.length;
   drawEffects(ch, sc);
   titles(ch, sc);
   $("mapwrap").dataset.grade = ch.area === "africa" ? "atlas" : sc.snapshot ? "modern"
@@ -1549,10 +1686,18 @@ function frame(now) {
     });
   } else setText($("hud-sub"), sc.title);
 
+  const storyLines = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
+  const storyGap = sc.duration*.55/storyLines.length;
+  const storyLine = !live ? sc.text : storyLines[Math.min(storyLines.length-1,Math.max(0,Math.floor(t/storyGap)))].trim();
+  setText($("story-caption").querySelector(".story-line"),storyLine);
+  setText($("story-caption").querySelector(".story-kicker"),[sc.when.label,sc.scale||sc.title].join(" · "));
+  setText($("viewer-status"),sceneCaution(sc));
   // Narration appears sentence by sentence while playing; everything shows when paused
   const gap = (sc.duration * 0.55) / Math.max(1, fx.sentences.length);
   fx.sentences.forEach((el, i) => el.classList.toggle("waiting", state.playing && live && t < i * gap));
 
+  assemblyFrame(t,live);
+  guideFrame(t,live);
   for (const pt of fx.points) {
     setOnce(pt, t >= pt.at, on => pt.els.forEach(el => {
       el.classList.toggle("hx-hidden", !on);
@@ -2103,6 +2248,11 @@ function drawRuler() {
   $("ruler").querySelectorAll("button").forEach((b, i) => {
     if (i === state.s) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
   });
+  const active = $("ruler").querySelector('[aria-current="step"]');
+  if(active && !document.body.classList.contains("video-mode")) {
+    const a=active.getBoundingClientRect(),r=$("ruler").getBoundingClientRect();
+    if(a.left<r.left||a.right>r.right)$("ruler").scrollLeft += a.left-r.left-(r.width-a.width)/2;
+  }
   showProgress();
 }
 function showProgress() {
@@ -2220,7 +2370,7 @@ document.addEventListener("keydown", e => {
   if (e.key === " ") { e.preventDefault(); $("play").click(); }      // same as the button, including Replay
   else if (e.key === "ArrowRight") { setPlaying(false); step(1); }
   else if (e.key === "ArrowLeft") { setPlaying(false); step(-1); }
-  else if (e.key === "Escape") setPlaying(false);
+  else if (e.key === "Escape") { if(theatreOn){setTheatre(false);$("cinema-toggle").focus();}else setPlaying(false); }
 });
 
 // --- Deterministic video preview -----------------------------------------------------------
@@ -2345,11 +2495,7 @@ window.taswira = {
     const sentences = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
     const gap = sc.duration * .55 / sentences.length;
     $("video-caption").textContent = t < 0 ? "" : sentences[Math.min(sentences.length - 1, Math.floor(t / gap))].trim();
-    const disputed = sc.disputed || (sc.show || []).some(id => chapter().features[id]?.status === "disputed");
-    $("video-caution").textContent = "Unreviewed draft · " + (disputed ? "Disputed evidence · " : "")
-      + (sc.unchecked ? "Not yet checked · " : "")
-      + (sc.base === "deep" ? "Model reconstruction; modern outlines, not ancient coastlines"
-        : sc.base === "modern" ? "Modern reference map, not a period reconstruction" : "Approximate physical geography");
+    $("video-caution").textContent=sceneCaution(sc);
     $("video-credit").textContent = sc.base === "deep"
       ? "Continents: Merdith et al. (2021), model v1.2.4 · CC BY 4.0 · simplified and sampled"
       : sc.base === "modern" ? "Esri, HERE, Garmin, OpenStreetMap · modern reference map"
@@ -2371,6 +2517,68 @@ window.taswira = {
 $("videobtn").onclick = () => { window.taswira.seek(state.c, state.s, 0); $("video-time").focus(); };
 $("exit-video").onclick = () => window.taswira.exitVideo();
 $("video-time").oninput = () => window.taswira.seek(state.c, state.s, +$("video-time").value);
+
+// The selected original guide is an illustrated narrator, never a historical actor.
+let guideOn=true;
+try {guideOn=localStorage.getItem("taswira-history-guide")!=="off";} catch {}
+const guideImage=new Image();
+if(DATA.guide)guideImage.src=DATA.guide.image;
+const guideReady=DATA.guide?guideImage.decode().then(()=>{
+  $("story-guide").querySelector(".guide-sprite").style.backgroundImage='url("'+DATA.guide.image+'")';wake();
+}).catch(()=>{$("story-guide").hidden=true;}):Promise.resolve();
+function guideFrame(t,live) {
+  const el=$("story-guide"),sc=scene();
+  const quiet=!!(sc.sensitive||sc.campaign_clock),time=live?Math.max(0,t):0;
+  const intro=captureOpening()>0;
+  const visible=guideOn&&!intro&&(!live||t>=.25);
+  el.hidden=!visible;if(!visible)return;
+  const pose=quiet?7:sc.disputed?3:!live?0:time<2?0:time<5?1:time<8?6:time<10?5:time<14?3:6;
+  el.dataset.pose=pose;
+  el.querySelector(".guide-sprite").style.clipPath=pose===5?"inset(0 0 0 18%)":"none";
+  el.querySelector(".guide-sprite").style.backgroundPosition=((pose%4)/3*100)+'% '+(pose<4?0:100)+'%';
+  const enter=live?easeOut(clamp01((t-.25)/.8)):1,bob=quiet||!live?0:Math.sin(time*1.9)*2;
+  el.style.opacity=enter;
+  el.style.transform=`translate(${(1-enter)*70}px,${bob}px) rotate(${quiet||!live?0:Math.sin(time*.8)*.65}deg)`;
+}
+$("guide-toggle").onclick=()=>{guideOn=!guideOn;$("guide-toggle").setAttribute("aria-pressed",guideOn);try{localStorage.setItem("taswira-history-guide",guideOn?"on":"off");}catch{}frame(performance.now());};
+$("guide-toggle").setAttribute("aria-pressed",guideOn);
+window.taswira.ready=()=>guideReady;
+
+// --- Reversible viewing controls -----------------------------------------------------------
+let detailsHidden = false, theatreOn = false, fullscreenFromTheatre = false;
+try { detailsHidden = localStorage.getItem("taswira-history-details") === "hidden"; } catch {}
+function applyViewLayout() {
+  document.body.classList.toggle("details-hidden", detailsHidden);
+  document.body.classList.toggle("theatre-mode", theatreOn);
+  const shown = !detailsHidden && !theatreOn;
+  $("details-toggle").setAttribute("aria-expanded", shown);
+  $("details-toggle").title = shown ? "Hide scene details" : "Show scene details and sources";
+  $("cinema-toggle").setAttribute("aria-pressed", theatreOn);
+  $("cinema-toggle").textContent = theatreOn ? "Exit cinema" : "Cinema";
+  requestAnimationFrame(()=>{map.invalidateSize({animate:false});sizeCanvas();sizeGlobe();wake();});
+}
+function setDetailsHidden(hidden, remember=true) {
+  detailsHidden = hidden;
+  if (hidden && $("card").contains(document.activeElement)) $("details-toggle").focus();
+  if (remember) try { localStorage.setItem("taswira-history-details", hidden ? "hidden" : "shown"); } catch {}
+  applyViewLayout();
+}
+function setTheatre(on) {
+  theatreOn = on;
+  if (on && ($("card").contains(document.activeElement) || document.querySelector("header").contains(document.activeElement))) $("cinema-toggle").focus();
+  applyViewLayout();
+}
+$("details-toggle").onclick = ()=>{if(theatreOn){setTheatre(false);setDetailsHidden(false);}else setDetailsHidden(!detailsHidden);};
+$("cinema-toggle").onclick = ()=>setTheatre(!theatreOn);
+$("fullscreen-toggle").onclick = async()=>{
+  try {
+    if(document.fullscreenElement) await document.exitFullscreen();
+    else {fullscreenFromTheatre=theatreOn;setTheatre(true);if($("app").requestFullscreen)await $("app").requestFullscreen();}
+  } catch {setText($("announce"),"Cinema view is ready. Full screen is unavailable in this browser.");}
+};
+document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement)setTheatre(fullscreenFromTheatre);});
+document.querySelector(".skip").addEventListener("click",()=>setTheatre(false));
+applyViewLayout();
 
 // --- Links like #chapter=nok&scene=iron -------------------------------------------------------
 function writeLink() {

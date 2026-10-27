@@ -355,5 +355,40 @@ python previews/build_act1_preview.py <scratch-history.html> <local-dependency-d
 ```
 
 Open `previews/act1.html`. It bundles the actual player and checked dependencies with their
-notices; only explicit modern reference scenes request external Esri tiles. The older
-`site-theme.html` remains a design-review snapshot of the previously merged chapter set.
+notices; only explicit modern reference scenes request external Esri tiles.
+
+## Zomo, architectural settings and Cinema
+
+Saifu selected an original hare guide, working name Zomo. The history build embeds the
+transparent illustration atlas in `art/`; motion follows the same scene clock as the map.
+The guide can be hidden independently. Sensitive passages use a still solemn pose.
+The atlas is a prototype: its walking pose is omitted pending repair. No voice is recorded.
+
+**Details** hides/restores the information panel. **Cinema** also hides chapter navigation,
+while retaining narration, date, uncertainty, timeline and transport controls. **Full screen**
+requests browser fullscreen; Cinema works if it is unavailable. Escape leaves Cinema.
+The conflict map has its own panel toggle and keeps the active filter context visible.
+
+An optional monument `setting` selects `royal-cemetery`, `stelae-field` or `stone-enclosure`.
+These assemble multiple local SVG components. They are architectural illustrations with
+schematic arrangements/counts, not measured plans or complete reconstructed city skylines.
+Their settings inherit the monument's dated evidence gate; effects add no historical sites.
+
+Review the actual motion in `previews/storycraft.html` (opens Great Zimbabwe in Cinema).
+`previews/site-theme.html` includes both updated players with the existing conflict-data
+snapshot, its original build date, dataset version and preliminary labels. It is not a data update.
+`previews/motif-catalogue.html` introduces eight researched cultural directions, with their
+distinct permitted uses. The supplied Hausa knot is not silently promoted to a medieval flag.
+
+```
+python previews/build_act1_preview.py <built-history> <local-dependencies> --output storycraft.html --scene zimbabwe --cinema
+python previews/build_motif_catalogue.py
+node capture_history.cjs <built-history> <local-dependencies> <new-output.mp4> 60 8 history/cuts/storycraft-pilot.json
+python previews/build_storycraft_video.py <new-output.mp4>
+```
+
+The reviewed three-shot manifest produces a silent 35-second, 1080p60 proof, including credits.
+The viewing HTML embeds that actual MP4; its source manifest and captions are alongside it.
+The previous four-shot pilot remains the export default when no shot manifest is supplied.
+See [the creative handoff](research/creative/CLAUDE-HANDOFF-2026-10-27.md) for the character
+bible, source inventories, whole-project review and the next Hausa city sequence.

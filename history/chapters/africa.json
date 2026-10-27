@@ -71,10 +71,11 @@
         "type": "pyramid",
         "from": -300,
         "to": -201,
-        "note": "Original symbolic steep-sided royal funerary pyramid with chapel. Represents the documented third-century BCE burial phase, not a measured or individually dated tomb.",
+        "note": "Original symbolic steep-sided royal funerary pyramid with chapel. Represents the documented third-century BCE burial phase, not a measured or individually dated tomb. The assembled cemetery is an architectural illustration: numbers, arrangement and reveal order are symbolic.",
         "sources": [
           "meroe-nomination"
-        ]
+        ],
+        "setting": "royal-cemetery"
       },
       "short": "Meroe"
     },
@@ -100,10 +101,11 @@
         "type": "stele",
         "from": 201,
         "to": 400,
-        "note": "Original schematic monolith with architectural panels; class dated third/fourth century CE. Not an individual measured stele.",
+        "note": "Original schematic monolith with architectural panels; class dated third/fourth century CE. Not an individual measured stele. The stelae/tomb grouping has symbolic counts and positions. No later palace or church is added.",
         "sources": [
           "aksum-unesco"
-        ]
+        ],
+        "setting": "stelae-field"
       },
       "short": "Aksum"
     },
@@ -224,17 +226,22 @@
       "disputed": null,
       "sources": [
         "unesco-great-zimbabwe",
-        "unesco-great-zimbabwe-map"
+        "unesco-great-zimbabwe-map",
+        "nmmz-great-zimbabwe",
+        "mukwende-great-zimbabwe"
       ],
       "uncertainty_km": 1,
       "monument": {
         "type": "tower",
         "from": 1300,
         "to": 1450,
-        "note": "Original enclosure-and-conical-tower schematic of the later architectural ensemble. The enclosure is dated to the fourteenth century; 1400 is an editorial snapshot, not a construction date for the individual tower.",
+        "note": "Original enclosure-and-conical-tower schematic of the later architectural ensemble. The enclosure is dated to the fourteenth century; 1400 is an editorial snapshot, not a construction date for the individual tower. Hill, enclosures and domestic structures are a symbolic assemblage of documented types, not a surveyed plan or known construction sequence.",
         "sources": [
-          "unesco-great-zimbabwe"
-        ]
+          "unesco-great-zimbabwe",
+          "nmmz-great-zimbabwe",
+          "mukwende-great-zimbabwe"
+        ],
+        "setting": "stone-enclosure"
       },
       "short": "Great Zimbabwe"
     },
@@ -1601,7 +1608,8 @@
       "unchecked": null,
       "mood": "calm",
       "duration": 18,
-      "scale": "Middle Nile · Kush"
+      "scale": "Middle Nile · Kush",
+      "focus_label": "Meroe · royal cemeteries"
     },
     {
       "id": "djenne",
@@ -1662,7 +1670,8 @@
       "unchecked": null,
       "mood": "calm",
       "duration": 18,
-      "scale": "North-east Africa · Aksum"
+      "scale": "North-east Africa · Aksum",
+      "focus_label": "Aksum · stelae and tombs"
     },
     {
       "id": "ghana",
@@ -1783,7 +1792,8 @@
       "unchecked": null,
       "mood": "calm",
       "duration": 18,
-      "scale": "Southern Africa · Great Zimbabwe"
+      "scale": "Southern Africa · Great Zimbabwe",
+      "focus_label": "Great Zimbabwe · stone city"
     },
     {
       "id": "kilwa",
