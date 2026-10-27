@@ -126,6 +126,8 @@
   .leaflet-tooltip-left::before { border-left-color: var(--surface-1); }
   .leaflet-tooltip-top::before { border-top-color: var(--surface-1); }
   .site-label { font-weight: 600; }
+  .site-label.hx-moved::before { display: none; }          /* a moved name no longer points at its dot */
+  .site-label.hx-crowded { visibility: hidden; }
   .group-label { background: none; border: none; box-shadow: none; color: #fff; font: 600 11px/1.1 system-ui, sans-serif;
                  text-shadow: 0 0 3px #000, 0 0 3px #000; text-align: center; white-space: nowrap; }
   .group-label.small { font-size: 9px; font-weight: 500; }
@@ -208,7 +210,6 @@
   .lb.top { top: 0; } .lb.bot { bottom: 0; }
   #mapwrap.cinema .lb { height: 30px; }
   #hud { transition: top .8s cubic-bezier(.6, 0, .2, 1), opacity .4s; }
-  #mapwrap.cinema #hud { top: 42px; }
   #hud-sub { transform-origin: right center; }
   #hud-sub.bump { animation: hxbump .5s ease-out; }
   @keyframes hxbump { from { transform: scale(1.45); color: #fff; text-shadow: 0 0 14px var(--accent), 0 0 3px #000; } }
@@ -292,7 +293,6 @@
     #ruler .lab { font-size: 10px; }
     .leaflet-control-attribution { font-size: 9px; }
     #mapwrap.cinema .lb { height: 16px; }
-    #mapwrap.cinema #hud { top: 24px; }
     #lower { left: 10px; bottom: 30px; }
     .lt-kicker { display: none; }
     .lt-title { font-size: 18px; }
@@ -303,6 +303,11 @@
   .hx-monument svg { width: 76px; height: 96px; overflow: visible; filter: drop-shadow(0 8px 8px #0008); }
   .hx-monument .hx-in { transform-origin: 50% 100%; }
   .hx-monument.hx-assemblage svg { width:var(--set-width); height:var(--set-height); overflow:visible; }
+  /* Far out, a setting becomes its small glyph (see assemblyFrame) */
+  .hx-assemblage .hx-glyph-art { display:none; }
+  .hx-assemblage.hx-glyph .hx-in { display:none; }
+  .hx-assemblage.hx-glyph .hx-glyph-art { display:block; }
+  .hx-assemblage .hx-glyph-art svg { width:46px; height:58px; }
   #story-guide { position:absolute; z-index:795; right:18px; bottom:42px; width:128px; margin:0; pointer-events:none; transform-origin:50% 100%; }
   #story-guide .guide-sprite { width:128px; height:171px; background-size:400% 200%; background-repeat:no-repeat; }
   #story-guide figcaption { text-align:center; color:#d4b57a; font:13px Georgia,serif; text-shadow:0 1px 8px #08120e; }
@@ -319,7 +324,6 @@
   }
   #tour-strip { display:none; position:absolute; z-index:480; left:16px; bottom:42px; max-width:min(460px,calc(100% - 32px)); padding:12px 16px;
     background:linear-gradient(100deg,#08120ef0,#08120ec9); border-left:2px solid #d4b57a; pointer-events:none; }
-  #mapwrap[data-tour="true"] #tour-strip { display:block; }
   #mapwrap[data-tour="true"] #lower { display:none; }
   #tour-strip p { margin:0; }
   .tour-scale { font:11px/1.4 system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; color:#b5c4b8; }
@@ -348,8 +352,7 @@
   #story-caption { display:none; position:absolute; z-index:790; bottom:42px; left:16px; right:168px; padding:12px 16px; color:#f0eee2; background:linear-gradient(95deg,#08120ef5,#08120ed9); border-left:2px solid #d4b57a; pointer-events:none; }
   #story-caption p { margin:0; } #story-caption .story-kicker { color:#d4b57a; font:11px/1.5 system-ui; letter-spacing:.08em; margin-bottom:5px; }
   #story-caption .story-line { font:19px/1.45 system-ui; }
-  body.details-hidden #card, body.theatre-mode :is(header,#draft,#card), body.details-hidden #tour-strip, body.theatre-mode #tour-strip { display:none; }
-  body.details-hidden #story-caption, body.theatre-mode #story-caption { display:block; }
+  body.details-hidden #card, body.theatre-mode :is(header,#draft,#card) { display:none; }
   body.theatre-mode #viewer-status { display:block; }
   body.theatre-mode { overflow:hidden; }
   body.theatre-mode #mapwrap { min-height:0; }
@@ -367,9 +370,67 @@
     #mapwrap[data-assembly="true"] #tour-strip { display:none; }
     #assembly-note { top:52px; font-size:9px; max-width:220px; }
     body.theatre-mode #assembly-note { top:90px; }
-    body.theatre-mode:not(.video-mode) #story-guide { top:135px; bottom:auto; }
     body.details-hidden #mapwrap, body.theatre-mode #mapwrap { flex:1 1 auto; min-height:320px; }
   }
+  /* --- What sits on the map: two zones that cannot collide ------------------------------------
+     Outside video export, every overlay lives in one of two zones. The top zone holds the view
+     buttons with any notes under them on the left, and the year on the right. The bottom zone holds
+     the title strip, the Africa tour strip and the narration stacked on the left, and Zomo on the
+     right (above the narration on a phone). Each zone lays out its parts in a grid or a column, so a
+     wrapped row of buttons or a long caption pushes its neighbours instead of covering them.
+     Video export keeps its own fixed layout: there the zones step aside (display: contents) and
+     each part takes the absolute position given to it below. */
+  body:not(.video-mode) .ov-zone { position:absolute; z-index:800; display:grid; gap:6px 14px; pointer-events:none; }
+  body:not(.video-mode) :is(#ov-top, #ov-notes, #ov-bottom, #ov-lower) > * { position:static; inset:auto; margin:0; }
+  body.video-mode :is(.ov-zone, #ov-notes, #ov-lower) { display:contents; }
+  #ov-top { top:10px; left:58px; right:12px; grid-template-columns:minmax(min(300px,52%),1fr) minmax(0,auto);
+    grid-template-areas:"tools hud" "notes hud"; align-items:start; }
+  #ov-top #view-tools { grid-area:tools; max-width:none; pointer-events:auto; }
+  #ov-notes { grid-area:notes; display:flex; flex-direction:column; align-items:flex-start; gap:6px; min-width:0; }
+  #ov-top #hud { grid-area:hud; justify-self:end; transition:margin-top .8s cubic-bezier(.6,0,.2,1), opacity .4s; }
+  body:not(.video-mode) #mapwrap.cinema #hud { margin-top:30px; }
+  #ov-bottom { left:16px; right:18px; bottom:max(42px, calc(var(--attrib, 16px) + 14px)); grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"text guide"; align-items:end; }
+  #ov-lower { grid-area:text; display:flex; flex-direction:column; align-items:flex-start; gap:8px; min-width:0; transition:opacity .4s; }
+  #ov-lower > #story-caption { align-self:stretch; }
+  #ov-lower > #tour-strip { max-width:min(460px,100%); }
+  #ov-lower > #lower { max-width:min(560px,100%); }
+  #ov-bottom #story-guide { grid-area:guide; }
+  /* Zomo takes at most a quarter of the map's height (set from the map's real size in fitOverlays),
+     and steps out on a map too short to share with the year, the buttons and the narration. */
+  body:not(.video-mode) #story-guide { width:auto; }
+  body:not(.video-mode) #story-guide .guide-sprite { height:min(171px, calc(var(--map-h, 900px) * .25)); width:auto; aspect-ratio:128/171; }
+  body:not(.video-mode) #mapwrap[data-short="true"] #story-guide { display:none; }
+  /* One lower third at a time: in the caption layouts the narration's first line already carries the
+     date and the scene, so the sliding title strip stays out. */
+  body:is(.details-hidden,.theatre-mode) #mapwrap #lower { display:none; }
+  /* Which lower third shows, one rule per layout. Normal: the Africa tour strip, or in other chapters
+     the title strip that slides in and away; the narration is in the side panel. Details hidden or
+     cinema: the narration caption, whose first line carries the date and place. Video: its own captions. */
+  #mapwrap[data-tour="true"] #tour-strip { display:block; }
+  body:is(.details-hidden,.theatre-mode,.video-mode) #mapwrap #tour-strip { display:none; }
+  body:is(.details-hidden,.theatre-mode) #mapwrap #story-caption { display:block; }
+  #story-caption .story-line { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:4; overflow:hidden; }
+  /* Paused, the caption holds the scene's whole narration: it scrolls inside a bounded box instead of
+     growing over the map */
+  #story-caption.whole { max-height:max(140px, calc(var(--map-h, 600px) * .36)); overflow-y:auto; overscroll-behavior:contain;
+    pointer-events:auto; scrollbar-width:thin; scrollbar-color:#48604e transparent; }
+  #story-caption.whole .story-line { display:block; -webkit-line-clamp:none; overflow:visible; }
+  #story-caption .story-line.fresh { animation:hxcaption .45s ease-out; }
+  @keyframes hxcaption { from { opacity:0; transform:translateY(5px); } }
+  @media (prefers-reduced-motion: reduce) { #story-caption .story-line.fresh { animation:none; } }
+  @media (max-width:760px) {
+    #ov-top { grid-template-columns:minmax(min(150px,48%),1fr) minmax(0,auto); grid-template-areas:"tools tools" "notes hud"; }
+    #ov-top #hud { min-width:0; overflow-wrap:anywhere; }
+    body:not(.video-mode) #mapwrap.cinema #hud { margin-top:16px; }
+    #ov-bottom { left:12px; right:12px; bottom:max(34px, calc(var(--attrib, 14px) + 10px)); grid-template-columns:minmax(0,1fr);
+      grid-template-areas:"guide" "text"; gap:4px; }
+    body:not(.video-mode) #story-guide .guide-sprite { height:min(120px, calc(var(--map-h, 600px) * .18)); }
+    #ov-bottom #story-guide { justify-self:end; }
+    #story-caption .story-line { -webkit-line-clamp:5; }
+    #story-caption.whole { max-height:max(120px, calc(var(--map-h, 600px) * .28)); }
+  }
+
   /* Export layout: preserve draft, uncertainty and credits inside the captured map. */
   #video-caption, #video-caution, #video-credit, #exit-video, #video-tools { display: none; }
   body.video-mode #app, body.video-mode #stage { display: block; height: 100svh; min-height: 0; }
@@ -436,6 +497,7 @@
     and each scene says how sure it is.</span> <a href="https://github.com/ksai4u-glitch/Taswira/issues/new?title=History%20page%3A%20correction">Suggest a correction</a>.</p>
   <div id="stage">
     <div id="mapwrap">
+      <div id="ov-top" class="ov-zone">
       <div id="view-tools" role="group" aria-label="Viewing options">
         <button id="details-toggle" type="button" aria-expanded="true" aria-controls="card" title="Hide scene details">Details</button>
         <button id="cinema-toggle" type="button" aria-pressed="false" aria-controls="app">Cinema</button>
@@ -443,11 +505,18 @@
         <button id="culture-toggle" type="button" aria-haspopup="dialog" aria-controls="culture-notes">Lore</button>
         <button id="guide-toggle" type="button" aria-pressed="true" title="Show or hide Zomo">Zomo</button>
       </div>
-      <p id="viewer-status" role="note"></p>
-      <p id="assembly-note" hidden>Architectural illustration · arrangement and counts schematic</p>
-      <div id="story-caption"><p class="story-kicker"></p><p class="story-line"></p></div>
-      <figure id="story-guide" aria-label="Zomo, Taswira’s fictional hare guide"><div class="guide-sprite"></div><figcaption>Zomo</figcaption></figure>
+      <div id="ov-notes"><p id="viewer-status" role="note"></p>
+      <p id="assembly-note" hidden>Architectural illustration · arrangement and counts schematic</p></div>
+      <div id="hud" aria-hidden="true"><div id="hud-year"></div><div id="hud-sub"></div><div id="hud-rewind"></div></div>
+      </div>
+      <div id="ov-bottom" class="ov-zone">
+      <div id="ov-lower">
+      <div id="lower" aria-hidden="true"><span class="lt-bar"></span><p class="lt-kicker"></p><p class="lt-title"></p></div>
       <div id="tour-strip" role="note"><p class="tour-scale"></p><p class="tour-focus"></p><p class="tour-date"></p><p class="tour-note"></p><div class="tour-rail"><span></span></div></div>
+      <div id="story-caption"><p class="story-kicker"></p><p class="story-line"></p></div>
+      </div>
+      <figure id="story-guide" aria-label="Zomo, Taswira’s fictional hare guide"><div class="guide-sprite"></div><figcaption>Zomo</figcaption></figure>
+      </div>
       <div id="map" role="img" aria-label="Map for the current scene. The same information is in the panel and in the text version below."></div>
       <canvas id="globe" aria-hidden="true"></canvas>
       <p id="globe-credit">Continents: <a href="https://doi.org/10.5281/zenodo.13635864">Merdith et al. (2021) plate model</a>, CC BY 4.0</p>
@@ -456,8 +525,6 @@
       <div id="grain" aria-hidden="true"></div>
       <canvas id="fx" aria-hidden="true"></canvas>
       <div class="lb top" aria-hidden="true"></div><div class="lb bot" aria-hidden="true"></div>
-      <div id="lower" aria-hidden="true"><span class="lt-bar"></span><p class="lt-kicker"></p><p class="lt-title"></p></div>
-      <div id="hud" aria-hidden="true"><div id="hud-year"></div><div id="hud-sub"></div><div id="hud-rewind"></div></div>
       <p id="video-caption"></p>
       <p id="video-caution"></p>
       <p id="video-credit"></p>
@@ -528,7 +595,8 @@ try { fxPref = localStorage.getItem(FX_KEY) !== "off"; } catch (e) { /* storage 
 const fxOn = () => captureClock !== null || fxPref && !lessMotion.matches;
 
 // --- Period background --------------------------------------------------------------
-// Land, lakes and rivers from Natural Earth, for historical scenes (see history/geo/README.md).
+// Land, lakes and rivers from Natural Earth, for historical scenes, covering the whole world
+// (see history/geo/README.md).
 // Stored as [lat, lon, dlat, dlon, ...] in thousandths of a degree; drawn on a canvas in its own
 // pane under the scene, with no borders, roads or names.
 function periodBackground() {
@@ -545,17 +613,29 @@ function periodBackground() {
   map.createPane("period").style.zIndex = 250;   // over the tile pane (200), under the scene (400)
   const renderer = L.canvas({ pane: "period", padding: 0.5 });
   const fill = colour => ({ renderer, interactive: false, stroke: false, fill: true, fillColor: colour, fillOpacity: 1 });
-  for (const poly of bg.land) L.polygon(poly.map(decode), fill("#20392c")).addTo(map);
-  for (const poly of bg.lakes) L.polygon(poly.map(decode), { ...fill("#0a1813"), stroke: true, color: "#355b46", weight: 1 }).addTo(map);
-  // Big rivers always; smaller ones only once the camera is close enough for them to help
+  const land = bg.land.map(poly => poly.map(decode)), lakes = bg.lakes.map(poly => poly.map(decode));
+  const rivers = bg.rivers.map(([rank, flat]) => [rank, decode(flat)]);
+  // The land covers the whole world, so pulling back never reaches an edge. A wide screen zoomed
+  // far out shows more than 360 degrees of longitude and Leaflet does not repeat vector layers,
+  // so the world is drawn three times side by side.
   const minor = L.layerGroup();
-  for (const [rank, flat] of bg.rivers) {
-    const line = L.polyline(decode(flat), { renderer, interactive: false, color: "#659482", opacity: .9,
-      weight: rank <= 3 ? 2.4 : rank <= 5 ? 1.7 : rank <= 7 ? 1.2 : 0.9, lineCap: "round", lineJoin: "round" });
-    line.addTo(rank <= 6 ? map : minor);
+  for (const dx of [0, -360, 360]) {
+    const at = pts => dx ? pts.map(([lat, lon]) => [lat, lon + dx]) : pts;
+    // Land is cut into tiles of different detail. A hairline of the land's own colour closes the
+    // anti-aliased seams where tiles meet, which would otherwise show as faint straight lines.
+    for (const poly of land) L.polygon(poly.map(at), { ...fill("#20392c"), stroke: true, color: "#20392c", weight: 1.2 }).addTo(map);
+    for (const poly of lakes) L.polygon(poly.map(at), { ...fill("#0a1813"), stroke: true, color: "#355b46", weight: 1 }).addTo(map);
+    // Big rivers always; smaller ones only once the camera is close enough for them to help
+    for (const [rank, line] of rivers) {
+      if (rank > 6 && dx) continue;
+      L.polyline(at(line), { renderer, interactive: false, color: "#659482", opacity: .9,
+        weight: rank <= 3 ? 2.4 : rank <= 5 ? 1.7 : rank <= 7 ? 1.2 : 0.9, lineCap: "round", lineJoin: "round" })
+        .addTo(rank <= 6 ? map : minor);
+    }
   }
   const showMinor = () => map.getZoom() >= 6.5 ? minor.addTo(map) : map.removeLayer(minor);
   map.on("zoomend", showMinor);
+  map.on("zoom moveend", () => { if (fx && captureClock === null) wake(); });
   showMinor();
 }
 
@@ -568,7 +648,25 @@ const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
 const modernTiles = L.tileLayer(ESRI + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
   maxZoom: 16, attribution: "&copy; Esri, HERE, Garmin, OpenStreetMap",
 });
-map.attributionControl.addAttribution("Historical background: Natural Earth | Borders: GRID3 via geoBoundaries (CC BY 4.0)");
+map.attributionControl.addAttribution("Historical background: Natural Earth");
+const BORDERS_CREDIT = "Borders: GRID3 via geoBoundaries (CC BY 4.0)";
+// The border credit is shown only while a scene draws state borders (a snapshot or a modern reference)
+let bordersCredited = false;      // Leaflet counts additions, so add and remove only on a change
+function creditBorders(on) {
+  if (on === bordersCredited) return;
+  bordersCredited = on;
+  if (on) map.attributionControl.addAttribution(BORDERS_CREDIT);
+  else map.attributionControl.removeAttribution(BORDERS_CREDIT);
+  fitOverlays();
+}
+// The overlay zones size themselves from the map's real height and keep clear of the credit line,
+// which wraps onto more lines on a narrow map
+function fitOverlays() {
+  const wrap = map.getContainer().parentElement, h = map.getSize().y;
+  wrap.style.setProperty("--map-h", h + "px");
+  wrap.style.setProperty("--attrib", map.attributionControl.getContainer().offsetHeight + "px");
+  wrap.dataset.short = h < (small() ? 420 : 300);
+}
 periodBackground();
 const svg = L.svg({ padding: 0.5 }).addTo(map);   // one SVG layer, so striped fills can use <pattern>
 const sceneLayer = L.layerGroup().addTo(map);
@@ -832,17 +930,35 @@ function architecturalFocus(sc,t,live) {
   const f=a.map((v,i)=>v+(b[i]-v)*u);
   return `translate(220,180) scale(${f[2]}) translate(${-f[0]},${-f[1]})`;
 }
+// An architectural setting is drawn on the land, so it scales with the land. At the scene's own
+// camera it is a close-up, sized for the layout (larger in cinema and video). Zooming out shrinks it
+// with the map; far out it becomes a small glyph, so a monument never covers a continent. Zooming in
+// lets it grow until it would fill the map, and no further.
+const GLYPH = { w: 46, h: 58 };
+function setSize(sc) {
+  const cinematic = captureClock !== null || theatreOn, directed = !!sc.beats?.length, size = map.getSize();
+  const close = Math.min(small() ? (cinematic ? 320 : 200) : (cinematic ? (directed ? 1000 : 700) : 430),
+    size.x * (cinematic ? .82 : .48));
+  const scale = Math.pow(2, map.getZoom() - cameraOf(chapter(), sc).zoom);
+  const width = Math.min(close * scale, size.x * .9, size.y * .78 * 440 / 300);
+  return width < Math.max(120, close * .3) ? null : width;
+}
 function assemblyFrame(t,live) {
   for(const set of fx.sets) {
-    const cinematic=captureClock!==null||theatreOn;
-    const directed=!!scene().beats?.length;
-    const width=Math.min(small()?(cinematic?320:200):(cinematic?(directed?1000:700):430),map.getSize().x*(cinematic?.82:.48)),height=width*300/440;
+    const width=setSize(scene()),node=set.marker.getElement(),tip=set.marker.getTooltip();
     if(set.width!==width){
-      set.width=width;const node=set.marker.getElement(),inner=node.querySelector(".hx-in");
-      node.style.width=width+"px";node.style.height=height+"px";node.style.marginLeft=-width/2+"px";node.style.marginTop=-height*.75+"px";
-      inner.style.setProperty("--set-width",width+"px");inner.style.setProperty("--set-height",height+"px");
-      const tip=set.marker.getTooltip();tip.options.direction="bottom";tip.options.offset=L.point(0,height*.25+7);tip.update();
+      set.width=width;node.classList.toggle("hx-glyph",width===null);
+      if(width===null){
+        node.style.width=GLYPH.w+"px";node.style.height=GLYPH.h+"px";node.style.marginLeft=-GLYPH.w/2+"px";node.style.marginTop=-GLYPH.h*.9+"px";
+        tip.options.direction="bottom";tip.options.offset=L.point(0,GLYPH.h*.1+6);tip.update();
+      }else{
+        const height=width*300/440,inner=node.querySelector(".hx-in");
+        node.style.width=width+"px";node.style.height=height+"px";node.style.marginLeft=-width/2+"px";node.style.marginTop=-height*.75+"px";
+        inner.style.setProperty("--set-width",width+"px");inner.style.setProperty("--set-height",height+"px");
+        tip.options.direction="bottom";tip.options.offset=L.point(0,height*.25+7);tip.update();
+      }
     }
+    if(width===null)continue;
     const camera=set.marker.getElement().querySelector('[data-set-camera]');
     camera.setAttribute('transform',architecturalFocus(scene(),t,live));
     for(const el of set.parts) {
@@ -897,7 +1013,8 @@ function drawPlaces(ch, sc) {
     if (f.monument && sc.monuments !== false) {
       const setting=f.monument.setting,w=setting?(small()?218:430):76,h=setting?w*300/440:96;
       m = L.marker(f.coordinates, {keyboard:false, title:f.name, icon:L.divIcon({className:"hx-monument"+(setting?" hx-assemblage":""),
-        html:'<div class="hx-in" style="--set-width:'+w+'px;--set-height:'+h+'px">'+(setting?assemblageSvg(setting):monumentSvg(f.monument.type))+'</div>',iconSize:[w,h],iconAnchor:[w/2,setting?h*.75:86]})});
+        html:'<div class="hx-in" style="--set-width:'+w+'px;--set-height:'+h+'px">'+(setting?assemblageSvg(setting):monumentSvg(f.monument.type))+'</div>'
+          +(setting?'<div class="hx-glyph-art">'+monumentSvg(f.monument.type)+'</div>':''),iconSize:[w,h],iconAnchor:[w/2,setting?h*.75:86]})});
     } else if (form === "communities") {
       raw.push(textLabel(f.coordinates, "self-governing communities", "field-label"));
     } else if (marked) {
@@ -920,6 +1037,7 @@ function drawPlaces(ch, sc) {
       m.addTo(sceneLayer);
       els.push(m);
       raw.push(m.getTooltip().getElement());
+      fx.siteLabels.push(m.getTooltip().getElement());
       if(f.monument?.setting && sc.monuments!==false) fx.sets.push({marker:m,at,parts:[...m.getElement().querySelectorAll("[data-set-part]")]});
     }
     // A documented flag or symbol, as a small badge above the place. Nothing is drawn when none is documented.
@@ -1357,7 +1475,7 @@ new ResizeObserver(() => {
   map.invalidateSize();
   const size = map.getSize(), changed = !size.equals(mapSize);
   mapSize = size;
-  sizeGlobe(); sizeCanvas();          // the effects canvas too, or sparks would land off their places
+  sizeGlobe(); sizeCanvas(); fitOverlays();          // the effects canvas too, or sparks would land off their places
   if (captureClock !== null && fx) {
     if (scene().base !== "deep") {
       const cam = captureCamera(state.t - lead()); map.setView(cam.center, cam.zoom, { animate: false, reset: true });
@@ -1380,7 +1498,7 @@ function render({ animate = true, announce = false } = {}) {
   const rollFrom = ch.area !== "africa" && state.drawnC === state.c ? state.shownYear : null;
   state.drawnC = state.c;
   sceneLayer.clearLayers();
-  fx = { sets: [], points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
+  fx = { sets: [], siteLabels: [], labelKey: null, points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
          timed: [], draws: [], flips: [], ties: [], arrivals: [], heads: [], drifts: [], goods: [], globeLines: [],
          rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
          card: { now: null }, lower: { now: null }, shownCount: { now: null } };
@@ -1398,6 +1516,7 @@ function render({ animate = true, announce = false } = {}) {
   $("mapwrap").dataset.sensitive = !!(sc.sensitive || sc.campaign_clock);
   if (sc.base === "modern") modernTiles.addTo(map);
   else modernTiles.remove();
+  creditBorders(!!sc.snapshot || sc.base === "modern");
   if (sc.snapshot) drawSnapshot(ch, sc);
   else if (sc.base !== "deep") drawPlaces(ch, sc);
   $("assembly-note").hidden = !fx.sets.length;
@@ -1659,6 +1778,7 @@ function frame(now) {
   const cardT = lead() ? state.t : Infinity;
   setOnce(fx.card, cardT < CARD ? Math.round(cardT * 40) : -1, v => showCard(v < 0 ? null : cardT));
   $("hud").style.opacity = cardT < CARD ? 0 : "";
+  $("ov-lower").style.opacity = cardT < CARD ? 0 : "";
 
   // Scene title strip: slides in, holds, slides away
   setOnce(fx.lower, x >= 0 && x < 4.8 ? Math.round(x * 40) : -1, v => {
@@ -1714,7 +1834,13 @@ function frame(now) {
   const storyLines = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
   const storyGap = sc.duration*.55/storyLines.length;
   const storyLine = !live ? sc.text : directedBeat(sc,t)?.beat.text || storyLines[Math.min(storyLines.length-1,Math.max(0,Math.floor(t/storyGap)))].trim();
-  setText($("story-caption").querySelector(".story-line"),storyLine);
+  const captionLine = $("story-caption").querySelector(".story-line");
+  $("story-caption").classList.toggle("whole", !live);
+  if (captionLine.textContent !== storyLine) {
+    captionLine.textContent = storyLine;
+    $("story-caption").scrollTop = 0;
+    captionLine.classList.remove("fresh"); void captionLine.offsetWidth; captionLine.classList.add("fresh");
+  }
   setText($("story-caption").querySelector(".story-kicker"),[sc.when.label,sc.scale||sc.title].join(" · "));
   setText($("viewer-status"),sceneCaution(sc));
   // Narration appears sentence by sentence while playing; everything shows when paused
@@ -1778,6 +1904,67 @@ function frame(now) {
   }
   if (live && state.playing) runCues(t);
   fx.globeBusy = drawGlobe(now);
+  declutterLabels();
+}
+
+// --- Place names that never pile up --------------------------------------------------------------
+// Names are permanent labels beside their points. When the camera pulls back, points crowd together,
+// so each name, in the scene's own order (earlier ones matter more), takes the first free slot from
+// a few positions around its point: beside it, a line above or below, then on the other side. Where
+// something only clips one end of a name, a short sideways step clears it. A name that finds no room
+// is hidden until there is room again; its point stays, and the name is still in the panel and the
+// text version. Overlays (year, buttons, captions, Zomo) count as taken space.
+const LABEL_SLOTS = [[1, 0], [1, -1], [1, 1], [-1, 0], [-1, -1], [-1, 1], [1, -2], [1, 2]];
+function declutterLabels() {
+  if (!fx || !fx.siteLabels.length) return;
+  const visible = fx.siteLabels.filter(el => el.isConnected && !el.classList.contains("hx-hidden"));
+  const size = map.getSize(), c = map.getCenter();
+  const key = [map.getZoom().toFixed(3), c.lat.toFixed(4), c.lng.toFixed(4), size.x, size.y, visible.length,
+    document.body.className, $("ov-top").offsetHeight, $("ov-bottom").offsetHeight].join();   // a new caption can change the free space
+  if (key === fx.labelKey) return;
+  fx.labelKey = key;
+  for (const el of fx.siteLabels) { el.style.translate = ""; el.classList.remove("hx-moved", "hx-crowded"); }
+  const wrap = $("mapwrap").getBoundingClientRect();
+  const box = r => ({ x: r.left, y: r.top, r: r.right, b: r.bottom });
+  const hits = (a, b) => Math.min(a.r, b.r) - Math.max(a.x, b.x) > 1 && Math.min(a.b, b.b) - Math.max(a.y, b.y) > 1;
+  const shown = el => el && !el.hidden && el.getClientRects().length && getComputedStyle(el).visibility !== "hidden"
+    && +getComputedStyle(el).opacity > 0.05;
+  const taken = [...document.querySelectorAll("#view-tools, #ov-notes > *, #hud, #ov-lower > *, #story-guide, .leaflet-control-zoom, .leaflet-control-attribution")]
+    .filter(shown).map(el => box(el.getBoundingClientRect()));
+  // The points themselves (small markers only: halos, uncertainty rings and close-up settings are not obstacles)
+  const dots = [];
+  for (const pt of fx.points) for (const el of pt.els) {
+    if (fx.siteLabels.includes(el) || el.classList?.contains("hx-hidden")) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width > 1 && r.width <= 60 && r.height <= 60) dots.push({ pt, ...box(r) });
+  }
+  const rects = visible.map(el => box(el.getBoundingClientRect()));
+  visible.forEach((el, i) => {
+    const r0 = rects[i], w = r0.r - r0.x, h = r0.b - r0.y;
+    // A setting's name hangs below it and may rise onto the setting itself, over its own point
+    const plate = el.classList.contains("leaflet-tooltip-bottom"), own = plate && fx.points.find(pt => pt.els.includes(el));
+    const blocks = taken.concat(dots.filter(d => d.pt !== own));
+    const fits = r => r.x >= wrap.left + 2 && r.r <= wrap.right - 2 && r.y >= wrap.top + 2 && r.b <= wrap.bottom - 2
+      && !blocks.some(t => hits(t, r));
+    const right = el.classList.contains("leaflet-tooltip-right"), flipBy = w + 28;
+    for (const [side, row] of LABEL_SLOTS) {
+      let dx = side === 1 ? 0 : right ? -flipBy : flipBy;
+      const dy = row * (h + 3);
+      let r = { x: r0.x + dx, y: r0.y + dy, r: r0.r + dx, b: r0.b + dy };
+      if (!fits(r)) {
+        const steps = blocks.filter(t => hits(t, r)).flatMap(t => [t.x - 2 - r.r, t.r + 2 - r.x])
+          .concat([wrap.left + 2 - r.x, wrap.right - 2 - r.r])
+          .filter(s => s && Math.abs(s) <= w * 0.5).sort((a, b) => Math.abs(a) - Math.abs(b));
+        const step = steps.find(s => fits({ ...r, x: r.x + s, r: r.r + s }));
+        if (step === undefined) continue;
+        r = { ...r, x: r.x + step, r: r.r + step }; dx += step;
+      }
+      if (dx || dy) { el.style.translate = `${dx}px ${dy}px`; el.classList.add("hx-moved"); }
+      taken.push(r);
+      return;
+    }
+    el.classList.add("hx-crowded");
+  });
 }
 
 function showCard(ct) {
