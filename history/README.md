@@ -55,8 +55,16 @@ tribute get an arrow towards the overlord. A move's `type` is one of three motio
 - `migration`: a soft, widening band with drifting dots and a `period` label, such as "by the
   15th century". `uncertain: "start"` (or `"end"`) adds a faint dashed lead beyond that end of the
   path, ending in a "?"; `"whole"` draws the whole move faintly.
-- `campaign`: a hard arrow drawn leg by leg, with a pulse at each stop. `dates` gives a label per
-  place on the path, such as `{"kano": "3 Feb 1903"}`.
+- `campaign`: a hard arrow drawn leg by leg. `stops` dates every place on the path, for example
+  `{"kano": {"date": "1903-02-03", "precision": "day", "label": "3 Feb 1903"}}`.
+  CE dates use ISO `YYYY`, `YYYY-MM` or `YYYY-MM-DD`, matching `precision` (`year`, `month`, `day`).
+  `approximate: true` adds an approximation marker; year/month-only dates keep their precision
+  on screen. The build rejects missing, invalid, out-of-order and out-of-scene stops.
+  One compiled clock drives all campaign legs, arrivals, date labels, control changes and the
+  year counter. Time is distributed by date gaps with at least 1.8 seconds per leg; scenes too
+  short to support readable timing fail validation. Partial dates anchor the beginning of their
+  interval for presentation only, never as a claim that the capture happened on 1 January or the
+  first of a month. Route segments remain schematic, not a reconstruction of marching speed.
 - `trade`: a dotted route with goods moving along it, and a `goods` label.
 
 A scene's `control` marks colonial claims: `{"sokoto": "claimed"}` draws a hatched disc (on paper
@@ -134,7 +142,8 @@ Leave `background` out (or use `"period"`) for the neutral map.
 While a scene plays, things appear over time: a year counter runs from `when.from` to `when.to`,
 the narration appears sentence by sentence, places pulse in one after another, and on state maps
 the new borders draw themselves before the new states take their colours. Jumping to a scene shows
-it finished. Optional extras:
+it finished, with the full date label rather than an animated starting year. Reduced-motion
+views also show complete information. Optional extras:
 
 - `furnace`: feature ids that glow, for iron working.
 - `mood`: the decoration while a scene with places plays. One of `survey` (a radar-like sweep over
@@ -168,6 +177,38 @@ covered, and `from`: the state it came from in the previous snapshot) and `split
 that were divided between earlier states. The build stops if any of today's states is missing or
 placed twice, if the number of states does not match `count`, or if a `from` does not exist.
 
+## Playback and reference chapters
+
+`CHAPTERS` orders the chapter bar. `reference: true` makes a chapter optional reference: it stays
+available through its button, scene navigation and deep links, but normal Play skips it. Play in
+a reference chapter stops at its end. The Map key is last in the bar and marked "reference";
+the current film sequence is Deep time → Nok → States. Replay restarts that sequence, or the
+selected reference chapter when exploring the key.
+
+## Rules for war and violence
+
+Humour must not cover killing, enslavement, starvation, displacement or atrocity. No jokes,
+comic sounds or celebratory effects accompany those passages. Set `sensitive: true` on scenes
+about these subjects: their factual markers and lines remain, but decorative canvas effects
+and marker pop/rise animations are suppressed. Campaign scenes receive this treatment automatically,
+including arrival rings, bursts, shockwaves and victory glows.
+
+For Acts 4 and 6, follow this sequence:
+
+1. Establish the place, actors and immediate context.
+2. Name forces; never imply their strength through icon size.
+3. Show advances and retreats through sourced, dated stops.
+4. Show a siege only where it is documented; do not invent a perimeter.
+5. Change the captured site's marker on its date. A captured town does not fill surrounding territory.
+6. Show fronts only as dated, sourced snapshots; never interpolate between them.
+7. Give human consequences their own cards, apart from military movement.
+8. Include aftermath: governance, livelihoods, displacement, rebuilding and continuing resistance
+   where sources support them.
+
+Uncertain casualty and displacement numbers appear as sourced ranges with a period and category,
+never as running counters. Explain incompatible estimates separately. A campaign's animated path
+is a presentation of documented links, not evidence of a surveyed route or a moving front.
+
 ## Rules the content follows
 
 1. Draw what the evidence supports: dated points for archaeology, legal snapshots for state creation.
@@ -186,6 +227,7 @@ With Playwright and Chromium installed, build a preview outside `docs/` (for exa
 
 ```
 node tests/history_browser.cjs /tmp/history.html /tmp/history-deps /tmp/history-screenshots
+node tests/history_playback_browser.cjs /tmp/history.html /tmp/history-deps
 ```
 
 The dependency directory holds local copies of `leaflet.js` and `leaflet.css` 1.9.4,
