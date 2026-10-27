@@ -10,9 +10,9 @@
   read it, then moves on. Everything drawn for a scene is worked out from the scene
   alone, so playing, jumping back, pressing Next or opening a link all show the same thing.
 
-  Scenes set before 1914 get a plain background of land, lakes and rivers from Natural Earth,
-  so ancient places never sit on today's borders, roads or town names. Later scenes use Esri's
-  modern map tiles. The two cross-fade when the story crosses that line. Scenes in deep time,
+  Historical scenes get a plain background of land, lakes and rivers from Natural Earth,
+  so places never sit on later roads or town names. A scene from 1914 onward can explicitly use
+  Esri's modern map as a locator, with a note explaining its limits. Scenes in deep time,
   millions of years ago, show a globe instead, with the continents where a plate model puts them.
 
   On top of that sits a layer of effects (title cards, light sweeps, sparks, dust, ripples) drawn
@@ -336,7 +336,7 @@
     moving sparks, dust, light and ripples are decoration: only the dots, lines, colours and text carry information.</p>
   {{TRANSCRIPT}}
   <p class="tr-sources">State borders: GRID3 Nigeria state boundaries via geoBoundaries (CC BY 4.0), simplified.
-    Background map: Natural Earth (public domain) for scenes before 1914, Esri after. This page is part of <a href="./">Taswira</a>.</p>
+    Background map: Natural Earth (public domain); Esri only for scenes explicitly labelled as modern reference maps. This page is part of <a href="./">Taswira</a>.</p>
 </main>
 
 <script>
@@ -374,7 +374,7 @@ try { fxPref = localStorage.getItem(FX_KEY) !== "off"; } catch (e) { /* storage 
 const fxOn = () => fxPref && !lessMotion.matches;
 
 // --- Period background --------------------------------------------------------------
-// Land, lakes and rivers from Natural Earth, for scenes before 1914 (see history/geo/README.md).
+// Land, lakes and rivers from Natural Earth, for historical scenes (see history/geo/README.md).
 // Stored as [lat, lon, dlat, dlon, ...] in thousandths of a degree; drawn on a canvas in its own
 // pane under the scene, with no borders, roads or names.
 function periodBackground() {
@@ -411,7 +411,7 @@ const map = L.map("map", { zoomSnap: 0, minZoom: 5, maxZoom: 11, attributionCont
   .setView([9.1, 8.6], 6);
 const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
 L.tileLayer(ESRI + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
-  maxZoom: 16, attribution: "&copy; Esri, HERE, Garmin, OpenStreetMap | Before 1914: Natural Earth"
+  maxZoom: 16, attribution: "&copy; Esri, HERE, Garmin, OpenStreetMap | Historical background: Natural Earth"
     + " | Borders: GRID3 via geoBoundaries (CC BY 4.0)",
 }).addTo(map);
 periodBackground();
@@ -605,7 +605,7 @@ const textLabel = (ll, html, cls) => L.marker(ll, { interactive: false, keyboard
   .addTo(sceneLayer).getElement();
 
 function drawPlaces(ch, sc) {
-  // Today's state borders help place the 20th-century digs; before 1914 there is nothing modern on the map
+  // Today's state borders are only a locator in an explicitly labelled modern reference scene.
   if (sc.base === "modern") todaysBorders();
   vocabDefs();
   const dim = new Set(sc.dim || []), furnace = new Set(sc.furnace || []);
@@ -1128,6 +1128,7 @@ function render({ animate = true, announce = false } = {}) {
     `<p class="c-text">${sentences.map(s => `<span class="line">${esc(s)}</span>`).join("")}</p>` +
     (sc.disputed ? `<div class="c-disputed"><b>Disputed.</b> ${esc(sc.disputed)}</div>` : "") +
     (sc.unchecked ? `<div class="c-disputed"><b>Not yet checked.</b> ${esc(sc.unchecked)}</div>` : "") +
+    (sc.background === "modern-reference" ? `<p class="c-method"><b>Modern reference map.</b> ${esc(sc.background_note)}</p>` : "") +
     legend(ch, sc) + `<h3>Sources for this scene</h3>${sourceList(sc.sources)}`;
   $("card").scrollTop = 0;
   fx.sentences = [...$("card").querySelectorAll(".c-text .line")];
@@ -2069,3 +2070,4 @@ readLink();
 </script>
 </body>
 </html>
+
