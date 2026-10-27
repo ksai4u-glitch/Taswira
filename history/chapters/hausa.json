@@ -1,7 +1,7 @@
 {
   "id": "hausa",
   "title": "Hausa cities: walls, markets and kings",
-  "period": "about 1000 to 1500 CE",
+  "period": "about 1000 to 1526 CE",
   "intro": "Walled towns grew across the Hausa lands of today's northern Nigeria. This chapter begins with Kano. Most of its early dates come from the Kano Chronicle, a history compiled from older traditions. It counts reigns by their length, so its years are a later reckoning and are labelled that way. The copy translated in 1908 was written down in the late nineteenth century; the historian Murray Last argues its first edition dates from the mid-1600s.",
   "features": [
     {
@@ -321,6 +321,230 @@
       }
     },
     {
+      "id": "kano-life",
+      "kind": "point",
+      "name": "Kano · the people inside",
+      "short": "Kano",
+      "coordinates": [
+        12.0,
+        8.52
+      ],
+      "what": "Who lived in Kano in the fifteenth century, told from the Kano Chronicle's reigns of Abdullahi Burja (1438–1452), Yakubu (1452–1463) and Muhammad Rumfa (1463–1499), by its reckoning, and from Leo Africanus's description, written in 1526.",
+      "evidence": "The Kano Chronicle (Palmer's 1908 translation), Lovejoy (1978) on kola, and Leo Africanus's description as summarised after Fisher (1978)",
+      "location": "Representative point for the old walled city, rounded; not a survey of the walls or gates.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "kano-chronicle-wiki",
+        "kano-chronicle-burja",
+        "kano-chronicle-yakubu",
+        "kano-chronicle-rumfa",
+        "unesco-kano-walls",
+        "kano-city-leo"
+      ],
+      "monument": {
+        "type": "walled-city",
+        "setting": "walled-city",
+        "base": "kano-city",
+        "from": 900,
+        "to": 1526,
+        "note": "Carries on from the previous scene's stage set as it stood in 1438; Rumfa's palace, walls and market rise again at their own date. People, camels and goods are small schematic figures with no faces, dress or likenesses, and their numbers are illustrative. The twenty-one towns of captives are shown as a count, because their places are not known. Roads are schematic.",
+        "sources": [
+          "kano-chronicle-burja",
+          "kano-chronicle-yakubu",
+          "kano-chronicle-rumfa",
+          "unesco-kano-walls",
+          "lovejoy-1978-wangara"
+        ],
+        "parts": [
+          {
+            "id": "palace",
+            "at": 27.4
+          },
+          {
+            "id": "palace-courts",
+            "at": 27.9
+          },
+          {
+            "id": "palace-gate",
+            "at": 28.3
+          },
+          {
+            "id": "rumfa-wall-1",
+            "at": 28.4,
+            "dur": 1.0
+          },
+          {
+            "id": "gate-dagachi",
+            "at": 28.6
+          },
+          {
+            "id": "gate-mata",
+            "at": 29.0
+          },
+          {
+            "id": "rumfa-wall-2",
+            "at": 29.0,
+            "dur": 1.0
+          },
+          {
+            "id": "gate-gertawasa",
+            "at": 29.4
+          },
+          {
+            "id": "gate-kawayi",
+            "at": 29.8
+          },
+          {
+            "id": "wall-undescribed",
+            "at": 29.9,
+            "dur": 0.6
+          },
+          {
+            "id": "rumfa-wall-3",
+            "at": 30.0,
+            "dur": 1.0
+          },
+          {
+            "id": "gate-naisa",
+            "at": 30.2
+          },
+          {
+            "id": "gate-kansakali",
+            "at": 30.8
+          },
+          {
+            "id": "kurmi",
+            "at": 31.0
+          },
+          {
+            "id": "kurmi-stalls-1",
+            "at": 31.3
+          },
+          {
+            "id": "kurmi-stalls-2",
+            "at": 31.6
+          },
+          {
+            "id": "trade-roads",
+            "at": 32.2
+          },
+          {
+            "id": "north-road",
+            "at": 32.6
+          },
+          {
+            "id": "manuscript",
+            "at": 33.0
+          },
+          {
+            "id": "homes",
+            "at": 0.6,
+            "year": 1095,
+            "label": "Homes inside the first wall, which was built to protect a growing population (UNESCO file); number and form schematic",
+            "sources": [
+              "unesco-kano-walls",
+              "wiki-hausa-architecture"
+            ]
+          },
+          {
+            "id": "townspeople",
+            "at": 1.4,
+            "year": 1095,
+            "label": "Townspeople: schematic figures, with no faces or dress drawn",
+            "sources": [
+              "unesco-kano-walls"
+            ]
+          },
+          {
+            "id": "road-bornu",
+            "at": 5.0,
+            "year": 1438,
+            "label": "Road towards Bornu, which Abdullahi Burja opened, 1438–1452 (Kano Chronicle reckoning); route schematic",
+            "sources": [
+              "kano-chronicle-burja"
+            ]
+          },
+          {
+            "id": "road-gwanja",
+            "at": 6.4,
+            "year": 1438,
+            "label": "Road towards Gwanja, the Chronicle's name for the lands to the south-west, opened by Burja; route schematic. The Gonja state itself was founded later (Lovejoy 1978)",
+            "sources": [
+              "kano-chronicle-burja",
+              "lovejoy-1978-wangara"
+            ]
+          },
+          {
+            "id": "camels",
+            "at": 10.4,
+            "year": 1438,
+            "label": "Camels: Burja was the first in Hausaland to own them (Kano Chronicle); caravan schematic",
+            "sources": [
+              "kano-chronicle-burja"
+            ]
+          },
+          {
+            "id": "captive-towns",
+            "at": 15.8,
+            "until": 21.0,
+            "year": 1438,
+            "label": "Twenty-one towns of captives taken in raids to the south under Burja (Kano Chronicle). Their places are not known, so they are shown as a count while the Chronicle's record is told",
+            "sources": [
+              "kano-chronicle-burja"
+            ]
+          },
+          {
+            "id": "fulani-books",
+            "at": 21.6,
+            "year": 1452,
+            "label": "Fulani from Mali bring books on divinity and etymology, in Yakubu's reign, 1452–1463 (Kano Chronicle reckoning)",
+            "sources": [
+              "kano-chronicle-yakubu"
+            ]
+          },
+          {
+            "id": "salt",
+            "at": 23.8,
+            "year": 1452,
+            "label": "Salt becomes common in Hausaland, in Yakubu's reign (Kano Chronicle); slabs schematic",
+            "sources": [
+              "kano-chronicle-yakubu"
+            ]
+          },
+          {
+            "id": "kurmi-traders",
+            "at": 33.6,
+            "year": 1463,
+            "label": "Traders at Kurmi: Rumfa's reign drew traders and scholars to Kano; figures schematic",
+            "sources": [
+              "kano-chronicle-rumfa",
+              "wiki-kurmi-market"
+            ]
+          },
+          {
+            "id": "council",
+            "at": 36.4,
+            "year": 1463,
+            "label": "The Tara-ta-Kano, a council of nine that Rumfa began (Kano Chronicle); nine marks with no likenesses, place schematic",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "kakaki",
+            "at": 40.6,
+            "year": 1463,
+            "label": "Kakaki, the long metal trumpets of Hausa royal courts, which Rumfa was the first to have (Kano Chronicle); figures schematic",
+            "sources": [
+              "kano-chronicle-rumfa",
+              "wiki-kakaki"
+            ]
+          }
+        ]
+      }
+    },
+    {
       "id": "katsina",
       "kind": "point",
       "name": "Katsina",
@@ -335,6 +559,25 @@
       "disputed": null,
       "sources": [
         "kano-chronicle-rumfa"
+      ]
+    },
+    {
+      "id": "bornu",
+      "kind": "point",
+      "form": "kingdom",
+      "name": "Bornu",
+      "coordinates": [
+        13.083,
+        12.367
+      ],
+      "what": "The kingdom east of Kano that grew from Kanem. By the Kano Chronicle's reckoning, Abdullahi Burja (1438–1452) was the first Hausa king to send it tribute, and he opened the road from Bornu to Gwanja through Kano.",
+      "evidence": "Kano Chronicle (Palmer 1908) and secondary sources",
+      "location": "Drawn at Ngazargamu, which became Bornu's capital about 1472. The point stands for the kingdom, not a city.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-bornu",
+        "kano-chronicle-burja"
       ]
     }
   ],
@@ -545,6 +788,254 @@
             "to": 1499,
             "label": "By 1499 · Kano Chronicle reckoning",
             "basis": "chronicle"
+          }
+        }
+      ]
+    },
+    {
+      "id": "kano-people",
+      "title": "Who lived inside the walls",
+      "when": {
+        "from": 1438,
+        "to": 1526,
+        "label": "1438–1526 · Kano Chronicle reckoning and Leo Africanus"
+      },
+      "camera": {
+        "center": [
+          12.25,
+          8.52
+        ],
+        "zoom": 8.5
+      },
+      "camera_path": [
+        {
+          "at": 1.2,
+          "center": [
+            12.25,
+            8.52
+          ],
+          "zoom": 8.62,
+          "dur": 42
+        },
+        {
+          "at": 44.4,
+          "center": [
+            12.6,
+            9.98
+          ],
+          "zoom": 6.3,
+          "dur": 3.6
+        }
+      ],
+      "show": [
+        "kano-life",
+        "katsina",
+        "bornu"
+      ],
+      "appear": {
+        "katsina": 46.0,
+        "bornu": 46.8
+      },
+      "dim": [],
+      "text": "Go back before Rumfa, to King Abdullahi Burja. People already lived inside the first wall. The Chronicle says Burja opened roads from Bornu, in the east, to Gwanja, in the south-west. He was the first in Hausaland to own camels. He was also the first to send tribute to Bornu. His men raided the south for captives, and settled them in twenty-one new towns. Under Yakubu, Fulani came from Mali with books on divinity and etymology. Salt became common in Hausaland. Then came Rumfa: his palace, new walls through named gates, and Kurmi market. Traders and scholars came to the city. Rumfa gave offices of state to eunuchs, and began a council of nine, the Tara-ta-Kano. He began kulle, the seclusion of women, and was the first to have kakaki, long royal trumpets. In his time came Kano's first war with Katsina. It lasted eleven years, and neither side won. Writing in 1526, Leo Africanus described Kano's people as wealthy merchants and skilled craftsmen. Whether he ever went there is doubted. By then, Wangara merchants had probably brought kola nuts into the trade.",
+      "sources": [
+        "kano-chronicle-wiki",
+        "last-1980-kano-chronicle",
+        "kano-chronicle-burja",
+        "kano-chronicle-yakubu",
+        "kano-chronicle-rumfa",
+        "wiki-kingdom-kano",
+        "wiki-bornu",
+        "lovejoy-1978-wangara",
+        "leo-africanus-wiki",
+        "kano-city-leo",
+        "wiki-kakaki",
+        "unesco-kano-walls",
+        "wiki-kurmi-market",
+        "archnet-gidan-rumfa",
+        "verskin-maghili"
+      ],
+      "disputed": "Did Leo Africanus see Kano? Fisher (1978) doubts that he visited Hausaland at all, so his description is given as his account, not as an eyewitness record. Yakubu's reign is 1452–1463 by the Chronicle's eleven years; one summary starts it in 1432.",
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 58,
+      "scale": "Hausa cities · Kano",
+      "focus_label": "Kano · who lived inside",
+      "beats": [
+        {
+          "at": 0,
+          "text": "Go back before Rumfa, to King Abdullahi Burja. People already lived inside the first wall.",
+          "pose": 1,
+          "focus": [
+            186,
+            176,
+            1.15
+          ],
+          "when": {
+            "from": 1438,
+            "to": 1452,
+            "label": "1438–1452 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 4.5,
+          "text": "The Chronicle says Burja opened roads from Bornu, in the east, to Gwanja, in the south-west.",
+          "pose": 5,
+          "focus": [
+            220,
+            160,
+            0.8
+          ],
+          "when": {
+            "from": 1438,
+            "to": 1452,
+            "label": "1438–1452 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 10,
+          "text": "He was the first in Hausaland to own camels.",
+          "pose": 3,
+          "focus": [
+            300,
+            150,
+            1.1
+          ],
+          "when": {
+            "from": 1438,
+            "to": 1452,
+            "label": "1438–1452 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 15,
+          "text": "He was also the first to send tribute to Bornu. His men raided the south for captives, and settled them in twenty-one new towns.",
+          "pose": 7,
+          "focus": [
+            360,
+            262,
+            1.5
+          ],
+          "when": {
+            "from": 1438,
+            "to": 1452,
+            "label": "1438–1452 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 21,
+          "text": "Under Yakubu, Fulani came from Mali with books on divinity and etymology. Salt became common in Hausaland.",
+          "pose": 3,
+          "focus": [
+            120,
+            166,
+            1.3
+          ],
+          "when": {
+            "from": 1452,
+            "to": 1463,
+            "label": "1452–1463 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 27,
+          "text": "Then came Rumfa: his palace, new walls through named gates, and Kurmi market.",
+          "pose": 1,
+          "focus": [
+            226,
+            214,
+            0.9
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 32.4,
+          "text": "Traders and scholars came to the city.",
+          "pose": 5,
+          "focus": [
+            190,
+            236,
+            1.3
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 36,
+          "text": "Rumfa gave offices of state to eunuchs, and began a council of nine, the Tara-ta-Kano.",
+          "pose": 7,
+          "focus": [
+            268,
+            226,
+            1.5
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 40,
+          "text": "He began kulle, the seclusion of women, and was the first to have kakaki, long royal trumpets.",
+          "pose": 3,
+          "focus": [
+            290,
+            236,
+            1.4
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 44,
+          "text": "In his time came Kano's first war with Katsina. It lasted eleven years, and neither side won.",
+          "pose": 7,
+          "focus": [
+            226,
+            200,
+            0.85
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 49,
+          "text": "Writing in 1526, Leo Africanus described Kano's people as wealthy merchants and skilled craftsmen. Whether he ever went there is doubted. By then, Wangara merchants had probably brought kola nuts into the trade.",
+          "pose": 3,
+          "focus": [
+            226,
+            200,
+            0.85
+          ],
+          "when": {
+            "from": 1526,
+            "to": 1526,
+            "label": "1526 · Leo Africanus's account; his visit is doubted",
+            "basis": "account"
           }
         }
       ]

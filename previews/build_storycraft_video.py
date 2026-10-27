@@ -15,6 +15,10 @@ COPIES = {
                         'labelled as archaeology, Kano Chronicle reckoning, sources that differ, or oral tradition with no date.',
                         'https://github.com/ksai4u-glitch/Taswira/blob/main/history/chapters/hausa.json',
                         'The Hausa cities chapter and its sources', 'taswira-kano.mp4'),
+    'kano-life-video.html': ('Who lived inside Kano\'s walls, 1438 to 1526: homes, roads to Bornu and Gwanja, camels, captives, '
+                             'scholars, salt, traders and Rumfa\'s court, each dated by the Kano Chronicle\'s reckoning, and Leo Africanus\'s doubted account.',
+                             'https://github.com/ksai4u-glitch/Taswira/blob/main/history/chapters/hausa.json',
+                             'The Hausa cities chapter and its sources', 'taswira-kano-life.mp4'),
 }
 
 

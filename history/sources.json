@@ -807,7 +807,7 @@
     "url": "https://en.wikipedia.org/wiki/Muhammad_Rumfa",
     "kind": "primary source passage reproduced in an encyclopedia article",
     "rights": "Facts and short phrases cited.",
-    "checked": "Opened 27 Oct 2026. In order: he built the Dakin Rimfa; the next year he entered his house; the next year he extended the walls from Kofan Dagachi towards Kofan Mata, on to Kofan Gertawasa and Kofan Kawayi, and from Kofan Naissa to Kofan Kansakali; he established the Kurmi market. First war with Katsina, 11 years, neither side winning. Ruled 37 years (1463-1499 by later reckoning). The Chronicle itself gives no calendar years and does not name al-Maghili."
+    "checked": "Opened 27 Oct 2026. In order: he built the Dakin Rimfa; the next year he entered his house; the next year he extended the walls from Kofan Dagachi towards Kofan Mata, on to Kofan Gertawasa and Kofan Kawayi, and from Kofan Naissa to Kofan Kansakali; he established the Kurmi market. Among his 12 innovations (opened again 27 Oct 2026, evening): the custom of Kulle; giving eunuchs the offices of state; the first to have Kakaki and Figinni and ostrich-feather sandals; the Tara-ta-Kano. First war with Katsina, 11 years, neither side winning. Ruled 37 years (1463-1499 by later reckoning). The article adds that his reign saw a wave of scholars and traders. The Chronicle itself gives no calendar years and does not name al-Maghili."
   },
   "kano-chronicle-gijimasu": {
     "title": "Gijimasu (with the Kano Chronicle passage on the first wall)",
@@ -907,5 +907,68 @@
     "kind": "encyclopedia article summarising an architectural study; secondary",
     "rights": "Facts cited.",
     "checked": "Opened 27 Oct 2026. Laterite earth as the main building material; walls of tubali; city walls with a sloping profile, crenellated crest and loopholes."
+  },
+  "kano-chronicle-burja": {
+    "title": "Abdullahi Burja (with the Kano Chronicle passage on his reign, Palmer 1908)",
+    "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+    "year": "checked 2026-10-27",
+    "url": "https://en.wikipedia.org/wiki/Abdullahi_Burja",
+    "kind": "primary source passage reproduced in an encyclopedia article",
+    "rights": "Facts and short phrases cited.",
+    "checked": "Opened 27 Oct 2026. Ruled 1438-1452 by later reckoning. The first in Hausaland to give Bornu tribute (tsare or gaisua); the first to own camels in Hausaland; he opened roads from Bornu to Gwanja. His Galadima Dauda raided to the south for captives and founded 21 towns of them. The Chronicle's numbers of people are not repeated on the map."
+  },
+  "kano-chronicle-yakubu": {
+    "title": "Yakubu (with the Kano Chronicle passage on his reign, Palmer 1908)",
+    "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+    "year": "checked 2026-10-27",
+    "url": "https://en.wikipedia.org/wiki/Yakubu_(sultan)",
+    "kind": "primary source passage reproduced in an encyclopedia article",
+    "rights": "Facts and short phrases cited.",
+    "checked": "Opened 27 Oct 2026. In his time the Fulani came to Hausaland from Mele (Mali) with books on divinity and etymology, and salt became common in Hausaland. He ruled 11 years, before Rumfa (1452-1463 by later reckoning); the article's opening line gives 1432, which does not fit the 11 years."
+  },
+  "wiki-kingdom-kano": {
+    "title": "Kingdom of Kano (Wikipedia)",
+    "author": "Wikipedia contributors (citing Palmer 1908 and M. Adamu, UNESCO General History of Africa vol. 4, 1984)",
+    "year": "checked 2026-10-27",
+    "url": "https://en.wikipedia.org/wiki/Kingdom_of_Kano",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Burja's reign (1438-52) saw Kano begin paying tribute to Bornu; Rumfa (1463-99) gave state offices to eunuchs, and his first war with Katsina lasted 11 years and ended inconclusively. Its uncited sentence on 15th-century exports and imports is not used."
+  },
+  "lovejoy-1978-wangara": {
+    "title": "The Role of the Wangara in the Economic Transformation of the Central Sudan in the Fifteenth and Sixteenth Centuries",
+    "author": "Paul E. Lovejoy, Journal of African History 19:2 (1978), pp. 173-193",
+    "year": "1978",
+    "url": "https://www.cambridge.org/core/journals/journal-of-african-history/article/abs/role-of-the-wangara-in-the-economic-transformation-of-the-central-sudan-in-the-fifteenth-and-sixteenth-centuries/1DB11290A76E4158CE5E60EB0CB0E4B9",
+    "kind": "peer-reviewed article (abstract and notes read; full text paywalled)",
+    "rights": "Facts cited; no text reproduced.",
+    "checked": "Opened 27 Oct 2026. Wangara merchants probably introduced new products such as kola nuts to the Central Sudan in the late fifteenth and sixteenth centuries. A note warns that Gonja was not founded in the fifteenth century, so a fifteenth-century mention of it cannot be taken literally."
+  },
+  "leo-africanus-wiki": {
+    "title": "Leo Africanus (Wikipedia)",
+    "author": "Wikipedia contributors (citing H. J. Fisher 1978 and P. Masonen 2001)",
+    "year": "checked 2026-10-27",
+    "url": "https://en.wikipedia.org/wiki/Leo_Africanus",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Reached Timbuktu about 1510; completed his Description of Africa in 1526; printed by Ramusio in 1550. It is doubtful whether he visited Hausaland and Bornu (Fisher 1978), and possible that he never crossed the Sahara."
+  },
+  "kano-city-leo": {
+    "title": "Kano (Wikipedia), on Leo Africanus's description",
+    "author": "Wikipedia contributors (citing H. J. Fisher, \"Leo Africanus and the Songhay Conquest of Hausaland\", International Journal of African Historical Studies 11:1, 1978, pp. 86-112)",
+    "year": "checked 2026-10-27",
+    "url": "https://en.wikipedia.org/wiki/Kano_(city)",
+    "kind": "encyclopedia (secondary, used as a pointer to the work it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Leo's description of Kano is believed to be of Rumfa's era: wealthy merchants and skilled craftsmen, the ruler's cavalry, and plenty of rice, corn, cotton and citrus. Leo's own text was not opened."
+  },
+  "wiki-kakaki": {
+    "title": "Kakaki (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-27",
+    "url": "https://en.wikipedia.org/wiki/Kakaki",
+    "kind": "encyclopedia article; secondary",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. A long metal trumpet, up to about three metres, played only by men and tied to royalty: in Hausa societies it is played only at a king's or sultan's palace."
   }
 }
