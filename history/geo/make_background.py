@@ -1,13 +1,15 @@
 """
-Make natural-earth-background.json, the map background for scenes before 1914.
+Make natural-earth-background.json, the neutral map background for historical scenes.
 
-Scenes set before 1914 must not sit on today's map (borders, roads, towns), so the
+Historical scenes must not sit on today's map (borders, roads, towns), so the
 history page draws its own background from Natural Earth instead: land, lakes and
 rivers, nothing else. Reservoirs are left out because they were made in the
 20th century (Kainji 1968, Lake Volta 1965).
 
-This script cuts the Natural Earth layers down to the area the page can show,
-simplifies the lines and writes a compact file. Only needed when the background
+The land covers the whole world, so no camera view (the Africa tour zooms out to
+the whole continent and beyond) runs off the edge of the data. Detail rises towards
+the region the story is about. This script simplifies the lines and writes a
+compact file. Only needed when the background
 changes; the result is committed. See history/geo/README.md for the exact files.
 
     python history/geo/make_background.py <folder with the Natural Earth .geojson files>
@@ -22,14 +24,21 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_PATH = os.path.join(HERE, "natural-earth-background.json")
 
-# What the map can show at its widest zoom on a large screen, and the closer area
-# where it zooms in. Boxes are (west, south, east, north) in degrees.
-WIDE = (-40.0, -40.0, 65.0, 45.0)
+# Boxes are (west, south, east, north) in degrees. WORLD is everything the map can show
+# (web maps stop at about 85 degrees north and south); REGION is Africa and its
+# neighbours, where the Africa tour works; NEAR is where the Nigeria chapters zoom in.
+WORLD = (-180.0, -85.0, 180.0, 85.0)
+REGION = (-40.0, -40.0, 65.0, 45.0)
 NEAR = (-6.0, 0.0, 20.0, 18.0)
 # Allowed error when simplifying, in degrees (0.01 is about 1 km)
-TOLERANCE = {"land_wide": 0.03, "land_near": 0.004, "lakes": 0.004, "rivers_near": 0.004, "rivers_wide": 0.02}
-# Outside the closer area only big rivers are kept (Natural Earth scalerank: 1 is the biggest)
+TOLERANCE = {"land_world": 0.08, "land_wide": 0.03, "land_near": 0.004, "lakes": 0.004, "lakes_world": 0.05,
+             "rivers_near": 0.004, "rivers_wide": 0.02, "rivers_world": 0.05}
+# Outside the closer area only big rivers are kept (Natural Earth scalerank: 0 is the biggest),
+# and outside REGION only the biggest of those
 WIDE_RIVER_RANK = 5
+WORLD_RIVER_RANK = 3
+# Outside REGION only the biggest lakes are kept (Superior, Baikal, Titicaca and the like)
+WORLD_LAKE_RANK = 1
 PRECISION = 1000          # coordinates are stored in thousandths of a degree (about 110 m)
 PAD = 0.05                # the detailed and coarse land overlap by this much, so no seam shows
 
@@ -188,27 +197,42 @@ def main():
     if len(sys.argv) != 2:
         sys.exit(__doc__)
     folder = sys.argv[1]
-    # Coarse land around the closer area, detailed land inside it
+    # Land in three levels of detail: the world, REGION, and the closer area. Each level
+    # overlaps the next by PAD, so no seam shows.
     coarse = read(folder, "ne_50m_land")
-    land = [p for box in around(WIDE, NEAR) for p in cut_polygons(coarse, box, TOLERANCE["land_wide"], 0.01)]
+    land = [p for box in around(WORLD, REGION) for p in cut_polygons(coarse, box, TOLERANCE["land_world"], 0.1)]
+    land += [p for box in around(REGION, NEAR) for p in cut_polygons(coarse, box, TOLERANCE["land_wide"], 0.01)]
     land += cut_polygons(read(folder, "ne_10m_land"), NEAR, TOLERANCE["land_near"], 0.0004)
-    lakes = cut_polygons([f for f in read(folder, "ne_10m_lakes")
-                          if f["properties"].get("featurecla") != "Reservoir"],
-                         WIDE, TOLERANCE["lakes"], 0.002)
+    # Lakes are kept whole, never cut at a box edge (a cut lake would show a straight shore).
+    # Every natural lake that reaches REGION, and the biggest ones elsewhere.
+    lakes = []
+    for f in read(folder, "ne_10m_lakes"):
+        if f["properties"].get("featurecla") == "Reservoir":
+            continue
+        for poly in polygons(f["geometry"]):
+            if overlaps(poly[0], REGION):
+                lakes += cut_polygons([{"geometry": {"type": "Polygon", "coordinates": poly}}],
+                                      WORLD, TOLERANCE["lakes"], 0.002)
+            elif rank_of(f) <= WORLD_LAKE_RANK:
+                lakes += cut_polygons([{"geometry": {"type": "Polygon", "coordinates": poly}}],
+                                      WORLD, TOLERANCE["lakes_world"], 0.1)
     rivers = []
     for f in read(folder, "ne_10m_rivers_lake_centerlines"):
         p = f["properties"]
         if p.get("featurecla") not in ("River", "Lake Centerline"):
             continue
-        rank = int(p.get("scalerank") or 10)
+        rank = rank_of(f)
         for line in lines(f["geometry"]):
             for run in clip_line(line, NEAR):
                 rivers.append([rank, encode(simplify(run, TOLERANCE["rivers_near"]))])
             if rank <= WIDE_RIVER_RANK:
                 # Outside the closer area: the same river, coarser. Inside it, the line above is used.
-                for run in clip_line(line, WIDE):
-                    for part in split_outside(run, NEAR):
-                        rivers.append([rank, encode(simplify(part, TOLERANCE["rivers_wide"]))])
+                for part in split_outside(line, NEAR):
+                    for run in clip_line(part, REGION):
+                        rivers.append([rank, encode(simplify(run, TOLERANCE["rivers_wide"]))])
+                    if rank <= WORLD_RIVER_RANK:
+                        for run in split_outside(part, REGION):
+                            rivers.append([rank, encode(simplify(run, TOLERANCE["rivers_world"]))])
     rivers = [r for r in rivers if len(r[1]) >= 4]
     rivers.sort(key=lambda r: -r[0])     # small rivers first, so big ones are drawn on top
 
@@ -219,6 +243,12 @@ def main():
         json.dump(out, f, separators=(",", ":"))
     print(f"Wrote {OUTPUT_PATH}: {len(land)} land polygons, {len(lakes)} lakes, {len(rivers)} river lines, "
           f"{os.path.getsize(OUTPUT_PATH) / 1000:.0f} KB.")
+
+
+def rank_of(feature):
+    """Natural Earth's scalerank (0 is the most important); missing counts as the least."""
+    rank = feature["properties"].get("scalerank")
+    return 10 if rank is None else int(rank)
 
 
 def split_outside(line, box):

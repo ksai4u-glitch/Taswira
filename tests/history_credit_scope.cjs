@@ -1,0 +1,3 @@
+const assert=require('assert/strict'),{creditLines,creditSeconds}=require('../capture_history.cjs');
+const city={clips:[{base:'period'}]},plates={clips:[{base:'deep'}]};
+assert.ok(!creditLines(city).join(' ').includes('Merdith'),'A city-only proof must not credit an unused plate model');assert.ok(creditLines(plates).join(' ').includes('Merdith'),'Plate-model captures must retain their model attribution');assert.ok(creditSeconds(city)>=10,'Viewers need time to read the credit card');assert.ok(creditSeconds(plates)>creditSeconds(city),'The longer model attribution needs more reading time');console.log('PASS: credits follow the actual shot scope and provide reading time.');

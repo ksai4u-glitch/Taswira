@@ -29,6 +29,21 @@ class AfricaHistoryTests(unittest.TestCase):
     def problems(self, ch):
         return bh.check([ch], self.sources, self.states, set(), self.emblems)
 
+    def test_authored_beats_validate_times_pose_and_focus(self):
+        ch, _, sc = self.sample()
+        sc['duration'] = 20
+        sc['beats'] = [{'at': 0, 'text': 'Look at the stone walls.', 'pose': 1, 'focus': [220, 180, 1]}]
+        self.assertEqual(self.problems(ch), [])
+        for bad in [float('nan'), -1, 20]:
+            sc['beats'][0]['at'] = bad
+            self.assertTrue(any('beats' in p for p in self.problems(ch)))
+        sc['beats'][0]['at'] = 0
+        sc['beats'][0]['pose'] = 4
+        self.assertTrue(any('beats' in p for p in self.problems(ch)))
+        sc['beats'][0]['pose'] = 1
+        sc['beats'][0]['focus'] = [220, 180, 99]
+        self.assertTrue(any('beats' in p for p in self.problems(ch)))
+
     def test_africa_area_accepts_southern_site_and_continent_camera(self):
         ch, _, _ = self.sample()
         self.assertEqual(self.problems(ch), [])

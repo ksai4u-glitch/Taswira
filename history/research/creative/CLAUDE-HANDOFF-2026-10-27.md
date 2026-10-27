@@ -264,3 +264,40 @@ or testing every browser. The PNG pose atlas remains a prototype. Full city reco
 recorded narration, original cleared sound design, historian/cultural feedback and final
 publication rights review remain future work. The concept illustration is not the current
 renderer’s visual output.
+
+## Latest directed-story improvement — read this before continuing
+
+The follow-up branch `agent/history-directed-story` starts from merged main `c29dc997`.
+The maintainer asked for improvements after the candid self-review. Preserve the golden
+rules: fluid and catchy motion; forest green/gold/Georgia; layered inhabited architecture;
+African/Hausa specificity; evidence-based dates and labels; distinct migration/trade/war;
+and calm treatment of violence. Do not remove motion to simplify exports.
+
+Implemented in this pass:
+
+- A 32-second Great Zimbabwe sequence with six authored beats: opening question, granite
+  hill, enclosure walls, inner passage/tower, domestic spaces, and a pullback. Captions,
+  purposeful guide poses and local architectural camera focus use those same beats.
+- More schematic domestic groups, supported by the already checked NMMZ/Mukwende accounts.
+  The exact layout/counts and reveal order are illustrative. No invented bridge or period flag.
+- A source-linked **Lore** notebook inside the actual player: Hausa interlace and storytelling,
+  eight cultural records, original knot art and a distinction between cultural and political roles.
+  Opening pauses the story; Close/Escape restores prior playback and focus.
+- Concise, readable credits: ten seconds for this city proof; sixteen when plate attribution
+  is needed. Plate-model credits/sources are conditional on actual deep-time shots.
+- `previews/directed-story.html` is the latest live preview. Older previews are saved snapshots.
+
+The full Hausa city chapter, voiced Zomo rig, original sound design, human activity animations,
+measured architecture and a complete film remain unfinished. This pass improves direction
+inside the existing schematic system; it is not a claim that the full cinematic ambition is met.
+
+Validation: authored-beat rejection tests, live/export caption/pose/focus checks, repeatable
+local focus, notebook keyboard/focus/phone checks, complete reduced motion and existing
+scene/video regressions. Independent review found one minor unused plate-source entry;
+the exporter now selects that source only for deep-time captures.
+
+Final proof: `previews/directed-video.html` embeds the rendered 42-second 1920×1080/60 fps
+H.264 file (2,520 frames: 32-second scene plus ten-second credits). Captions and source
+manifest are alongside it. It remains silent. The in-flight capture started before the
+metadata-only model-source fix; its companion manifest was reconciled to the actual
+city-only shot scope afterwards, without changing frames. PR #53 contains this pass.
