@@ -179,3 +179,21 @@ placed twice, if the number of states does not match `count`, or if a `from` doe
    and described, never copied.
 4. The page stays marked "Unreviewed draft" until a historian has looked at it.
 
+## Browser regression check
+
+With Playwright and Chromium installed, build a preview outside `docs/` (for example, call
+`build_history.build()` and write its returned HTML to a temporary file). Then run:
+
+```
+node tests/history_browser.cjs /tmp/history.html /tmp/history-deps /tmp/history-screenshots
+```
+
+The dependency directory holds local copies of `leaflet.js` and `leaflet.css` 1.9.4,
+`d3-array.js` 3.2.4 and `d3-geo.js` 3.1.1. Set `CHROMIUM_PATH` if necessary. The script intercepts
+CDN requests and uses a placeholder for Esri tiles, so it checks layer selection and requests,
+not the availability or appearance of Esri's live service. Screenshots are optional.
+
+It checks all scenes at 1440×900 and 390×844, jumped to, playing and with reduced motion.
+Historical scenes must leave the modern layer detached; only labelled modern-reference scenes
+may create Esri tiles. The text and all dated scene overlays remain available without tile service.
+
