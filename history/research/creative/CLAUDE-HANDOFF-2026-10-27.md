@@ -295,3 +295,9 @@ Validation: authored-beat rejection tests, live/export caption/pose/focus checks
 local focus, notebook keyboard/focus/phone checks, complete reduced motion and existing
 scene/video regressions. Independent review found one minor unused plate-source entry;
 the exporter now selects that source only for deep-time captures.
+
+Final proof: `previews/directed-video.html` embeds the rendered 42-second 1920×1080/60 fps
+H.264 file (2,520 frames: 32-second scene plus ten-second credits). Captions and source
+manifest are alongside it. It remains silent. The in-flight capture started before the
+metadata-only model-source fix; its companion manifest was reconciled to the actual
+city-only shot scope afterwards, without changing frames. PR #53 contains this pass.

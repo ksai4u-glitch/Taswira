@@ -39,7 +39,7 @@ def package(video, output_name="storycraft-video.html"):
     (root / output_name).write_text(page, encoding='utf-8')
     (root / Path(output_name).with_suffix('.sources.json')).write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     (root / Path(output_name).with_suffix('.vtt')).write_text(captions, encoding='utf-8')
-    print('Wrote storycraft-video.html with the rendered MP4, source manifest and captions.')
+    print(f'Wrote {output_name} with the rendered MP4, source manifest and captions.')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,93 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "clips": [
+    {
+      "chapter": "africa",
+      "scene": "zimbabwe",
+      "duration": 32,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "unesco-great-zimbabwe",
+        "unesco-great-zimbabwe-map",
+        "nmmz-great-zimbabwe",
+        "mukwende-great-zimbabwe"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "great-zimbabwe",
+          "name": "Great Zimbabwe · enclosure",
+          "location": "Representative site coordinate, rounded for an overview; not a surveyed boundary or a precise building footprint. Display halo is illustrative, not a measured confidence interval.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "unesco-great-zimbabwe",
+            "unesco-great-zimbabwe-map",
+            "nmmz-great-zimbabwe",
+            "mukwende-great-zimbabwe"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 32,
+      "seconds": 32
+    }
+  ],
+  "sources": {
+    "natural-earth": {
+      "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+      "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+      "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+      "url": "https://www.naturalearthdata.com/",
+      "kind": "background map data",
+      "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+      "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+    },
+    "unesco-great-zimbabwe": {
+      "title": "Great Zimbabwe National Monument",
+      "author": "UNESCO World Heritage Centre",
+      "year": "checked 2026-10-27",
+      "url": "https://whc.unesco.org/en/list/364/",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Page explicitly licenses its short description CC BY-SA IGO3.0. This is not blanket clearance for images or every page component. Original fact-based prose and original schematic proposed.",
+      "checked": "Opened 27 Oct 2026. Outstanding Universal Value / Brief synthesis: lines52–55 and61 in retrieved page. Construction interval; Hill/Enclosure/Valley division; enclosure date, material and tower form; trade evidence. "
+    },
+    "unesco-great-zimbabwe-map": {
+      "title": "Great Zimbabwe National Monument — Maps / Geographical data",
+      "author": "UNESCO World Heritage Centre",
+      "year": "checked 2026-10-27",
+      "url": "https://whc.unesco.org/en/list/364/maps/",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Coordinate fact cited. No map artwork copied; map-layer reuse terms not verified.",
+      "checked": "Opened 27 Oct 2026. Geographical data table, property364, lines9–12: DMS coordinate recorded above. "
+    },
+    "nmmz-great-zimbabwe": {
+      "title": "Southern Region, Masvingo: Great Zimbabwe",
+      "author": "National Museums and Monuments of Zimbabwe",
+      "url": "https://www.nmmz.co.zw/southern-region-masvingo/",
+      "year": "checked 2026-10-27",
+      "kind": "national heritage authority",
+      "rights": "No source images copied; original geometry and prose based on facts. Image reuse licence not established.",
+      "checked": "Opened 27 Oct 2026. Components include hill, enclosure, valley and peripheral settlements; dry-stone enclosures and dhaka houses/granaries; flourishing1290–1450. No exact inventory or roof reconstruction copied."
+    },
+    "mukwende-great-zimbabwe": {
+      "title": "Great Zimbabwe",
+      "author": "Tawanda Mukwende, Great Zimbabwe University, Metropolitan Museum of Art",
+      "url": "https://www.metmuseum.org/essays/great-zimbabwe",
+      "year": "2025-05-27",
+      "kind": "specialist architectural/historical essay",
+      "rights": "Facts paraphrased, original schematic. Photographs credited to Sosena Solomon are not reused.",
+      "checked": "Opened 27 Oct 2026. Hilltop enclosures, terraced habitation, valley clusters, dhaka building and house floors inside Great Enclosure. Broad occupancy11th–17thcenturies, prominence12th–15th. Assembly is a selected later-phase illustration, not exact building plans or contemporaneous counts."
+    }
+  },
+  "status": "Unreviewed draft; rights and historian review required before publication",
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 42,
+  "frames": 2520,
+  "title": "Taswira · Beyond the monuments",
+  "capture_notes": "Source list reconciled to the actual city-only shot scope after capture. Video frames are unchanged."
+}
