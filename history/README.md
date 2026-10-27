@@ -239,3 +239,49 @@ It checks all scenes at 1440×900 and 390×844, jumped to, playing and with redu
 Historical scenes must leave the modern layer detached; only labelled modern-reference scenes
 may create Esri tiles. The text and all dated scene overlays remain available without tile service.
 
+## Video pilot and exact-time capture
+
+A downloadable, offline viewing copy is in `previews/history-video-pilot.html`, with its caption
+file and source manifest alongside. It embeds the compressed 21-second 1080p/30fps pilot.
+
+The main player has a separate video preview mode. Use **Video preview**, scrub its labelled scene
+time slider, then use **Exit video preview** or Escape to return. Playback does not start on its own.
+The export layout removes the panel and controls from the map, enlarges text, and includes captions,
+draft/uncertainty markers and source credits. The full transcript remains in the normal player.
+
+```js
+window.taswira.info("deep", "south-atlantic");
+window.taswira.seek("deep", "south-atlantic", 7);
+window.taswira.exitVideo();
+```
+
+Chapter and scene can be IDs or zero-based indices. Time is non-negative seconds, including a
+3.6-second title card at the start of a chapter, clamped to the scene's duration. `info()` reports
+the content start, duration, source IDs, location precision and dispute/uncertainty metadata.
+Seeking stops normal playback. The year counter has a fixed scene origin, effects use the explicit
+clock, the globe camera has no time-dependent easing, and the map camera is computed directly from
+cues rather than Leaflet's real-time flight. CSS animations and transitions are disabled only in
+video mode. At a fixed browser, viewport, device scale and fonts, repeated seeks reproduce pixels.
+
+Build a local preview without touching the default `docs/history.html` output:
+
+```
+python build_history.py --output work/history-preview.html
+node tests/history_video_browser.cjs work/history-preview.html work/history-deps
+node tests/history_capture_cli.cjs work/history-preview.html work/history-deps
+node capture_history.cjs work/history-preview.html work/history-deps work/pilot.mp4 30 6
+```
+
+The capture script requires Playwright, Chromium, ffmpeg and the local dependency files listed
+above. `CHROMIUM_PATH` and `FFMPEG_PATH` select binaries. It intercepts dependency requests locally
+and blocks other network requests. It captures three short, existing scenes at 1920×1080 and 30fps
+(or the explicitly requested rate), then adds a credits card. The last argument is seconds per shot.
+It writes an MP4, a WebVTT caption file and a source/uncertainty manifest. Existing outputs are never
+overwritten, and failed captures remove their own temporary files. No voice-over or music is added.
+
+The pilot excludes Esri reference scenes; their video rights remain unresolved. Model outlines are
+modern shapes moved by plate rotations, not ancient coastlines, and physical geography is approximate.
+The pilot and map remain **Unreviewed draft**. Historical review and source-specific reuse checks
+are still required before publishing a finished video. This is a capture and layout pilot, not a
+completed narrated film. The separate director experiment in PR #48 is independent.
+
