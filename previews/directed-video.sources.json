@@ -1,4 +1,5 @@
 {
+  "title": "Taswira · Beyond the monuments",
   "width": 1920,
   "height": 1080,
   "fps": 60,
@@ -87,7 +88,5 @@
   "status": "Unreviewed draft; rights and historian review required before publication",
   "transition": "0.45-second dissolve into each later shot",
   "duration": 42,
-  "frames": 2520,
-  "title": "Taswira · Beyond the monuments",
-  "capture_notes": "Source list reconciled to the actual city-only shot scope after capture. Video frames are unchanged."
+  "frames": 2520
 }
