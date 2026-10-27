@@ -134,7 +134,7 @@
       "show": [
         "kagarko-sites"
       ],
-      "text": "The earliest Nok communities were farmers who arrived around 1500 BCE and mainly grew millet. This phase is known from pottery and plant remains, not from sculpture: the terracottas came about six centuries later.",
+      "text": "The earliest evidence of Nok farming dates to around 1500 BCE. Communities mainly grew millet. This phase is known from pottery and plant remains, not from sculpture: the terracottas came about six centuries later.",
       "sources": [
         "dfg-nok",
         "scientia-breunig"
@@ -243,7 +243,7 @@
       "id": "rediscovery",
       "background": "modern-reference",
       "background_note": "Today's map is used only to locate the archaeological sites. Its roads, towns and borders do not reconstruct the landscape of 1928 to 2021.",
-      "title": "Rediscovery, and looting",
+      "title": "Archaeological research and looting",
       "when": {
         "from": 1928,
         "to": 2021,
@@ -261,7 +261,7 @@
         "taruga",
         "kagarko-sites"
       ],
-      "text": "Tin miners found the first sculptures in 1928 and 1943. Fagg excavated Taruga in 1961, and the Frankfurt project worked systematically from 2005 to 2021. When German researchers began looking for Nok sites from 1989, most of the ones they found had already been looted.",
+      "text": "Tin-mining finds in 1928 and 1943 brought the sculptures to archaeologists' attention. Fagg excavated Taruga in 1961, and the Frankfurt project worked systematically from 2005 to 2021. When German researchers began looking for Nok sites from 1989, most of the ones they found had already been looted.",
       "sources": [
         "wiki-nok",
         "dfg-nok"
