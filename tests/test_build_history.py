@@ -22,6 +22,7 @@ class HistoryDataTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.states, cls.arcs, cls.users = bh.load_states()
+        cls.background = bh.load_background()
         cls.chapters, cls.sources = load()
 
     def chapter(self, cid):
@@ -93,7 +94,7 @@ class HistoryDataTests(unittest.TestCase):
         self.assertTrue(any("shatter needs features" in p for p in found))
 
     def test_outlines_follow_the_snapshot(self):
-        data = bh.page_data(self.chapters, self.sources, self.states, self.arcs, self.users)
+        data = bh.page_data(self.chapters, self.sources, self.states, self.arcs, self.users, self.background)
         snaps = next(c for c in data["chapters"] if c["id"] == "states")["snapshots"]
         between = [i for i, u in enumerate(self.users) if sorted(u) == ["NG-KN", "NG-KT"]]
         self.assertTrue(between)
@@ -109,9 +110,33 @@ class HistoryDataTests(unittest.TestCase):
         self.assertEqual(colours["1976"]["Kano"], colours["1967"]["Kano"])
         self.assertNotEqual(colours["1991"]["Jigawa"], colours["1991"]["Kano"])
 
+    def test_scenes_before_1914_get_the_period_background(self):
+        data = bh.page_data(self.chapters, self.sources, self.states, self.arcs, self.users, self.background)
+        bases = {sc["id"]: sc["base"] for ch in data["chapters"] for sc in ch["scenes"]}
+        for ancient in ("where", "farmers", "terracottas", "iron", "decline"):
+            self.assertEqual(bases[ancient], "period")   # Nok before 1 CE: never on today's map
+        self.assertEqual(bases["rediscovery"], "modern")  # the digs of 1928 to 2021 happened in today's Nigeria
+        self.assertEqual(bases["1963"], "modern")
+        self.assertEqual(bh.base_for({"when": {"from": 1913}}), "period")
+        self.assertEqual(bh.base_for({"when": {"from": 1914}}), "modern")
+
+    def test_background_is_land_lakes_and_rivers_only(self):
+        self.assertEqual(set(self.background), {"land", "lakes", "rivers"})
+        # Lagos lagoon sits at about 6.5 N, 3.4 E: the first point of some land ring is near Nigeria
+        firsts = [(r[0][0] / 1000, r[0][1] / 1000) for r in self.background["land"]]
+        self.assertTrue(any(-5 < lat < 25 and -20 < lon < 30 for lat, lon in firsts))
+        # Kainji Reservoir (1968) must not be drawn as a lake
+        for poly in self.background["lakes"]:
+            lat, lon = poly[0][0] / 1000, poly[0][1] / 1000
+            self.assertFalse(9.8 < lat < 10.6 and 4.3 < lon < 4.8, "Kainji Reservoir is in the background")
+
+    def test_page_has_no_modern_place_name_layer(self):
+        with open(bh.TEMPLATE_PATH, encoding="utf-8") as f:
+            self.assertNotIn("World_Dark_Gray_Reference", f.read())
+
     def test_page_is_built_with_credits_and_text_version(self):
         page, data = bh.build()
-        for must in ("Unreviewed draft", "GRID3", "geoBoundaries", "CC BY 4.0", "Text version"):
+        for must in ("Unreviewed draft", "GRID3", "geoBoundaries", "CC BY 4.0", "Natural Earth", "Text version"):
             self.assertIn(must, page)
         for ch in data["chapters"]:
             for sc in ch["scenes"]:

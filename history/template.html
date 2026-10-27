@@ -9,6 +9,10 @@
   read it, then moves on. Everything drawn for a scene is worked out from the scene
   alone, so playing, jumping back, pressing Next or opening a link all show the same thing.
 
+  Scenes set before 1914 get a plain background of land, lakes and rivers from Natural Earth,
+  so ancient places never sit on today's borders, roads or town names. Later scenes use Esri's
+  modern map tiles. The two cross-fade when the story crosses that line.
+
   On top of that sits a layer of effects (title cards, light sweeps, sparks, dust, ripples) drawn
   on a <canvas>. They are decoration only: they never add places, borders or dates. They can be
   switched off with the Effects button, and are off when the device asks for less motion.
@@ -61,6 +65,7 @@
   #stage { flex: 1; min-height: 0; display: flex; }
   #mapwrap { flex: 1; min-width: 0; position: relative; }
   #map { position: absolute; inset: 0; }
+  #map.leaflet-container { background: #11171d; }   /* the sea, under the period background */
   #hud { position: absolute; top: 12px; right: 12px; z-index: 500; pointer-events: none; text-align: right;
          text-shadow: 0 0 8px #000, 0 0 3px #000; }
   #hud-year { font: 700 34px/1.1 var(--mono); color: var(--accent); text-shadow: 0 0 14px rgb(76 201 224 / .55), 0 0 3px #000; }
@@ -136,7 +141,7 @@
   .group-label.old { color: #cfd8e3; font-style: italic; }
   .c-text .line { transition: opacity .6s; }
   .c-text .line.waiting { opacity: 0; }
-  .c-deco { font-size: 12px; color: var(--text-muted); }
+  .c-deco, .c-base { font-size: 12px; color: var(--text-muted); }
 
   /* Cinematic layer: decoration on top of the map, switched off by the Effects button */
   #fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 470; pointer-events: none; }
@@ -156,11 +161,15 @@
   #hud-sub { transform-origin: right center; }
   #hud-sub.bump { animation: hxbump .5s ease-out; }
   @keyframes hxbump { from { transform: scale(1.45); color: #fff; text-shadow: 0 0 14px var(--accent), 0 0 3px #000; } }
-  .leaflet-tile-pane { transition: filter 1.6s ease; }
-  #mapwrap.fx-on[data-grade="ancient"] .leaflet-tile-pane { filter: sepia(.6) saturate(1.5) hue-rotate(-10deg) brightness(.92); }
-  #mapwrap.fx-on[data-grade="iron"] .leaflet-tile-pane { filter: sepia(.9) saturate(2.4) hue-rotate(-22deg) brightness(.82); }
-  #mapwrap.fx-on[data-grade="decline"] .leaflet-tile-pane { filter: grayscale(1) brightness(.62) contrast(1.15); }
-  #mapwrap.fx-on[data-grade="modern"] .leaflet-tile-pane { filter: saturate(1.2) hue-rotate(10deg) brightness(1.05); }
+  /* Two backgrounds: today's map tiles, and the period background (Natural Earth) for scenes before 1914 */
+  .leaflet-tile-pane, .leaflet-period-pane { transition: filter 1.6s ease, opacity 1.2s ease; }
+  .leaflet-period-pane { pointer-events: none; opacity: 0; }
+  #mapwrap[data-base="period"] .leaflet-period-pane { opacity: 1; }
+  #mapwrap[data-base="period"] .leaflet-tile-pane { opacity: 0; }
+  #mapwrap.fx-on[data-grade="ancient"] :is(.leaflet-tile-pane, .leaflet-period-pane) { filter: sepia(.6) saturate(1.5) hue-rotate(-10deg) brightness(.92); }
+  #mapwrap.fx-on[data-grade="iron"] :is(.leaflet-tile-pane, .leaflet-period-pane) { filter: sepia(.9) saturate(2.4) hue-rotate(-22deg) brightness(.82); }
+  #mapwrap.fx-on[data-grade="decline"] :is(.leaflet-tile-pane, .leaflet-period-pane) { filter: grayscale(1) brightness(.62) contrast(1.15); }
+  #mapwrap.fx-on[data-grade="modern"] :is(.leaflet-tile-pane, .leaflet-period-pane) { filter: saturate(1.2) hue-rotate(10deg) brightness(1.05); }
 
   /* Chapter title card, shown when a chapter starts playing */
   #title-card { position: absolute; inset: 0; z-index: 455; display: flex; flex-direction: column; align-items: center;
@@ -194,7 +203,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hx-flash, .hx-pulse, .hx-pop, .hx-ping, .hx-furnace, .hx-pop-label { animation: none; }
-    .hx-state, .c-text .line, .group-label { transition: none; }
+    .hx-state, .c-text .line, .group-label, .leaflet-tile-pane, .leaflet-period-pane { transition: none; }
     #fx, #grain, .lb, #title-card, #lower { display: none; }
   }
 
@@ -278,7 +287,7 @@
     moving sparks, dust, light and ripples are decoration: only the dots, lines, colours and text carry information.</p>
   {{TRANSCRIPT}}
   <p class="tr-sources">State borders: GRID3 Nigeria state boundaries via geoBoundaries (CC BY 4.0), simplified.
-    Background map: Esri. This page is part of <a href="./">Taswira</a>.</p>
+    Background map: Natural Earth (public domain) for scenes before 1914, Esri after. This page is part of <a href="./">Taswira</a>.</p>
 </main>
 
 <script>
@@ -315,16 +324,48 @@ let fxPref = true;
 try { fxPref = localStorage.getItem(FX_KEY) !== "off"; } catch (e) { /* storage blocked: keep the default */ }
 const fxOn = () => fxPref && !lessMotion.matches;
 
+// --- Period background --------------------------------------------------------------
+// Land, lakes and rivers from Natural Earth, for scenes before 1914 (see history/geo/README.md).
+// Stored as [lat, lon, dlat, dlon, ...] in thousandths of a degree; drawn on a canvas in its own
+// pane under the scene, with no borders, roads or names.
+function periodBackground() {
+  const bg = DATA.background;
+  const decode = flat => {
+    const pts = [];
+    let lat = 0, lon = 0;
+    for (let i = 0; i < flat.length; i += 2) {
+      lat += flat[i]; lon += flat[i + 1];
+      pts.push([lat / 1000, lon / 1000]);
+    }
+    return pts;
+  };
+  map.createPane("period").style.zIndex = 250;   // over the tile pane (200), under the scene (400)
+  const renderer = L.canvas({ pane: "period", padding: 0.5 });
+  const fill = colour => ({ renderer, interactive: false, stroke: false, fill: true, fillColor: colour, fillOpacity: 1 });
+  for (const poly of bg.land) L.polygon(poly.map(decode), fill("#262d34")).addTo(map);
+  for (const poly of bg.lakes) L.polygon(poly.map(decode), { ...fill("#11171d"), stroke: true, color: "#2d4152", weight: 1 }).addTo(map);
+  // Big rivers always; smaller ones only once the camera is close enough for them to help
+  const minor = L.layerGroup();
+  for (const [rank, flat] of bg.rivers) {
+    const line = L.polyline(decode(flat), { renderer, interactive: false, color: "#3a5f75", opacity: .9,
+      weight: rank <= 3 ? 2.4 : rank <= 5 ? 1.7 : rank <= 7 ? 1.2 : 0.9, lineCap: "round", lineJoin: "round" });
+    line.addTo(rank <= 6 ? map : minor);
+  }
+  const showMinor = () => map.getZoom() >= 6.5 ? minor.addTo(map) : map.removeLayer(minor);
+  map.on("zoomend", showMinor);
+  showMinor();
+}
+
 // --- Map ---------------------------------------------------------------------------
 // zoomSnap 0: the camera moves smoothly, and stopping it mid-flight does not jump to a rounded zoom
 const map = L.map("map", { zoomSnap: 0, minZoom: 5, maxZoom: 11, attributionControl: true })
   .setView([9.1, 8.6], 6);
 const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
 L.tileLayer(ESRI + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
-  maxZoom: 16, attribution: "&copy; Esri, HERE, Garmin, OpenStreetMap | Borders: GRID3 via geoBoundaries (CC BY 4.0)",
+  maxZoom: 16, attribution: "&copy; Esri, HERE, Garmin, OpenStreetMap | Before 1914: Natural Earth"
+    + " | Borders: GRID3 via geoBoundaries (CC BY 4.0)",
 }).addTo(map);
-// Modern place names help in the archaeology chapter but clutter the state maps
-const placeNames = L.tileLayer(ESRI + "World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16, opacity: .8 });
+periodBackground();
 const svg = L.svg({ padding: 0.5 }).addTo(map);   // one SVG layer, so striped fills can use <pattern>
 const sceneLayer = L.layerGroup().addTo(map);
 const WIDE = { center: [9.1, 8.3], zoom: 5.5 };      // the whole country, behind a chapter's title card
@@ -393,7 +434,8 @@ function todaysBorders() {
 const POINTS_FROM = 1.0;    // seconds into a scene when the first place appears
 
 function drawPoints(ch, sc) {
-  todaysBorders();      // for orientation only: these borders did not exist then
+  // Today's state borders help place the 20th-century digs; before 1914 there is nothing modern on the map
+  if (sc.base === "modern") todaysBorders();
   const dim = new Set(sc.dim || []), furnace = new Set(sc.furnace || []);
   const shown = sc.show || [];
   shown.forEach((id, k) => {
@@ -555,7 +597,10 @@ function legend(ch, sc) {
       (f.disputed ? `<div class="f-disputed"><b>Disputed.</b> ${esc(f.disputed)}</div>` : "") +
       `<div class="c-sources">Sources: ${f.sources.map(s => `<a href="${esc(DATA.sources[s].url)}">${esc(DATA.sources[s].title)}</a>`).join("; ")}</div></li>`;
   }).join("");
-  return items ? `<h3>On the map</h3><ul class="features">${items}</ul>${deco}` : "";
+  const ground = sc.base === "period"
+    ? '<p class="c-base">Background: land, lakes and rivers only (Natural Earth). No borders, roads or towns of today are drawn, because none existed then.</p>'
+    : '<p class="c-base">Faint lines: today\'s state borders, for reference.</p>';
+  return items ? `<h3>On the map</h3><ul class="features">${items}</ul>${ground}${deco}` : "";
 }
 
 function splitList(snap) {
@@ -626,8 +671,9 @@ function render({ animate = true, announce = false } = {}) {
   fx = { points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
          rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
          card: { now: null }, lower: { now: null }, shownCount: { now: null } };
-  if (sc.snapshot) { map.removeLayer(placeNames); drawSnapshot(ch, sc); }
-  else { placeNames.addTo(map); drawPoints(ch, sc); }
+  $("mapwrap").dataset.base = sc.base;
+  if (sc.snapshot) drawSnapshot(ch, sc);
+  else drawPoints(ch, sc);
   drawEffects(ch, sc);
   titles(ch, sc);
   $("mapwrap").dataset.grade = sc.snapshot ? "modern"

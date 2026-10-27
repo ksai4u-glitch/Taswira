@@ -7,6 +7,8 @@ Everything it shows comes from three kinds of files in history/:
   history/chapters/<id>.json   the scenes, what is on the map in each, and the text
   history/sources.json         every source a scene or map feature cites
   history/geo/*.topojson       today's state borders (simplified, see history/geo/README.md)
+  history/geo/natural-earth-background.json
+                               land, lakes and rivers for scenes before 1914
 
 This script checks those files (dates, places, sources, which state belonged to
 which at each date), fills in history/template.html and writes docs/history.html.
@@ -32,10 +34,17 @@ HISTORY_DIR = os.path.join(HERE, "history")
 TEMPLATE_PATH = os.path.join(HISTORY_DIR, "template.html")
 SOURCES_PATH = os.path.join(HISTORY_DIR, "sources.json")
 STATES_PATH = os.path.join(HISTORY_DIR, "geo", "nga-states-2022.topojson")
+BACKGROUND_PATH = os.path.join(HISTORY_DIR, "geo", "natural-earth-background.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
 CHAPTERS = ["nok", "states"]
+
+# Scenes that start before this year are drawn on the period background (land, lakes and
+# rivers only), never on today's map with its borders, roads and town names
+PERIOD_BEFORE = 1914
+# Map data credited on the map itself rather than by a scene
+MAP_SOURCES = {"grid3-states", "esri-tiles", "natural-earth"}
 
 # Rough box around Nigeria, to catch swapped or mistyped coordinates
 LAT_RANGE = (4.0, 14.0)
@@ -66,6 +75,36 @@ CHILD_SHIFTS = [0, 0.12, -0.10, 0.20, -0.17, 0.27]
 def read_json(path):
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
+
+# --- Period background ------------------------------------------------------------
+
+def load_background(path=BACKGROUND_PATH):
+    """Read the period background made by history/geo/make_background.py and check its shape:
+    every ring or line is a list of [lat, lon, dlat, dlon, ...] in thousandths of a degree."""
+    bg = read_json(path)
+    problems = []
+    for key in ("land", "lakes", "rivers"):
+        if not bg.get(key):
+            problems.append(f"background: {key} is missing or empty")
+    flats = ([ring for poly in bg.get("land", []) + bg.get("lakes", []) for ring in poly]
+             + [line for _, line in bg.get("rivers", [])])
+    for flat in flats:
+        if len(flat) < 4 or len(flat) % 2 or not all(isinstance(v, int) for v in flat):
+            problems.append("background: a ring or line is not a list of whole-number pairs")
+            break
+        lat, lon = flat[0] / 1000, flat[1] / 1000
+        if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+            problems.append(f"background: a line starts at an impossible place ({lat}, {lon})")
+            break
+    if problems:
+        sys.exit("Not building the history page:\n  - " + "\n  - ".join(problems))
+    return {key: bg[key] for key in ("land", "lakes", "rivers")}
+
+
+def base_for(scene):
+    """Which background a scene sits on: "period" before 1914, "modern" (today's map) after."""
+    return "period" if scene["when"]["from"] < PERIOD_BEFORE else "modern"
 
 
 # --- Today's state borders -------------------------------------------------------
@@ -299,8 +338,8 @@ def reading_seconds(text):
     return max(8, round(len(text.split()) * 0.33 + 4))
 
 
-def page_data(chapters, sources, states, arcs, users):
-    out = {"chapters": [], "sources": sources, "built": date.today().isoformat(),
+def page_data(chapters, sources, states, arcs, users, background):
+    out = {"chapters": [], "sources": sources, "built": date.today().isoformat(), "background": background,
            # Each state as lists of arc numbers (negative: walk the arc backwards); the page rebuilds the rings
            "states": {c: {"name": s["name"], "rings": s["arc_refs"]} for c, s in states.items()},
            "arcs": arcs}
@@ -322,7 +361,8 @@ def page_data(chapters, sources, states, arcs, users):
                 "split": {c: dict(sp, colours=[colours[key].get(p, OTHER_COLOUR) for p in sp["parents"]])
                           for c, sp in snap.get("split", {}).items()},
             }
-        scenes = [dict(sc, duration=sc.get("duration", reading_seconds(sc["text"]))) for sc in ch["scenes"]]
+        scenes = [dict(sc, duration=sc.get("duration", reading_seconds(sc["text"])), base=base_for(sc))
+                  for sc in ch["scenes"]]
         out["chapters"].append({
             "id": ch["id"], "title": ch["title"], "period": ch["period"], "intro": ch["intro"],
             "method": ch.get("method"), "features": {f["id"]: f for f in ch.get("features", [])},
@@ -391,10 +431,10 @@ def build():
     problems = check(chapters, sources, states, cited)
     if problems:
         sys.exit("Not building the history page:\n  - " + "\n  - ".join(problems))
-    for sid in sorted(set(sources) - cited - {"grid3-states", "esri-tiles"}):   # those two are credited on the map
+    for sid in sorted(set(sources) - cited - MAP_SOURCES):
         print(f"Note: source {sid} is not cited by any scene or feature.")
 
-    data = page_data(chapters, sources, states, arcs, users)
+    data = page_data(chapters, sources, states, arcs, users, load_background())
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         template = f.read()
     # "</" inside the JSON would end the <script> block early
@@ -403,8 +443,8 @@ def build():
                     .replace("{{TRANSCRIPT}}", transcript(chapters, sources, states))
                     .replace("{{BUILT}}", data["built"]))
 
-    # The page must say it is an unreviewed draft and credit the boundary data
-    for must in ("Unreviewed draft", "GRID3", "geoBoundaries", "CC BY 4.0"):
+    # The page must say it is an unreviewed draft and credit the boundary and background data
+    for must in ("Unreviewed draft", "GRID3", "geoBoundaries", "CC BY 4.0", "Natural Earth"):
         if must not in page:
             sys.exit(f"Not building the history page: the page does not mention {must!r}.")
     return page, data
