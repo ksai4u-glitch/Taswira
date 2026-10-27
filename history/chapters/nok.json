@@ -202,8 +202,7 @@
         "scientia-breunig"
       ],
       "furnace": [
-        "taruga",
-        "katsina-ala"
+        "taruga"
       ],
       "mood": "iron"
     },
@@ -242,6 +241,8 @@
     },
     {
       "id": "rediscovery",
+      "background": "modern-reference",
+      "background_note": "Today's map is used only to locate the archaeological sites. Its roads, towns and borders do not reconstruct the landscape of 1928 to 2021.",
       "title": "Rediscovery, and looting",
       "when": {
         "from": 1928,
@@ -269,3 +270,4 @@
     }
   ]
 }
+
