@@ -27,6 +27,7 @@ Uses only the Python standard library.
 
 import colorsys
 import html
+import argparse
 import json
 import math
 import os
@@ -928,18 +929,25 @@ def build():
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Build Taswira's sourced history page or an explicit local preview.")
+    parser.add_argument("--check", action="store_true", help="validate and build in memory without writing")
+    parser.add_argument("--output", default=OUTPUT_PATH, help="write a local preview here instead of docs/history.html")
+    args = parser.parse_args()
     page, data = build()
     scenes = sum(len(c["scenes"]) for c in data["chapters"])
-    if "--check" in sys.argv[1:]:
+    if args.check:
         print(f"Checks passed: {len(data['chapters'])} chapters, {scenes} scenes, "
               f"{len(data['sources'])} sources. Nothing written (--check).")
         return
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
+    os.makedirs(os.path.dirname(os.path.abspath(args.output)), exist_ok=True)
+    with open(args.output, "w", encoding="utf-8") as f:
         f.write(page)
-    size_kb = os.path.getsize(OUTPUT_PATH) / 1000
+    size_kb = os.path.getsize(args.output) / 1000
     print(f"Checks passed: {len(data['chapters'])} chapters, {scenes} scenes, {len(data['sources'])} sources.")
-    print(f"Wrote {OUTPUT_PATH} ({size_kb:.0f} KB). Open it in your browser to try it.")
+    print(f"Wrote {args.output} ({size_kb:.0f} KB). Open it in your browser to try it.")
+    if os.path.abspath(args.output) != os.path.abspath(OUTPUT_PATH):
+        print("Local preview only. The default live-site output was not changed.")
+        return
     print("\nTo publish it later, commit and push it:")
     print("  git add docs/history.html")
     print('  git commit -m "Update history page"')
