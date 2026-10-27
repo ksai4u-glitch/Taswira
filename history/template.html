@@ -139,6 +139,39 @@
   @keyframes hxlabel { from { opacity: 0; filter: blur(4px); } to { opacity: 1; filter: none; } }
   .group-label { transition: opacity .5s; }
   .group-label.old { color: #cfd8e3; font-style: italic; }
+  /* Map vocabulary: markers for each political form, emblem badges, labels on routes */
+  .hx-mark, .hx-emblem { background: none; border: none; }
+  .hx-mark svg, .hx-emblem svg { display: block; overflow: visible; }
+  .hx-in { transform-origin: center bottom; }
+  .hx-mark .hx-in { transform-origin: center; }
+  .hx-mark.hx-dim { opacity: .45; }
+  .hx-rise { animation: hxrise .7s cubic-bezier(.2, 1.5, .5, 1); }
+  @keyframes hxrise { from { transform: scale(0) translateY(6px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .em { width: 40px; height: 26px; padding: 2px 3px; border-radius: 6px; color: #f4c95d;
+        background: rgb(10 15 20 / .85); border: 1px solid #5b4a1e; box-shadow: 0 0 10px rgb(244 201 93 / .25); }
+  .field-label { color: #dfe8a0; font-style: italic; font-weight: 500; }
+  .move-label { background: none; border: none; box-shadow: none; white-space: nowrap; font: italic 600 11px/1.1 system-ui, sans-serif;
+                text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 6px #000; }
+  .move-label.date { font: 700 12px var(--mono); color: #ffb0a6; }
+  .move-label.date .lab-c { transform: translate(-50%, 15px); }
+  .move-label.ask { font: 800 16px system-ui, sans-serif; color: #fff; }
+  .move-label::before { display: none; }
+  .lab-c { display: inline-block; transform: translate(-50%, -50%); }
+  #mapwrap.fx-on .hx-drift { animation: hxdrift 2.4s linear infinite; }
+  @keyframes hxdrift { to { stroke-dashoffset: -12; } }
+  /* How sure each thing is */
+  .st { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 4px; border: 1px solid;
+        font: 600 10px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; vertical-align: 1px; }
+  .st-firm { color: #8fd694; border-color: #3d6a40; }
+  .st-approx { color: var(--text-secondary); border-color: var(--border); }
+  .st-disputed { color: var(--warn); border-color: #7a5420; }
+  .st-to-check { color: #ff8a8a; border-color: #7a3030; }
+  .tag { color: var(--text-muted); font-size: 12px; }
+  .f-emblem { margin-top: 6px; padding: 6px 8px; border-radius: 6px; background: rgb(244 201 93 / .07); font-size: 13px; color: var(--text-secondary); }
+  .f-emblem svg { width: 44px; height: 25px; color: #f4c95d; vertical-align: middle; margin-right: 6px; }
+  .key { list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--text-secondary); }
+  .key li { display: flex; gap: 8px; align-items: center; margin: 5px 0; }
+  .key svg { flex: none; overflow: visible; }
   .c-text .line { transition: opacity .6s; }
   .c-text .line.waiting { opacity: 0; }
   .c-deco, .c-base { font-size: 12px; color: var(--text-muted); }
@@ -202,7 +235,7 @@
   #fxbtn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
 
   @media (prefers-reduced-motion: reduce) {
-    .hx-flash, .hx-pulse, .hx-pop, .hx-ping, .hx-furnace, .hx-pop-label { animation: none; }
+    .hx-flash, .hx-pulse, .hx-pop, .hx-ping, .hx-furnace, .hx-pop-label, .hx-rise, #mapwrap.fx-on .hx-drift { animation: none; }
     .hx-state, .c-text .line, .group-label, .leaflet-tile-pane, .leaflet-period-pane { transition: none; }
     #fx, #grain, .lb, #title-card, #lower { display: none; }
   }
@@ -369,7 +402,9 @@ periodBackground();
 const svg = L.svg({ padding: 0.5 }).addTo(map);   // one SVG layer, so striped fills can use <pattern>
 const sceneLayer = L.layerGroup().addTo(map);
 const WIDE = { center: [9.1, 8.3], zoom: 5.5 };      // the whole country, behind a chapter's title card
-const zoomFor = z => z - (map.getSize().x < 600 ? 1 : 0);   // a phone's small map shows the same area zoomed out
+const small = () => map.getSize().x < 600;
+const mapName = f => small() && f.short || f.name;   // a phone's map labels a place by its short name, if it has one
+const zoomFor = z => z - (small() ? 1 : 0);   // a phone's small map shows the same area zoomed out
 let defs = null;
 function patternDefs() {
   if (!defs) {
@@ -433,36 +468,269 @@ function todaysBorders() {
 
 const POINTS_FROM = 1.0;    // seconds into a scene when the first place appears
 
-function drawPoints(ch, sc) {
+// --- Map vocabulary ------------------------------------------------------------------
+// Each kind of political order, tie and movement has its own look (see history/README.md).
+// Before borders were surveyed, nothing here fills land with a colour or draws a hard edge.
+const VOCAB = {
+  kingdom: [244, 201, 93], "city-state": [236, 159, 110], network: [111, 211, 193], caliphate: [195, 169, 255],
+  emirate: [195, 169, 255], communities: [201, 215, 122], migration: [234, 217, 176], campaign: [255, 91, 79],
+  trade: [247, 165, 65], claim: [255, 138, 101], site: [76, 201, 224],
+};
+const hex = rgb => "#" + rgb.map(v => v.toString(16).padStart(2, "0")).join("");
+// Ties between places. Allegiance and tribute point to the overlord; networks are dotted threads.
+const TIE = {
+  allegiance: { rgb: VOCAB.caliphate, arrow: true }, tribute: { rgb: VOCAB.kingdom, arrow: true },
+  alliance: { rgb: [232, 238, 244] }, trade: { rgb: VOCAB.network, dotted: true }, ritual: { rgb: VOCAB.network, dotted: true },
+};
+const FORM_WORDS = { kingdom: "Kingdom", "city-state": "City-state", network: "Centre of a network",
+  caliphate: "Seat of the caliphate", emirate: "Emirate", communities: "Self-governing communities" };
+const TIE_WORDS = { allegiance: "Allegiance", tribute: "Tribute", alliance: "Alliance", trade: "Trade", ritual: "Ritual authority" };
+const MOVE_WORDS = { migration: "Migration", campaign: "Military campaign", trade: "Trade route" };
+const STATUS_WORDS = { firm: "Firm", approx: "Approximate", disputed: "Disputed", "to-check": "To check" };
+const CONTROL_WORDS = { claimed: "Claimed on paper (hatched)", held: "Held: occupation documented (solid)",
+  taken: "Claimed, then taken during this scene (hatching turns solid)" };
+const TIER_WORDS = { flag: "Flag", symbol: "Royal or community symbol, not a flag", none: "No emblem documented" };
+// How long movements take to draw, in seconds
+const SEG = 1.8, DRIFT = 4, ROUTE = 2.4;
+
+// Marker for a place's political form, as SVG drawn around (0, 0)
+function markSvg(form) {
+  const c = hex(VOCAB[form]), d = "#0a0f14";
+  const spokes = [0, 60, 120, 180, 240, 300].map(a => {
+    const r = a * Math.PI / 180, x = Math.cos(r), y = Math.sin(r);
+    return `<line x1="${(7 * x).toFixed(2)}" y1="${(7 * y).toFixed(2)}" x2="${(11 * x).toFixed(2)}" y2="${(11 * y).toFixed(2)}"/>`;
+  }).join("");
+  const inner = {
+    kingdom: `<path d="M0-10 10 0 0 10-10 0Z" fill="${c}" stroke="${d}" stroke-width="2"/><circle r="3" fill="${d}"/>`,
+    "city-state": `<circle r="7.6" fill="${d}" fill-opacity=".75" stroke="${c}" stroke-width="3.6" stroke-dasharray="3.1 1.68"/><circle r="2.4" fill="${c}"/>`,
+    network: `<g stroke="${c}" stroke-width="2" stroke-linecap="round">${spokes}</g><circle r="6" fill="${d}" stroke="${c}" stroke-width="2"/><circle r="2.8" fill="${c}"/>`,
+    caliphate: `<circle r="10" fill="${d}" stroke="${c}" stroke-width="2"/><circle r="6.2" fill="none" stroke="${c}" stroke-width="1.6"/><circle r="2.8" fill="${c}"/>`,
+    emirate: `<circle r="6.6" fill="${d}" stroke="${c}" stroke-width="2.4"/><circle r="2.4" fill="${c}"/>`,
+  }[form];
+  return `<svg viewBox="-13 -13 26 26" width="26" height="26" aria-hidden="true">${inner}</svg>`;
+}
+
+// Gradients, patterns and arrowheads the vocabulary needs, made once
+function vocabDefs() {
+  const d = patternDefs();
+  if (d.querySelector("#hx-hatch")) return;
+  const halo = Object.entries(VOCAB).map(([k, [r, gg, b]]) => `<radialGradient id="hx-halo-${k}">
+      <stop offset="0" stop-color="rgb(${r},${gg},${b})" stop-opacity=".42"/><stop offset=".5" stop-color="rgb(${r},${gg},${b})" stop-opacity=".16"/>
+      <stop offset="1" stop-color="rgb(${r},${gg},${b})" stop-opacity="0"/></radialGradient>`).join("");
+  const arrow = (id, rgb, w, gap) => `<marker id="${id}" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="${w}"
+      markerHeight="${w}" refX="${10 + gap * 10 / w}" refY="5" orient="auto"><path d="M0 0 10 5 0 10 2.5 5Z" fill="${hex(rgb)}"/></marker>`;
+  d.insertAdjacentHTML("beforeend", halo + `
+    <pattern id="hx-hatch" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)">
+      <rect width="1.8" height="5" fill="${hex(VOCAB.claim)}"/></pattern>
+    <pattern id="hx-stipple" patternUnits="userSpaceOnUse" width="10" height="10">
+      <circle cx="2.5" cy="2.5" r="1.15" fill="${hex(VOCAB.communities)}"/><circle cx="7.5" cy="7.5" r="1.15" fill="${hex(VOCAB.communities)}"/></pattern>
+    <radialGradient id="hx-soft-g"><stop offset=".45" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <mask id="hx-soft" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#hx-soft-g)"/></mask>` +
+    arrow("hx-arrow-campaign", VOCAB.campaign, 15, 9) + arrow("hx-arrow-allegiance", TIE.allegiance.rgb, 12, 12) +
+    arrow("hx-arrow-tribute", TIE.tribute.rgb, 12, 12));
+}
+
+// A smooth curve through some places (Catmull-Rom), as [lat, lon] points
+function smooth(pts, per = 16) {
+  if (pts.length < 3) return pts.slice();
+  const out = [];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+    for (let k = 0; k < per; k++) {
+      const u = k / per, u2 = u * u, u3 = u2 * u;
+      out.push([0, 1].map(j => 0.5 * (2 * p1[j] + (-p0[j] + p2[j]) * u + (2 * p0[j] - 5 * p1[j] + 4 * p2[j] - p3[j]) * u2
+                                      + (-p0[j] + 3 * p1[j] - 3 * p2[j] + p3[j]) * u3)));
+    }
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+// A gentle bend between two places, so threads and routes do not look surveyed
+function bend(a, b, k = 0.12, n = 24) {
+  const mid = [(a[0] + b[0]) / 2 + (b[1] - a[1]) * k, (a[1] + b[1]) / 2 - (b[0] - a[0]) * k];
+  return Array.from({ length: n + 1 }, (_, i) => {
+    const u = i / n;
+    return [0, 1].map(j => (1 - u) ** 2 * a[j] + 2 * (1 - u) * u * mid[j] + u * u * b[j]);
+  });
+}
+// How far along a line each point is (0 to 1), for placing things along it
+function along(pts) {
+  const cum = [0];
+  for (let k = 1; k < pts.length; k++) {
+    const dy = pts[k][0] - pts[k - 1][0], dx = (pts[k][1] - pts[k - 1][1]) * Math.cos(pts[k][0] * Math.PI / 180);
+    cum.push(cum[k - 1] + Math.hypot(dx, dy));
+  }
+  const total = cum[cum.length - 1] || 1;
+  return { pts, cum: cum.map(c => c / total) };
+}
+function pointAt(line, u) {
+  const { pts, cum } = line;
+  u = clamp01(u);
+  let k = 1;
+  while (k < cum.length - 1 && cum[k] < u) k++;
+  const v = (u - cum[k - 1]) / ((cum[k] - cum[k - 1]) || 1);
+  return [pts[k - 1][0] + (pts[k][0] - pts[k - 1][0]) * v, pts[k - 1][1] + (pts[k][1] - pts[k - 1][1]) * v];
+}
+// A text label centred on a place
+const textLabel = (ll, html, cls) => L.marker(ll, { interactive: false, keyboard: false,
+  icon: L.divIcon({ className: "group-label " + cls, html: `<span class="lab-c">${html}</span>`, iconSize: null }) })
+  .addTo(sceneLayer).getElement();
+
+function drawPlaces(ch, sc) {
   // Today's state borders help place the 20th-century digs; before 1914 there is nothing modern on the map
   if (sc.base === "modern") todaysBorders();
+  vocabDefs();
   const dim = new Set(sc.dim || []), furnace = new Set(sc.furnace || []);
-  const shown = sc.show || [];
+  const shown = (sc.show || []).filter(id => ch.features[id].kind === "point");
+  const atOf = {};
   shown.forEach((id, k) => {
     const f = ch.features[id];
-    const faded = dim.has(id);
+    const faded = dim.has(id), form = f.form;
     const at = POINTS_FROM + k * Math.min(1.2, (sc.duration * 0.4) / Math.max(1, shown.length));   // one after another
-    const els = [];
+    atOf[id] = at;
+    const els = [], raw = [];
     if (f.uncertainty_km) {
       els.push(L.circle(f.coordinates, { renderer: svg, radius: f.uncertainty_km * 1000, color: "#4cc9e0",
         weight: 1.5, dashArray: "4 5", fill: false, opacity: faded ? .35 : .8, interactive: false }).addTo(sceneLayer));
     }
-    if (!faded) {
-      els.push(L.circleMarker(f.coordinates, { renderer: svg, radius: 8, color: furnace.has(id) ? "#ff9a3c" : "#4cc9e0",
-        weight: 2, fill: false, interactive: false, className: "hx-ping" }).addTo(sceneLayer));
+    // A kingdom's halo of influence, or the dotted field of self-governing communities: no edge, no border
+    if (f.reach_km) {
+      const fill = form === "communities" ? "url(#hx-stipple)" : `url(#hx-halo-${VOCAB[form] ? form : "site"})`;
+      const area = L.circle(f.coordinates, { renderer: svg, radius: f.reach_km * 1000, stroke: false, fillColor: fill,
+        fillOpacity: faded ? .45 : 1, interactive: false }).addTo(sceneLayer);
+      if (form === "communities") area.getElement().setAttribute("mask", "url(#hx-soft)");
+      els.push(area);
     }
-    const m = L.circleMarker(f.coordinates, { renderer: svg, radius: 8, color: "#e8eef4", weight: 2,
-      fillColor: furnace.has(id) ? "#ff9a3c" : "#4cc9e0", fillOpacity: faded ? .35 : .95, opacity: faded ? .45 : 1,
-      className: "hx-site" + (furnace.has(id) ? " hx-furnace" : "") });
+    // A colonial claim: hatched while on paper, solid once occupation is documented
+    const how = (sc.control || {})[id];
+    if (how) {
+      const disc = held => L.circleMarker(f.coordinates, { renderer: svg, radius: 17, interactive: false,
+        color: hex(VOCAB.claim), weight: held ? 2.2 : 1.6, dashArray: held ? null : "3 3",
+        fillColor: held ? hex(VOCAB.claim) : "url(#hx-hatch)", fillOpacity: held ? .5 : 1 }).addTo(sceneLayer).getElement();
+      if (how === "claimed") raw.push(disc(false));
+      else if (how === "held") raw.push(disc(true));
+      else fx.flips.push({ id, paper: disc(false), held: disc(true), show: at, at: Infinity, now: null, ll: f.coordinates });
+    }
+    let m;
     const left = f.label === "left";       // set in the chapter file when two labels would overlap
-    m.bindTooltip(esc(f.name), { permanent: true, direction: left ? "left" : "right", className: "site-label",
-                                 offset: [left ? -8 : 8, 0] });
-    m.on("click", () => pickFeature(id));
-    m.addTo(sceneLayer);
-    els.push(m);
-    fx.points.push({ els: els.map(l => l.getElement()).concat(m.getTooltip().getElement()), at, now: null,
-                     ll: f.coordinates, furnace: furnace.has(id), faded, seed: k + 1 });
+    if (form === "communities") {
+      raw.push(textLabel(f.coordinates, "self-governing communities", "field-label"));
+    } else if (form) {
+      m = L.marker(f.coordinates, { keyboard: false, title: f.name, icon: L.divIcon({ className: "hx-mark" + (faded ? " hx-dim" : ""),
+        html: `<div class="hx-in">${markSvg(form)}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }) });
+    } else {
+      if (!faded) {
+        els.push(L.circleMarker(f.coordinates, { renderer: svg, radius: 8, color: furnace.has(id) ? "#ff9a3c" : "#4cc9e0",
+          weight: 2, fill: false, interactive: false, className: "hx-ping" }).addTo(sceneLayer));
+      }
+      m = L.circleMarker(f.coordinates, { renderer: svg, radius: 8, color: "#e8eef4", weight: 2,
+        fillColor: furnace.has(id) ? "#ff9a3c" : "#4cc9e0", fillOpacity: faded ? .35 : .95, opacity: faded ? .45 : 1,
+        className: "hx-site" + (furnace.has(id) ? " hx-furnace" : "") });
+    }
+    if (m) {
+      const off = form ? 12 : 8;
+      m.bindTooltip(esc(mapName(f)), { permanent: true, direction: left ? "left" : "right", className: "site-label",
+                                   offset: [left ? -off : off, 0], opacity: faded ? .6 : .9 });
+      m.on("click", () => pickFeature(id));
+      m.addTo(sceneLayer);
+      els.push(m);
+      raw.push(m.getTooltip().getElement());
+    }
+    // A documented flag or symbol, as a small badge above the place. Nothing is drawn when none is documented.
+    const em = f.emblem && DATA.emblems[f.emblem];
+    if (em && em.svg && em.tier !== "none" && !faded) {
+      els.push(L.marker(f.coordinates, { interactive: false, keyboard: false, icon: L.divIcon({ className: "hx-emblem",
+        html: `<div class="hx-in em em-${em.tier}">${em.svg}</div>`, iconSize: [40, 26], iconAnchor: [20, 42] }) }).addTo(sceneLayer));
+    }
+    fx.points.push({ els: els.map(l => l.getElement()).concat(raw), at, now: null, ll: f.coordinates,
+                     furnace: furnace.has(id), faded, seed: k + 1, rgb: VOCAB[form] || null, form, reach: f.reach_km || 0 });
   });
+  drawTies(ch, sc, atOf);
+  drawMoves(ch, sc, atOf);
+}
+
+// Allegiance, tribute and alliance lines, and the threads of a network
+function drawTies(ch, sc, atOf) {
+  for (const id of sc.show || []) {
+    const f = ch.features[id];
+    if (f.kind !== "link") continue;
+    const a = ch.features[f.from].coordinates, b = ch.features[f.to].coordinates, style = TIE[f.type];
+    const at = Math.max(atOf[f.from], atOf[f.to]) + 0.5;
+    const pts = style.dotted ? bend(a, b) : [a, b];
+    const line = L.polyline(pts, { renderer: svg, interactive: false, color: hex(style.rgb), opacity: .9,
+      weight: style.dotted ? 2.4 : 1.8, dashArray: style.dotted ? "1 6" : null, lineCap: "round" }).addTo(sceneLayer);
+    const el = line.getElement();
+    if (style.dotted) fx.timed.push({ els: [el], from: at, to: Infinity, now: null });
+    else {
+      el.setAttribute("pathLength", 1);
+      fx.draws.push({ el, from: at, dur: 1.2, marker: style.arrow ? `url(#hx-arrow-${f.type})` : null, now: null });
+    }
+    fx.ties.push({ line: along(pts), at: at + 1.2, rgb: style.rgb, dotted: !!style.dotted, seed: fx.ties.length + 1 });
+  }
+}
+
+// Migration, military campaigns and trade routes
+function drawMoves(ch, sc, atOf) {
+  for (const id of sc.show || []) {
+    const f = ch.features[id];
+    if (f.kind !== "move") continue;
+    const stops = f.path.map(p => ch.features[p].coordinates);
+    const start = Math.max(...f.path.map(p => atOf[p])) + 0.6;
+    const rgb = VOCAB[f.type], c = hex(rgb), faint = f.uncertain === "whole";
+    // Where an end of the route is uncertain, a faint dashed lead runs on beyond it, ending in a question mark
+    const lead = (from, toward) => {
+      const p = [from[0] + (from[0] - toward[0]) * 0.45, from[1] + (from[1] - toward[1]) * 0.45];
+      const el = L.polyline([p, from], { renderer: svg, interactive: false, color: c, weight: 2, opacity: .55,
+        dashArray: "2 6", lineCap: "round" }).addTo(sceneLayer).getElement();
+      fx.timed.push({ els: [el, textLabel(p, "?", "move-label ask")], from: start, to: Infinity, now: null });
+      return el;
+    };
+    if (f.uncertain === "start") lead(stops[0], stops[1]);
+    if (f.uncertain === "end") lead(stops[stops.length - 1], stops[stops.length - 2]);
+
+    if (f.type === "campaign") {
+      // Hard arrows, one per leg, drawn in order; each dated stop pulses as the arrow reaches it
+      for (let i = 0; i < stops.length - 1; i++) {
+        const el = L.polyline([stops[i], stops[i + 1]], { renderer: svg, interactive: false, color: c, weight: 3.4,
+          opacity: faint ? .5 : .95, dashArray: faint ? "6 6" : null, lineCap: "round" }).addTo(sceneLayer).getElement();
+        el.setAttribute("pathLength", 1);
+        fx.draws.push({ el, from: start + i * SEG, dur: SEG, marker: "url(#hx-arrow-campaign)", now: null });
+      }
+      f.path.forEach((p, i) => {
+        const t = start + i * SEG;
+        fx.arrivals.push({ ll: stops[i], at: t, rgb });
+        for (const fl of fx.flips) if (fl.id === p) fl.at = Math.min(fl.at, t);
+        if (f.dates && f.dates[p]) {
+          fx.timed.push({ els: [textLabel(stops[i], esc(f.dates[p]), "move-label date")], from: t, to: Infinity, now: null });
+        }
+      });
+      fx.heads.push({ line: along(stops), from: start, dur: SEG * (stops.length - 1), rgb });
+    } else if (f.type === "migration") {
+      // A soft band that thickens towards where people went, with dots drifting along it; no arrowhead
+      const line = along(smooth(stops)), n = 10;
+      for (let i = 0; i < n; i++) {
+        const piece = line.pts.filter((_, k) => line.cum[k] >= i / n - 0.02 && line.cum[k] <= (i + 1) / n + 0.02);
+        if (piece.length < 2) continue;
+        const el = L.polyline(piece, { renderer: svg, interactive: false, color: c, lineCap: "round", lineJoin: "round",
+          weight: 6 + i * 1.4, opacity: (faint ? 0.5 : 1) * (0.05 + i * 0.017) }).addTo(sceneLayer).getElement();
+        fx.timed.push({ els: [el], from: start + DRIFT * i / n, to: Infinity, now: null });
+      }
+      const dots = L.polyline(line.pts, { renderer: svg, interactive: false, color: c, weight: 3.2, opacity: .75,
+        dashArray: "0.1 12", lineCap: "round", className: "hx-drift" }).addTo(sceneLayer).getElement();
+      const mid = pointAt(line, 0.5);
+      fx.timed.push({ els: [dots, textLabel(mid, `<span style="color:${c}">${esc(f.period)}</span>`, "move-label")],
+                      from: start + DRIFT, to: Infinity, now: null });
+      fx.drifts.push({ line, from: start, rgb, faint });
+    } else {
+      // Trade: a dotted route with the goods named on it, and (as decoration) goods travelling along
+      const line = along(stops.length === 2 ? bend(stops[0], stops[1], 0.08) : smooth(stops));
+      const el = L.polyline(line.pts, { renderer: svg, interactive: false, color: c, weight: 3, opacity: faint ? .5 : .95,
+        dashArray: "1 7", lineCap: "round" }).addTo(sceneLayer).getElement();
+      const label = textLabel(pointAt(line, 0.5), `<span style="color:${c}">${esc(f.goods)}</span>`, "move-label");
+      fx.timed.push({ els: [el, label], from: start, to: Infinity, now: null });
+      fx.goods.push({ line, from: start + 0.4, rgb });
+    }
+  }
 }
 
 // Fill of one of today's states in a snapshot: a colour, or stripes if it was split
@@ -590,17 +858,87 @@ function legend(ch, sc) {
         <li><svg width="28" height="14" aria-hidden="true"><defs><pattern id="lg-str" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="4" height="8" fill="#c9a35b"/><rect x="4" width="4" height="8" fill="#5fa8a0"/></pattern></defs><rect width="28" height="14" fill="url(#lg-str)"/></svg>Today's state was split between earlier states</li>
       </ul>` + splitList(snap) + (ch.method ? `<p class="c-method">${esc(ch.method)}</p>` : "") + deco;
   }
-  const items = (sc.show || []).map(id => {
-    const f = ch.features[id];
-    return `<li id="f-${esc(id)}" tabindex="-1"><div class="f-name">${esc(f.name)}</div><div>${esc(f.what)}</div>
-      <dl><dt>Evidence</dt><dd>${esc(f.evidence)}</dd><dt>Location</dt><dd>${esc(f.location)}</dd></dl>` +
-      (f.disputed ? `<div class="f-disputed"><b>Disputed.</b> ${esc(f.disputed)}</div>` : "") +
-      `<div class="c-sources">Sources: ${f.sources.map(s => `<a href="${esc(DATA.sources[s].url)}">${esc(DATA.sources[s].title)}</a>`).join("; ")}</div></li>`;
-  }).join("");
+  const items = (sc.show || []).map(id => featureItem(ch, sc, id)).join("");
   const ground = sc.base === "period"
     ? '<p class="c-base">Background: land, lakes and rivers only (Natural Earth). No borders, roads or towns of today are drawn, because none existed then.</p>'
     : '<p class="c-base">Faint lines: today\'s state borders, for reference.</p>';
-  return items ? `<h3>On the map</h3><ul class="features">${items}</ul>${ground}${deco}` : "";
+  return items ? `<h3>On the map</h3><ul class="features">${items}</ul>${keyFor(ch, sc)}${ground}${deco}` : "";
+}
+
+const badge = st => `<span class="st st-${esc(st)}">${esc(STATUS_WORDS[st])}</span>`;
+const sourceLinks = ids => ids.map(s => `<a href="${esc(DATA.sources[s].url)}">${esc(DATA.sources[s].title)}</a>`).join("; ");
+
+// One thing on the map, in the panel: what it is, how sure, what it rests on and where it comes from
+function featureItem(ch, sc, id) {
+  const f = ch.features[id], name = p => esc(ch.features[p].name), rows = [];
+  let tag = "";
+  if (f.kind === "link") {
+    tag = TIE_WORDS[f.type];
+    rows.push(["From", `${name(f.from)} to ${name(f.to)}`]);
+  } else if (f.kind === "move") {
+    tag = MOVE_WORDS[f.type];
+    rows.push(["Route", f.path.map(p => name(p) + (f.dates && f.dates[p] ? ` (${esc(f.dates[p])})` : "")).join(" → ")]);
+    if (f.period) rows.push(["When", esc(f.period)]);
+    if (f.goods) rows.push(["Goods", esc(f.goods)]);
+  } else if (f.form) tag = FORM_WORDS[f.form];
+  rows.push(["Evidence", esc(f.evidence)]);
+  if (f.location) rows.push([f.kind === "move" ? "Route drawn" : "Location", esc(f.location)]);
+  if (f.reach_note) rows.push([f.form === "communities" ? "Field" : "Halo", esc(f.reach_note)]);
+  if (sc.control && sc.control[id]) rows.push(["Claim", esc(CONTROL_WORDS[sc.control[id]])]);
+  const em = f.emblem && DATA.emblems[f.emblem];
+  return `<li id="f-${esc(id)}" tabindex="-1"><div class="f-name">${esc(f.name)}${badge(f.status)}</div>` +
+    (tag ? `<div class="tag">${esc(tag)}</div>` : "") + `<div>${esc(f.what)}</div>
+      <dl>${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` +
+    (f.disputed ? `<div class="f-disputed"><b>Disputed.</b> ${esc(f.disputed)}</div>` : "") +
+    (em ? `<div class="f-emblem">${em.svg && em.tier !== "none" ? em.svg : ""}<b>${esc(TIER_WORDS[em.tier])}.</b>
+      ${esc(em.description)} ${esc(em.note || "")} ${badge(em.status)}` +
+      (em.sources.length ? `<div class="c-sources">Sources: ${sourceLinks(em.sources)}</div>` : "") + "</div>" : "") +
+    `<div class="c-sources">Sources: ${sourceLinks(f.sources)}</div></li>`;
+}
+
+// The key: one line for each style the scene uses
+function keyFor(ch, sc) {
+  const used = new Set();
+  for (const id of sc.show || []) {
+    const f = ch.features[id];
+    used.add(f.kind === "point" ? f.form || "site" : f.kind === "link" ? "tie-" + f.type : "move-" + f.type);
+    if (f.emblem && DATA.emblems[f.emblem].svg) used.add("emblem");
+  }
+  for (const how of Object.values(sc.control || {})) used.add(how === "taken" ? "taken" : how);
+  if (used.size === 1 && used.has("site")) return "";
+  const sw = (inner, w = 30) => `<svg width="${w}" height="18" viewBox="0 0 ${w} 18" aria-hidden="true">${inner}</svg>`;
+  const mark = form => `<svg width="30" height="18" viewBox="-15 -9 30 18" aria-hidden="true"><g transform="scale(.68)">${markSvg(form).replace(/^<svg[^>]*>|<\/svg>$/g, "")}</g></svg>`;
+  const line = (rgb, extra) => sw(`<path d="M2 9 H28" stroke="${hex(rgb)}" stroke-linecap="round" ${extra}/>`);
+  const rows = {
+    site: [sw(`<circle cx="15" cy="9" r="5" fill="#4cc9e0" stroke="#e8eef4" stroke-width="1.5"/>`), "Site or town"],
+    kingdom: [mark("kingdom"), "Kingdom: its capital. Where a halo is drawn, it fades with distance and is not a border."],
+    "city-state": [mark("city-state"), "City-state: a walled town with its own ruler"],
+    network: [mark("network"), "Centre of a network, with dotted threads to the places it reached. No area is filled."],
+    caliphate: [mark("caliphate"), "Seat of the caliphate"],
+    emirate: [mark("emirate"), "Emirate capital"],
+    communities: [sw(`<rect width="30" height="18" fill="url(#hx-stipple)" mask="url(#hx-soft)"/>`), "Self-governing communities: a pattern, not individual villages"],
+    "tie-allegiance": [line(TIE.allegiance.rgb, 'stroke-width="1.8" marker-end="url(#hx-key-arrow-a)"'), "Allegiance, pointing to the overlord"],
+    "tie-tribute": [line(TIE.tribute.rgb, 'stroke-width="1.8" marker-end="url(#hx-key-arrow-t)"'), "Tribute, pointing to the overlord"],
+    "tie-alliance": [line(TIE.alliance.rgb, 'stroke-width="1.8"'), "Alliance"],
+    "tie-trade": [line(TIE.trade.rgb, 'stroke-width="2.4" stroke-dasharray="1 6"'), "Network thread: trade"],
+    "tie-ritual": [line(TIE.ritual.rgb, 'stroke-width="2.4" stroke-dasharray="1 6"'), "Network thread: ritual authority"],
+    "move-migration": [sw(`<path d="M2 9 H28" stroke="${hex(VOCAB.migration)}" stroke-opacity=".25" stroke-width="12" stroke-linecap="round"/><path d="M4 9 H28" stroke="${hex(VOCAB.migration)}" stroke-width="3" stroke-dasharray="0.1 8" stroke-linecap="round"/>`),
+      "Migration: a band that thickens where people went, no arrowhead. A dashed end with ? marks an uncertain origin."],
+    "move-campaign": [line(VOCAB.campaign, 'stroke-width="3" marker-end="url(#hx-key-arrow-c)"'), "Military campaign: an arrow for each leg, with dates where the towns were taken"],
+    "move-trade": [line(VOCAB.trade, 'stroke-width="3" stroke-dasharray="1 6"'), "Trade route, with the goods named on it"],
+    claimed: [sw(`<circle cx="15" cy="9" r="8" fill="url(#hx-key-hatch)" stroke="${hex(VOCAB.claim)}" stroke-dasharray="3 3"/>`), "Claimed on paper (hatched)"],
+    held: [sw(`<circle cx="15" cy="9" r="8" fill="${hex(VOCAB.claim)}" fill-opacity=".5" stroke="${hex(VOCAB.claim)}"/>`), "Held: occupation documented (solid)"],
+    taken: [sw(`<circle cx="9" cy="9" r="7" fill="url(#hx-key-hatch)" stroke="${hex(VOCAB.claim)}" stroke-dasharray="3 3"/><circle cx="23" cy="9" r="7" fill="${hex(VOCAB.claim)}" fill-opacity=".5" stroke="${hex(VOCAB.claim)}"/>`),
+      "Claimed on paper (hatched), then held once taken (solid)"],
+    emblem: [sw(`<rect x="3" y="2" width="24" height="14" rx="3" fill="#0a0f14" stroke="#5b4a1e"/><circle cx="15" cy="9" r="3" fill="#f4c95d"/>`), "Badge: a documented flag or symbol (see its entry above)"],
+  };
+  const defs = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <pattern id="hx-key-hatch" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)"><rect width="1.5" height="4" fill="${hex(VOCAB.claim)}"/></pattern>
+    ${[["a", TIE.allegiance.rgb], ["t", TIE.tribute.rgb], ["c", VOCAB.campaign]].map(([k, rgb]) =>
+      `<marker id="hx-key-arrow-${k}" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" refX="9" refY="5" orient="auto"><path d="M0 0 10 5 0 10 2.5 5Z" fill="${hex(rgb)}"/></marker>`).join("")}
+    </defs></svg>`;
+  return `<h3>Key</h3>${defs}<ul class="key">` +
+    [...used].filter(k => rows[k]).map(k => `<li>${rows[k][0]}<span>${esc(rows[k][1])}</span></li>`).join("") + "</ul>";
 }
 
 function splitList(snap) {
@@ -634,30 +972,77 @@ function titles(ch, sc) {
   $("lower").querySelector(".lt-title").textContent = sc.title;
 }
 
+// Where a scene's camera sits. A phone's small map is fitted to the scene's places and their labels
+// instead, and never comes closer than the chapter file's camera.
+const PHONE_CLOSE_IN = 0.3;      // a phone's map has no room to spare, so the camera barely closes in
+function cameraOf(ch, sc) {
+  const { center, zoom } = sc.camera;
+  const shown = sc.snapshot ? [] : (sc.show || []).map(id => ch.features[id]);
+  const places = shown.filter(f => f.kind === "point");
+  if (!small() || !places.length) return { center, zoom: zoomFor(zoom) };
+  const dated = new Set(shown.flatMap(f => Object.keys(f.dates || {})));
+  // Each place's marker and label in pixels around its point. A label's width is guessed from its name.
+  const boxes = places.map(f => {
+    const w = 20 + 7.6 * mapName(f).length, left = f.label === "left";
+    const badge = f.emblem && DATA.emblems[f.emblem].svg;
+    return { ll: f.coordinates, l: left ? w : 16, r: left ? 16 : w, t: badge ? 48 : 18, b: dated.has(f.id) ? 36 : 18 };
+  });
+  const size = map.getSize(), top = 60, bottom = 44;       // the year above, the attribution below
+  const room = Math.pow(2, -0.35 * PHONE_CLOSE_IN);      // space kept for the slow drift in
+  const span = z => {
+    const at = boxes.map(o => ({ o, p: map.project(o.ll, z) }));
+    return { x0: Math.min(...at.map(a => a.p.x - a.o.l)), x1: Math.max(...at.map(a => a.p.x + a.o.r)),
+             y0: Math.min(...at.map(a => a.p.y - a.o.t)), y1: Math.max(...at.map(a => a.p.y + a.o.b)) };
+  };
+  const fits = z => {
+    const s = span(z);
+    return s.x1 - s.x0 <= (size.x - 16) * room && s.y1 - s.y0 <= (size.y - top - bottom) * room;
+  };
+  let lo = map.getMinZoom(), hi = zoomFor(zoom);
+  if (fits(hi)) lo = hi;
+  else for (let k = 0; k < 16; k++) { const m = (lo + hi) / 2; if (fits(m)) lo = m; else hi = m; }
+  const s = span(lo);
+  const mid = L.point((s.x0 + s.x1) / 2, (s.y0 + s.y1) / 2 + (bottom - top) / 2);
+  return { center: map.unproject(mid, lo), zoom: lo };
+}
+
 // Where the camera goes while a scene plays, in seconds into the scene
 function cameraCues(sc) {
-  const { center, zoom } = sc.camera, out = [];
+  const { center, zoom } = cameraOf(chapter(), sc), out = [];
+  const near = small() ? PHONE_CLOSE_IN : 1;
   out.push(lead() ? { at: -1.1, center, zoom, dur: 2.2 } : { at: 0, center, zoom, dur: 1.4 });
   const f = fx.focus;
   if (f) {
-    const lean = [center[0] + (f.centre[0] - center[0]) * 0.4, center[1] + (f.centre[1] - center[1]) * 0.4];
-    out.push({ at: f.from, center: lean, zoom: zoom + 0.5, dur: Math.max(1.5, f.to - f.from + 0.5) });
-    out.push({ at: f.to + 1.2, center, zoom: zoom + 0.1, dur: 1.8 });
-    out.push({ at: f.to + 3.2, center, zoom: zoom + 0.3, dur: Math.max(2, sc.duration - f.to - 3.6) });
+    const c = L.latLng(center);
+    const lean = [c.lat + (f.centre[0] - c.lat) * 0.4, c.lng + (f.centre[1] - c.lng) * 0.4];
+    out.push({ at: f.from, center: lean, zoom: zoom + 0.5 * near, dur: Math.max(1.5, f.to - f.from + 0.5) });
+    out.push({ at: f.to + 1.2, center, zoom: zoom + 0.1 * near, dur: 1.8 });
+    out.push({ at: f.to + 3.2, center, zoom: zoom + 0.3 * near, dur: Math.max(2, sc.duration - f.to - 3.6) });
   } else {
-    out.push({ at: 1.5, center, zoom: zoom + 0.35, dur: Math.max(2, sc.duration - 2) });   // slow drift in
+    out.push({ at: 1.5, center, zoom: zoom + 0.35 * near, dur: Math.max(2, sc.duration - 2) });   // slow drift in
   }
   return out;
 }
 function flyCue(c, t) {
   fx.lastCue = c;
-  map.flyTo(c.center, zoomFor(c.zoom), { duration: Math.max(0.5, c.dur - Math.max(0, t - c.at)) });
+  map.flyTo(c.center, c.zoom, { duration: Math.max(0.5, c.dur - Math.max(0, t - c.at)) });
 }
 function runCues(t) {
   let due = null;
   while (fx.cue < fx.cues.length && fx.cues[fx.cue].at <= t) due = fx.cues[fx.cue++];
   if (due) flyCue(due, t);
 }
+// On a phone the panel below the map fills in after the map is made, which changes the map's height
+// without the window resizing. Leaflet would keep the old size, so the camera is worked out again.
+let mapSize = map.getSize();
+new ResizeObserver(() => {
+  map.invalidateSize();
+  const size = map.getSize(), changed = !size.equals(mapSize);
+  mapSize = size;
+  if (!changed || !fx || scene().snapshot) return;
+  fx.cues = cameraCues(scene());
+  if (!isLive()) { const cam = cameraOf(chapter(), scene()); map.setView(cam.center, cam.zoom, { animate: false }); }
+}).observe(map.getContainer());
 
 // Draw the map and panel for the current scene. Only redraws when the scene changes.
 function render({ animate = true, announce = false } = {}) {
@@ -669,22 +1054,23 @@ function render({ animate = true, announce = false } = {}) {
   state.drawnC = state.c;
   sceneLayer.clearLayers();
   fx = { points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
+         timed: [], draws: [], flips: [], ties: [], arrivals: [], heads: [], drifts: [], goods: [],
          rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
          card: { now: null }, lower: { now: null }, shownCount: { now: null } };
   $("mapwrap").dataset.base = sc.base;
   if (sc.snapshot) drawSnapshot(ch, sc);
-  else drawPoints(ch, sc);
+  else drawPlaces(ch, sc);
   drawEffects(ch, sc);
   titles(ch, sc);
   $("mapwrap").dataset.grade = sc.snapshot ? "modern"
     : { iron: "iron", decline: "decline" }[sc.mood] || "ancient";
 
   map.stop();
-  const zoom = zoomFor(sc.camera.zoom);
+  const cam = cameraOf(ch, sc);
   if (isLive() && lead()) map.setView(WIDE.center, zoomFor(WIDE.zoom), { animate: false });
   else if (!isLive()) {
-    if (animate && !lessMotion.matches) map.flyTo(sc.camera.center, zoom, { duration: 1.2 });
-    else map.setView(sc.camera.center, zoom, { animate: false });
+    if (animate && !lessMotion.matches) map.flyTo(cam.center, cam.zoom, { duration: 1.2 });
+    else map.setView(cam.center, cam.zoom, { animate: false });
   }
   fx.cues = cameraCues(sc);
 
@@ -697,6 +1083,7 @@ function render({ animate = true, announce = false } = {}) {
     (state.s === 0 ? `<p class="c-intro">${esc(ch.intro)}</p>` : "") +
     `<p class="c-text">${sentences.map(s => `<span class="line">${esc(s)}</span>`).join("")}</p>` +
     (sc.disputed ? `<div class="c-disputed"><b>Disputed.</b> ${esc(sc.disputed)}</div>` : "") +
+    (sc.unchecked ? `<div class="c-disputed"><b>Not yet checked.</b> ${esc(sc.unchecked)}</div>` : "") +
     legend(ch, sc) + `<h3>Sources for this scene</h3>${sourceList(sc.sources)}`;
   $("card").scrollTop = 0;
   fx.sentences = [...$("card").querySelectorAll(".c-text .line")];
@@ -787,8 +1174,24 @@ function frame(now) {
     setOnce(pt, t >= pt.at, on => pt.els.forEach(el => {
       el.classList.toggle("hx-hidden", !on);
       if (on && live && el instanceof SVGElement) el.classList.add("hx-pop");   // Leaflet positions labels with transform
+      const inner = el.querySelector && el.querySelector(".hx-in");            // markers rise from the map
+      if (inner) inner.classList.toggle("hx-rise", on && live);
     }));
   }
+  for (const it of fx.timed) setOnce(it, t >= it.from && (t < it.to || it.to === Infinity),
+                                     on => it.els.forEach(el => el.classList.toggle("hx-hidden", !on)));
+  for (const d of fx.draws) setOnce(d, Math.round(clamp01((t - d.from) / d.dur) * 100), v => {
+    d.el.classList.toggle("hx-hidden", v <= 0);
+    d.el.style.strokeDasharray = v >= 100 ? "" : "1";
+    d.el.style.strokeDashoffset = v >= 100 ? "" : String(1 - v / 100);
+    if (d.marker && v >= 100) d.el.setAttribute("marker-end", d.marker);    // the arrowhead once the line is complete
+    else d.el.removeAttribute("marker-end");
+  });
+  // A place taken by a campaign: hatched from when it appears, solid from when the campaign reaches it
+  for (const fl of fx.flips) setOnce(fl, t < fl.show ? 0 : t < fl.at ? 1 : 2, v => {
+    fl.paper.classList.toggle("hx-hidden", v !== 1);
+    fl.held.classList.toggle("hx-hidden", v !== 2);
+  });
   for (const st of fx.states) {
     setOnce(st, t >= st.at ? st.newFill : st.oldFill, fill => {
       st.el.style.fill = fill;
@@ -1027,6 +1430,66 @@ function searchlight(sites, W) {
   }
 }
 
+// Map distance to screen distance, for halos drawn on the canvas
+function kmToPx(ll, km) {
+  const a = xy(ll), b = xy([ll[0], ll[1] + km / (111.32 * Math.cos(ll[0] * Math.PI / 180))]);
+  return Math.abs(b.x - a.x);
+}
+// Tribute and allegiance travel to the overlord; traders and specialists along network threads; migrants drift;
+// goods travel along trade routes; a campaign's arrow glows as it draws and each stop it reaches pulses.
+function paintVocab(live, t, W, age) {
+  const started = from => !live || t >= from;
+  for (const tie of fx.ties) {
+    if (!started(tie.at)) continue;
+    const n = tie.dotted ? 2 : 1, per = tie.dotted ? 5 : 3.2;
+    for (let i = 0; i < n; i++) {
+      const u = ((W + tie.seed * 0.7) / per + i / n) % 1, p = xy(pointAt(tie.line, u));
+      const fade = Math.sin(u * Math.PI);
+      glow(p.x, p.y, 12, tie.rgb, 0.5 * fade);
+      dot(p.x, p.y, 2.2, tie.dotted ? tie.rgb : COL.white, 0.9 * fade);
+    }
+  }
+  for (const d of fx.drifts) {
+    const shown = live ? clamp01((t - d.from) / DRIFT) : 1;
+    if (shown <= 0) continue;
+    for (let i = 0; i < 30; i++) {
+      const u = (rnd(i, 4) + W / (26 + 10 * rnd(i, 5))) % 1;
+      if (u > shown) continue;
+      const p = xy(pointAt(d.line, u)), q = xy(pointAt(d.line, Math.min(1, u + 0.01)));
+      const len = Math.hypot(q.x - p.x, q.y - p.y) || 1, side = (rnd(i, 6) - 0.5) * (6 + 14 * u);
+      const px = p.x - (q.y - p.y) / len * side, py = p.y + (q.x - p.x) / len * side;
+      dot(px, py, 1.6 + rnd(i, 7), d.rgb, (d.faint ? 0.35 : 0.7) * Math.sin(u * Math.PI) ** 0.6);
+    }
+  }
+  for (const gd of fx.goods) {
+    if (!started(gd.from)) continue;
+    for (let i = 0; i < 4; i++) {
+      const u = (W / 9 + i / 4) % 1, p = xy(pointAt(gd.line, u)), a = Math.min(1, Math.sin(u * Math.PI) * 3);
+      glow(p.x, p.y, 10, gd.rgb, 0.35 * a);
+      g.save(); g.translate(p.x, p.y); g.rotate(Math.PI / 4);
+      g.fillStyle = rgba(COL.white, 0.9 * a); g.fillRect(-2.6, -2.6, 5.2, 5.2);
+      g.restore();
+    }
+  }
+  for (const h of fx.heads) {
+    const u = live ? (t - h.from) / h.dur : 1;
+    if (u <= 0 || u >= 1) continue;
+    const pts = h.line.pts, legs = pts.length - 1, i = Math.min(legs - 1, Math.floor(u * legs)), v = u * legs - i;
+    const p = xy([pts[i][0] + (pts[i + 1][0] - pts[i][0]) * v, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * v]);
+    glow(p.x, p.y, 26, h.rgb, 0.85);
+    glow(p.x, p.y, 7, COL.white, 0.9);
+  }
+  for (const a of fx.arrivals) {
+    const p = xy(a.ll), k = age(a.at);
+    ring(p.x, p.y, k, { r0: 6, r1: 50, c: a.rgb, life: 1.3, w: 2.5 });
+    ring(p.x, p.y, k - 0.25, { r0: 6, r1: 34, c: COL.white, life: 1, w: 1.5 });
+  }
+  for (const fl of fx.flips) {      // an ink stamp as a claim turns into occupation
+    const p = xy(fl.ll);
+    ring(p.x, p.y, age(fl.at), { r0: 44, r1: 18, c: VOCAB.claim, life: 0.5, w: 3 });
+  }
+}
+
 // Paint one frame of effects. Returns true while something is still moving.
 function paint(now) {
   g.clearRect(0, 0, cvW, cvH);
@@ -1037,7 +1500,8 @@ function paint(now) {
   const sites = fx.points.map(pt => ({ pt, p: xy(pt.ll) }));
   const cardT = lead() ? state.t : Infinity;
   const mood = cardT < CARD - 0.4 ? "" : sc.mood;     // nothing behind the chapter's title card
-  let moving = (!live && x < 6) || !!sc.mood;     // while playing, the loop runs anyway
+  let moving = (!live && x < 6) || !!sc.mood     // while playing, the loop runs anyway
+    || fx.ties.length + fx.drifts.length + fx.goods.length > 0;
 
   // Darkening first, with normal blending
   g.globalCompositeOperation = "source-over";
@@ -1086,13 +1550,19 @@ function paint(now) {
     case "excavation": break;    // the searchlight is drawn above
   }
 
-  // Places arriving: a shockwave, a flash and sparks (dust and a camera flash when excavated)
-  const dig = sc.mood === "excavation";
+  // Places arriving: a shockwave, a flash and sparks (dust and a camera flash when excavated).
+  // Scenes about war or the slave trade stay calm: a single soft ring, no sparks.
+  const dig = sc.mood === "excavation", calm = sc.mood === "calm" || sc.mood === "decline";
   sites.forEach(({ pt, p }) => {
     const a = age(pt.at);
     if (a < 0 || a > 1.6) return;
-    const c = pt.furnace ? COL.ember : dig ? COL.sand : sc.mood === "farming" ? COL.green
-            : sc.mood === "sculpture" ? COL.clay : COL.cyan, k = pt.faded ? 0.6 : 1;
+    const c = pt.rgb || (pt.furnace ? COL.ember : dig ? COL.sand : sc.mood === "farming" ? COL.green
+            : sc.mood === "sculpture" ? COL.clay : COL.cyan), k = pt.faded ? 0.6 : 1;
+    if (pt.reach && !pt.faded) {      // a halo or field spreads out to its size
+      const r = kmToPx(pt.ll, pt.reach);
+      ring(p.x, p.y, a - 0.2, { r0: 10, r1: r, c, life: 1.4, w: 2 });
+    }
+    if (calm) { ring(p.x, p.y, a, { r0: 4, r1: 40 * k, c, life: 1.4, w: 1.5 }); return; }
     ring(p.x, p.y, a, { r0: 4, r1: 48 * k, c, life: 1.1, w: 3 });
     ring(p.x, p.y, a - 0.15, { r0: 4, r1: 86 * k, c, life: 1.4, w: 1.5 });
     glow(p.x, p.y, 44 * (1 - a / 1.6), c, 0.7 * (1 - a / 1.6) * k);
@@ -1129,6 +1599,9 @@ function paint(now) {
     const a = live ? t - fx.count.end - 0.2 : x - 1.1;
     sweep(a / 1.1, COL.gold, 0.22);
   }
+
+  // The map vocabulary in motion (decoration: the lines, dots and labels already say it all)
+  paintVocab(live, t, W, age);
 
   // Effects from the chapter file
   for (const e of fx.effects) {

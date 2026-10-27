@@ -169,5 +169,248 @@
     "kind": "background map data",
     "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
     "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+  },
+  "wiki-trans-saharan": {
+    "title": "Trans-Saharan trade (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Trans-Saharan_trade",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. From Kawar, caravans crossed the dunes of Bilma, where rock salt was mined, to the savanna north of Lake Chad; the shortest route, exchanging slaves and ivory from the south for salt; the Tripoli-Murzuk-Lake Chad road; regular routes only from the 7th and 8th centuries; the eastern route led to Kanem-Bornu."
+  },
+  "wiki-kanem": {
+    "title": "Kanem Empire (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Kanem_Empire",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Core territory in Kanem, north-east of Lake Chad; the site of Njimi has never been located; founding typically dated to c. 700, with c. 600 and c. 900 also given; the Bilala took Njimi around 1380 and the court moved to Bornu; exported salt, ivory, slaves and animal products."
+  },
+  "wiki-hausa": {
+    "title": "Hausa Kingdoms (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Hausa_Kingdoms",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Daura the mother city; the Hausa Bakwai as seven states; fortified capital cities; by the 15th century trading centres competing with Kanem-Bornu and Mali; Bornu made the Hausa states vassals in the 15th century, tribute sent through Daura, unsure whether all or only Kano and Biram; Rano conquered by Kano under Yaji I; Tuareg and Fulani migration from the 14th and 15th centuries."
+  },
+  "wiki-bornu": {
+    "title": "Bornu Empire (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Bornu_Empire",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Ngazargamu founded c. 1472 on the Yobe; captured and destroyed by the Fulani in 1808; mai Idris III recognised as suzerain of Kano and paid tribute."
+  },
+  "wiki-fula": {
+    "title": "Fula people (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Fula_people",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Origins unclear; Futa Toro supported by linguistic evidence; one estimate, mainly from oral tradition, has migrants leaving Futa Toro eastwards between the 11th and 14th centuries; a steady flow into Hausaland by the 15th century and later into Bornu; pastoral, semi-nomadic and settled Fulani."
+  },
+  "wiki-benin": {
+    "title": "Kingdom of Benin (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Kingdom_of_Benin",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Ewuare came to power in 1440 and expanded the former city-state; the capital was Edo, now Benin City; armies expanded west into eastern Yorubaland from the mid-15th century; influence reached Lagos by about the mid-1500s; the Niger appears to have been the effective eastern boundary of Benin rule."
+  },
+  "wiki-benin-art": {
+    "title": "Benin court and ceremonial art (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Benin_court_and_ceremonial_art",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. The leopard is one of the principal symbols of the Oba in Benin art; coral-bead regalia, mudfish and ivory trumpets also appear. The page gives no date for the leopard imagery."
+  },
+  "wiki-aro": {
+    "title": "Aro Confederacy (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Aro_Confederacy",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Origins in the mid-17th century (infobox 1640); Arochukwu as its centre with the Ibini Ukpabi oracle; traded with the Oguta, Onitsha and Kalabari monarchies; slave markets at Oguta Lake, Onitsha, Abonnema and Bonny; economy mainly enslaved people and palm oil; allies such as Ohafia, Edda and Abam; Arochukwu captured 28 Dec 1901, collapse by early 1902."
+  },
+  "wiki-igbo": {
+    "title": "Igbo people (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Igbo_people",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Communities ruled by a republican consultative assembly and councils of elders; umunna patrilineages; the Ozo title society; Onitsha had kings called Obi; Nri and Arochukwu had priest-kings; warrant chiefs placed where there were no monarchies."
+  },
+  "wiki-sokoto": {
+    "title": "Sokoto Caliphate (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Sokoto_Caliphate",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Usman dan Fodio moved to Gudu in February 1804 and war was declared on 21 Feb 1804; Kano captured 1807; Sokoto founded by Muhammad Bello in 1809; Gwandu the western seat; emirs appointed by the caliph, with wide autonomy, pledged allegiance and brought tribute each year; the emirates recognised the Sultan of Sokoto's suzerainty; Attahiru I killed in June 1903 (text) or at Burmi on 27 Jul 1903 (infobox)."
+  },
+  "wiki-rnc": {
+    "title": "Royal Niger Company (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Royal_Niger_Company",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. On 1 Jan 1900 the company transferred its territories to the British government for £865,000; with the Niger Coast Protectorate they formed the Protectorates of Northern and Southern Nigeria."
+  },
+  "wiki-battle-kano": {
+    "title": "Battle of Kano (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Battle_of_Kano",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. A force under Colonel Thomas Morland left Zaria at the end of January 1903 and took Kano on 3 Feb 1903 after heavy fighting. Casualty figures conflict between the infobox and the text, so none are used."
+  },
+  "wiki-battle-sokoto": {
+    "title": "Battle of Sokoto (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Battle_of_Sokoto",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Battle fought on 15 Mar 1903 under Kemball and Morland; Attahiru I left the city and was killed at the Battle of Burmi in July 1903."
+  },
+  "wiki-colonial-north": {
+    "title": "Colonial history of Northern Nigeria (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Colonial_history_of_Northern_Nigeria",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Kano's fort captured in February 1903, Sokoto shortly after; the caliphate's council conceded to Lugard's demands on 13 Mar 1903. The page also dates the proclamation of the protectorate to 1 Jan 1897 at Ida, which conflicts with other sources, so that is not used."
+  },
+  "wiki-places-key": {
+    "title": "Coordinates and town facts for the map key (Wikipedia place articles)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Ngazargamu",
+    "kind": "gazetteer coordinates of today's towns and of one ruined capital",
+    "rights": "Coordinates are facts; no text reused.",
+    "checked": "Opened 27 Oct 2026. Bilma 18.687 N 12.919 E; Mao (Kanem region, Chad) 14.119 N 15.313 E; Daura 13.036 N 8.318 E; Katsina 12.989 N 7.601 E (21 km city wall, founded c. 1100); Kano 12.000 N 8.517 E (walls begun under Gijimasu, 1095-1134); Ngazargamu ruins 13.083 N 12.367 E (near Geidam); Benin City 6.333 N 5.622 E; Arochukwu 5.383 N 7.917 E; Oguta 5.712 N 6.809 E (on Oguta Lake); Onitsha 6.167 N 6.783 E (founded 1630-1680, or the 16th century by some sources); Bonny 4.433 N 7.167 E (turned to palm oil after 1807); Sokoto 13.062 N 5.234 E (founded as a ribat in 1809); Gwandu 12.502 N 4.643 E (co-capital overseeing the western and southern lands); Zaria 11.067 N 7.700 E (captured by the Fulani in 1805, taken by British forces under Lugard in 1901)."
+  },
+  "fotw-rnc": {
+    "title": "Royal Niger Company (Flags of the World)",
+    "author": "Flags of the World contributors",
+    "year": "accessed 2026",
+    "url": "https://fotw.info/FLAGS/ng_rnc.html",
+    "kind": "flag reference site (secondary)",
+    "rights": "Description cited; no images reused.",
+    "checked": "Opened 27 Oct 2026 for the research outline. Badge: a black Y for the Niger and the Benue with ARS, JUS and PAX, in a red ring on white; on a White Ensign approved 2 Jun 1887, withdrawn 1 Feb 1888, then a Blue Ensign; use until 1899 presumed."
+  },
+  "fotw-ng-gb": {
+    "title": "Colonial Nigeria (Flags of the World)",
+    "author": "Flags of the World contributors",
+    "year": "accessed 2026",
+    "url": "https://crwflags.com/fotw/flags/ng-gb.html",
+    "kind": "flag reference site (secondary)",
+    "rights": "Description cited; no images reused.",
+    "checked": "Opened 27 Oct 2026 for the research outline. Blue Ensign with a green six-pointed star around a crown in a red disc; Lugard wrote in 1940 that he first suggested the star for Northern Nigeria; one writer is not sure the post-1953 versions flew."
+  },
+  "wiki-nigerian-flags": {
+    "title": "List of Nigerian flags (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/List_of_Nigerian_flags",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026 for the research outline. Shows flags for Kanem, Bornu and the Aro Confederacy without any citation; colonial flag of 1914 to 1952."
+  },
+  "rmg-556": {
+    "title": "Royal Museums Greenwich, object 556",
+    "author": "National Maritime Museum, Greenwich",
+    "year": "accessed 2026",
+    "url": "https://www.rmg.co.uk/collections/objects/rmgc-object-556",
+    "kind": "museum record (primary for the object)",
+    "rights": "Description cited. The museum marks its record photographs \"do not reproduce\", so none are copied.",
+    "checked": "Opened 27 Oct 2026 for the research outline: red flag with a printed Union Flag and NANNA in white."
+  },
+  "rmg-555": {
+    "title": "Royal Museums Greenwich, object 555",
+    "author": "National Maritime Museum, Greenwich",
+    "year": "accessed 2026",
+    "url": "https://www.rmg.co.uk/collections/objects/rmgc-object-555",
+    "kind": "museum record (primary for the object)",
+    "rights": "Description cited. The museum marks its record photographs \"do not reproduce\", so none are copied.",
+    "checked": "Opened 27 Oct 2026 for the research outline: yellow flag with an upside-down Union Flag, NANNA in blue and a man shooting a leopard, captured in 1894."
+  },
+  "rmg-557": {
+    "title": "Royal Museums Greenwich, object 557",
+    "author": "National Maritime Museum, Greenwich",
+    "year": "accessed 2026",
+    "url": "https://www.rmg.co.uk/collections/objects/rmgc-object-557",
+    "kind": "museum record (primary for the object)",
+    "rights": "Description cited. The museum marks its record photographs \"do not reproduce\", so none are copied.",
+    "checked": "Opened 27 Oct 2026 for the research outline: red flag with white figures of one man beheading another, said to come from the 1897 Benin expedition; maker and meaning unknown."
+  },
+  "wiki-unidentified-flag": {
+    "title": "Unidentified flag from the Kingdom of Benin (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Unidentified_flag_from_the_Kingdom_of_Benin",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026 for the research outline. The flag's maker, owner and meaning are unknown."
+  },
+  "wiki-nigerian-heraldry": {
+    "title": "Nigerian heraldry (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Nigerian_heraldry",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Among the Yoruba, Solomon's knot is commonly viewed as a royal symbol; the Dagin Arewa, a star-shaped northern knot, is used in architecture, design and embroidery, with no date given; the arms' wavy white pall is the meeting of the Niger and the Benue."
+  },
+  "wiki-catalan-atlas": {
+    "title": "Catalan Atlas (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Catalan_Atlas",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026 for the research outline. 14th-century European maps placed an imaginary kingdom of Organa in the region; the palm-tree flag shown online for Kanem traces to this."
+  },
+  "wiki-nri": {
+    "title": "Kingdom of Nri (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Kingdom_of_Nri",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026 for the research outline. Ichi facial marks showed status; the Eze Nri held ritual, not military, authority."
+  },
+  "wiki-flag-biafra": {
+    "title": "Flag of Biafra (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Flag_of_Biafra",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026 for the research outline. Red, black and green with a golden rising sun of eleven rays over a gold bar; first raised 30 May 1967."
+  },
+  "wiki-flag-nigeria": {
+    "title": "Flag of Nigeria (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Flag_of_Nigeria",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026 for the research outline. Green-white-green by Michael Taiwo Akinkunmi, chosen in 1959; his red sun was removed; raised on 1 Oct 1960."
   }
 }
