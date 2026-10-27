@@ -259,9 +259,8 @@ Chapter and scene can be IDs or zero-based indices. Time is non-negative seconds
 3.6-second title card at the start of a chapter, clamped to the scene's duration. `info()` reports
 the content start, duration, source IDs, location precision and dispute/uncertainty metadata.
 Seeking stops normal playback. The year counter has a fixed scene origin, effects use the explicit
-clock, the globe camera has no time-dependent easing, and the map camera is computed directly from
-cues rather than Leaflet's real-time flight. CSS animations and transitions are disabled only in
-video mode. At a fixed browser, viewport, device scale and fonts, repeated seeks reproduce pixels.
+clock, the globe retains its smoothly following camera on a fixed integration step, and the map camera samples the original flying geometry from
+cues rather than Leaflet's real-time flight. CSS keyframes are paused and explicitly sampled at scene time rather than removed. Layout transitions remain disabled for capture; shot dissolves preserve visual continuity. At a fixed browser, viewport, device scale and fonts, repeated seeks reproduce pixels.
 
 Build a local preview without touching the default `docs/history.html` output:
 
@@ -274,7 +273,7 @@ node capture_history.cjs work/history-preview.html work/history-deps work/pilot.
 
 The capture script requires Playwright, Chromium, ffmpeg and the local dependency files listed
 above. `CHROMIUM_PATH` and `FFMPEG_PATH` select binaries. It intercepts dependency requests locally
-and blocks other network requests. It captures three short, existing scenes at 1920×1080 and 30fps
+and blocks other network requests. It captures four short, existing scenes at 1920×1080 and 30fps
 (or the explicitly requested rate), then adds a credits card. The last argument is seconds per shot.
 It writes an MP4, a WebVTT caption file and a source/uncertainty manifest. Existing outputs are never
 overwritten, and failed captures remove their own temporary files. No voice-over or music is added.
@@ -283,5 +282,41 @@ The pilot excludes Esri reference scenes; their video rights remain unresolved. 
 modern shapes moved by plate rotations, not ancient coastlines, and physical geography is approximate.
 The pilot and map remain **Unreviewed draft**. Historical review and source-specific reuse checks
 are still required before publishing a finished video. This is a capture and layout pilot, not a
-completed narrated film. The separate director experiment in PR #48 is independent.
+completed narrated film. The separate director experiment in PR #48 supplied the green-and-gold visual direction now used across both page templates.
 
+
+## Maintainer requirement: preserve the spectacle
+
+Saifu explicitly reaffirmed on 27 October 2026 that the experience must be flashy, catchy and
+fluid. The original moving camera, globe easing, title cards, rising markers, furnace flicker,
+pulses, particles and scene transitions are product requirements, not disposable decoration.
+Do not obtain repeatable video by stripping those animations out. Sample their original motion
+on the export clock and visually compare the result with the live player. Preserve factual
+geometry, chronology, reduced-motion accessibility and the existing restraint for human suffering.
+The first static-looking pilot is superseded by the restored-motion viewing copy.
+
+Saifu also chose the green-and-gold palette and Georgia serif intro as the visual direction
+for the **whole website**, including the live conflict map and interactive history player.
+Keep that identity consistent across new chapters and previews. See [visual-direction.md](visual-direction.md).
+
+
+### Review the complete green theme
+
+`previews/site-theme.html` packages the interactive history and the published conflict-data
+snapshot in one downloadable file. Switch pages with the History and Conflict map tabs.
+The conflict data keeps its existing build date, version, preliminary labels and attribution;
+this is a design preview, not a fresh data release. Basemap tiles still need internet.
+Libraries are bundled for this preview only, with their notices in the file and
+`previews/dependency-licenses.txt`. The source templates continue using their existing CDN URLs.
+
+To rebuild it after building history to a scratch file:
+
+```
+python previews/build_site_theme.py <existing-map-snapshot> <built-history> <local-dependency-directory>
+node tests/site_theme_browser.cjs previews/site-theme.html
+```
+
+The dependency directory also needs `leaflet-heat.js` (0.2.0). The revised standalone video
+viewing copy is 23 seconds, 1920×1080 at 60 fps, with a green serif opening, camera flights,
+sampled CSS animation, moving particles and short dissolves. Its source manifest and captions
+are alongside `previews/history-video-pilot.html`. It supersedes the earlier 21-second 30 fps copy.
