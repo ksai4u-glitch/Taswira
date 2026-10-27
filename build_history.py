@@ -33,6 +33,7 @@ import os
 import re
 import sys
 from datetime import date
+from calendar import isleap
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 HISTORY_DIR = os.path.join(HERE, "history")
@@ -46,7 +47,7 @@ PLATES_PATH = os.path.join(HISTORY_DIR, "geo", "plates.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
-CHAPTERS = ["deep", "nok", "key", "states"]
+CHAPTERS = ["deep", "nok", "states", "key"]
 
 # Modern reference maps are never allowed before this year. Later historical scenes also
 # use the neutral background unless a modern locator is explicitly requested and explained.
@@ -392,6 +393,7 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
             need(ch.get(field), f"chapter {cid}: missing {field}")
         need(ch.get("area") in AREAS + (None,), f"chapter {cid}: area must be one of {', '.join(AREAS)}, or left out")
         need(ch.get("clock") in CLOCKS + (None,), f"chapter {cid}: clock must be one of {', '.join(CLOCKS)}, or left out")
+        need(isinstance(ch.get("reference", False), bool), f"chapter {cid}: reference must be true or false")
         world = ch.get("area") == "world"
         lat_range, lon_range = ((-90.0, 90.0), (-180.0, 180.0)) if world else (LAT_RANGE, LON_RANGE)
 
@@ -460,6 +462,24 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                 need(f.get("type") != "trade" or f.get("goods"), f"{where}: trade needs goods")
                 for k in f.get("dates", {}):
                     need(k in f.get("path", []), f"{where}: a date for {k!r}, which is not on the path")
+                if f.get("type") == "campaign":
+                    stops = f.get("stops")
+                    need(isinstance(stops, dict) and set(stops) == set(f.get("path", [])),
+                         f"{where}: campaign stops must date every path place, with no extra stops")
+                    need("dates" not in f, f"{where}: use structured campaign stops, not free-text dates")
+                    stops = stops if isinstance(stops, dict) else {}
+                    parsed = []
+                    for pid, stop in (stops or {}).items():
+                        try:
+                            parse_campaign_stop(stop)
+                        except ValueError as error:
+                            need(False, f"{where}: stop {pid}: {error}")
+                    for pid in f.get("path", []):
+                        try:
+                            parsed.append(parse_campaign_stop((stops or {}).get(pid))["year"])
+                        except ValueError:
+                            pass
+                    need(parsed == sorted(parsed), f"{where}: campaign stops must be in chronological order")
             else:
                 need(False, f"{where}: unknown kind {kind!r}")
         # Links and paths join places of the same chapter
@@ -515,6 +535,7 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                  and when["from"] <= when["to"] <= date.today().year,
                  f"{where}: when.from and when.to must be whole years (BCE negative), from <= to")
             need(when.get("label"), f"{where}: when.label missing")
+            need(isinstance(sc.get("sensitive", False), bool), f"{where}: sensitive must be true or false")
             need(sc.get("background") in (None, "period", "modern-reference"),
                  f"{where}: background must be period or modern-reference, or left out")
             if sc.get("background") == "modern-reference":
@@ -564,6 +585,14 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                          f"{where}: {fid} can only be shown on the globe")
             for fid in shown:
                 f = features.get(fid, {})
+                if f.get("type") == "campaign":
+                    for pid, stop in (f["stops"] if isinstance(f.get("stops"), dict) else {}).items():
+                        try:
+                            y = parse_campaign_stop(stop)["year"]
+                            need(when["from"] <= y < when["to"] + 1,
+                                 f"{where}: campaign stop {pid} is outside the scene's years")
+                        except (ValueError, KeyError, TypeError):
+                            pass  # malformed stops or scene years have their own diagnostics
                 ends = ([f.get("from"), f.get("to")] if f.get("kind") == "link"
                         else f.get("path", []) if f.get("kind") == "move" else [])
                 missing = [e for e in ends if e not in shown]
@@ -594,6 +623,13 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                 need(fid in sc.get("show", []), f"{where}: furnace glow on {fid!r}, which the scene does not show")
             if "mood" in sc:
                 need(sc["mood"] in MOODS, f"{where}: mood must be one of {', '.join(MOODS)}")
+            if any(features.get(fid, {}).get("type") == "campaign" for fid in shown):
+                try:
+                    campaign_clock(sc, features, sc.get("duration", reading_seconds(sc.get("text", ""))))
+                except ValueError as error:
+                    need(False, f"{where}: {error}")
+                except (KeyError, TypeError):
+                    pass  # feature/date diagnostics above describe invalid input
             for e in sc.get("effects", []):
                 need(e.get("type") in EFFECTS and isinstance(e.get("at"), (int, float)) and 0 <= e["at"] < 1,
                      f"{where}: an effect needs type {', '.join(EFFECTS)} and at between 0 and 1 (part of the scene)")
@@ -616,6 +652,74 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
 def reading_seconds(text):
     """Time to show a scene while playing: enough to read it at a calm pace."""
     return max(8, round(len(text.split()) * 0.33 + 4))
+
+
+def parse_campaign_stop(stop):
+    """Validate CE ISO dates at their stated precision; do not invent missing month/day evidence."""
+    if not isinstance(stop, dict):
+        raise ValueError("a stop needs a date and precision")
+    precision = stop.get("precision")
+    patterns = {"year": r"\d{4}", "month": r"\d{4}-\d{2}", "day": r"\d{4}-\d{2}-\d{2}"}
+    raw = stop.get("date")
+    if not isinstance(precision, str) or precision not in patterns or not isinstance(raw, str) or not re.fullmatch(patterns[precision], raw):
+        raise ValueError("stop date must be ISO YYYY, YYYY-MM or YYYY-MM-DD matching its precision")
+    if not isinstance(stop.get("approximate", False), bool):
+        raise ValueError("approximate must be true or false")
+    parsed = date.fromisoformat(raw + {"year": "-01-01", "month": "-01", "day": ""}[precision])
+    year = parsed.year + (parsed - date(parsed.year, 1, 1)).days / (366 if isleap(parsed.year) else 365)
+    label = stop.get("label", raw)
+    if not isinstance(label, str) or not label.strip():
+        raise ValueError("stop label must be non-empty text")
+    if stop.get("approximate"):
+        label = "approx. " + label
+    if precision != "day":
+        label += f" ({precision} only)"
+    return dict(stop, year=year, label=label)
+
+
+def campaign_clock(scene, features, duration):
+    """One chronological clock for every campaign, its arrivals and the displayed year.
+
+    Missing month/day components anchor an interval at its beginning for presentation only;
+    labels retain the evidence's precision. Equal dates hold the year while a leg draws.
+    """
+    if not isinstance(duration, (int, float)) or isinstance(duration, bool) or not math.isfinite(duration) or duration <= 0:
+        raise ValueError("scene duration must be a finite positive number")
+    events = []
+    campaigns = {}
+    for fid in scene.get("show", []):
+        f = features.get(fid, {})
+        if f.get("type") != "campaign":
+            continue
+        if not isinstance(f.get("stops"), dict):
+            raise ValueError("campaign needs a structured stops mapping")
+        campaigns[fid] = []
+        for pid in f["path"]:
+            stop = dict(parse_campaign_stop(f.get("stops", {}).get(pid)), id=pid)
+            campaigns[fid].append(stop)
+            events.append(stop)
+    if not events:
+        return None
+    events.sort(key=lambda stop: stop["year"])
+    end_year = scene["when"]["to"]
+    first, last = scene["when"]["from"], end_year + 1 - 1 / (366 if isleap(end_year) else 365)
+    anchors = ([{"year": first}] if first < events[0]["year"] else []) + events
+    if last > events[-1]["year"]:
+        anchors.append({"year": last})
+    points = sum(features.get(fid, {}).get("kind") == "point" for fid in scene.get("show", []))
+    start = 1 + max(0, points - 1) * min(1.2, duration * .4 / max(1, points)) + .6
+    minimum = 1.8
+    spare = duration - 2 - start - minimum * (len(anchors) - 1)
+    if spare < 0:
+        raise ValueError("campaign needs a longer scene duration for readable dated legs")
+    span = anchors[-1]["year"] - anchors[0]["year"]
+    t = start
+    for i, anchor in enumerate(anchors):
+        if i:
+            fraction = (anchor["year"] - anchors[i - 1]["year"]) / span if span else 0
+            t += minimum + spare * fraction
+        anchor["at"] = t
+    return {"knots": [[stop["at"], stop["year"]] for stop in anchors], "campaigns": campaigns}
 
 
 def page_data(chapters, sources, states, arcs, users, background, emblems=None, plates=None):
@@ -646,6 +750,13 @@ def page_data(chapters, sources, states, arcs, users, background, emblems=None, 
         scenes = [dict(sc, duration=sc.get("duration", reading_seconds(sc["text"])), base=base_for(sc))
                   for sc in ch["scenes"]]
         features = {f["id"]: dict(f) for f in ch.get("features", [])}
+        for f in features.values():
+            if f.get("type") == "campaign":
+                f["dates"] = {pid: parse_campaign_stop(stop)["label"] for pid, stop in f["stops"].items()}
+        for sc in scenes:
+            clock = campaign_clock(sc, features, sc["duration"])
+            if clock:
+                sc["campaign_clock"] = clock
         if globe and ch.get("area") == "world":
             # Which plate each place, line and camera rides on, so the page can move them. A line moves
             # with the plate under its first point, so it keeps its shape.
@@ -659,7 +770,7 @@ def page_data(chapters, sources, states, arcs, users, background, emblems=None, 
                     sc["camera"] = dict(sc["camera"], plate=plate_of(*sc["camera"]["center"], plates))
         out["chapters"].append({
             "id": ch["id"], "title": ch["title"], "period": ch["period"], "intro": ch["intro"],
-            "method": ch.get("method"), "clock": ch.get("clock"), "features": features,
+            "method": ch.get("method"), "clock": ch.get("clock"), "reference": ch.get("reference", False), "features": features,
             "snapshots": snap_out, "scenes": scenes,
         })
     return out
@@ -702,7 +813,9 @@ def feature_text(f, sc, features, sources, emblems):
         head = (f"<strong>{e(f['name'])}.</strong> {e(LINK_WORDS[f['type']])}, from "
                 f"{e(features[f['from']]['name'])} to {e(features[f['to']]['name'])}. {e(f['what'])}")
     elif kind == "move":
-        stops = " to ".join(features[p]["name"] + (f" ({f['dates'][p]})" if p in f.get("dates", {}) else "")
+        dates = ({pid: parse_campaign_stop(stop)["label"] for pid, stop in f["stops"].items()}
+                 if f.get("type") == "campaign" else f.get("dates", {}))
+        stops = " to ".join(features[p]["name"] + (f" ({dates[p]})" if p in dates else "")
                             for p in f["path"])
         extra = "".join(f" <em>{label}:</em> {e(f[k])}." for k, label in (("period", "When"), ("goods", "Goods"))
                         if f.get(k))
