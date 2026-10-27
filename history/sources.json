@@ -493,5 +493,257 @@
     "kind": "gazetteer coordinates of today's places",
     "rights": "Coordinates are facts; no text reused.",
     "checked": "Opened 27 Oct 2026. Lake Chad 13.099 N 14.533 E (Lake Mega-Chad: four highstands between 39,000 BC and 300 BC, about 400,000 km², over 180 m deep, draining to the Benue through the Mayo Kebbi); Enugu State 6.500 N 7.500 E (coal in the Udi Hills around Enugu, first shipped to Britain by 1914); Abakaliki 6.333 N 8.100 E; Makurdi 7.733 N 8.500 E (on the Benue); the Gongola joins the Benue opposite Numan (page geotag 9.500 N 12.067 E)."
+  },
+  "irhoud-mpg": {
+    "title": "The first of our kind",
+    "author": "Max Planck Society",
+    "year": "2017-06-07",
+    "url": "https://www.mpg.de/11322481/oldest-homo-sapiens-fossils-at-jebel-irhoud-morocco",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Facts paraphrased; no image or text asset rights established.",
+    "checked": "Opened 27 Oct 2026. Main article, paragraphs on fossils, heated-flint dating and continent-wide evolution (retrieved lines 117-129) Early Homo sapiens fossils, stone tools, approximately 300,000-year date; interpretation extending beyond one African locality."
+  },
+  "irhoud-dating": {
+    "title": "The age of the hominin fossils from Jebel Irhoud, Morocco, and the origins of the Middle Stone Age",
+    "author": "Nature; abstract opened at US National Library of Medicine / PubMed",
+    "year": "2017-06-07",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28593967/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Bibliographic abstract checked for facts; no asset reuse permission inferred.",
+    "checked": "Opened 27 Oct 2026. Abstract, retrieved lines 254-258 Thermoluminescence estimate of 315 ± 34 thousand years for heated flints associated with the fossils."
+  },
+  "irhoud-mindat": {
+    "title": "Djebel Irhoud fossil locality 82672",
+    "author": "Mindat",
+    "year": "checked 2026-10-27",
+    "url": "https://www.mindat.org/paleo_loc.php?id=82672",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Coordinates recorded as facts; no maps or photographs reused.",
+    "checked": "Opened 27 Oct 2026. Locality coordinates and derivation, retrieved lines 29-40 Approximate fossil locality coordinates, explicitly based on a nearby landmark."
+  },
+  "egypt-ministry": {
+    "title": "Early Dynastic Period",
+    "author": "Egyptian Ministry of Tourism and Antiquities",
+    "year": "checked 2026-10-27",
+    "url": "https://egymonuments.gov.eg/historical-periods/early-dynastic-period/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Page states all rights reserved; facts only in original prose.",
+    "checked": "Opened 27 Oct 2026. Historical summary, retrieved lines 133-135 Approximate 3100 BCE unification chronology, explicitly gradual process, Memphis as a new capital."
+  },
+  "memphis-map": {
+    "title": "Memphis and its Necropolis — Maps / geographical data",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/86/maps/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Coordinate facts used; cadastral maps not copied.",
+    "checked": "Opened 27 Oct 2026. Component 86-001, Site of Memphis, retrieved lines 9-14 Coordinates for Memphis separately from component 86-002, the pyramid fields."
+  },
+  "meroe-unesco": {
+    "title": "Archaeological Sites of the Island of Meroe",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/1336/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Short description has a CC-BY-SA IGO 3.0 label; no blanket licence assumed for photographs, maps, nomination documents or the entire page. Facts paraphrased.",
+    "checked": "Opened 27 Oct 2026. Brief synthesis, retrieved lines 47-53 Meroe's royal importance, third-century BCE royal burials and Kushite funerary pyramids."
+  },
+  "meroe-nomination": {
+    "title": "Archaeological Sites of the Island of Meroe — Nomination Text",
+    "author": "State Party nomination hosted by UNESCO",
+    "year": "2010-01-25",
+    "url": "https://whc.unesco.org/document/168998",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Source used for factual geometry and dating; no illustrations copied and no asset licence established.",
+    "checked": "Opened 27 Oct 2026. PDF page index 5 (coordinates); page indices 35-36 (burial chronology and form); page index 42 (pyramid-topped third-century royal burials) Separate city and cemetery coordinates; third-century BCE royal funerary phase; square steep-sided superstructures and east-side chapels."
+  },
+  "meroe-booklet": {
+    "title": "Sudanese Cultural Heritage Sites",
+    "author": "Abdelrahman Ali Mohamed",
+    "year": "2017",
+    "url": "https://sudan.un.org/en/download/3749/19905",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Publication carries copyright notices for author, NCAM and UNESCO; no photographs, plans or illustrations cleared for reuse.",
+    "checked": "Opened 27 Oct 2026. PDF page indices 30-32, printed pages 29-31 Steep-sided sandstone pyramid exteriors, independent underground burial chambers, east-side offering chapels; third-century BCE royal burial-ground shift."
+  },
+  "aksum-unesco": {
+    "title": "Aksum",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/15/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Short-description licence does not clear all page images or linked assets. Use original prose and schematic geometry only.",
+    "checked": "Opened 27 Oct 2026. Brief Synthesis, retrieved lines 44-51 Third/fourth-century stelae and architectural carving. The standing example is described as representing a nine-storey building; another large stele lies fallen."
+  },
+  "aksum-map": {
+    "title": "Aksum — Maps / geographical data",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/15/maps/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Coordinate facts only; no map copied.",
+    "checked": "Opened 27 Oct 2026. Geographical data table, retrieved lines 10-13 Property representative coordinates."
+  },
+  "kilwa-unesco": {
+    "title": "Ruins of Kilwa Kisiwani and Ruins of Songo Mnara",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/144/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Short description carries a CC-BY-SA IGO 3.0 label; no photograph, map or entire-page licence inferred. Facts paraphrased.",
+    "checked": "Opened 27 Oct 2026. Brief synthesis, retrieved lines 50-54 Swahili trading cities, Kilwa's thirteenth/fourteenth-century prosperity, Indian Ocean exchange, distinct architectural phases."
+  },
+  "kilwa-map": {
+    "title": "Kilwa Kisiwani and Songo Mnara — Maps / geographical data",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/144/maps/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Coordinate facts only; no source map copied.",
+    "checked": "Opened 27 Oct 2026. Component 144-001, retrieved lines 9-14 Kilwa-specific coordinates, separate from Songo Mnara."
+  },
+  "unesco-djenne": {
+    "title": "Old Towns of Djenné",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/116/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Short description labels CC BY-SA IGO 3.0; no blanket clearance for photographs/maps/PDFs. Facts only in original prose; no assets copied.",
+    "checked": "Opened 27 Oct 2026. Outstanding Universal Value, Brief synthesis and criterion (iii), web lines 52–61: separates the modern town from four archaeological components and identifies pre-Islamic remains at Djenné-Djeno. The present Great Mosque was reconstructed in 1906–1907. "
+  },
+  "unesco-djenne-components": {
+    "title": "Old Towns of Djenné — Maps, geographical data",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/116/maps/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Only numerical location facts used; map artwork and boundary geometry not copied.",
+    "checked": "Opened 27 Oct 2026. Geographical data table, component 116-001 Djenné-Djeno (ancienne Djenné), web lines 8–18: N13 53 24.92 W4 32 25.6. Modern Djenné is separately listed as component 116-004. "
+  },
+  "met-sahel": {
+    "title": "Sahel: Art and Empires on the Shores of the Sahara — Inside the Exhibition",
+    "author": "The Metropolitan Museum of Art",
+    "year": "checked 2026-10-27",
+    "url": "https://www.metmuseum.org/exhibitions/sahel-art-empire-sahara/inside-the-exhibition",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "No blanket text/image reuse licence established. Original paraphrases of facts only; no text passages or art copied.",
+    "checked": "Opened 27 Oct 2026. Archaeology, lines 104–107: Jenne-jeno study spans c.250 BCE–1400 CE and suggests self-governance. Ancient Mali, lines 91–94: early-thirteenth-century state formation; no identified palace/temple hierarchy at Jenne-jeno; abandonment occurred between early 1200s and 1400. Islam, line 84: Musa's pilgrimage via Cairo in 1324 and subsequent patronage of Timbuktu's learning. Ancient Ghana, line 66: ancient polity geographically distinct from modern Ghana. "
+  },
+  "dueppen-west-africa": {
+    "title": "Reconnecting the Forest, Savanna, and Sahel in West Africa: The Sociopolitical Implications of a Long-Networked Past",
+    "author": "Stephen Dueppen",
+    "year": "2024-09-30",
+    "url": "https://doi.org/10.1007/s10814-024-09201-w",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Article explicitly CC BY-NC-ND 4.0, rights section lines 1150–1153. Do not adapt or reproduce its maps/figures. Cite factual findings using independently authored prose.",
+    "checked": "Opened 27 Oct 2026. Kingdom of Ghana section, web lines 289–304, and synthesis line 531: political extent and organization remain uncertain; the traditional identification of Koumbi Saleh as capital has been questioned. The late-first/early-second-millennium town is interpreted as a commercial centre associated with Ghana, including mosque and cemetery evidence. Ghana participated in medieval gold exchange linked to Bambuk. "
+  },
+  "brill-loc-coordinates": {
+    "title": "Migration Histories of the Medieval Afroeurasian Transition Zone: Aspects of Mobility between Africa, Asia and Europe, 300–1500 C.E.",
+    "author": "Brill; open-access copy hosted by Library of Congress",
+    "year": "checked 2026-10-27",
+    "url": "https://tile.loc.gov/storage-services/master/gdc/gdcebookspublic/20/19/05/93/52/2019059352/2019059352.pdf",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Front matter specifies CC BY-NC 4.0 for original material; third-party material may have separate rights. Use numerical point only with citation; no map/image copied.",
+    "checked": "Opened 27 Oct 2026. Printed p.473 (PDF page 488; zero-based page 487), 'List of Places Displayed on Map 15.1. and their Geographical Coordinates', row 162: Kumbi Saleh latitude 15.76549, longitude -7.96869. This is a scholarly map gazetteer, not a site survey. "
+  },
+  "unesco-timbuktu": {
+    "title": "Timbuktu",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/119/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Short description labels CC BY-SA IGO 3.0, not blanket image/map permission. Facts only in original prose.",
+    "checked": "Opened 27 Oct 2026. Brief synthesis, web lines 48–57: commercial and scholarly importance, especially in the fifteenth/sixteenth centuries; market handled manuscripts, gold, and salt from Teghaza. Djingareyber's initial construction is associated with Musa's return; later rebuilding is explicit. Metadata line 284: N16 46 24 W2 59 58. "
+  },
+  "unesco-askia": {
+    "title": "Tomb of Askia",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/1139/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Short description labels CC BY-SA IGO 3.0, not blanket image/map permission. Use original schematic only; no trace/copy of a photo.",
+    "checked": "Opened 27 Oct 2026. English description and Brief synthesis, web lines 4–5 and 48–51: monument built by Askia Mohamed at Gao in 1495; associated with Songhai and trans-Saharan salt/gold exchange. Pyramidal earthen tower and permanent timber scaffolding are described. "
+  },
+  "unesco-askia-periodic": {
+    "title": "Tomb of Askia — Rapport Périodique Cycle 3, Section II",
+    "author": "Mali state-party periodic report hosted by UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/document/217638",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "No blanket asset clearance. Numerical facts only; no PDF art/maps copied.",
+    "checked": "Opened 27 Oct 2026. PDF page 1, section 1.3 geographical-information table: Tomb of Askia 16.29 / -0.045. Confirms west longitude. This rounded representative location is used instead of silently correcting the conflicting web metadata. "
+  },
+  "unesco-great-zimbabwe": {
+    "title": "Great Zimbabwe National Monument",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/364/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Page explicitly licenses its short description CC BY-SA IGO3.0. This is not blanket clearance for images or every page component. Original fact-based prose and original schematic proposed.",
+    "checked": "Opened 27 Oct 2026. Outstanding Universal Value / Brief synthesis: lines52–55 and61 in retrieved page. Construction interval; Hill/Enclosure/Valley division; enclosure date, material and tower form; trade evidence. "
+  },
+  "unesco-great-zimbabwe-map": {
+    "title": "Great Zimbabwe National Monument — Maps / Geographical data",
+    "author": "UNESCO World Heritage Centre",
+    "year": "checked 2026-10-27",
+    "url": "https://whc.unesco.org/en/list/364/maps/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Coordinate fact cited. No map artwork copied; map-layer reuse terms not verified.",
+    "checked": "Opened 27 Oct 2026. Geographical data table, property364, lines9–12: DMS coordinate recorded above. "
+  },
+  "frobenius-kanem": {
+    "title": "The Lake Chad Region as a Crossroads: first archaeological and oral historical investigations into early Kanem-Borno and its intra-African connections",
+    "author": "Frobenius Institute",
+    "year": "checked 2026-10-27",
+    "url": "https://www.frobenius-institut.de/en/research/beendete-projekte/the-lake-chad-region-as-a-crossroads-first-archaeological-and-oral-historical-investigations-into-early-kanem-borno-and-its-intra-african-connections",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "No reusable asset licence established. Cite facts in original prose; no images copied.",
+    "checked": "Opened 27 Oct 2026. Project results, lines12–16: eastern Lake Chad study region; uncertain formative archaeology; later flourishing; Tié/Njimi hypothesis and excavated building attributes. "
+  },
+  "magnavita-2025": {
+    "title": "New Luminescence and Radiocarbon Dates for Kanem-Borno Fired-Brick Elite Sites in Kanem, Chad: Bayesian Chronological Modelling of Settlement Construction",
+    "author": "Research source",
+    "year": "2025-01-25",
+    "url": "https://link.springer.com/article/10.1007/s10437-025-09611-1",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Article CC BY4.0 verified. Third-party credit-line exceptions apply. No figure asset selected or copied.",
+    "checked": "Opened 27 Oct 2026. HTML Introduction68–81; Sites101–112; Model2 discussion230–250; Rights393–395. Full article and23-page PDF opened. Figure1 caption checked; no exact coordinate extracted. "
+  },
+  "dai-tie-2020": {
+    "title": "Publication: Archaeological research in Tié, Chad",
+    "author": "German Archaeological Institute / Entangled Africa project",
+    "year": "checked 2026-10-27",
+    "url": "https://www.dainst.blog/entangled-africa/en/publication_2021_07/",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Unknown for reuse; no copied text or artwork proposed.",
+    "checked": "Opened 27 Oct 2026. Lines35–42 reproduce abstract of Magnavita/Bouimon2020, Afrique: Archéologie & Arts16:77–96: enclosure and multiroom building; period of later use; uncertain building function. "
+  },
+  "fao-niger": {
+    "title": "The Niger River basin",
+    "author": "Food and Agriculture Organization of the United Nations",
+    "year": "checked 2026-10-27",
+    "url": "https://www.fao.org/4/w4347e/w4347e0i.htm",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Unknown for assets. Original prose only; no source map copied.",
+    "checked": "Opened 27 Oct 2026. Rivers and discharges / upper, middle and lower Niger systems: lines123–144. Source region, inland delta, loop, Niger–Benin reach, Lokoja confluence, maritime delta. "
+  },
+  "esa-niger": {
+    "title": "Earth from Space: The Niger delta",
+    "author": "European Space Agency",
+    "year": "2008-02-01",
+    "url": "https://www.esa.int/Applications/Observing_the_Earth/Earth_from_Space_The_Niger_delta",
+    "kind": "institutional or scholarly evidence; see checked passage",
+    "rights": "Image reuse not checked; satellite image not copied.",
+    "checked": "Opened 27 Oct 2026. Lines9–14: southern Guinea origin,4180km length, Benue joins at Lokoja, subsequent southward flow to Gulf of Guinea. "
+  },
+  "ne-africa-rivers": {
+    "title": "Natural Earth 1:50m rivers and lake centerlines: Niger and Benue",
+    "author": "Natural Earth contributors; nvkelso/natural-earth-vector",
+    "year": "repository snapshot 2026-10-27",
+    "url": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_50m_rivers_lake_centerlines.geojson",
+    "kind": "licensed generalised geographic vector data",
+    "rights": "Public domain (Natural Earth). Only mapped river/lake centreline coordinates are reused.",
+    "checked": "Read GeoJSON and selected NAME Niger/Benue. Blob 6f9d88ea3498448c7f29f458ce42a771a36bd6be. Main-stem segments concatenated at coincident or near-coincident endpoints (largest join about 240m at this generalised scale). Physical locator only, not historical channel reconstruction or trade/migration route."
   }
 }

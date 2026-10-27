@@ -320,3 +320,40 @@ The dependency directory also needs `leaflet-heat.js` (0.2.0). The revised stand
 viewing copy is 23 seconds, 1920×1080 at 60 fps, with a green serif opening, camera flights,
 sampled CSS animation, moving particles and short dissolves. Its source manifest and captions
 are alongside `previews/history-video-pilot.html`. It supersedes the earlier 21-second 30 fps copy.
+
+
+## Act 1: Africa overview
+
+The `africa` chapter plays between `deep` and `nok`: eleven dated snapshots, five geographic
+zoom stages, then an explicit rewind into Nok. Three original architectural schematics rise
+only in their documented periods; they are neither actor emblems nor scale reconstructions.
+The Africa area has its own bounded validator; existing Nigerian chapters keep their narrower
+validation. `clock: "ago"` and `clock: "label"` are optional scene overrides. A label clock
+marks the geographic interlude, avoiding a false shared date for sites from different periods.
+`when.approx: false` preserves sourced exact years such as 1324 and 1495.
+
+A point may set `monument: {type, from, to, note, sources}`: type is pyramid, stele or tower;
+its documented interval must cover every scene showing that schematic. Overview scenes set
+`monuments: false` and retain ordinary site markers. `kind: "line", type: "river"` uses
+mapped coordinate geometry with no arrows or migration/trade particles. The Niger locator
+uses Natural Earth 1:50m vertices and small joins between its generalised segments. It is
+explicitly a modern physical locator, not reconstructed ancient channels or reservoir outlines.
+
+Optional `camera_path` cues have ordered scene-content times (`at`), `center`, `zoom` and
+positive `dur`, finishing before the scene ends. Both live playback and video sampling use them.
+The previous path's terminal camera is retained when the following video scene begins.
+
+Source checks and unresolved claims are preserved in `history/research/act1-*-evidence.json`.
+Tié's exact coordinate is unverified: Kanem is a regional view without a fabricated capital pin.
+No new trans-Saharan caravan route is drawn without source geometry.
+
+Build an offline preview (starts directly in Act 1):
+
+```
+python build_history.py --output <scratch-history.html>
+python previews/build_act1_preview.py <scratch-history.html> <local-dependency-directory>
+```
+
+Open `previews/act1.html`. It bundles the actual player and checked dependencies with their
+notices; only explicit modern reference scenes request external Esri tiles. The older
+`site-theme.html` remains a design-review snapshot of the previously merged chapter set.

@@ -298,6 +298,30 @@
     .lt-title { font-size: 18px; }
     .tc-kicker { font-size: 11px; letter-spacing: .35em; }
   }
+  /* Africa tour: original schematic architecture, not emblems or scale reconstructions. */
+  .hx-monument { background: none; border: 0; }
+  .hx-monument svg { width: 76px; height: 96px; overflow: visible; filter: drop-shadow(0 8px 8px #0008); }
+  .hx-monument .hx-in { transform-origin: 50% 100%; }
+  #tour-strip { display:none; position:absolute; z-index:480; left:16px; bottom:42px; max-width:min(460px,calc(100% - 32px)); padding:12px 16px;
+    background:linear-gradient(100deg,#08120ef0,#08120ec9); border-left:2px solid #d4b57a; pointer-events:none; }
+  #mapwrap[data-tour="true"] #tour-strip { display:block; }
+  #mapwrap[data-tour="true"] #lower { display:none; }
+  #tour-strip p { margin:0; }
+  .tour-scale { font:11px/1.4 system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; color:#b5c4b8; }
+  .tour-focus { font:400 25px/1.25 Georgia,serif; color:#f0eee2; margin:5px 0!important; }
+  .tour-date { color:#d4b57a; font:400 19px Georgia,serif; }
+  .tour-note { color:#b5c4b8; font:12px/1.4 system-ui,sans-serif; margin-top:6px!important; }
+  .tour-rail { height:2px; margin-top:10px; background:#304b3d; }
+  .tour-rail span { display:block; height:100%; background:#d4b57a; }
+  body.video-mode #tour-strip { left:64px; bottom:235px; }
+  @media(max-width:760px) {
+    #mapwrap[data-tour="true"] #hud { display:none; }
+    #tour-strip { left:12px; top:auto; bottom:36px; padding:6px 10px; max-width:calc(100% - 24px); }
+    #tour-strip :is(.tour-focus,.tour-note,.tour-rail) { display:none; }
+    #tour-strip .tour-date { font-size:15px; margin-top:3px; }
+    body.video-mode #tour-strip { left:16px; top:auto; bottom:240px; }
+    body.video-mode #tour-strip .tour-focus { display:block; font-size:20px; }
+  }
   /* Export layout: preserve draft, uncertainty and credits inside the captured map. */
   #video-caption, #video-caution, #video-credit, #exit-video, #video-tools { display: none; }
   body.video-mode #app, body.video-mode #stage { display: block; height: 100svh; min-height: 0; }
@@ -364,6 +388,7 @@
     and each scene says how sure it is.</span> <a href="https://github.com/ksai4u-glitch/Taswira/issues/new?title=History%20page%3A%20correction">Suggest a correction</a>.</p>
   <div id="stage">
     <div id="mapwrap">
+      <div id="tour-strip" role="note"><p class="tour-scale"></p><p class="tour-focus"></p><p class="tour-date"></p><p class="tour-note"></p><div class="tour-rail"><span></span></div></div>
       <div id="map" role="img" aria-label="Map for the current scene. The same information is in the panel and in the text version below."></div>
       <canvas id="globe" aria-hidden="true"></canvas>
       <p id="globe-credit">Continents: <a href="https://doi.org/10.5281/zenodo.13635864">Merdith et al. (2021) plate model</a>, CC BY 4.0</p>
@@ -548,9 +573,10 @@ function yearsText(n) {
 function yearText(y, approx) {
   y = Math.round(y);
   const ago = AGO - y;
+  if (scene().clock === "label") return scene().when.label;
   if (ago >= 1e6) return `${yearsText(ago)} ago`;
-  if (chapter().clock === "ago" && ago < 50) return "today";
-  if (chapter().clock === "ago") return `${approx ? "about " : ""}${yearsText(Math.round(ago / 100) * 100)} ago`;
+  if ((scene().clock || chapter().clock) === "ago" && ago < 50) return "today";
+  if ((scene().clock || chapter().clock) === "ago") return `${approx ? "about " : ""}${yearsText(Math.round(ago / 100) * 100)} ago`;
   if (approx) y = Math.round(y / 50) * 50;
   if (approx && y >= 0 && y < 50) return "about 1 CE";
   const s = y < 0 ? `${-y} BCE` : y < 1000 ? `${y} CE` : `${y}`;
@@ -586,7 +612,7 @@ const MOVE_WORDS = { migration: "Migration", campaign: "Military campaign", trad
 const STATUS_WORDS = { firm: "Firm", approx: "Approximate", disputed: "Disputed", "to-check": "To check" };
 const CONTROL_WORDS = { claimed: "Claimed on paper (hatched)", held: "Held: occupation documented (solid)",
   taken: "Claimed, then taken during this scene (hatching turns solid)" };
-const LINE_WORDS = { rift: "Rift" };
+const LINE_WORDS = { rift: "Rift", river: "Physical river locator" };
 const TIER_WORDS = { flag: "Flag", symbol: "Royal or community symbol, not a flag", none: "No emblem documented" };
 // How long movements take to draw, in seconds
 const DRIFT = 4, ROUTE = 2.4;
@@ -674,6 +700,14 @@ const textLabel = (ll, html, cls) => L.marker(ll, { interactive: false, keyboard
   icon: L.divIcon({ className: "group-label " + cls, html: `<span class="lab-c">${html}</span>`, iconSize: null }) })
   .addTo(sceneLayer).getElement();
 
+function monumentSvg(type) {
+  const shape = {
+    pyramid: '<path d="M12 81 37 17 57 81Z" fill="#d4b57a"/><path d="M37 17 68 73 57 81Z" fill="#806742"/><path d="M52 81V65h13v16" fill="#ad8c57"/>',
+    stele: '<path d="M30 86V14h20v72Z" fill="#d4b57a"/><path d="M50 14 58 20v66h-8Z" fill="#806742"/>' + Array.from({length:7},(_,i)=>'<path d="M34 '+(24+i*8)+'h12" stroke="#806742" stroke-width="3"/>').join(''),
+    tower: '<path d="M8 82V61Q37 48 69 61v21" fill="none" stroke="#a88a58" stroke-width="7"/><path d="M30 80 36 37h9l8 43Z" fill="#d4b57a"/><path d="M36 37h9l8 43H43Z" fill="#9b7e50"/>'
+  }[type];
+  return '<svg viewBox="0 0 76 96" aria-hidden="true">'+shape+'<path d="M8 86h60" stroke="#d4b57a" stroke-width="1" opacity=".4"/></svg>';
+}
 function drawPlaces(ch, sc) {
   // Today's state borders are only a locator in an explicitly labelled modern reference scene.
   if (sc.base === "modern") todaysBorders();
@@ -712,7 +746,10 @@ function drawPlaces(ch, sc) {
     let m;
     const left = f.label === "left";       // set in the chapter file when two labels would overlap
     const marked = form && form !== "lake", c = furnace.has(id) ? "#ff9a3c" : form === "lake" ? hex(VOCAB.lake) : "#d4b57a";
-    if (form === "communities") {
+    if (f.monument && sc.monuments !== false) {
+      m = L.marker(f.coordinates, {keyboard:false, title:f.name, icon:L.divIcon({className:"hx-monument",
+        html:'<div class="hx-in">'+monumentSvg(f.monument.type)+'</div>',iconSize:[76,96],iconAnchor:[38,86]})});
+    } else if (form === "communities") {
       raw.push(textLabel(f.coordinates, "self-governing communities", "field-label"));
     } else if (marked) {
       m = L.marker(f.coordinates, { keyboard: false, title: f.name, icon: L.divIcon({ className: "hx-mark" + (faded ? " hx-dim" : ""),
@@ -744,6 +781,13 @@ function drawPlaces(ch, sc) {
     fx.points.push({ els: els.map(l => l.getElement()).concat(raw), at, now: null, ll: f.coordinates,
                      furnace: furnace.has(id), faded, seed: k + 1, rgb: VOCAB[form] || null, form, reach: f.reach_km || 0 });
   });
+  for (const id of sc.show || []) {
+    const f = ch.features[id];
+    if (f.kind !== "line" || f.type !== "river") continue;
+    const river = L.polyline(f.path, {renderer:svg,color:f.colour || "#a8d2b6",weight:3.5,opacity:.9,interactive:false,className:"hx-river"}).addTo(sceneLayer).getElement();
+    river.setAttribute("pathLength",1);
+    fx.draws.push({el:river,from:1.1,dur:Math.min(8,sc.duration*.4),now:null});
+  }
   drawTies(ch, sc, atOf);
   drawMoves(ch, sc, atOf);
 }
@@ -985,10 +1029,11 @@ function featureItem(ch, sc, id) {
     if (f.goods) rows.push(["Goods", esc(f.goods)]);
   } else if (f.kind === "line") {
     tag = LINE_WORDS[f.type];
-    rows.push(["Active", `${f.active[0]} to ${f.active[1]} million years ago`]);
+    if (f.type === "rift") rows.push(["Active", `${f.active[0]} to ${f.active[1]} million years ago`]);
   } else if (f.form) tag = FORM_WORDS[f.form];
   rows.push(["Evidence", esc(f.evidence)]);
   if (f.location) rows.push([f.kind === "move" ? "Route drawn" : "Location", esc(f.location)]);
+  if (f.monument && sc.monuments !== false) rows.push(["Schematic",esc(f.monument.note)]);
   if (f.reach_note) rows.push([{ communities: "Field", lake: "Area" }[f.form] || "Halo", esc(f.reach_note)]);
   if (sc.control && sc.control[id]) rows.push(["Claim", esc(CONTROL_WORDS[sc.control[id]])]);
   const em = f.emblem && DATA.emblems[f.emblem];
@@ -1040,6 +1085,7 @@ function keyFor(ch, sc) {
     emblem: [sw(`<rect x="3" y="2" width="24" height="14" rx="3" fill="#08120e" stroke="#5b4a1e"/><circle cx="15" cy="9" r="3" fill="#f4c95d"/>`), "Badge: a documented flag or symbol (see its entry above)"],
     landmass: [sw(`<rect x="1" y="3" width="28" height="12" rx="5" fill="${LAND_LIT}"/>`), "A continent the scene is about (lit); others are dim"],
     lake: [sw(`<circle cx="15" cy="9" r="8" fill="url(#hx-halo-lake)"/>`), "A lake drawn as a soft disc of its area. Its shoreline is not drawn."],
+    "line-river": [line([168,210,182], 'stroke-width="3"'), "Generalised physical river locator; not a boundary, migration or trade route"],
     "line-rift": [line(RIFT, 'stroke-width="3"'), "A rift: bright while it was opening, grey once it stopped"],
   };
   const defs = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -1089,6 +1135,7 @@ function cameraOf(ch, sc) {
   const { center, zoom } = sc.camera;
   const shown = sc.snapshot ? [] : (sc.show || []).map(id => ch.features[id]);
   const places = shown.filter(f => f.kind === "point");
+  if (ch.area === "africa") return {center,zoom: small() ? Math.max(2,zoom-1.3) : zoomFor(zoom)};
   if (!small() || !places.length) return { center, zoom: zoomFor(zoom) };
   const dated = new Set(shown.flatMap(f => Object.keys(f.dates || {})));
   // Each place's marker and label in pixels around its point. A label's width is guessed from its name.
@@ -1122,6 +1169,7 @@ function cameraCues(sc) {
   const { center, zoom } = cameraOf(chapter(), sc), out = [];
   const near = small() ? PHONE_CLOSE_IN : 1;
   out.push(lead() ? { at: -1.1, center, zoom, dur: 2.2 } : { at: 0, center, zoom, dur: 1.4 });
+  if (sc.camera_path) return out.concat(sc.camera_path.map(c=>({...c,zoom:small()?Math.max(2,c.zoom-1.3):zoomFor(c.zoom)})));
   const f = fx.focus;
   if (f) {
     const c = L.latLng(center);
@@ -1170,7 +1218,7 @@ function render({ animate = true, announce = false } = {}) {
   if (state.drawn === key) return;
   state.drawn = key;
   // The year counter rolls from the year last shown, within a chapter
-  const rollFrom = state.drawnC === state.c ? state.shownYear : null;
+  const rollFrom = ch.area !== "africa" && state.drawnC === state.c ? state.shownYear : null;
   state.drawnC = state.c;
   sceneLayer.clearLayers();
   fx = { points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
@@ -1178,6 +1226,15 @@ function render({ animate = true, announce = false } = {}) {
          rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
          card: { now: null }, lower: { now: null }, shownCount: { now: null } };
   $("mapwrap").dataset.base = sc.base;
+  $("mapwrap").dataset.tour = ch.area === "africa";
+  if (ch.area === "africa") {
+    const strip = $("tour-strip");
+    setText(strip.querySelector(".tour-scale"), sc.scale || "Africa · dated snapshots");
+    setText(strip.querySelector(".tour-focus"), sc.focus_label || sc.title);
+    setText(strip.querySelector(".tour-date"), sc.when.label);
+    setText(strip.querySelector(".tour-note"), sc.time_note || "Selected moment; not the lifetime or borders of a state.");
+    strip.querySelector(".tour-rail span").style.width = ((state.s+1)/ch.scenes.length*100)+"%";
+  }
   $("mapwrap").dataset.sensitive = !!(sc.sensitive || sc.campaign_clock);
   if (sc.base === "modern") modernTiles.addTo(map);
   else modernTiles.remove();
@@ -1185,14 +1242,18 @@ function render({ animate = true, announce = false } = {}) {
   else if (sc.base !== "deep") drawPlaces(ch, sc);
   drawEffects(ch, sc);
   titles(ch, sc);
-  $("mapwrap").dataset.grade = sc.snapshot ? "modern"
+  $("mapwrap").dataset.grade = ch.area === "africa" ? "atlas" : sc.snapshot ? "modern"
     : { iron: "iron", decline: "decline" }[sc.mood] || "ancient";
 
   map.stop();
   if (sc.base !== "deep") {         // on the globe, the globe has its own camera
     const cam = cameraOf(ch, sc);
-    map.setMinZoom(Math.min(5, Math.floor(cam.zoom)));
-    if (isLive() && lead()) map.setView(WIDE.center, zoomFor(WIDE.zoom), { animate: false });
+    const floor = ch.area === "africa" ? 2 : Math.min(5, Math.floor(cam.zoom));
+    // setMinZoom otherwise starts a browser-time zoom when raising the floor. Finish that
+    // adjustment synchronously before sampling the authored camera on the export clock.
+    if (map.getZoom() < floor) map.setZoom(floor, {animate:false});
+    map.setMinZoom(floor);
+    if (isLive() && lead()) map.setView(ch.area === "africa" ? [0,20] : WIDE.center, ch.area === "africa" ? 2.6 : zoomFor(WIDE.zoom), { animate: false });
     else if (!isLive()) {
       if (animate && !lessMotion.matches) map.flyTo(cam.center, cam.zoom, { duration: 1.2 });
       else map.setView(cam.center, cam.zoom, { animate: false });
@@ -1451,7 +1512,7 @@ function frame(now) {
 
   // Year counter: rolls to the scene's start year, then runs to its end year while it plays
   const from = sc.when.from, to = sc.when.to;
-  let year, blur = 0, approx = from < 1800;
+  let year, blur = 0, approx = from < 1800 && sc.when.approx !== false;
   if (!live) {
     year = to;   // a jumped-to or reduced-motion scene shows its complete state
   } else if (sc.campaign_clock) {
@@ -2167,8 +2228,10 @@ function captureCamera(t) {
   const sc = scene(), cam = cameraOf(chapter(), sc);
   const priorChapter = state.s ? chapter() : DATA.chapters[state.c - 1];
   const prior = state.s ? chapter().scenes[state.s - 1] : priorChapter?.scenes.at(-1);
+  const terminal = prior?.camera_path?.at(-1);
+  const priorCamera = terminal ? {center:terminal.center,zoom:small()?Math.max(2,terminal.zoom-1.3):zoomFor(terminal.zoom)} : prior && cameraOf(priorChapter, prior);
   let position = lead() || !prior || prior.base === "deep"
-    ? { center: WIDE.center, zoom: zoomFor(WIDE.zoom) } : cameraOf(priorChapter, prior);
+    ? chapter().area === "africa" ? {center:[0,20],zoom:2.6} : { center: WIDE.center, zoom: zoomFor(WIDE.zoom) } : priorCamera;
   let active = null;
   const sample = (move, at) => {
     const u = clamp01((at - move.at) / move.dur);

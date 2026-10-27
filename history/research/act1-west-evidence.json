@@ -1,0 +1,180 @@
+{
+  "scope": "Taswira Act 1 western Sahel research; no implementation or empire polygons",
+  "checked_at": "2026-10-27",
+  "method": "Linked pages/PDFs were opened and indicated passages read; search snippets were not treated as verification. Checked-passage notes below are original paraphrases, not copied extracts.",
+  "coordinate_convention": "Decimal latitude, longitude; longitude west is negative. Precision is a conservative display choice, not a surveyed confidence interval.",
+  "sources": [
+    {
+      "id": "unesco-djenne",
+      "title": "Old Towns of Djenné",
+      "url": "https://whc.unesco.org/en/list/116/",
+      "publisher": "UNESCO World Heritage Centre",
+      "opened": true,
+      "checked_passage": "Outstanding Universal Value, Brief synthesis and criterion (iii), web lines 52–61: separates the modern town from four archaeological components and identifies pre-Islamic remains at Djenné-Djeno. The present Great Mosque was reconstructed in 1906–1907.",
+      "rights": "Short description labels CC BY-SA IGO 3.0; no blanket clearance for photographs/maps/PDFs. Facts only in original prose; no assets copied."
+    },
+    {
+      "id": "unesco-djenne-components",
+      "title": "Old Towns of Djenné — Maps, geographical data",
+      "url": "https://whc.unesco.org/en/list/116/maps/",
+      "publisher": "UNESCO World Heritage Centre",
+      "opened": true,
+      "checked_passage": "Geographical data table, component 116-001 Djenné-Djeno (ancienne Djenné), web lines 8–18: N13 53 24.92 W4 32 25.6. Modern Djenné is separately listed as component 116-004.",
+      "rights": "Only numerical location facts used; map artwork and boundary geometry not copied."
+    },
+    {
+      "id": "met-sahel",
+      "title": "Sahel: Art and Empires on the Shores of the Sahara — Inside the Exhibition",
+      "url": "https://www.metmuseum.org/exhibitions/sahel-art-empire-sahara/inside-the-exhibition",
+      "publisher": "The Metropolitan Museum of Art",
+      "opened": true,
+      "checked_passage": "Archaeology, lines 104–107: Jenne-jeno study spans c.250 BCE–1400 CE and suggests self-governance. Ancient Mali, lines 91–94: early-thirteenth-century state formation; no identified palace/temple hierarchy at Jenne-jeno; abandonment occurred between early 1200s and 1400. Islam, line 84: Musa's pilgrimage via Cairo in 1324 and subsequent patronage of Timbuktu's learning. Ancient Ghana, line 66: ancient polity geographically distinct from modern Ghana.",
+      "rights": "No blanket text/image reuse licence established. Original paraphrases of facts only; no text passages or art copied.",
+      "critical_limit": "Do not adopt this exhibition's unqualified Kumbi Saleh capital identification or conjectured Almoravid conquest: newer archaeological synthesis below warrants qualification."
+    },
+    {
+      "id": "dueppen-west-africa",
+      "title": "Reconnecting the Forest, Savanna, and Sahel in West Africa: The Sociopolitical Implications of a Long-Networked Past",
+      "author": "Stephen Dueppen",
+      "publisher": "Journal of Archaeological Research / Springer Nature",
+      "published_online": "2024-09-30",
+      "issue": "33 (2025), 337–404",
+      "url": "https://doi.org/10.1007/s10814-024-09201-w",
+      "opened": true,
+      "checked_passage": "Kingdom of Ghana section, web lines 289–304, and synthesis line 531: political extent and organization remain uncertain; the traditional identification of Koumbi Saleh as capital has been questioned. The late-first/early-second-millennium town is interpreted as a commercial centre associated with Ghana, including mosque and cemetery evidence. Ghana participated in medieval gold exchange linked to Bambuk.",
+      "rights": "Article explicitly CC BY-NC-ND 4.0, rights section lines 1150–1153. Do not adapt or reproduce its maps/figures. Cite factual findings using independently authored prose."
+    },
+    {
+      "id": "unesco-kumbi-tentative",
+      "title": "Site archéologique de Kumbi Saleh",
+      "url": "https://whc.unesco.org/en/tentativelists/1546",
+      "publisher": "Mauritania, Ministry of Culture / Institut Mauritanien de Recherche Scientifique, hosted by UNESCO",
+      "submitted": "2001-06-14",
+      "opened": true,
+      "checked_passage": "Header, web lines 66–79: submitting authority and only regional location ('Hodh', about 1165 km east of Nouakchott). Description lines 81–84 records excavated buildings and mosque. The page does not supply numerical latitude/longitude.",
+      "critical_limit": "State-party tentative submission, not an inscribed UNESCO property or UNESCO endorsement of historical claims. Do not use its unqualified capital identification, fourth-century start or Almoravid-conquest story to override newer research.",
+      "rights": "No asset licence established. Facts cited only; no photographs, map or prose reproduction."
+    },
+    {
+      "id": "brill-loc-coordinates",
+      "title": "Migration Histories of the Medieval Afroeurasian Transition Zone: Aspects of Mobility between Africa, Asia and Europe, 300–1500 C.E.",
+      "editors": ["Johannes Preiser-Kapeller", "Lucian Reinfandt", "Yannis Stouraitis"],
+      "publisher": "Brill; open-access copy hosted by Library of Congress",
+      "year": 2020,
+      "url": "https://tile.loc.gov/storage-services/master/gdc/gdcebookspublic/20/19/05/93/52/2019059352/2019059352.pdf",
+      "opened": true,
+      "checked_passage": "Printed p.473 (PDF page 488; zero-based page 487), 'List of Places Displayed on Map 15.1. and their Geographical Coordinates', row 162: Kumbi Saleh latitude 15.76549, longitude -7.96869. This is a scholarly map gazetteer, not a site survey.",
+      "rights": "Front matter specifies CC BY-NC 4.0 for original material; third-party material may have separate rights. Use numerical point only with citation; no map/image copied."
+    },
+    {
+      "id": "capel-columns-tomb",
+      "title": "The End of a Hundred-Year-Old Archaeological Riddle: First Dating of the Columns Tomb of Kumbi Saleh (Mauritania)",
+      "authors": ["Chloé Capel", "Antoine Zazzo", "Jean-François Saliège", "Jean Polet"],
+      "publisher": "Radiocarbon / Cambridge University Press",
+      "url": "https://doi.org/10.2458/azu_rc.57.18112",
+      "opened_url": "https://www.cambridge.org/core/journals/radiocarbon/article/abs/end-of-a-hundredyearold-archaeological-riddle-first-dating-of-the-columns-tomb-of-kumbi-saleh-mauritania/B05908912874FC3FD5D1779F217E12B1",
+      "opened": true,
+      "access_scope": "Abstract only; full article/tables not read",
+      "checked_passage": "Abstract, web lines 463–466: radiocarbon work dates three individuals from the main vault to the end of the eleventh through twelfth centuries. This dates human remains, not the construction of the city or the founding of Ghana.",
+      "rights": "Copyright 2015 Arizona Board of Regents. Original factual summary only; no assets/text copied."
+    },
+    {
+      "id": "unesco-timbuktu",
+      "title": "Timbuktu",
+      "url": "https://whc.unesco.org/en/list/119/",
+      "publisher": "UNESCO World Heritage Centre",
+      "opened": true,
+      "checked_passage": "Brief synthesis, web lines 48–57: commercial and scholarly importance, especially in the fifteenth/sixteenth centuries; market handled manuscripts, gold, and salt from Teghaza. Djingareyber's initial construction is associated with Musa's return; later rebuilding is explicit. Metadata line 284: N16 46 24 W2 59 58.",
+      "rights": "Short description labels CC BY-SA IGO 3.0, not blanket image/map permission. Facts only in original prose.",
+      "critical_limit": "Intellectual/spiritual centre does not establish a political capital. Avoid page's disputed fifth-century foundation claim or precise student/population numbers."
+    },
+    {
+      "id": "unesco-askia",
+      "title": "Tomb of Askia",
+      "url": "https://whc.unesco.org/en/list/1139/",
+      "publisher": "UNESCO World Heritage Centre",
+      "opened": true,
+      "checked_passage": "English description and Brief synthesis, web lines 4–5 and 48–51: monument built by Askia Mohamed at Gao in 1495; associated with Songhai and trans-Saharan salt/gold exchange. Pyramidal earthen tower and permanent timber scaffolding are described.",
+      "rights": "Short description labels CC BY-SA IGO 3.0, not blanket image/map permission. Use original schematic only; no trace/copy of a photo.",
+      "critical_limit": "Metadata prints EAST longitude, conflicting with the nomination and periodic report. Do not use the web page's +0.04456 coordinate. Date is monument date, not polity founding."
+    },
+    {
+      "id": "unesco-askia-periodic",
+      "title": "Tomb of Askia — Rapport Périodique Cycle 3, Section II",
+      "url": "https://whc.unesco.org/document/217638",
+      "publisher": "Mali state-party periodic report hosted by UNESCO World Heritage Centre",
+      "opened": true,
+      "checked_passage": "PDF page 1, section 1.3 geographical-information table: Tomb of Askia 16.29 / -0.045. Confirms west longitude. This rounded representative location is used instead of silently correcting the conflicting web metadata.",
+      "rights": "No blanket asset clearance. Numerical facts only; no PDF art/maps copied."
+    },
+    {
+      "id": "unesco-askia-nomination",
+      "title": "Tomb of Askia — World Heritage Scanned Nomination (January 2003)",
+      "url": "https://whc.unesco.org/uploads/nominations/1139.pdf",
+      "publisher": "Republic of Mali, hosted by UNESCO World Heritage Centre",
+      "opened": true,
+      "checked_passage": "PDF page 3 (zero-based 2), section 1d explicitly locates the monument west of Greenwich; original numeric notation is irregular, so not converted. Section 2a (PDF page 4) supports 1495 and earthen pyramidal form, while noting later repairs.",
+      "rights": "Nomination publication is not blanket reuse permission. No drawings/photos/boundaries copied."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "djenne-djenno",
+      "label": "Djenné-Djenno — ancient town",
+      "kind": "archaeological urban site",
+      "recommended_date_label": "c. 250 BCE–1400 CE",
+      "temporal": {"start_year": -250, "end_year": 1400, "approximate": true, "meaning": "archaeological urban sequence; not an unchanged kingdom, and abandonment was gradual"},
+      "point": {"latitude": 13.89025556, "longitude": -4.54044444, "source_dms": "N13 53 24.92 W4 32 25.6", "source_id": "unesco-djenne-components", "role": "UNESCO archaeological component 116-001 representative point", "display_precision": "about 0.001 degree", "uncertainty_note": "Use a point with a broad site marker; no surveyed boundary or palace position established here."},
+      "narration": "At Djenné-Djenno, a town grew in the inland Niger delta from about 250 BCE. Archaeology reveals crafts, exchange, and forms of self-government.",
+      "claim_sources": ["unesco-djenne", "met-sahel"],
+      "visual_limits": ["No king/crown/palace marker", "Distinguish from present Djenné and its 1906–1907 mosque", "Do not animate a full modern mosque during ancient occupation"]
+    },
+    {
+      "id": "ghana-wagadu",
+      "label": "Ghana / Wagadu — Koumbi Saleh trading town",
+      "kind": "polity context anchored by an archaeological commercial centre",
+      "recommended_date_label": "c. 1000–1200 CE · medieval trade context",
+      "temporal": {"start_year": 1000, "end_year": 1200, "approximate": true, "meaning": "selected scene focus within late-first/early-second-millennium archaeology; not the full duration or founding of Ghana"},
+      "point": {"latitude": 15.76549, "longitude": -7.96869, "source_id": "brill-loc-coordinates", "role": "scholarly gazetteer location for archaeological Kumbi Saleh", "display_precision": "about 0.01 degree", "uncertainty_km_display": 1, "uncertainty_note": "Conservative illustrative radius, not measured survey error. UNESCO tentative entry supplies only a regional location."},
+      "narration": "Ghana, also known as Wagadu, was linked to medieval gold exchange. Koumbi Saleh was a commercial centre; its identification as the capital remains debated.",
+      "claim_sources": ["dueppen-west-africa", "met-sahel"],
+      "visual_limits": ["Label capital identification tentative if mentioned", "No filled empire, exact founding date, or modern Ghana outline", "Do not imply the Columns Tomb is a verified royal tomb or use burial dates as construction dates", "Do not repeat a certain 1076 Almoravid conquest"]
+    },
+    {
+      "id": "mali-timbuktu",
+      "label": "Mali — Musa's 1324 pilgrimage and Timbuktu",
+      "kind": "dated reign event and commercial/scholarly city",
+      "recommended_date_label": "1324 CE · Musa's pilgrimage",
+      "temporal": {"start_year": 1324, "end_year": 1324, "approximate": false, "meaning": "pilgrimage event; Timbuktu's longer commercial/learning history extends beyond this date"},
+      "point": {"latitude": 16.77333333, "longitude": -2.99944444, "source_dms": "N16 46 24 W2 59 58", "source_id": "unesco-timbuktu", "role": "World Heritage property representative point; Timbuktu city context", "display_precision": "about 0.01 degree", "uncertainty_km_display": 1, "uncertainty_note": "Property-level point, not a verified medieval palace, market stall, or exact initial mosque footprint."},
+      "narration": "In 1324, Mali's ruler Musa travelled to Mecca through Cairo. His patronage helped Timbuktu develop as a centre of Islamic study.",
+      "claim_sources": ["met-sahel", "unesco-timbuktu"],
+      "visual_limits": ["Timbuktu is not labelled Mali's political capital", "No 'richest person ever', caravan size, exact wealth figure, or invented pilgrimage path", "Do not place all later Timbuktu manuscripts or sixteenth-century mosque forms at 1324"]
+    },
+    {
+      "id": "songhai-gao",
+      "label": "Songhai — Gao and the Tomb of Askia",
+      "kind": "capital and dated monument",
+      "recommended_date_label": "1495 CE",
+      "temporal": {"start_year": 1495, "end_year": 1495, "approximate": false, "meaning": "documented monument construction date, not foundation of Songhai"},
+      "point": {"latitude": 16.29, "longitude": -0.045, "source_id": "unesco-askia-periodic", "role": "rounded property location for Tomb of Askia at Gao", "display_precision": "about 0.01 degree", "uncertainty_km_display": 1, "uncertainty_note": "Rounded periodic-report point is preferred because World Heritage webpage incorrectly gives east longitude; nomination independently specifies west. No precise boundary inferred."},
+      "narration": "At Gao, capital of Songhai, Askia Mohamed built this earthen monument in 1495. Salt and gold exchange helped sustain the empire's wealth.",
+      "claim_sources": ["unesco-askia"],
+      "visual_limits": ["Monument appears no earlier than 1495", "Original schematic earthen tower, no tracing", "No empire footprint into Hausaland or inferred ethnic boundary", "Avoid saying this marks the first date Gao became a capital or the founding of Songhai"]
+    }
+  ],
+  "trade_connection": {
+    "status": "context verified; no route geometry cleared",
+    "supported_context": "Ghana participated in medieval gold commerce. UNESCO identifies Timbuktu as a market receiving salt from Teghaza and trading gold, especially in its fifteenth/sixteenth-century peak; Songhai's Gao monument is linked to salt and gold commerce.",
+    "source_ids": ["dueppen-west-africa", "unesco-timbuktu", "unesco-askia"],
+    "candidate_named_pair": {"from": "Teghaza", "to": "Timbuktu", "date_label": "15th–16th centuries (broad market context)", "verified_exact_dated_edge": false},
+    "approved_geometry": null,
+    "display_advice": "Use trade words/icons at the verified sites or broad contextual narration. No animated line purporting to follow a historical caravan itinerary: endpoints, exact interval and route geometry have not all been verified."
+  },
+  "open_gates": [
+    "Koumbi Saleh point is a scholarly cartographic coordinate rather than excavation survey; sufficient for a coarse overview only.",
+    "No medieval route polyline, exact caravan path or checked Teghaza coordinate established.",
+    "Songhai point uses the authoritative rounded west-longitude periodic report; record the contradictory east-longitude webpage metadata rather than silently importing it.",
+    "Neither the full Ghana nor Mali polity duration is asserted by the selected scene bounds."
+  ]
+}

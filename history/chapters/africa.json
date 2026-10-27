@@ -1,0 +1,2137 @@
+{
+  "id": "africa",
+  "title": "Africa: peoples, cities and kingdoms",
+  "period": "about 300,000 years ago to 1495 CE · overview, then rewind",
+  "area": "africa",
+  "intro": "A continental tour before the close-up. Each stop is a selected dated moment, not a claim about a whole kingdom’s duration. The last five views change geographic scale, then the story rewinds to Nok.",
+  "method": "Points locate sites or city centres with stated uncertainty, never empire outlines. Architecture is an original symbolic schematic, not a scale reconstruction or an emblem. Geography and the river locator are generalised modern physical references, not ancient coastlines, riverbanks or lake extents. Capital identifications and dates remain qualified. The tour explicitly jumps and rewinds; its progress rail shows scene order, not proportional years.",
+  "features": [
+    {
+      "id": "jebel-irhoud",
+      "kind": "point",
+      "name": "Jebel Irhoud · approximate locality",
+      "coordinates": [
+        31.87,
+        -8.87
+      ],
+      "what": "At Jebel Irhoud in present-day Morocco, early Homo sapiens remains occur with Middle Stone Age tools dated to about 300,000 years ago. This is one part of a much wider African story of human origins.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "Approximate fossil locality based on a nearby landmark, rounded to 31.87 N, 8.87 W. The 15 km overview halo is illustrative, not surveyed excavation accuracy.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "irhoud-mpg",
+        "irhoud-dating",
+        "irhoud-mindat"
+      ],
+      "uncertainty_km": 15,
+      "short": "Jebel Irhoud"
+    },
+    {
+      "id": "memphis-egypt",
+      "kind": "point",
+      "name": "Memphis · early Egypt",
+      "coordinates": [
+        29.855,
+        31.261
+      ],
+      "what": "Around 3100 BCE, the gradual unification of Upper and Lower Egypt reached a major stage. Memphis became a capital between the two regions.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "UNESCO property component 86-001 representative point",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "egypt-ministry",
+        "memphis-map"
+      ],
+      "uncertainty_km": 1,
+      "form": "kingdom",
+      "short": "Memphis"
+    },
+    {
+      "id": "meroe-kush",
+      "kind": "point",
+      "name": "Meroe · royal cemeteries",
+      "coordinates": [
+        16.937,
+        33.757
+      ],
+      "what": "Meroe was a major centre of Kush. From the third century BCE, most Kushite rulers were buried here. Its royal cemeteries used steep-sided pyramids above tombs cut into the ground.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "Representative point of the royal cemetery complex, separate from the royal city. It does not locate an individual pyramid footprint.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "meroe-unesco",
+        "meroe-nomination",
+        "meroe-booklet"
+      ],
+      "uncertainty_km": 1,
+      "monument": {
+        "type": "pyramid",
+        "from": -300,
+        "to": -201,
+        "note": "Original symbolic steep-sided royal funerary pyramid with chapel. Represents the documented third-century BCE burial phase, not a measured or individually dated tomb.",
+        "sources": [
+          "meroe-nomination"
+        ]
+      },
+      "short": "Meroe"
+    },
+    {
+      "id": "aksum",
+      "kind": "point",
+      "name": "Aksum · stone stelae",
+      "coordinates": [
+        14.13,
+        38.719
+      ],
+      "what": "Aksum's great stone stelae were carved in the third and fourth centuries CE. Some turned a single block of stone into the image of a many-storeyed building.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "UNESCO Aksum property representative point",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "aksum-unesco",
+        "aksum-map"
+      ],
+      "uncertainty_km": 1,
+      "monument": {
+        "type": "stele",
+        "from": 201,
+        "to": 400,
+        "note": "Original schematic monolith with architectural panels; class dated third/fourth century CE. Not an individual measured stele.",
+        "sources": [
+          "aksum-unesco"
+        ]
+      },
+      "short": "Aksum"
+    },
+    {
+      "id": "kilwa",
+      "kind": "point",
+      "name": "Kilwa Kisiwani · trading city",
+      "coordinates": [
+        -8.958,
+        39.523
+      ],
+      "what": "Kilwa Kisiwani was a Swahili trading city, especially prosperous in the thirteenth and fourteenth centuries. Its merchants connected African hinterland goods with Indian Ocean markets in Arabia, India and China.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "Kilwa Kisiwani component 144-001 representative point",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "kilwa-unesco",
+        "kilwa-map"
+      ],
+      "uncertainty_km": 1,
+      "short": "Kilwa Kisiwani"
+    },
+    {
+      "id": "djenne-djenno",
+      "kind": "point",
+      "name": "Djenné-Djenno — ancient town",
+      "coordinates": [
+        13.89,
+        -4.54
+      ],
+      "what": "At Djenné-Djenno, a town grew in the inland Niger delta from about 250 BCE. Archaeology reveals crafts, exchange, and forms of self-government.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "Use a point with a broad site marker; no surveyed boundary or palace position established here.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "unesco-djenne",
+        "met-sahel",
+        "unesco-djenne-components"
+      ],
+      "uncertainty_km": 1,
+      "short": "Djenné-Djenno"
+    },
+    {
+      "id": "ghana-wagadu",
+      "kind": "point",
+      "name": "Ghana / Wagadu — Koumbi Saleh trading town",
+      "coordinates": [
+        15.765,
+        -7.969
+      ],
+      "what": "Ghana, also known as Wagadu, was linked to medieval gold exchange. Koumbi Saleh was a commercial centre; its identification as the capital remains debated.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "Conservative illustrative radius, not measured survey error. UNESCO tentative entry supplies only a regional location.",
+      "status": "disputed",
+      "disputed": "Koumbi Saleh is a documented commercial centre. Identification as Ghana’s capital remains debated; this point does not locate a verified royal seat.",
+      "sources": [
+        "dueppen-west-africa",
+        "met-sahel",
+        "brill-loc-coordinates"
+      ],
+      "uncertainty_km": 1,
+      "short": "Koumbi Saleh"
+    },
+    {
+      "id": "mali-timbuktu",
+      "kind": "point",
+      "name": "Mali — Musa's 1324 pilgrimage and Timbuktu",
+      "coordinates": [
+        16.773,
+        -2.999
+      ],
+      "what": "In 1324, Mali's ruler Musa travelled to Mecca through Cairo. His patronage helped Timbuktu develop as a centre of Islamic study.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "Property-level point, not a verified medieval palace, market stall, or exact initial mosque footprint.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "met-sahel",
+        "unesco-timbuktu"
+      ],
+      "uncertainty_km": 1,
+      "short": "Timbuktu"
+    },
+    {
+      "id": "songhai-gao",
+      "kind": "point",
+      "name": "Songhai — Gao and the Tomb of Askia",
+      "coordinates": [
+        16.29,
+        -0.045
+      ],
+      "what": "At Gao, capital of Songhai, Askia Mohamed built this earthen monument in 1495. Salt and gold exchange helped sustain the empire's wealth.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "Rounded periodic-report point is preferred because World Heritage webpage incorrectly gives east longitude; nomination independently specifies west. No precise boundary inferred.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "unesco-askia",
+        "unesco-askia-periodic"
+      ],
+      "uncertainty_km": 1,
+      "short": "Gao · Askia"
+    },
+    {
+      "id": "great-zimbabwe",
+      "kind": "point",
+      "name": "Great Zimbabwe · enclosure",
+      "coordinates": [
+        -20.271,
+        30.933
+      ],
+      "what": "In southern Africa, Great Zimbabwe grew into a major trading city. Its fourteenth-century Great Enclosure still expresses the skill of its stone builders.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "Representative site coordinate, rounded for an overview; not a surveyed boundary or a precise building footprint. Display halo is illustrative, not a measured confidence interval.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "unesco-great-zimbabwe",
+        "unesco-great-zimbabwe-map"
+      ],
+      "uncertainty_km": 1,
+      "monument": {
+        "type": "tower",
+        "from": 1300,
+        "to": 1450,
+        "note": "Original enclosure-and-conical-tower schematic of the later architectural ensemble. The enclosure is dated to the fourteenth century; 1400 is an editorial snapshot, not a construction date for the individual tower.",
+        "sources": [
+          "unesco-great-zimbabwe"
+        ]
+      },
+      "short": "Great Zimbabwe"
+    },
+    {
+      "id": "niger",
+      "kind": "line",
+      "type": "river",
+      "name": "Niger · generalised physical locator",
+      "path": [
+        [
+          9.0899,
+          -10.7321
+        ],
+        [
+          9.1538,
+          -10.665
+        ],
+        [
+          9.235,
+          -10.6217
+        ],
+        [
+          9.3551,
+          -10.5801
+        ],
+        [
+          9.4529,
+          -10.5834
+        ],
+        [
+          9.566,
+          -10.6557
+        ],
+        [
+          9.7504,
+          -10.642
+        ],
+        [
+          9.9151,
+          -10.6845
+        ],
+        [
+          10.1214,
+          -10.7786
+        ],
+        [
+          10.2477,
+          -10.8157
+        ],
+        [
+          10.2939,
+          -10.7959
+        ],
+        [
+          10.3218,
+          -10.7467
+        ],
+        [
+          10.3314,
+          -10.6678
+        ],
+        [
+          10.3586,
+          -10.6337
+        ],
+        [
+          10.4033,
+          -10.6442
+        ],
+        [
+          10.4256,
+          -10.6134
+        ],
+        [
+          10.4256,
+          -10.541
+        ],
+        [
+          10.4515,
+          -10.481
+        ],
+        [
+          10.5034,
+          -10.4332
+        ],
+        [
+          10.524,
+          -10.3631
+        ],
+        [
+          10.5135,
+          -10.2706
+        ],
+        [
+          10.4909,
+          -10.2183
+        ],
+        [
+          10.4776,
+          -10.1986
+        ],
+        [
+          10.4716,
+          -10.174
+        ],
+        [
+          10.4824,
+          -10.1512
+        ],
+        [
+          10.5687,
+          -10.0533
+        ],
+        [
+          10.6084,
+          -9.97
+        ],
+        [
+          10.6015,
+          -9.9014
+        ],
+        [
+          10.6248,
+          -9.8659
+        ],
+        [
+          10.6425,
+          -9.8482
+        ],
+        [
+          10.6624,
+          -9.8014
+        ],
+        [
+          10.6784,
+          -9.6583
+        ],
+        [
+          10.7806,
+          -9.5355
+        ],
+        [
+          10.9693,
+          -9.4326
+        ],
+        [
+          11.0648,
+          -9.3434
+        ],
+        [
+          11.0673,
+          -9.2678
+        ],
+        [
+          11.0971,
+          -9.1987
+        ],
+        [
+          11.1543,
+          -9.1359
+        ],
+        [
+          11.2395,
+          -9.1165
+        ],
+        [
+          11.3525,
+          -9.1405
+        ],
+        [
+          11.4186,
+          -9.0889
+        ],
+        [
+          11.4377,
+          -8.9618
+        ],
+        [
+          11.5049,
+          -8.8519
+        ],
+        [
+          11.6202,
+          -8.7592
+        ],
+        [
+          11.7189,
+          -8.651
+        ],
+        [
+          11.8008,
+          -8.5272
+        ],
+        [
+          11.9049,
+          -8.4327
+        ],
+        [
+          12.031,
+          -8.3674
+        ],
+        [
+          12.1437,
+          -8.2814
+        ],
+        [
+          12.2428,
+          -8.1747
+        ],
+        [
+          12.3747,
+          -8.0981
+        ],
+        [
+          12.5394,
+          -8.0514
+        ],
+        [
+          12.6265,
+          -7.9643
+        ],
+        [
+          12.6361,
+          -7.8369
+        ],
+        [
+          12.7467,
+          -7.6664
+        ],
+        [
+          12.9583,
+          -7.4529
+        ],
+        [
+          13.104,
+          -7.2791
+        ],
+        [
+          13.2235,
+          -7.0777
+        ],
+        [
+          13.3248,
+          -6.9492
+        ],
+        [
+          13.3618,
+          -6.7879
+        ],
+        [
+          13.3682,
+          -6.5509
+        ],
+        [
+          13.4091,
+          -6.3673
+        ],
+        [
+          13.4843,
+          -6.2372
+        ],
+        [
+          13.572,
+          -6.1461
+        ],
+        [
+          13.6722,
+          -6.0941
+        ],
+        [
+          13.7103,
+          -6.0212
+        ],
+        [
+          13.7187,
+          -5.9025
+        ],
+        [
+          13.7452,
+          -5.7852
+        ],
+        [
+          13.8871,
+          -5.5954
+        ],
+        [
+          13.9617,
+          -5.4352
+        ],
+        [
+          13.9692,
+          -5.3047
+        ],
+        [
+          14.0081,
+          -5.2141
+        ],
+        [
+          14.0786,
+          -5.1636
+        ],
+        [
+          14.1547,
+          -4.9962
+        ],
+        [
+          14.2363,
+          -4.7121
+        ],
+        [
+          14.2664,
+          -4.549
+        ],
+        [
+          14.2743,
+          -4.4869
+        ],
+        [
+          14.3133,
+          -4.4145
+        ],
+        [
+          14.5507,
+          -4.2005
+        ],
+        [
+          14.7718,
+          -4.1169
+        ],
+        [
+          14.8848,
+          -4.0421
+        ],
+        [
+          14.9636,
+          -3.9482
+        ],
+        [
+          15.0726,
+          -3.9208
+        ],
+        [
+          15.2812,
+          -3.9795
+        ],
+        [
+          15.2903,
+          -3.9541
+        ],
+        [
+          15.3068,
+          -3.9137
+        ],
+        [
+          15.3536,
+          -3.8522
+        ],
+        [
+          15.3952,
+          -3.8203
+        ],
+        [
+          15.4317,
+          -3.8178
+        ],
+        [
+          15.4558,
+          -3.8535
+        ],
+        [
+          15.4674,
+          -3.9271
+        ],
+        [
+          15.5035,
+          -3.9229
+        ],
+        [
+          15.6029,
+          -3.7956
+        ],
+        [
+          15.6197,
+          -3.7868
+        ],
+        [
+          15.6421,
+          -3.8609
+        ],
+        [
+          15.6597,
+          -3.8494
+        ],
+        [
+          15.6736,
+          -3.8119
+        ],
+        [
+          15.6838,
+          -3.7484
+        ],
+        [
+          15.732,
+          -3.7138
+        ],
+        [
+          15.8181,
+          -3.7083
+        ],
+        [
+          15.8722,
+          -3.6819
+        ],
+        [
+          15.8945,
+          -3.6347
+        ],
+        [
+          15.9389,
+          -3.5975
+        ],
+        [
+          16.0055,
+          -3.5703
+        ],
+        [
+          16.0467,
+          -3.5031
+        ],
+        [
+          16.0467,
+          -3.5031
+        ],
+        [
+          16.0625,
+          -3.3958
+        ],
+        [
+          16.1014,
+          -3.3288
+        ],
+        [
+          16.1634,
+          -3.3022
+        ],
+        [
+          16.1987,
+          -3.2705
+        ],
+        [
+          16.2073,
+          -3.2338
+        ],
+        [
+          16.2253,
+          -3.206
+        ],
+        [
+          16.2529,
+          -3.1872
+        ],
+        [
+          16.3001,
+          -3.189
+        ],
+        [
+          16.408,
+          -3.2218
+        ],
+        [
+          16.408,
+          -3.2218
+        ],
+        [
+          16.4378,
+          -3.1672
+        ],
+        [
+          16.5113,
+          -3.1064
+        ],
+        [
+          16.6063,
+          -3.0802
+        ],
+        [
+          16.6502,
+          -3.0275
+        ],
+        [
+          16.6429,
+          -2.9483
+        ],
+        [
+          16.69,
+          -2.7429
+        ],
+        [
+          16.7917,
+          -2.4113
+        ],
+        [
+          16.8371,
+          -2.1974
+        ],
+        [
+          16.8261,
+          -2.101
+        ],
+        [
+          16.835,
+          -2.0429
+        ],
+        [
+          16.864,
+          -2.0229
+        ],
+        [
+          16.915,
+          -1.8966
+        ],
+        [
+          16.9882,
+          -1.664
+        ],
+        [
+          17.0355,
+          -1.4485
+        ],
+        [
+          17.0568,
+          -1.2502
+        ],
+        [
+          17.048,
+          -1.1179
+        ],
+        [
+          17.0089,
+          -1.0515
+        ],
+        [
+          16.9955,
+          -0.9645
+        ],
+        [
+          17.0077,
+          -0.8568
+        ],
+        [
+          16.9926,
+          -0.7704
+        ],
+        [
+          16.9501,
+          -0.7051
+        ],
+        [
+          16.9376,
+          -0.6006
+        ],
+        [
+          16.9552,
+          -0.4565
+        ],
+        [
+          16.8728,
+          -0.346
+        ],
+        [
+          16.6906,
+          -0.269
+        ],
+        [
+          16.5774,
+          -0.2029
+        ],
+        [
+          16.5332,
+          -0.1477
+        ],
+        [
+          16.4259,
+          -0.0894
+        ],
+        [
+          16.1703,
+          0.0028
+        ],
+        [
+          15.9831,
+          0.1435
+        ],
+        [
+          15.8721,
+          0.2594
+        ],
+        [
+          15.7749,
+          0.3974
+        ],
+        [
+          15.6791,
+          0.4713
+        ],
+        [
+          15.5848,
+          0.4809
+        ],
+        [
+          15.5104,
+          0.5477
+        ],
+        [
+          15.4562,
+          0.6719
+        ],
+        [
+          15.4097,
+          0.7388
+        ],
+        [
+          15.3711,
+          0.7487
+        ],
+        [
+          15.2826,
+          0.7273
+        ],
+        [
+          15.1442,
+          0.6749
+        ],
+        [
+          15.0459,
+          0.6575
+        ],
+        [
+          14.9876,
+          0.675
+        ],
+        [
+          14.9477,
+          0.7221
+        ],
+        [
+          14.9262,
+          0.7985
+        ],
+        [
+          14.8607,
+          0.855
+        ],
+        [
+          14.7512,
+          0.8913
+        ],
+        [
+          14.6303,
+          0.965
+        ],
+        [
+          14.498,
+          1.0759
+        ],
+        [
+          14.3812,
+          1.2083
+        ],
+        [
+          14.2799,
+          1.3622
+        ],
+        [
+          14.1462,
+          1.4634
+        ],
+        [
+          13.9801,
+          1.512
+        ],
+        [
+          13.8469,
+          1.5811
+        ],
+        [
+          13.7467,
+          1.6707
+        ],
+        [
+          13.6505,
+          1.8117
+        ],
+        [
+          13.5584,
+          2.0038
+        ],
+        [
+          13.4757,
+          2.1246
+        ],
+        [
+          13.4024,
+          2.1739
+        ],
+        [
+          13.3434,
+          2.2356
+        ],
+        [
+          13.2986,
+          2.3097
+        ],
+        [
+          13.176,
+          2.3546
+        ],
+        [
+          12.9757,
+          2.3703
+        ],
+        [
+          12.8182,
+          2.4154
+        ],
+        [
+          12.7035,
+          2.4897
+        ],
+        [
+          12.6273,
+          2.5206
+        ],
+        [
+          12.5896,
+          2.508
+        ],
+        [
+          12.5519,
+          2.5152
+        ],
+        [
+          12.5286,
+          2.5398
+        ],
+        [
+          12.5301,
+          2.5705
+        ],
+        [
+          12.5516,
+          2.5967
+        ],
+        [
+          12.5516,
+          2.6151
+        ],
+        [
+          12.531,
+          2.6263
+        ],
+        [
+          12.5223,
+          2.6531
+        ],
+        [
+          12.5301,
+          2.692
+        ],
+        [
+          12.5193,
+          2.7182
+        ],
+        [
+          12.468,
+          2.7365
+        ],
+        [
+          12.4321,
+          2.7678
+        ],
+        [
+          12.4194,
+          2.8151
+        ],
+        [
+          12.3994,
+          2.8437
+        ],
+        [
+          12.1181,
+          3.1496
+        ],
+        [
+          11.9919,
+          3.2674
+        ],
+        [
+          11.9271,
+          3.2991
+        ],
+        [
+          11.8805,
+          3.3599
+        ],
+        [
+          11.8519,
+          3.4498
+        ],
+        [
+          11.7874,
+          3.5317
+        ],
+        [
+          11.6963,
+          3.5954
+        ],
+        [
+          11.62,
+          3.6947
+        ],
+        [
+          11.5699,
+          3.8514
+        ],
+        [
+          11.484,
+          4.0223
+        ],
+        [
+          11.3906,
+          4.1331
+        ],
+        [
+          11.2613,
+          4.2407
+        ],
+        [
+          11.1696,
+          4.3675
+        ],
+        [
+          11.1155,
+          4.5133
+        ],
+        [
+          11.0447,
+          4.6201
+        ],
+        [
+          10.9573,
+          4.6877
+        ],
+        [
+          10.837,
+          4.7052
+        ],
+        [
+          10.6072,
+          4.6562
+        ],
+        [
+          10.6093,
+          4.6566
+        ],
+        [
+          10.4247,
+          4.5371
+        ],
+        [
+          10.2385,
+          4.5294
+        ],
+        [
+          9.8645,
+          4.6257
+        ],
+        [
+          9.8645,
+          4.6257
+        ],
+        [
+          9.7552,
+          4.6441
+        ],
+        [
+          9.6695,
+          4.6311
+        ],
+        [
+          9.571,
+          4.5928
+        ],
+        [
+          9.4725,
+          4.5864
+        ],
+        [
+          9.374,
+          4.6122
+        ],
+        [
+          9.3123,
+          4.6544
+        ],
+        [
+          9.2874,
+          4.7132
+        ],
+        [
+          9.2434,
+          4.7496
+        ],
+        [
+          9.1803,
+          4.7638
+        ],
+        [
+          9.1607,
+          4.8296
+        ],
+        [
+          9.1847,
+          4.9471
+        ],
+        [
+          9.1496,
+          5.0568
+        ],
+        [
+          9.0554,
+          5.1586
+        ],
+        [
+          8.9887,
+          5.2916
+        ],
+        [
+          8.9492,
+          5.4559
+        ],
+        [
+          8.8826,
+          5.6041
+        ],
+        [
+          8.7418,
+          5.8024
+        ],
+        [
+          8.7545,
+          6.0199
+        ],
+        [
+          8.7425,
+          6.1587
+        ],
+        [
+          8.7102,
+          6.2913
+        ],
+        [
+          8.6284,
+          6.3846
+        ],
+        [
+          8.4973,
+          6.4384
+        ],
+        [
+          8.3772,
+          6.5212
+        ],
+        [
+          8.2681,
+          6.6327
+        ],
+        [
+          8.1444,
+          6.7159
+        ],
+        [
+          8.0059,
+          6.7707
+        ],
+        [
+          7.793,
+          6.776
+        ],
+        [
+          7.362,
+          6.7098
+        ],
+        [
+          6.9734,
+          6.6644
+        ],
+        [
+          6.743,
+          6.6596
+        ],
+        [
+          6.4404,
+          6.6906
+        ],
+        [
+          6.2023,
+          6.7409
+        ],
+        [
+          5.9775,
+          6.7073
+        ],
+        [
+          5.5413,
+          6.5563
+        ],
+        [
+          5.4643,
+          6.4951
+        ],
+        [
+          5.4218,
+          6.4798
+        ],
+        [
+          5.3881,
+          6.4902
+        ],
+        [
+          5.3628,
+          6.4548
+        ],
+        [
+          5.3628,
+          6.4548
+        ],
+        [
+          5.301,
+          6.394
+        ],
+        [
+          5.2563,
+          6.3486
+        ],
+        [
+          5.2208,
+          6.3304
+        ],
+        [
+          5.1955,
+          6.3335
+        ],
+        [
+          5.1804,
+          6.3578
+        ],
+        [
+          5.1532,
+          6.3536
+        ],
+        [
+          5.1141,
+          6.321
+        ],
+        [
+          5.0948,
+          6.2918
+        ],
+        [
+          5.0955,
+          6.2661
+        ],
+        [
+          5.061,
+          6.2574
+        ],
+        [
+          4.9914,
+          6.2658
+        ],
+        [
+          4.9914,
+          6.2658
+        ],
+        [
+          4.9191,
+          6.2237
+        ],
+        [
+          4.844,
+          6.1312
+        ],
+        [
+          4.7099,
+          6.0775
+        ],
+        [
+          4.4199,
+          6.0554
+        ],
+        [
+          4.2906,
+          6.0766
+        ]
+      ],
+      "what": "Generalised present-day river centreline for orientation. Not an ancient shoreline, a political border or a reconstructed historical channel.",
+      "evidence": "Natural Earth mapped geometry",
+      "location": "Original Natural Earth vertices; 1:50m generalisation. Niger lake centreline bridges are shown only as narrow river locators, with no reservoir area or outline.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "ne-africa-rivers",
+        "fao-niger",
+        "esa-niger"
+      ]
+    },
+    {
+      "id": "benue",
+      "kind": "line",
+      "type": "river",
+      "name": "Lower Benue · physical locator",
+      "path": [
+        [
+          9.4906,
+          11.9241
+        ],
+        [
+          9.4965,
+          11.7835
+        ],
+        [
+          9.4091,
+          11.5741
+        ],
+        [
+          9.2302,
+          11.2488
+        ],
+        [
+          9.0607,
+          11.0379
+        ],
+        [
+          8.9007,
+          10.9412
+        ],
+        [
+          8.7953,
+          10.8578
+        ],
+        [
+          8.7447,
+          10.7876
+        ],
+        [
+          8.7074,
+          10.6355
+        ],
+        [
+          8.6835,
+          10.4014
+        ],
+        [
+          8.5901,
+          10.2182
+        ],
+        [
+          8.4271,
+          10.0858
+        ],
+        [
+          8.3272,
+          9.9765
+        ],
+        [
+          8.2722,
+          9.847
+        ],
+        [
+          8.1206,
+          9.53
+        ],
+        [
+          8.0387,
+          9.3952
+        ],
+        [
+          7.9761,
+          9.337
+        ],
+        [
+          7.8925,
+          9.141
+        ],
+        [
+          7.7881,
+          8.807
+        ],
+        [
+          7.7993,
+          8.4373
+        ],
+        [
+          7.99,
+          7.8288
+        ],
+        [
+          8.0186,
+          7.4215
+        ],
+        [
+          7.9675,
+          7.1562
+        ],
+        [
+          7.793,
+          6.776
+        ]
+      ],
+      "what": "Generalised present-day river centreline for orientation. Not an ancient shoreline, a political border or a reconstructed historical channel.",
+      "evidence": "Natural Earth mapped geometry",
+      "location": "Original Natural Earth vertices; 1:50m generalisation. Niger lake centreline bridges are shown only as narrow river locators, with no reservoir area or outline.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "ne-africa-rivers",
+        "fao-niger",
+        "esa-niger"
+      ]
+    },
+    {
+      "id": "confluence",
+      "kind": "point",
+      "name": "Niger + Benue · near Lokoja",
+      "coordinates": [
+        7.793,
+        6.776
+      ],
+      "what": "The Benue joins the Niger near Lokoja. The point uses the endpoint of the generalised mapped Benue, not an exact survey of the confluence.",
+      "evidence": "Archaeology and institutional/scholarly records",
+      "location": "Representative site coordinate, rounded for an overview; not a surveyed boundary or a precise building footprint. Display halo is illustrative, not a measured confidence interval.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "ne-africa-rivers",
+        "fao-niger",
+        "esa-niger"
+      ],
+      "uncertainty_km": 3,
+      "short": "Niger + Benue"
+    },
+    {
+      "id": "nok-context",
+      "kind": "point",
+      "name": "Nok village (Jaba LGA, Kaduna State)",
+      "short": "Nok village",
+      "coordinates": [
+        9.5,
+        8.017
+      ],
+      "what": "The first known Nok terracotta was found here in 1928, about 7 m deep in a tin mine. A second head, found nearby in 1943, led Bernard Fagg to recognise a lost sculptural tradition, and the culture is named after the village.",
+      "evidence": "Documented chance finds, later studied by archaeologists",
+      "location": "Town location. The finds came from tin mines near the village.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-nok",
+        "wiki-places"
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "origins",
+      "title": "Our species has an African story",
+      "when": {
+        "from": -298000,
+        "to": -298000,
+        "label": "About 300,000 years ago"
+      },
+      "camera": {
+        "center": [
+          19,
+          10
+        ],
+        "zoom": 3.5
+      },
+      "show": [
+        "jebel-irhoud"
+      ],
+      "dim": [],
+      "text": "Rewind: the previous chapter ended around 5,000 years ago. Now we return to roughly 300,000 years ago. At Jebel Irhoud, early Homo sapiens remains were found with Middle Stone Age tools. This is one part of a much wider African story of human origins.",
+      "sources": [
+        "irhoud-mpg",
+        "irhoud-dating",
+        "irhoud-mindat"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 22,
+      "clock": "ago",
+      "scale": "Africa · human origins",
+      "time_note": "REWIND · 5,000 → about 300,000 years ago. Approximate locality only."
+    },
+    {
+      "id": "egypt",
+      "title": "A state takes shape on the Nile",
+      "when": {
+        "from": -3100,
+        "to": -3100,
+        "label": "Around 3100 BCE"
+      },
+      "camera": {
+        "center": [
+          25,
+          28
+        ],
+        "zoom": 4.5
+      },
+      "show": [
+        "memphis-egypt"
+      ],
+      "dim": [],
+      "text": "Jump forward by almost 300,000 years. Around 3100 BCE, the gradual unification of Upper and Lower Egypt reached a major stage. Memphis became a capital between the two regions.",
+      "sources": [
+        "egypt-ministry",
+        "memphis-map"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 19,
+      "scale": "North-east Africa · lower Nile",
+      "time_note": "TIME SCALE CHANGES · years ago → BCE/CE. Gradual unification, not one exact event."
+    },
+    {
+      "id": "meroe",
+      "title": "Kush builds its own royal landscape",
+      "when": {
+        "from": -250,
+        "to": -250,
+        "label": "Third century BCE"
+      },
+      "camera": {
+        "center": [
+          17,
+          31
+        ],
+        "zoom": 5.1
+      },
+      "show": [
+        "meroe-kush"
+      ],
+      "dim": [],
+      "text": "Further south on the Nile, Meroe was a major centre of Kush. In the third century BCE, royal burials here used steep-sided pyramids above underground tombs. The city and its royal cemeteries formed distinct parts of this landscape.",
+      "sources": [
+        "meroe-unesco",
+        "meroe-nomination",
+        "meroe-booklet"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 18,
+      "scale": "Middle Nile · Kush"
+    },
+    {
+      "id": "djenne",
+      "title": "A town without an invented king",
+      "when": {
+        "from": -200,
+        "to": -200,
+        "label": "Around 200 BCE · within a longer urban sequence"
+      },
+      "camera": {
+        "center": [
+          13,
+          -4.5
+        ],
+        "zoom": 5
+      },
+      "show": [
+        "djenne-djenno"
+      ],
+      "dim": [],
+      "text": "Shift west to the inland Niger delta. Djenné-Djenno grew from about 250 BCE. Archaeology reveals crafts, exchange and forms of self-government: an urban history alongside the stories of kings and courts.",
+      "sources": [
+        "unesco-djenne",
+        "met-sahel",
+        "unesco-djenne-components"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 16,
+      "scale": "West Africa · inland Niger delta"
+    },
+    {
+      "id": "aksum",
+      "title": "Stone becomes architecture",
+      "when": {
+        "from": 350,
+        "to": 350,
+        "label": "Third–fourth centuries CE"
+      },
+      "camera": {
+        "center": [
+          13.5,
+          36.5
+        ],
+        "zoom": 5.2
+      },
+      "show": [
+        "aksum"
+      ],
+      "dim": [],
+      "text": "In north-eastern Africa, Aksum’s great stone stelae were carved in the third and fourth centuries CE. Some turned a single block of stone into the image of a many-storeyed building.",
+      "sources": [
+        "aksum-unesco",
+        "aksum-map"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 18,
+      "scale": "North-east Africa · Aksum"
+    },
+    {
+      "id": "ghana",
+      "title": "Gold, exchange and an uncertain capital",
+      "when": {
+        "from": 1100,
+        "to": 1100,
+        "label": "Around 1100 CE · selected trade context"
+      },
+      "camera": {
+        "center": [
+          16,
+          -7
+        ],
+        "zoom": 4.9
+      },
+      "show": [
+        "ghana-wagadu"
+      ],
+      "dim": [],
+      "text": "Ghana, also called Wagadu, was linked to medieval gold exchange. Koumbi Saleh was a commercial centre; whether it was the capital remains debated. This earlier Ghana lay far from the present-day country of the same name.",
+      "sources": [
+        "dueppen-west-africa",
+        "met-sahel",
+        "brill-loc-coordinates"
+      ],
+      "disputed": "The identification of Koumbi Saleh as Ghana’s political capital is debated. The scene locates the archaeological trading town, not a confirmed palace.",
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 18,
+      "scale": "Western Sahel · Ghana / Wagadu"
+    },
+    {
+      "id": "kanem",
+      "title": "A centre east of Lake Chad",
+      "when": {
+        "from": 1250,
+        "to": 1250,
+        "label": "Thirteenth century CE · regional overview"
+      },
+      "camera": {
+        "center": [
+          15,
+          17
+        ],
+        "zoom": 4.7
+      },
+      "show": [],
+      "dim": [],
+      "text": "Now east of Lake Chad. Kanem linked communities across the Sahara. Recent archaeological work considers Tié a probable location of Njimi, an early Islamic capital. The identification remains a research question as the regional story comes into focus.",
+      "sources": [
+        "frobenius-kanem",
+        "magnavita-2025",
+        "dai-tie-2020"
+      ],
+      "disputed": "Tié’s identification with Njimi is probable, not certain. No unverified capital point or medieval lake shoreline is drawn.",
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 20,
+      "scale": "Central Sahel · east of Lake Chad"
+    },
+    {
+      "id": "mali",
+      "title": "Mali, Musa and a city of learning",
+      "when": {
+        "from": 1324,
+        "to": 1324,
+        "label": "1324 CE · Musa’s pilgrimage",
+        "approx": false
+      },
+      "camera": {
+        "center": [
+          16,
+          -4
+        ],
+        "zoom": 5
+      },
+      "show": [
+        "mali-timbuktu"
+      ],
+      "dim": [],
+      "text": "In 1324, Mali’s ruler Musa travelled to Mecca through Cairo. His patronage helped Timbuktu develop as a centre of Islamic study. Timbuktu enters this tour as a commercial and scholarly city.",
+      "sources": [
+        "met-sahel",
+        "unesco-timbuktu"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 18,
+      "scale": "Western Sahel · Mali and Timbuktu"
+    },
+    {
+      "id": "zimbabwe",
+      "title": "A city built in stone",
+      "when": {
+        "from": 1400,
+        "to": 1400,
+        "label": "Around 1400 CE · later building phase"
+      },
+      "camera": {
+        "center": [
+          -20,
+          30
+        ],
+        "zoom": 5.1
+      },
+      "show": [
+        "great-zimbabwe"
+      ],
+      "dim": [],
+      "text": "Far to the south, Great Zimbabwe grew into a major trading city. Its fourteenth-century Great Enclosure shows the skill of its stone builders. The enclosure and conical tower form part of the site’s later architectural ensemble.",
+      "sources": [
+        "unesco-great-zimbabwe",
+        "unesco-great-zimbabwe-map"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 18,
+      "scale": "Southern Africa · Great Zimbabwe"
+    },
+    {
+      "id": "kilwa",
+      "title": "Africa faces the Indian Ocean too",
+      "when": {
+        "from": 1400,
+        "to": 1400,
+        "label": "Thirteenth–fourteenth centuries CE"
+      },
+      "camera": {
+        "center": [
+          -8.8,
+          37
+        ],
+        "zoom": 5
+      },
+      "show": [
+        "kilwa"
+      ],
+      "dim": [],
+      "text": "Turn toward the Indian Ocean. Kilwa Kisiwani flourished as a Swahili trading city in the thirteenth and fourteenth centuries. Its sea connections belong in Africa’s history alongside the Sahara and the Niger.",
+      "sources": [
+        "kilwa-unesco",
+        "kilwa-map"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 17,
+      "scale": "East Africa · Kilwa Kisiwani"
+    },
+    {
+      "id": "songhai",
+      "title": "Gao and the Songhai world",
+      "when": {
+        "from": 1495,
+        "to": 1495,
+        "label": "1495 CE · monument at Gao",
+        "approx": false
+      },
+      "camera": {
+        "center": [
+          16,
+          1
+        ],
+        "zoom": 5.2
+      },
+      "show": [
+        "songhai-gao"
+      ],
+      "dim": [],
+      "text": "At Gao, a centre of Songhai, Askia Mohamed built an earthen monument in 1495. Trans-Saharan salt and gold exchange helped sustain the empire’s wealth. The city anchors our final stop before the camera pulls back.",
+      "sources": [
+        "unesco-askia",
+        "unesco-askia-periodic"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 16,
+      "scale": "Western Sahel · Songhai"
+    },
+    {
+      "id": "zoom-africa",
+      "title": "Different centuries. One continent.",
+      "when": {
+        "from": 1495,
+        "to": 1495,
+        "label": "Geographic interlude · different periods"
+      },
+      "camera": {
+        "center": [
+          0,
+          20
+        ],
+        "zoom": 2.6
+      },
+      "show": [
+        "jebel-irhoud",
+        "memphis-egypt",
+        "meroe-kush",
+        "aksum",
+        "kilwa",
+        "djenne-djenno",
+        "ghana-wagadu",
+        "mali-timbuktu",
+        "songhai-gao",
+        "great-zimbabwe"
+      ],
+      "dim": [
+        "jebel-irhoud",
+        "memphis-egypt",
+        "meroe-kush",
+        "aksum",
+        "kilwa",
+        "djenne-djenno",
+        "ghana-wagadu",
+        "mali-timbuktu",
+        "songhai-gao",
+        "great-zimbabwe"
+      ],
+      "text": "Different centuries. One continent. These places recall separate historical moments. Now change the geographic lens: from the whole of Africa toward the Niger and the region that later became Nigeria.",
+      "sources": [
+        "natural-earth",
+        "ne-africa-rivers",
+        "fao-niger",
+        "esa-niger",
+        "irhoud-mpg",
+        "irhoud-dating",
+        "irhoud-mindat",
+        "egypt-ministry",
+        "memphis-map",
+        "meroe-unesco",
+        "meroe-nomination",
+        "meroe-booklet",
+        "aksum-unesco",
+        "aksum-map",
+        "kilwa-unesco",
+        "kilwa-map",
+        "unesco-djenne",
+        "met-sahel",
+        "unesco-djenne-components",
+        "dueppen-west-africa",
+        "brill-loc-coordinates",
+        "unesco-timbuktu",
+        "unesco-askia",
+        "unesco-askia-periodic",
+        "unesco-great-zimbabwe",
+        "unesco-great-zimbabwe-map"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 12,
+      "clock": "label",
+      "monuments": false,
+      "scale": "1 / 5 · Africa",
+      "time_note": "Physical geography is approximate. Stops recall different periods; they are not simultaneous states."
+    },
+    {
+      "id": "sub-saharan",
+      "title": "Across sub-Saharan Africa",
+      "when": {
+        "from": 1495,
+        "to": 1495,
+        "label": "Geographic interlude · different periods"
+      },
+      "camera": {
+        "center": [
+          -5,
+          20
+        ],
+        "zoom": 3.2
+      },
+      "show": [],
+      "dim": [],
+      "text": "Move south of the Sahara. This broad geographic view brings the Sahel, forest regions, eastern coast and southern cities into one frame. Then we narrow the view again toward West Africa.",
+      "sources": [
+        "natural-earth",
+        "ne-africa-rivers",
+        "fao-niger",
+        "esa-niger"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 12,
+      "clock": "label",
+      "monuments": false,
+      "scale": "2 / 5 · Sub-Saharan Africa",
+      "time_note": "Physical geography is approximate. Stops recall different periods; they are not simultaneous states."
+    },
+    {
+      "id": "west-africa",
+      "title": "Follow the mapped Niger",
+      "when": {
+        "from": 1495,
+        "to": 1495,
+        "label": "Geographic interlude · different periods"
+      },
+      "camera": {
+        "center": [
+          11,
+          -2
+        ],
+        "zoom": 4.2
+      },
+      "show": [
+        "niger"
+      ],
+      "dim": [],
+      "text": "Now West Africa. The Niger begins in Guinea’s highlands, runs through the inland delta and bends across the western Sahel toward the Atlantic. Follow its broad sweep along this generalised physical locator, from the headwaters to the bend and the lower river.",
+      "sources": [
+        "natural-earth",
+        "ne-africa-rivers",
+        "fao-niger",
+        "esa-niger"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 22,
+      "clock": "label",
+      "monuments": false,
+      "scale": "3 / 5 · West Africa → the Niger",
+      "time_note": "Physical geography is approximate. Stops recall different periods; they are not simultaneous states.",
+      "camera_path": [
+        {
+          "at": 3,
+          "center": [
+            10,
+            -9
+          ],
+          "zoom": 5,
+          "dur": 3
+        },
+        {
+          "at": 7,
+          "center": [
+            16,
+            -3
+          ],
+          "zoom": 5,
+          "dur": 3
+        },
+        {
+          "at": 11,
+          "center": [
+            11,
+            3
+          ],
+          "zoom": 5,
+          "dur": 3
+        },
+        {
+          "at": 15,
+          "center": [
+            6.5,
+            6.5
+          ],
+          "zoom": 5.6,
+          "dur": 5
+        }
+      ]
+    },
+    {
+      "id": "niger-benue",
+      "title": "Where the rivers meet",
+      "when": {
+        "from": 1495,
+        "to": 1495,
+        "label": "Geographic interlude · different periods"
+      },
+      "camera": {
+        "center": [
+          8.3,
+          7.3
+        ],
+        "zoom": 5.4
+      },
+      "show": [
+        "niger",
+        "benue",
+        "confluence"
+      ],
+      "dim": [],
+      "text": "The frame narrows to the lower Niger and the Benue. Their waters meet near Lokoja, then continue south into the branching delta on the Gulf of Guinea.",
+      "sources": [
+        "natural-earth",
+        "ne-africa-rivers",
+        "fao-niger",
+        "esa-niger"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 15,
+      "clock": "label",
+      "monuments": false,
+      "scale": "4 / 5 · Lower Niger and Benue",
+      "time_note": "Physical geography is approximate. Stops recall different periods; they are not simultaneous states."
+    },
+    {
+      "id": "zoom-region",
+      "title": "The region that later became Nigeria",
+      "when": {
+        "from": 1495,
+        "to": 1495,
+        "label": "Geographic interlude · different periods"
+      },
+      "camera": {
+        "center": [
+          9.1,
+          8.6
+        ],
+        "zoom": 5.8
+      },
+      "show": [
+        "niger",
+        "benue"
+      ],
+      "dim": [],
+      "text": "Finally, the region that later became Nigeria: the lower Niger, the Benue and the wider Chad basin. This becomes the frame for the next chapters, following particular communities, cities and states through their own dates.",
+      "sources": [
+        "natural-earth",
+        "ne-africa-rivers",
+        "fao-niger",
+        "esa-niger"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 15,
+      "clock": "label",
+      "monuments": false,
+      "scale": "5 / 5 · The region that later became Nigeria",
+      "time_note": "Physical geography is approximate. Stops recall different periods; they are not simultaneous states."
+    },
+    {
+      "id": "return-nok",
+      "title": "Rewind to the first Nok chapter",
+      "when": {
+        "from": -1500,
+        "to": -1500,
+        "label": "Rewind · about 1500 BCE"
+      },
+      "camera": {
+        "center": [
+          9.3,
+          8.1
+        ],
+        "zoom": 6.4
+      },
+      "show": [
+        "nok-context"
+      ],
+      "dim": [],
+      "text": "Our continental tour reached the medieval centuries. Now rewind to about 1500 BCE. We will follow the much earlier farmers, sculptors and ironworkers associated with Nok, then build the later regional story in order.",
+      "sources": [
+        "wiki-nok",
+        "wiki-places"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 15,
+      "scale": "Nigeria region · return to chronology",
+      "time_note": "REWIND · medieval overview → about 1500 BCE. Nok follows next."
+    }
+  ]
+}

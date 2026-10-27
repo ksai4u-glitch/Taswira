@@ -48,7 +48,7 @@ PLATES_PATH = os.path.join(HISTORY_DIR, "geo", "plates.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
-CHAPTERS = ["deep", "nok", "states", "key"]
+CHAPTERS = ["deep", "africa", "nok", "states", "key"]
 
 # Modern reference maps are never allowed before this year. Later historical scenes also
 # use the neutral background unless a modern locator is explicitly requested and explained.
@@ -61,9 +61,11 @@ MAP_SOURCES = {"grid3-states", "esri-tiles", "natural-earth", "merdith-2021"}
 LAT_RANGE = (2.0, 20.0)
 LON_RANGE = (0.0, 18.0)
 # A chapter with "area": "world" may place things anywhere (the deep-time globe)
-AREAS = ("world",)
+AREAS = ("world", "africa")
+AFRICA_LAT = (-40.0, 40.0)
+AFRICA_LON = (-25.0, 55.0)
 # A chapter with "clock": "ago" counts in years ago (million years ago, then years ago)
-CLOCKS = ("ago",)
+CLOCKS = ("ago", "label")
 SLUG = re.compile(r"^[a-z0-9-]+$")
 UNSAFE_SVG = re.compile(r"<script|<foreignObject|\son\w+\s*=|href", re.I)
 
@@ -87,7 +89,7 @@ TIERS = ("flag", "symbol", "none")
 # and a lake drawn as a soft disc of its area (its shoreline is not drawn)
 NATURE = ("landmass", "lake")
 # Lines drawn on the globe, with the years (million years ago) they were active
-LINE_TYPES = ("rift",)
+LINE_TYPES = ("rift", "river")
 
 # Deep time: scenes with "view": "globe" show the whole Earth, with the continents where the
 # plate model puts them. The plate file covers the last 600 million years.
@@ -396,7 +398,7 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
         need(ch.get("clock") in CLOCKS + (None,), f"chapter {cid}: clock must be one of {', '.join(CLOCKS)}, or left out")
         need(isinstance(ch.get("reference", False), bool), f"chapter {cid}: reference must be true or false")
         world = ch.get("area") == "world"
-        lat_range, lon_range = ((-90.0, 90.0), (-180.0, 180.0)) if world else (LAT_RANGE, LON_RANGE)
+        lat_range, lon_range = ((-90.0, 90.0), (-180.0, 180.0)) if world else (AFRICA_LAT, AFRICA_LON) if ch.get("area") == "africa" else (LAT_RANGE, LON_RANGE)
 
         def placed(ll):
             return (isinstance(ll, (list, tuple)) and len(ll) == 2 and all(isinstance(v, (int, float)) for v in ll)
@@ -437,6 +439,15 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                         for b in blocks:
                             need(any(k.startswith(str(b)) for k in known),
                                  f"{where}: no plate in the plate model starts with {b}")
+                if "monument" in f:
+                    m = f["monument"]
+                    need(isinstance(m, dict), f"{where}: monument must be an object")
+                    if isinstance(m, dict):
+                        need(m.get("type") in ("pyramid", "stele", "tower") and m.get("note"),
+                             f"{where}: monument needs a known schematic type and note")
+                        need(all(type(m.get(k)) is int for k in ("from", "to")) and m.get("from", 1) <= m.get("to", 0),
+                             f"{where}: monument needs documented from/to years")
+                        cite(where + " monument", m.get("sources"))
                 if "emblem" in f:
                     need(f["emblem"] in emblems, f"{where}: unknown emblem {f['emblem']!r}")
                 if "short" in f:
@@ -448,8 +459,8 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                 need(len(path) >= 2 and all(placed(ll) for ll in path),
                      f"{where}: a line needs a path of two or more [lat, lon] inside the map area")
                 active = f.get("active")
-                need(isinstance(active, list) and len(active) == 2 and all(isinstance(v, (int, float)) for v in active)
-                     and active[0] >= active[1] >= 0,
+                need(f.get("type") == "river" or (isinstance(active, list) and len(active) == 2 and all(isinstance(v, (int, float)) for v in active)
+                     and active[0] >= active[1] >= 0),
                      f"{where}: active must be [from, to] in million years ago, older first")
             elif kind == "link":
                 need(f.get("type") in LINKS, f"{where}: type must be one of {', '.join(LINKS)}")
@@ -536,6 +547,7 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                  and when["from"] <= when["to"] <= date.today().year,
                  f"{where}: when.from and when.to must be whole years (BCE negative), from <= to")
             need(when.get("label"), f"{where}: when.label missing")
+            need(isinstance(sc.get("monuments", True), bool), f"{where}: monuments must be true or false")
             need(isinstance(sc.get("sensitive", False), bool), f"{where}: sensitive must be true or false")
             need(sc.get("background") in (None, "period", "modern-reference"),
                  f"{where}: background must be period or modern-reference, or left out")
@@ -546,6 +558,7 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                 need(sc.get("view") != "globe" and isinstance(when.get("from"), int)
                      and when["from"] >= PERIOD_BEFORE,
                      f"{where}: modern-reference is only for map scenes from 1914 onward")
+            need(sc.get("clock") in CLOCKS + (None,), f"{where}: unknown scene clock")
             cam = sc.get("camera", {})
             shown = sc.get("show", [])
             for fid in shown + sc.get("dim", []):
@@ -564,7 +577,7 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                     spots = [("the camera centre", cam.get("center"))]
                     for fid in shown:
                         f = features.get(fid, {})
-                        need(f.get("kind") in ("point", "line"), f"{where}: a globe shows places and lines only")
+                        need(f.get("kind") == "point" or (f.get("kind") == "line" and f.get("type") == "rift"), f"{where}: a globe shows places and rifts only")
                         lls = [f.get("coordinates")] if f.get("kind") == "point" else f.get("path", [])
                         spots += [(f"{fid} at {ll}", ll) for ll in lls]
                     ends = [(AGO_YEAR - when[k]) / 10 ** 6 for k in ("from", "to") if isinstance(when.get(k), int)]
@@ -578,12 +591,22 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                                  f"which the plate model does not place {ma:g} million years ago")
             else:
                 lat, lon = cam.get("center", [0, 0])
-                need(LAT_RANGE[0] <= lat <= LAT_RANGE[1] and LON_RANGE[0] <= lon <= LON_RANGE[1]
-                     and 4 <= cam.get("zoom", 0) <= 11, f"{where}: camera centre or zoom out of range")
+                need(lat_range[0] <= lat <= lat_range[1] and lon_range[0] <= lon <= lon_range[1]
+                     and (2 <= cam.get("zoom", 0) <= 11 if ch.get("area") == "africa" else 4 <= cam.get("zoom", 0) <= 11), f"{where}: camera centre or zoom out of range")
                 for fid in shown:
                     f = features.get(fid, {})
-                    need(f.get("kind") != "line" and f.get("form") != "landmass",
+                    need((f.get("kind") != "line" or f.get("type") == "river") and f.get("form") != "landmass",
                          f"{where}: {fid} can only be shown on the globe")
+            previous_cue = -1
+            for cue in sc.get("camera_path", []):
+                valid = isinstance(cue, dict) and placed(cue.get("center"))
+                need(valid and 2 <= cue.get("zoom", 0) <= 11 and isinstance(cue.get("at"), (int, float))
+                     and previous_cue < cue["at"] < sc.get("duration", reading_seconds(sc.get("text", "")))
+                     and isinstance(cue.get("dur"), (int, float)) and cue["dur"] > 0
+                     and cue["at"] + cue["dur"] <= sc.get("duration", reading_seconds(sc.get("text", ""))),
+                     f"{where}: camera_path needs ordered times, bounded centres/zooms and positive durations")
+                if isinstance(cue, dict) and isinstance(cue.get("at"), (int, float)):
+                    previous_cue = cue["at"]
             for fid in shown:
                 f = features.get(fid, {})
                 if f.get("type") == "campaign":
@@ -598,6 +621,10 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                         else f.get("path", []) if f.get("kind") == "move" else [])
                 missing = [e for e in ends if e not in shown]
                 need(not missing, f"{where}: {fid} joins {', '.join(map(str, missing))}, which the scene does not show")
+                m = f.get("monument")
+                if sc.get("monuments", True) and isinstance(m, dict) and all(type(m.get(k)) is int for k in ("from", "to")):
+                    need(m["from"] <= when.get("from", -10**10) <= when.get("to", 10**10) <= m["to"],
+                         f"{where}: monument is outside its documented interval")
                 e = emblems.get(f.get("emblem"))
                 if e and e["tier"] != "none" and when.get("from") is not None and when.get("to") is not None:
                     need(emblem_fits(e, when), f"{where}: shows the {f['emblem']} emblem outside its documented years")
@@ -771,7 +798,7 @@ def page_data(chapters, sources, states, arcs, users, background, emblems=None, 
                     sc["camera"] = dict(sc["camera"], plate=plate_of(*sc["camera"]["center"], plates))
         out["chapters"].append({
             "id": ch["id"], "title": ch["title"], "period": ch["period"], "intro": ch["intro"],
-            "method": ch.get("method"), "clock": ch.get("clock"), "reference": ch.get("reference", False), "features": features,
+            "method": ch.get("method"), "area": ch.get("area"), "clock": ch.get("clock"), "reference": ch.get("reference", False), "features": features,
             "snapshots": snap_out, "scenes": scenes,
         })
     return out
@@ -823,12 +850,16 @@ def feature_text(f, sc, features, sources, emblems):
         head = f"<strong>{e(f['name'])}.</strong> {e(MOVE_WORDS[f['type']])}: {e(stops)}. {e(f['what'])}{extra}"
         if f.get("uncertain"):
             head += f" <em>Uncertain part of the route:</em> {e(f['uncertain'])}."
+    elif kind == "line" and f.get("type") == "river":
+        head = f"<strong>{e(f['name'])}.</strong> Physical river locator. {e(f['what'])}"
     elif kind == "line":
         head = (f"<strong>{e(f['name'])}.</strong> {e(LINE_WORDS[f['type']])}, active about {f['active'][0]} "
                 f"to {f['active'][1]} million years ago. {e(f['what'])}")
     else:
         form = f" ({FORM_WORDS[f['form']]})" if f.get("form") else ""
         head = f"<strong>{e(f['name'])}{e(form)}.</strong> {e(f['what'])}"
+        if f.get("monument") and sc.get("monuments", True):
+            head += f" <em>Schematic:</em> {e(f['monument']['note'])}"
         if f.get("reach_note"):
             head += f" <em>Halo or field:</em> {e(f['reach_note'])}"
         how = sc.get("control", {}).get(f["id"])
