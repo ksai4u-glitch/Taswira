@@ -25,12 +25,20 @@ class HistoryDataTests(unittest.TestCase):
         cls.background = bh.load_background()
         cls.chapters, cls.sources = load()
         cls.emblems = bh.load_emblems()
+        cls.plates = bh.load_plates()
 
     def chapter(self, cid):
         return copy.deepcopy(next(c for c in self.chapters if c["id"] == cid))
 
-    def problems_with(self, chapters, emblems=None):
-        return bh.check(chapters, self.sources, self.states, set(), emblems or self.emblems)
+    def problems_with(self, chapters, emblems=None, plates="real"):
+        return bh.check(chapters, self.sources, self.states, set(), emblems or self.emblems,
+                        self.plates if plates == "real" else plates)
+
+    def feature(self, ch, fid):
+        return next(f for f in ch["features"] if f["id"] == fid)
+
+    def scene(self, ch, sid):
+        return next(sc for sc in ch["scenes"] if sc["id"] == sid)
 
     def emblem_problems(self, emblems):
         return bh.check_emblems(emblems, self.sources, set())
@@ -260,6 +268,82 @@ class HistoryDataTests(unittest.TestCase):
             for sc in ch["scenes"]:
                 self.assertIn(sc["title"].replace("'", "&#x27;"), page)
         self.assertNotIn("{{", page)
+        self.assertEqual(page.count('"id":"deep"'), 1)            # the data is in the page once, not also in a comment
+
+    # --- Deep time: the globe ------------------------------------------------------------
+    def test_globe_scenes_need_the_plate_file(self):
+        found = self.problems_with([self.chapter("deep")], plates=None)
+        self.assertTrue(any("needs history/geo/plates.json" in p for p in found))
+
+    def test_globe_scenes_get_the_deep_base(self):
+        self.assertEqual(bh.base_for({"view": "globe", "when": {"from": -600_000_000}}), "deep")
+        self.assertEqual(bh.base_for({"when": {"from": -56_000_000}}), "period")
+
+    def test_places_on_the_globe_must_be_on_a_continent(self):
+        deep = self.chapter("deep")
+        self.feature(deep, "nigeria-today")["coordinates"] = [0.0, -25.0]       # the middle of the Atlantic
+        self.assertTrue(any("nigeria-today at [0.0, -25.0] is not on any continent" in p
+                            for p in self.problems_with([deep])))
+        deep = self.chapter("deep")
+        self.scene(deep, "benue")["camera"]["center"] = [0.0, -25.0]
+        self.assertTrue(any("the camera centre is not on any continent" in p for p in self.problems_with([deep])))
+
+    def test_globe_camera_and_years_are_checked(self):
+        deep = self.chapter("deep")
+        self.scene(deep, "gondwana")["camera"]["zoom"] = 8
+        self.scene(deep, "pangaea")["when"]["from"] = -700_000_000
+        found = self.problems_with([deep])
+        self.assertTrue(any("gondwana: a globe camera needs" in p for p in found))
+        self.assertTrue(any("pangaea: the plate file starts 600 million years ago" in p for p in found))
+
+    def test_lines_and_continents_are_only_shown_on_the_globe(self):
+        deep = self.chapter("deep")
+        self.scene(deep, "delta")["show"] += ["benue-trough", "africa"]
+        found = self.problems_with([deep])
+        self.assertTrue(any("benue-trough can only be shown on the globe" in p for p in found))
+        self.assertTrue(any("africa can only be shown on the globe" in p for p in found))
+
+    def test_a_line_is_checked(self):
+        deep = self.chapter("deep")
+        line = self.feature(deep, "benue-trough")
+        line["type"], line["active"] = "canal", [84, 145]
+        found = self.problems_with([deep])
+        self.assertTrue(any("type must be one of rift" in p for p in found))
+        self.assertTrue(any("active must be [from, to] in million years ago, older first" in p for p in found))
+
+    def test_a_continent_names_plates_of_the_model(self):
+        deep = self.chapter("deep")
+        self.feature(deep, "africa")["blocks"] = ["99999"]
+        self.feature(deep, "india")["blocks"] = []
+        found = self.problems_with([deep])
+        self.assertTrue(any("no plate in the plate model starts with 99999" in p for p in found))
+        self.assertTrue(any("india: a landmass needs blocks" in p for p in found))
+
+    def test_plate_of_finds_the_oldest_outline_under_a_place(self):
+        self.assertEqual(bh.plate_of(9.1, 8.0, self.plates), 760)               # the Nigeria-Benin Shield
+        self.assertIsNone(bh.plate_of(0.0, -25.0, self.plates))
+        # Central Brazil lies in two outlines, South America's (from 1,980 million years ago) and one
+        # from 55 million years ago; the older one wins
+        self.assertEqual(bh.plate_of(-10.0, -55.0, self.plates), 201)
+        self.assertTrue(bh.turn_known(760, 600, self.plates))
+        self.assertFalse(bh.turn_known(123456, 0, self.plates))
+
+    def test_page_data_puts_places_lines_and_cameras_on_plates(self):
+        data = bh.page_data(self.chapters, self.sources, self.states, self.arcs, self.users, self.background,
+                            self.emblems, self.plates)
+        self.assertIs(data["plates"], self.plates)
+        deep = next(ch for ch in data["chapters"] if ch["id"] == "deep")
+        self.assertEqual(deep["features"]["nigeria-today"]["plate"], 760)
+        self.assertIsNotNone(deep["features"]["benue-trough"]["plate"])
+        self.assertEqual(deep["clock"], "ago")
+        globe = [sc for sc in deep["scenes"] if sc.get("view") == "globe"]
+        self.assertTrue(globe and all(sc["base"] == "deep" and sc["camera"]["plate"] for sc in globe))
+        nok = next(ch for ch in data["chapters"] if ch["id"] == "nok")
+        self.assertFalse(any("plate" in f for f in nok["features"].values()))   # only world chapters ride plates
+        # Without a globe scene the plates are left out of the page
+        others = [ch for ch in self.chapters if ch["id"] != "deep"]
+        self.assertIsNone(bh.page_data(others, self.sources, self.states, self.arcs, self.users,
+                                       self.background, self.emblems, self.plates)["plates"])
 
 
 if __name__ == "__main__":

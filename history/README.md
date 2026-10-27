@@ -8,7 +8,7 @@
 - `emblems.json`: flags, emblems and symbols, each with how sure it is (see "Emblems" below).
 - `drawings/`: the few emblems that are drawn, as small SVG files of plain shapes.
 - `template.html`: the page (map, scene panel, timeline, text version).
-- `geo/`: today's state borders, see `geo/README.md`.
+- `geo/`: today's state borders, the period background and the plate model, see `geo/README.md`.
 
 ## A chapter
 
@@ -16,8 +16,8 @@ A chapter has an `intro`, optional `features` (places on the map), optional `sna
 state each of today's states belonged to on a date), and `scenes`.
 
 A feature is a `point` (a place, with `coordinates` inside the map area: latitude 2 to 20, longitude
-0 to 18), a `link` (a tie between two places, `from` and `to`) or a `move` (a `path` through two or
-more places). Links and moves join places of the same chapter, and a scene that shows one also
+0 to 18), a `link` (a tie between two places, `from` and `to`), a `move` (a `path` through two or
+more places) or a `line` (on the globe only, see "Deep time" below). Links and moves join places of the same chapter, and a scene that shows one also
 shows its places. Every feature records separately:
 
 | Field | Meaning |
@@ -45,6 +45,9 @@ A point's `form` says what kind of power sat there:
 | `caliphate` | a double ring, the caliph's seat |
 | `emirate` | a ring, tied to the caliphate by `allegiance` links |
 | `communities` | a dotted field with a soft edge (`reach_km` and `reach_note`), for self-governing towns and villages with no ruler over them |
+
+Two forms are about the land, not power: `lake`, a lake of the time, drawn as a blue dot with a halo
+of `reach_km`, and `landmass`, a continent's name on the globe (see "Deep time" below).
 
 A link's `type` is `allegiance`, `tribute`, `alliance`, `trade` or `ritual`; allegiance and
 tribute get an arrow towards the overlord. A move's `type` is one of three motion styles:
@@ -76,6 +79,33 @@ Each has a `description`, a `status` and `disputed` like a feature, a `note`, op
 The panel shows the emblem's description, status and sources under the place, and the text version
 lists every entry, including the ones with nothing documented.
 
+### Deep time
+
+A chapter with `"area": "world"` may put places anywhere on Earth, and `"clock": "ago"` counts its
+years as years ago ("145 million years ago", then "14,500 years ago", then "today"), counted back
+from the year 2000. `when` still holds whole years, so 145 million years ago is `-145000000`.
+
+A scene with `"view": "globe"` shows the whole Earth instead of the map, as far back as 600 million
+years ago. The continents are today's outlines, each moved with its plate as the Merdith et al.
+(2021) plate model says (see `geo/README.md`). The camera's `center` is a place it follows as that
+place's plate moves, and its `zoom` runs from 1 (the whole Earth) to 6. On the globe a scene shows:
+
+- points, which ride on the plate under them;
+- `landmass` points: a continent's name. `blocks` lists how the model's plate numbers for that
+  continent start. The model numbers plates by region: 1 North America, 2 South America, 3 Europe,
+  4 northern and central Asia, 5 India, Arabia and Iran, 6 China and South-East Asia, 7 Africa,
+  8 Australia, Antarctica and New Zealand. So Africa is `"7"` plus the Somali and north-east
+  African blocks that the model numbers among Arabia's (5032, 5034, 5902 to 5905). Where two
+  continents match a plate, the longer start wins. The continents a scene shows are lit, unless
+  `dim`; the rest of the land stays dark.
+- `line` features: a `path` of two or more points, a `type` (`rift`) and `active`, the years it was
+  active as `[from, to]` in million years ago. A rift glows, with sparks, while it is active and
+  turns grey after. A line rides on the plate under its first point, so it keeps its shape.
+
+The build stops if a place, line point or camera centre on the globe is not on one of the model's
+continents, if the model does not place its plate at the scene's years, if a continent's `blocks`
+match no plate, or if a line or continent is shown on the map instead of the globe.
+
 ### Not yet checked
 
 Anything with status `to-check`, a feature or a drawn emblem, may only be shown in a scene whose
@@ -104,8 +134,11 @@ it finished. Optional extras:
 - `mood`: the decoration while a scene with places plays. One of `survey` (a radar-like sweep over
   the sites), `farming` (stalks growing), `sculpture` (clay-coloured specks gathering), `iron`
   (embers and sparks at the `furnace` sites), `decline` (the map greys, ash drifts, the sites smoulder),
-  `excavation` (a searchlight, dust and a camera flash as each site appears) or `calm` (no sparks
-  or flashes, only a soft ring as each place appears, for scenes about trade or everyday life).
+  `excavation` (a searchlight, dust and a camera flash as each site appears), `calm` (no sparks
+  or flashes, only a soft ring as each place appears, for scenes about trade or everyday life),
+  `delta` (sand and mud coming down the river from the north and fanning out into the sea, wider as
+  the scene goes on) or `greening` (green spreading over the land and ripples on its lakes, then
+  sand blowing back in over the last part of the scene).
 - `effects`: a list of moments, where `at` is how far into the scene (0 to 1) each starts:
   `{"type": "pulse", "state": "NG-FC", "at": 0.5}` (a beacon of light over a state),
   `{"type": "arc", "from": [lat, lon], "to": [lat, lon], "from_label": "...", "to_label": "...", "at": 0.6}`
