@@ -11,6 +11,7 @@ Everything it shows comes from three kinds of files in history/:
   history/geo/*.topojson       today's state borders (simplified, see history/geo/README.md)
   history/geo/natural-earth-background.json
                                land, lakes and rivers for scenes before 1914
+  history/geo/plates.json      the continents of a plate model, for scenes in deep time
 
 This script checks those files (dates, places, sources, how sure each thing is,
 which state belonged to which at each date), fills in history/template.html and
@@ -27,6 +28,7 @@ Uses only the Python standard library.
 import colorsys
 import html
 import json
+import math
 import os
 import re
 import sys
@@ -40,26 +42,31 @@ EMBLEMS_PATH = os.path.join(HISTORY_DIR, "emblems.json")
 DRAWINGS_DIR = os.path.join(HISTORY_DIR, "drawings")
 STATES_PATH = os.path.join(HISTORY_DIR, "geo", "nga-states-2022.topojson")
 BACKGROUND_PATH = os.path.join(HISTORY_DIR, "geo", "natural-earth-background.json")
+PLATES_PATH = os.path.join(HISTORY_DIR, "geo", "plates.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
-CHAPTERS = ["nok", "key", "states"]
+CHAPTERS = ["deep", "nok", "key", "states"]
 
 # Scenes that start before this year are drawn on the period background (land, lakes and
 # rivers only), never on today's map with its borders, roads and town names
 PERIOD_BEFORE = 1914
 # Map data credited on the map itself rather than by a scene
-MAP_SOURCES = {"grid3-states", "esri-tiles", "natural-earth"}
+MAP_SOURCES = {"grid3-states", "esri-tiles", "natural-earth", "merdith-2021"}
 
 # Rough box around the lower Niger and Lake Chad basin, out to Bilma on the Sahara salt road,
 # to catch swapped or mistyped coordinates
 LAT_RANGE = (2.0, 20.0)
 LON_RANGE = (0.0, 18.0)
+# A chapter with "area": "world" may place things anywhere (the deep-time globe)
+AREAS = ("world",)
+# A chapter with "clock": "ago" counts in years ago (million years ago, then years ago)
+CLOCKS = ("ago",)
 SLUG = re.compile(r"^[a-z0-9-]+$")
 UNSAFE_SVG = re.compile(r"<script|<foreignObject|\son\w+\s*=|href", re.I)
 
 # Moods set the decoration while a scene with places plays (see history/README.md)
-MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation", "calm")
+MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation", "calm", "delta", "greening")
 EFFECTS = ("arc", "pulse", "shatter")
 
 # The map vocabulary (see history/README.md). How sure each thing on the map is:
@@ -74,6 +81,18 @@ UNCERTAIN = ("start", "end", "whole")
 CONTROL = ("claimed", "held", "taken")
 # What is documented about an actor's emblem: a flag, a symbol that is not a flag, or nothing
 TIERS = ("flag", "symbol", "none")
+# Forms for the land rather than its rulers: a name written across a continent (on the globe),
+# and a lake drawn as a soft disc of its area (its shoreline is not drawn)
+NATURE = ("landmass", "lake")
+# Lines drawn on the globe, with the years (million years ago) they were active
+LINE_TYPES = ("rift",)
+
+# Deep time: scenes with "view": "globe" show the whole Earth, with the continents where the
+# plate model puts them. The plate file covers the last 600 million years.
+VIEWS = ("globe",)
+OLDEST_YEAR = -600_000_000
+AGO_YEAR = 2000             # "years ago" count back from 2000, as on the page
+GLOBE_ZOOM = (1, 6)
 
 # Hues for the 12 states of 1967, picked so neighbours look different.
 # Later states keep the hue of the state they came from.
@@ -123,8 +142,61 @@ def load_background(path=BACKGROUND_PATH):
 
 
 def base_for(scene):
-    """Which background a scene sits on: "period" before 1914, "modern" (today's map) after."""
+    """Which background a scene sits on: "deep" (the globe) for deep time, "period" before 1914,
+    "modern" (today's map) after."""
+    if scene.get("view") == "globe":
+        return "deep"
     return "period" if scene["when"]["from"] < PERIOD_BEFORE else "modern"
+
+
+# --- Plates ------------------------------------------------------------------------
+
+def load_plates(path=PLATES_PATH):
+    """The plate file made by history/geo/make_plates.py, or None if it has not been made."""
+    return read_json(path) if os.path.exists(path) else None
+
+
+def unit(lat, lon):
+    la, lo = math.radians(lat), math.radians(lon)
+    return (math.cos(la) * math.cos(lo), math.cos(la) * math.sin(lo), math.sin(la))
+
+
+def plate_of(lat, lon, plates):
+    """The plate whose present-day outline holds a point, or None. Where outlines overlap, the one
+    that goes furthest back wins (some, like the Benue Trough's, exist only today).
+    Each outline is drawn flat around the point (a stereographic projection from the far side
+    of the Earth), where an ordinary inside-or-outside test works for outlines of any size."""
+    p = unit(lat, lon)
+    # Two directions at right angles to p, along the ground
+    e1 = (-math.sin(math.radians(lon)), math.cos(math.radians(lon)), 0.0)
+    e2 = (p[1] * e1[2] - p[2] * e1[1], p[2] * e1[0] - p[0] * e1[2], p[0] * e1[1] - p[1] * e1[0])
+    dot = lambda a, b: a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+    k = plates["precision"]
+    best = None
+    for shape in plates["shapes"]:
+        flat = []
+        for la, lo in shape["ring"]:
+            v = unit(la / k, lo / k)
+            d = 1 + dot(v, p)
+            if d > 1e-9:
+                flat.append((dot(v, e1) / d, dot(v, e2) / d))
+        inside = False
+        for (x1, y1), (x2, y2) in zip(flat, flat[1:] + flat[:1]):
+            if (y1 > 0) != (y2 > 0) and 0 < x1 + (0 - y1) * (x2 - x1) / (y2 - y1):
+                inside = not inside
+        if inside and (best is None or shape["from"] > best["from"]):
+            best = shape
+    return best and best["plate"]
+
+
+def turn_known(plate, ma, plates):
+    """Whether the plate file says where a plate was at a time (million years ago)."""
+    rows = plates["rotations"].get(str(plate))
+    if isinstance(rows, str):                     # moves with another plate
+        rows = plates["rotations"][rows]
+    times = plates["times"]
+    i = min(range(len(times)), key=lambda n: abs(times[n] - ma))
+    return rows is not None and rows[i] is not None
 
 
 # --- Emblems ------------------------------------------------------------------------
@@ -287,7 +359,7 @@ def snapshot_colours(snapshots):
 
 # --- Checks ------------------------------------------------------------------------
 
-def check(chapters, sources, states, cited=None, emblems=None):
+def check(chapters, sources, states, cited=None, emblems=None, plates=None):
     """Return a list of problems. An empty list means the page can be built.
     Pass a set as cited to collect the ids of the sources that are used."""
     problems = []
@@ -316,6 +388,14 @@ def check(chapters, sources, states, cited=None, emblems=None):
         seen_chapters.add(cid)
         for field in ("title", "period", "intro", "scenes"):
             need(ch.get(field), f"chapter {cid}: missing {field}")
+        need(ch.get("area") in AREAS + (None,), f"chapter {cid}: area must be one of {', '.join(AREAS)}, or left out")
+        need(ch.get("clock") in CLOCKS + (None,), f"chapter {cid}: clock must be one of {', '.join(CLOCKS)}, or left out")
+        world = ch.get("area") == "world"
+        lat_range, lon_range = ((-90.0, 90.0), (-180.0, 180.0)) if world else (LAT_RANGE, LON_RANGE)
+
+        def placed(ll):
+            return (isinstance(ll, (list, tuple)) and len(ll) == 2 and all(isinstance(v, (int, float)) for v in ll)
+                    and lat_range[0] <= ll[0] <= lat_range[1] and lon_range[0] <= ll[1] <= lon_range[1])
 
         features = {}
         for f in ch.get("features", []):
@@ -331,24 +411,41 @@ def check(chapters, sources, states, cited=None, emblems=None):
                  f"{where}: status must be 'disputed' exactly when disputed explains the disagreement")
             cite(where, f.get("sources"))
             kind = f.get("kind")
-            if kind in ("point", "move"):
+            if kind in ("point", "move", "line"):
                 need(f.get("location"), f"{where}: missing location (how precise the place or route is)")
             if kind == "point":
-                lat, lon = f.get("coordinates", [None, None])
-                need(isinstance(lat, (int, float)) and LAT_RANGE[0] <= lat <= LAT_RANGE[1]
-                     and isinstance(lon, (int, float)) and LON_RANGE[0] <= lon <= LON_RANGE[1],
-                     f"{where}: coordinates [lat, lon] are outside the map area")
+                need(placed(f.get("coordinates")), f"{where}: coordinates [lat, lon] are outside the map area")
                 if "form" in f:
-                    need(f["form"] in FORMS, f"{where}: form must be one of {', '.join(FORMS)}")
+                    need(f["form"] in FORMS + NATURE, f"{where}: form must be one of {', '.join(FORMS + NATURE)}")
                 if "reach_km" in f or f.get("form") == "communities":
                     need(isinstance(f.get("reach_km"), (int, float)) and 5 <= f["reach_km"] <= 600
                          and f.get("reach_note"), f"{where}: a halo or field needs reach_km (5 to 600) and a "
                                                   f"reach_note saying what its size rests on")
+                if f.get("form") == "landmass":
+                    # A continent lights the model's plates whose numbers start with these digits
+                    # (the model numbers plates by region: 7 Africa, 2 South America and so on)
+                    blocks = f.get("blocks")
+                    need(isinstance(blocks, list) and blocks and all(isinstance(b, str) and b.isdigit() for b in blocks),
+                         f"{where}: a landmass needs blocks, the starts of its plate numbers, like [\"7\"]")
+                    if plates and isinstance(blocks, list):
+                        known = {str(sh["plate"]) for sh in plates["shapes"]}
+                        for b in blocks:
+                            need(any(k.startswith(str(b)) for k in known),
+                                 f"{where}: no plate in the plate model starts with {b}")
                 if "emblem" in f:
                     need(f["emblem"] in emblems, f"{where}: unknown emblem {f['emblem']!r}")
                 if "short" in f:
                     need(isinstance(f["short"], str) and 0 < len(f["short"]) < len(f.get("name", "")),
                          f"{where}: short must be a shorter name for the map on a phone")
+            elif kind == "line":
+                need(f.get("type") in LINE_TYPES, f"{where}: type must be one of {', '.join(LINE_TYPES)}")
+                path = f.get("path", [])
+                need(len(path) >= 2 and all(placed(ll) for ll in path),
+                     f"{where}: a line needs a path of two or more [lat, lon] inside the map area")
+                active = f.get("active")
+                need(isinstance(active, list) and len(active) == 2 and all(isinstance(v, (int, float)) for v in active)
+                     and active[0] >= active[1] >= 0,
+                     f"{where}: active must be [from, to] in million years ago, older first")
             elif kind == "link":
                 need(f.get("type") in LINKS, f"{where}: type must be one of {', '.join(LINKS)}")
             elif kind == "move":
@@ -366,6 +463,8 @@ def check(chapters, sources, states, cited=None, emblems=None):
         # Links and paths join places of the same chapter
         is_point = lambda x: features.get(x, {}).get("kind") == "point"
         for fid, f in features.items():
+            if f.get("kind") == "line":
+                continue                  # a line's path is coordinates, not places
             ends = [f.get("from"), f.get("to")] if f.get("kind") == "link" else f.get("path", [])
             for end in ends:
                 need(is_point(end), f"{cid}/{fid}: {end!r} is not a place in this chapter")
@@ -415,15 +514,47 @@ def check(chapters, sources, states, cited=None, emblems=None):
                  f"{where}: when.from and when.to must be whole years (BCE negative), from <= to")
             need(when.get("label"), f"{where}: when.label missing")
             cam = sc.get("camera", {})
-            lat, lon = cam.get("center", [0, 0])
-            need(LAT_RANGE[0] <= lat <= LAT_RANGE[1] and LON_RANGE[0] <= lon <= LON_RANGE[1]
-                 and 4 <= cam.get("zoom", 0) <= 11, f"{where}: camera centre or zoom out of range")
             shown = sc.get("show", [])
             for fid in shown + sc.get("dim", []):
                 need(fid in features, f"{where}: shows unknown feature {fid!r}")
+            need(sc.get("view") in VIEWS + (None,), f"{where}: view must be one of {', '.join(VIEWS)}, or left out")
+            if sc.get("view") == "globe":
+                # The camera follows a place on the globe, and everything shown moves with a plate
+                need(placed(cam.get("center")) and GLOBE_ZOOM[0] <= cam.get("zoom", 0) <= GLOBE_ZOOM[1],
+                     f"{where}: a globe camera needs a center on the map and a zoom from "
+                     f"{GLOBE_ZOOM[0]} to {GLOBE_ZOOM[1]}")
+                need(isinstance(when.get("from"), int) and when["from"] >= OLDEST_YEAR,
+                     f"{where}: the plate file starts {-OLDEST_YEAR // 10 ** 6} million years ago")
+                if plates is None:
+                    need(False, f"{where}: a globe scene needs history/geo/plates.json (see history/geo/README.md)")
+                else:
+                    spots = [("the camera centre", cam.get("center"))]
+                    for fid in shown:
+                        f = features.get(fid, {})
+                        need(f.get("kind") in ("point", "line"), f"{where}: a globe shows places and lines only")
+                        lls = [f.get("coordinates")] if f.get("kind") == "point" else f.get("path", [])
+                        spots += [(f"{fid} at {ll}", ll) for ll in lls]
+                    ends = [(AGO_YEAR - when[k]) / 10 ** 6 for k in ("from", "to") if isinstance(when.get(k), int)]
+                    for name, ll in spots:
+                        if not placed(ll):
+                            continue
+                        plate = plate_of(*ll, plates)
+                        need(plate is not None, f"{where}: {name} is not on any continent of the plate model")
+                        for ma in ends if plate is not None else []:
+                            need(turn_known(plate, ma, plates), f"{where}: {name} is on plate {plate}, "
+                                 f"which the plate model does not place {ma:g} million years ago")
+            else:
+                lat, lon = cam.get("center", [0, 0])
+                need(LAT_RANGE[0] <= lat <= LAT_RANGE[1] and LON_RANGE[0] <= lon <= LON_RANGE[1]
+                     and 4 <= cam.get("zoom", 0) <= 11, f"{where}: camera centre or zoom out of range")
+                for fid in shown:
+                    f = features.get(fid, {})
+                    need(f.get("kind") != "line" and f.get("form") != "landmass",
+                         f"{where}: {fid} can only be shown on the globe")
             for fid in shown:
                 f = features.get(fid, {})
-                ends = [f.get("from"), f.get("to")] if f.get("kind") == "link" else f.get("path", [])
+                ends = ([f.get("from"), f.get("to")] if f.get("kind") == "link"
+                        else f.get("path", []) if f.get("kind") == "move" else [])
                 missing = [e for e in ends if e not in shown]
                 need(not missing, f"{where}: {fid} joins {', '.join(map(str, missing))}, which the scene does not show")
                 e = emblems.get(f.get("emblem"))
@@ -476,9 +607,10 @@ def reading_seconds(text):
     return max(8, round(len(text.split()) * 0.33 + 4))
 
 
-def page_data(chapters, sources, states, arcs, users, background, emblems=None):
+def page_data(chapters, sources, states, arcs, users, background, emblems=None, plates=None):
+    globe = plates is not None and any(sc.get("view") == "globe" for ch in chapters for sc in ch["scenes"])
     out = {"chapters": [], "sources": sources, "built": date.today().isoformat(), "background": background,
-           "emblems": emblems or {},
+           "emblems": emblems or {}, "plates": plates if globe else None,
            # Each state as lists of arc numbers (negative: walk the arc backwards); the page rebuilds the rings
            "states": {c: {"name": s["name"], "rings": s["arc_refs"]} for c, s in states.items()},
            "arcs": arcs}
@@ -502,9 +634,21 @@ def page_data(chapters, sources, states, arcs, users, background, emblems=None):
             }
         scenes = [dict(sc, duration=sc.get("duration", reading_seconds(sc["text"])), base=base_for(sc))
                   for sc in ch["scenes"]]
+        features = {f["id"]: dict(f) for f in ch.get("features", [])}
+        if globe and ch.get("area") == "world":
+            # Which plate each place, line and camera rides on, so the page can move them. A line moves
+            # with the plate under its first point, so it keeps its shape.
+            for f in features.values():
+                if f["kind"] == "point":
+                    f["plate"] = plate_of(*f["coordinates"], plates)
+                elif f["kind"] == "line":
+                    f["plate"] = plate_of(*f["path"][0], plates)
+            for sc in scenes:
+                if sc.get("view") == "globe":
+                    sc["camera"] = dict(sc["camera"], plate=plate_of(*sc["camera"]["center"], plates))
         out["chapters"].append({
             "id": ch["id"], "title": ch["title"], "period": ch["period"], "intro": ch["intro"],
-            "method": ch.get("method"), "features": {f["id"]: f for f in ch.get("features", [])},
+            "method": ch.get("method"), "clock": ch.get("clock"), "features": features,
             "snapshots": snap_out, "scenes": scenes,
         })
     return out
@@ -517,11 +661,12 @@ def source_links(ids, sources):
 
 STATUS_WORDS = {"firm": "Firm", "approx": "Approximate", "disputed": "Disputed", "to-check": "To check"}
 TIER_WORDS = {"flag": "Flag", "symbol": "Symbol, not a flag", "none": "Nothing documented"}
-FORM_WORDS = {"kingdom": "Kingdom", "city-state": "City-state", "network": "Centre of a network",
+FORM_WORDS = {"landmass": "Continent", "lake": "Lake", "kingdom": "Kingdom", "city-state": "City-state", "network": "Centre of a network",
               "caliphate": "Seat of the caliphate", "emirate": "Emirate", "communities": "Self-governing communities"}
 LINK_WORDS = {"allegiance": "Allegiance", "tribute": "Tribute", "alliance": "Alliance", "trade": "Trade",
               "ritual": "Ritual authority"}
 MOVE_WORDS = {"migration": "Migration", "campaign": "Military campaign", "trade": "Trade route"}
+LINE_WORDS = {"rift": "Rift"}
 CONTROL_WORDS = {"claimed": "claimed on paper (hatched)", "held": "held (solid)",
                  "taken": "claimed, then taken during this scene"}
 
@@ -553,6 +698,9 @@ def feature_text(f, sc, features, sources, emblems):
         head = f"<strong>{e(f['name'])}.</strong> {e(MOVE_WORDS[f['type']])}: {e(stops)}. {e(f['what'])}{extra}"
         if f.get("uncertain"):
             head += f" <em>Uncertain part of the route:</em> {e(f['uncertain'])}."
+    elif kind == "line":
+        head = (f"<strong>{e(f['name'])}.</strong> {e(LINE_WORDS[f['type']])}, active about {f['active'][0]} "
+                f"to {f['active'][1]} million years ago. {e(f['what'])}")
     else:
         form = f" ({FORM_WORDS[f['form']]})" if f.get("form") else ""
         head = f"<strong>{e(f['name'])}{e(form)}.</strong> {e(f['what'])}"
@@ -626,16 +774,20 @@ def build():
     chapters = [read_json(os.path.join(HISTORY_DIR, "chapters", f"{c}.json")) for c in CHAPTERS]
     states, arcs, users = load_states()
     emblems = load_emblems()
+    plates = load_plates()
     cited = set()
-    problems = check_emblems(emblems, sources, cited) + check(chapters, sources, states, cited, emblems)
+    problems = check_emblems(emblems, sources, cited) + check(chapters, sources, states, cited, emblems, plates)
     if problems:
         sys.exit("Not building the history page:\n  - " + "\n  - ".join(problems))
     for sid in sorted(set(sources) - cited - MAP_SOURCES):
         print(f"Note: source {sid} is not cited by any scene, feature or emblem.")
 
-    data = page_data(chapters, sources, states, arcs, users, load_background(), emblems)
+    data = page_data(chapters, sources, states, arcs, users, load_background(), emblems, plates)
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         template = f.read()
+    for slot in ("{{DATA}}", "{{TRANSCRIPT}}", "{{BUILT}}"):
+        if template.count(slot) != 1:
+            sys.exit(f"{TEMPLATE_PATH} must hold {slot} exactly once, not {template.count(slot)} times")
     # "</" inside the JSON would end the <script> block early
     data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     page = (template.replace("{{DATA}}", data_json)

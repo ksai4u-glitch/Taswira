@@ -412,5 +412,86 @@
     "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
     "checked": "Opened 27 Oct 2026 for the research outline. Green-white-green by Michael Taiwo Akinkunmi, chosen in 1959; his red sun was removed; raised on 1 Oct 1960."
+  },
+  "merdith-2021": {
+    "title": "Extending full-plate tectonic models into deep time: plate model, version 1.2.4",
+    "author": "Andrew S. Merdith, Simon E. Williams, Alan S. Collins, Michael G. Tetley, Jacob A. Mulder, Morgan L. Blades, Alexander Young, Sheree E. Armistead, John Cannon, Sabin Zahirovic and R. Dietmar Müller",
+    "year": "2021 (Earth-Science Reviews 214); data version 1.2.4, 2022",
+    "url": "https://doi.org/10.5281/zenodo.13635864",
+    "kind": "plate model (scientific data)",
+    "rights": "CC BY 4.0 (Zenodo record). Continent outlines simplified and plate positions sampled every 10 million years for this page.",
+    "checked": "Zenodo record (text and file list sent by the maintainer on 27 Oct 2026, as zenodo.org could not be reached from the build machine): CC BY 4.0. The zip Merdith_etal_2021_ESR_v1.2.4.zip matches the record's MD5 (181ab32d1d235a923ee343568731e64a). It holds the rotation file Rotations/1000_0_rotfile_Merdith_etal.rot and the continent outlines Continents/shapes_continents.gpml used here, covering the last 1,000 million years."
+  },
+  "wiki-gondwana": {
+    "title": "Gondwana (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Gondwana",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Assembly c. 800 to 650 Ma (East African Orogeny) to c. 600 to 530 Ma (Brasiliano and Kuunga orogenies); remnants include South America, Africa, Antarctica, Australia, Zealandia, Arabia and India; Pangaea's break-up began with the Central Atlantic magmatic province, peaking c. 200 Ma; Africa and Antarctica began to part c. 180 to 160 Ma; South Atlantic rifting propagated north c. 150 or 140 Ma, spreading c. 135 to 130 Ma, rifting north of the equator after 120.4 Ma until c. 100 to 96 Ma; footprints suggest a land link as late as the early Aptian (c. 120 Ma); 'considerable debate over the exact timing'."
+  },
+  "wiki-benue-trough": {
+    "title": "Benue Trough (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Benue_Trough",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. About 1,000 km north-east from the Bight of Benin to Lake Chad, about 150 km wide, its southern limit the northern edge of the Niger Delta; rifting began at the start of the Cretaceous (145 Ma); intense compression and folding in the Santonian, about 84 Ma; commonly explained as an aulacogen, the inactive arm of a three-armed rift as South America separated from Africa; coal swamps in the Anambra Basin; the Enugu deposits formed in brackish marshes in the Late Campanian to early Maastrichtian, around 70 Ma. No specific date for the start of rifting beyond 'the start of the Cretaceous' (the outline's 118 Ma is not supported)."
+  },
+  "usgs-niger-delta": {
+    "title": "Tertiary Niger Delta (Akata-Agbada) Petroleum System, Niger Delta Province (Open-File Report 99-50-H, chapter A)",
+    "author": "Michele L. W. Tuttle, Michael E. Brownfield and Ronald R. Charpentier, US Geological Survey",
+    "year": "1999",
+    "url": "https://pubs.usgs.gov/of/1999/ofr-99-0050/OF99-50H/ChapterA.html",
+    "kind": "government geological report (secondary)",
+    "rights": "US government work, public domain; facts cited.",
+    "checked": "Opened 27 Oct 2026. The delta proper began developing in the Eocene; from the Eocene to the present it has prograded south-west about 250 km over oceanic crust into the Gulf of Guinea; area some 300,000 km²; sediments over 10 km thick in the depocentre; the Benue-Abakaliki trough is a failed arm of a rift triple junction associated with the opening of the South Atlantic."
+  },
+  "wiki-eocene": {
+    "title": "Eocene (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Eocene",
+    "kind": "encyclopedia (geological time scale)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. The Eocene began about 56 million years ago and ended between 33.9 and 33.4 Ma."
+  },
+  "wiki-african-humid-period": {
+    "title": "African humid period (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/African_humid_period",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 27 Oct 2026. Began about 14,600 to 14,500 years ago and ended 6,000 to 5,000 years ago, apparently in several steps and at different times in different places; Lake Megachad about 330,000 km²; humans gradually abandoned the desert for places with more secure water, such as the Nile valley. It does not say that people moved south towards the Niger or Lake Chad."
+  },
+  "kuper-kropelin-2006": {
+    "title": "Climate-Controlled Holocene Occupation in the Sahara: Motor of Africa's Evolution",
+    "author": "Rudolph Kuper and Stefan Kröpelin, Science 313, 803-807",
+    "year": "2006",
+    "url": "https://www.uni-koeln.de/sfb389/sonstiges/kroepelin/242%202006%20Kuper%20Kroepelin%20Science%20313%20%20(11%20August%202006).pdf",
+    "kind": "peer-reviewed article (archaeology and climate)",
+    "rights": "Cited and described; no text or figures reused.",
+    "checked": "Opened 27 Oct 2026 (author copy at the University of Cologne). About the eastern Sahara (Egypt, Sudan and adjacent Libya and Chad): humid from 8500 to 5300 BCE; regular rains stopped reaching the Egyptian Sahara by 5300 BCE and full desert returned about 3500 BCE; people moved to the Nile valley and ecological refuges, and towards today's Sahel and the Sudanese plains. The authors suggest the process applied to the whole Sahara, an inference rather than a finding for the central and western Sahara."
+  },
+  "cambridge-lake-chad-2019": {
+    "title": "Burial Practices, Settlement and Regional Connections around the Southern Lake Chad Basin, 1500 BC-AD 1500",
+    "author": "chapter 13 in Burials, Migration and Identity in the Ancient Sahara and Beyond, eds M. C. Gatto, D. J. Mattingly, N. Ray and M. Sterry (Cambridge University Press)",
+    "year": "2019",
+    "url": "https://www.cambridge.org/core/books/burials-migration-and-identity-in-the-ancient-sahara-and-beyond/burial-practices-settlement-and-regional-connections-around-the-southern-lake-chad-basin-1500-bcad-1500/7428F6A83AD5127E8A53DB7C813D6CBD",
+    "kind": "book chapter (archaeology); only the summary was read",
+    "rights": "Cited and described; no text reused. The full chapter is not open access.",
+    "checked": "Chapter page opened 27 Oct 2026; only its summary was read. From c. 1800 BC agro-pastoral systems developed and permanent settlements expanded south of Lake Chad, first on Gajiganna Culture sites; environmental change involved periodic population exchanges between the southern Sahara and the Lake Chad Basin."
+  },
+  "wiki-places-deep": {
+    "title": "Coordinates and facts for the deep-time chapter (Wikipedia place articles)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Lake_Chad",
+    "kind": "gazetteer coordinates of today's places",
+    "rights": "Coordinates are facts; no text reused.",
+    "checked": "Opened 27 Oct 2026. Lake Chad 13.099 N 14.533 E (Lake Mega-Chad: four highstands between 39,000 BC and 300 BC, about 400,000 km², over 180 m deep, draining to the Benue through the Mayo Kebbi); Enugu State 6.500 N 7.500 E (coal in the Udi Hills around Enugu, first shipped to Britain by 1914); Abakaliki 6.333 N 8.100 E; Makurdi 7.733 N 8.500 E (on the Benue); the Gongola joins the Benue opposite Numan (page geotag 9.500 N 12.067 E)."
   }
 }
