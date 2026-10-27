@@ -74,7 +74,8 @@ Each has a `description`, a `status` and `disputed` like a feature, a `note`, op
   looked for, and may not have a drawing.
 - A `drawing` names an SVG file in `drawings/`, drawn as a plain silhouette from the description,
   never copied from an object. It may hold shapes only: no scripts or links.
-- An emblem shown in a scene must fit the scene's years.
+- An emblem shown in a scene must be valid for the whole scene, not just overlap its years.
+  Split a scene at an emblem's change of date if necessary.
 
 The panel shows the emblem's description, status and sources under the place, and the text version
 lists every entry, including the ones with nothing documented.
@@ -118,12 +119,17 @@ a `camera`, `sources`, and either `show` (feature ids, with `dim` for ones shown
 `snapshot`. An optional `disputed` adds a note to the scene. On a phone's small map the camera
 is fitted to the scene's places and their labels instead, never closer than the scene's camera.
 
-**Background.** The build picks it from `when.from`. A scene that starts before 1914 sits on a
-plain map of land, lakes and rivers from Natural Earth, with no borders, roads or modern town
-names, because none of those existed then. From 1914 (the year the outline of Nigeria first
-existed) a scene uses today's map tiles, and scenes with places also show today's state borders
-faintly, for reference. The two backgrounds cross-fade when the story crosses that line, as it does
-in the Nok chapter's last scene about the 20th-century digs. See `geo/README.md` for the data.
+**Background.** Historical map scenes default to plain land, lakes and rivers from Natural Earth,
+including scenes after 1914. Today's roads, towns and administrative borders are not a reconstruction
+of any earlier period. The physical geography is also modern and approximate; see `geo/README.md`
+for its limits. Dated features and state snapshots are drawn on top separately.
+
+A scene from 1914 onward may explicitly request `"background": "modern-reference"` to locate places
+on today's map, as the Nok chapter's archaeological rediscovery scene does. It must include a
+non-empty `background_note` explaining that the map is a modern locator, not a historical
+reconstruction. The note appears in the scene panel and text version. Modern reference scenes
+also show today's state borders faintly. Globe scenes and scenes before 1914 may not use this option.
+Leave `background` out (or use `"period"`) for the neutral map.
 
 While a scene plays, things appear over time: a year counter runs from `when.from` to `when.to`,
 the narration appears sentence by sentence, places pulse in one after another, and on state maps
@@ -172,3 +178,4 @@ placed twice, if the number of states does not match `count`, or if a `from` doe
 3. Cite every scene and feature, and record what we may reuse. Sources with unknown rights are cited
    and described, never copied.
 4. The page stays marked "Unreviewed draft" until a historian has looked at it.
+
