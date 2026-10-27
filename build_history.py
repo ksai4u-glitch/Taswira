@@ -51,7 +51,7 @@ PLATES_PATH = os.path.join(HISTORY_DIR, "geo", "plates.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
-CHAPTERS = ["deep", "africa", "nok", "states", "key"]
+CHAPTERS = ["deep", "africa", "nok", "hausa", "states", "key"]
 
 # Modern reference maps are never allowed before this year. Later historical scenes also
 # use the neutral background unless a modern locator is explicitly requested and explained.
@@ -75,6 +75,11 @@ UNSAFE_SVG = re.compile(r"<script|<foreignObject|\son\w+\s*=|href", re.I)
 # Moods set the decoration while a scene with places plays (see history/README.md)
 MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation", "calm", "delta", "greening")
 EFFECTS = ("arc", "pulse", "shatter")
+# Architectural stage sets drawn on the map, and the small glyph each becomes when far out
+SETTINGS = ("royal-cemetery", "stelae-field", "stone-enclosure", "walled-city")
+MONUMENT_TYPES = ("pyramid", "stele", "tower", "walled-city")
+# What a dated beat's date rests on. A Chronicle date says so on screen; oral tradition has no date.
+BEAT_BASES = ("archaeology", "chronicle", "differ", "oral")
 
 # The map vocabulary (see history/README.md). How sure each thing on the map is:
 STATUSES = ("firm", "approx", "disputed", "to-check")
@@ -368,6 +373,75 @@ def snapshot_colours(snapshots):
 
 # --- Checks ------------------------------------------------------------------------
 
+def check_parts(where, m, need, cite):
+    """A setting built from dated parts: each part is natural ground, oral tradition (shown for a
+    while and never dated), or dated by its earliest documented year, with sources."""
+    parts = m.get("parts")
+    need(isinstance(parts, list) and parts, f"{where}: monument parts must be a non-empty list")
+    seen = set()
+    for part in parts if isinstance(parts, list) else []:
+        pid = part.get("id", "?") if isinstance(part, dict) else "?"
+        here = f"{where} part {pid}"
+        need(isinstance(part, dict) and SLUG.match(pid) and pid not in seen, f"{here}: id must be unique, a-z 0-9 -")
+        seen.add(pid)
+        if not isinstance(part, dict):
+            continue
+        at, until = part.get("at"), part.get("until")
+        need(isinstance(at, (int, float)) and at >= 0, f"{here}: at must be seconds into the scene")
+        need(until is None or (isinstance(until, (int, float)) and isinstance(at, (int, float)) and until > at),
+             f"{here}: until must come after at")
+        kinds = [k for k in ("natural", "oral") if part.get(k)] + (["year"] if "year" in part else [])
+        need(len(kinds) == 1, f"{here}: a part is natural, oral, or has a year (exactly one)")
+        if part.get("natural"):
+            continue
+        need(isinstance(part.get("label"), str) and part["label"].strip(), f"{here}: say what the part shows and what its date rests on")
+        cite(here, part.get("sources"))
+        if part.get("oral"):
+            need(until is not None, f"{here}: oral tradition is shown for a while and then leaves (until)")
+        elif "year" in part:
+            need(type(part["year"]) is int and m.get("from", part["year"]) <= part["year"] <= m.get("to", part["year"]),
+                 f"{here}: year must be a whole year inside the monument's from/to")
+
+
+def beat_in_force(beats, at):
+    """The beat on screen at a time in the scene (beats start at zero and are in order)."""
+    current = beats[0]
+    for beat in beats:
+        if beat["at"] <= at:
+            current = beat
+    return current
+
+
+def check_part_times(where, fid, parts, sc, need):
+    """No part of a dated setting may appear before its date: the beat on screen when it appears
+    must be dated no earlier than the part. Oral tradition appears only while an oral-tradition
+    beat is on screen, and has left before the next dated beat."""
+    beats = sc.get("beats", [])
+    duration = sc.get("duration", reading_seconds(sc.get("text", "")))
+    good = (isinstance(beats, list) and beats and all(isinstance(b, dict) and isinstance(b.get("at"), (int, float))
+                                                       and isinstance(b.get("when"), dict) for b in beats))
+    need(good, f"{where}: {fid} has dated parts, so every beat needs a when")
+    if not good:
+        return
+    for part in parts:
+        if not isinstance(part, dict) or not isinstance(part.get("at"), (int, float)):
+            continue
+        here = f"{where}: {fid} part {part.get('id')}"
+        need(part["at"] < duration and (part.get("until") is None or part["until"] <= duration),
+             f"{here} is timed past the end of the scene")
+        shown = beat_in_force(beats, part["at"])["when"]
+        if part.get("natural"):
+            continue
+        if part.get("oral"):
+            need(shown.get("basis") == "oral", f"{here} is oral tradition but appears during a dated beat")
+            later = [b["at"] for b in beats if b["at"] > part["at"] and b["when"].get("basis") != "oral"]
+            need(not later or (isinstance(part.get("until"), (int, float)) and part["until"] <= later[0]),
+                 f"{here} is oral tradition and must leave before the next dated beat")
+        elif type(part.get("year")) is int:
+            need(shown.get("basis") != "oral" and isinstance(shown.get("from"), int) and shown["from"] >= part["year"],
+                 f"{here} appears at {part['at']} s under \"{shown.get('label')}\", before its date ({part['year']})")
+
+
 def check(chapters, sources, states, cited=None, emblems=None, plates=None):
     """Return a list of problems. An empty list means the page can be built.
     Pass a set as cited to collect the ids of the sources that are used."""
@@ -446,10 +520,11 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                     m = f["monument"]
                     need(isinstance(m, dict), f"{where}: monument must be an object")
                     if isinstance(m, dict):
-                        need(m.get("setting") in (None, "royal-cemetery", "stelae-field", "stone-enclosure"),
-                             f"{where}: unsupported architectural setting")
-                        need(m.get("type") in ("pyramid", "stele", "tower") and m.get("note"),
+                        need(m.get("setting") in (None,) + SETTINGS, f"{where}: unsupported architectural setting")
+                        need(m.get("type") in MONUMENT_TYPES and m.get("note"),
                              f"{where}: monument needs a known schematic type and note")
+                        if "parts" in m:
+                            check_parts(where, m, need, cite)
                         need(all(type(m.get(k)) is int for k in ("from", "to")) and m.get("from", 1) <= m.get("to", 0),
                              f"{where}: monument needs documented from/to years")
                         cite(where + " monument", m.get("sources"))
@@ -621,6 +696,39 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
             if isinstance(beats, list) and beats:
                 need(isinstance(beats[0], dict) and beats[0].get("at") == 0,
                      f"{where}: beats must begin at zero")
+            dated = isinstance(beats, list) and any(isinstance(b, dict) and "when" in b for b in beats)
+            last_year = None
+            for beat in beats if dated else []:
+                bw = beat.get("when") if isinstance(beat, dict) else None
+                here = f"{where} beat at {beat.get('at') if isinstance(beat, dict) else '?'}"
+                if not isinstance(bw, dict):
+                    need(False, f"{here}: when one beat is dated, every beat needs a when")
+                    continue
+                basis, label = bw.get("basis"), bw.get("label")
+                need(basis in BEAT_BASES, f"{here}: when.basis must be one of {', '.join(BEAT_BASES)}")
+                need(isinstance(label, str) and label.strip(), f"{here}: when.label missing")
+                label = label if isinstance(label, str) else ""
+                if basis == "oral":
+                    # Oral tradition is labelled as such and never given a date
+                    need("from" not in bw and "to" not in bw and not re.search(r"\d", label),
+                         f"{here}: an oral-tradition beat has no date and no year in its label")
+                    continue
+                need(isinstance(bw.get("from"), int) and isinstance(bw.get("to"), int) and bw["from"] <= bw["to"]
+                     and when.get("from", bw["from"]) <= bw["from"] and bw["to"] <= when.get("to", bw["to"]),
+                     f"{here}: when.from and when.to must be whole years inside the scene's years")
+                if basis == "chronicle":
+                    need("Chronicle" in label, f"{here}: a date reckoned from a chronicle must say so in its label")
+                if basis == "differ":
+                    need("differ" in label.lower(), f"{here}: a disputed date must say that the sources differ")
+                if isinstance(bw.get("from"), int):
+                    need(last_year is None or bw["from"] >= last_year, f"{here}: dated beats must not go back in time")
+                    last_year = bw["from"]
+            appear = sc.get("appear", {})
+            need(isinstance(appear, dict), f"{where}: appear must map places to seconds")
+            for fid, at in (appear if isinstance(appear, dict) else {}).items():
+                need(fid in shown and features.get(fid, {}).get("kind") == "point"
+                     and isinstance(at, (int, float)) and 0 <= at < sc.get("duration", reading_seconds(sc.get("text", ""))),
+                     f"{where}: appear needs places the scene shows and times inside the scene")
             previous_cue = -1
             for cue in sc.get("camera_path", []):
                 valid = isinstance(cue, dict) and placed(cue.get("center"))
@@ -649,6 +757,8 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                 if sc.get("monuments", True) and isinstance(m, dict) and all(type(m.get(k)) is int for k in ("from", "to")):
                     need(m["from"] <= when.get("from", -10**10) <= when.get("to", 10**10) <= m["to"],
                          f"{where}: monument is outside its documented interval")
+                if sc.get("monuments", True) and isinstance(m, dict) and isinstance(m.get("parts"), list):
+                    check_part_times(where, fid, m["parts"], sc, need)
                 e = emblems.get(f.get("emblem"))
                 if e and e["tier"] != "none" and when.get("from") is not None and when.get("to") is not None:
                     need(emblem_fits(e, when), f"{where}: shows the {f['emblem']} emblem outside its documented years")
@@ -900,6 +1010,9 @@ def feature_text(f, sc, features, sources, emblems):
         head = f"<strong>{e(f['name'])}{e(form)}.</strong> {e(f['what'])}"
         if f.get("monument") and sc.get("monuments", True):
             head += f" <em>Schematic:</em> {e(f['monument']['note'])}"
+            dated = [p for p in f["monument"].get("parts", []) if not p.get("natural")]
+            if dated:
+                head += " <em>What appears when:</em> " + "; ".join(e(p["label"]) for p in dated) + "."
         if f.get("reach_note"):
             head += f" <em>Halo or field:</em> {e(f['reach_note'])}"
         how = sc.get("control", {}).get(f["id"])
@@ -929,7 +1042,13 @@ def transcript(chapters, sources, states, emblems=None):
             parts.append(f'<p class="tr-method"><strong>How to read this map.</strong> {e(ch["method"])}</p>')
         features = {f["id"]: f for f in ch.get("features", [])}
         for sc in ch["scenes"]:
-            parts.append(f'<h4>{e(sc["when"]["label"])}: {e(sc["title"])}</h4><p>{e(sc["text"])}</p>')
+            if sc.get("beats") and all("when" in b for b in sc["beats"]):
+                # A scene told in dated beats: each line with the date it rests on
+                parts.append(f'<h4>{e(sc["when"]["label"])}: {e(sc["title"])}</h4><ol class="tr-beats">'
+                             + "".join(f'<li><em>{e(b["when"]["label"])}.</em> {e(b["text"])}</li>' for b in sc["beats"])
+                             + "</ol>")
+            else:
+                parts.append(f'<h4>{e(sc["when"]["label"])}: {e(sc["title"])}</h4><p>{e(sc["text"])}</p>')
             if sc.get("disputed"):
                 parts.append(f'<p class="tr-disputed"><strong>Disputed:</strong> {e(sc["disputed"])}</p>')
             if sc.get("unchecked"):

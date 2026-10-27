@@ -1,0 +1,194 @@
+{
+  "title": "Taswira · The earth becomes a city",
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "clips": [
+    {
+      "chapter": "hausa",
+      "scene": "kano",
+      "duration": 47.6,
+      "contentStart": 3.6,
+      "base": "period",
+      "sources": [
+        "kano-chronicle-wiki",
+        "last-1980-kano-chronicle",
+        "kano-chronicle-gijimasu",
+        "kano-chronicle-yusa",
+        "kano-chronicle-rumfa",
+        "unesco-kano-walls",
+        "wiki-dalla-hill",
+        "archnet-gidan-rumfa",
+        "wiki-kurmi-market",
+        "verskin-maghili",
+        "osiboye-2016-kano-walls",
+        "africanlegacy-kano-walls",
+        "wiki-hausa-architecture"
+      ],
+      "disputed": "Who finished Kano's first wall? The Kano Chronicle credits Yusa (1136–1194 by its reckoning); Nigeria's 2007 UNESCO tentative-list file credits Zamnagawa, in the mid-14th century. The age of the Dala settlement also differs: the 7th century (Iliffe) or the 10th (UNESCO file).",
+      "unchecked": null,
+      "features": [
+        {
+          "id": "kano-city",
+          "name": "Kano · walled city",
+          "location": "Representative point for the old walled city, rounded; not a survey of the walls or gates.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-wiki",
+            "kano-chronicle-rumfa",
+            "kano-chronicle-gijimasu",
+            "unesco-kano-walls",
+            "wiki-dalla-hill",
+            "archnet-gidan-rumfa"
+          ]
+        },
+        {
+          "id": "katsina",
+          "name": "Katsina",
+          "location": "Today's city centre, rounded. The fifteenth-century town's extent is not drawn.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-rumfa"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 47.6,
+      "seconds": 47.6
+    }
+  ],
+  "sources": {
+    "natural-earth": {
+      "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+      "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+      "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+      "url": "https://www.naturalearthdata.com/",
+      "kind": "background map data",
+      "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+      "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+    },
+    "kano-chronicle-wiki": {
+      "title": "Kano Chronicle",
+      "author": "Wikipedia contributors (describes and links H. R. Palmer, \"The Kano Chronicle\", Journal of the Royal Anthropological Institute 38, 1908, pp. 58-98)",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Kano_Chronicle",
+      "kind": "encyclopedia overview of a primary source; used only to describe the Chronicle and Palmer's translation",
+      "rights": "Facts cited; no text reproduced beyond short names.",
+      "checked": "Opened 27 Oct 2026. The Chronicle is a compilation of oral tradition and older documents; the copy Palmer translated (1908) was written down in the late nineteenth century. It gives reigns by length, so calendar years are reckoned by later editors."
+    },
+    "last-1980-kano-chronicle": {
+      "title": "Historical Metaphors in the Kano Chronicle",
+      "author": "Murray Last, History in Africa 7 (1980), pp. 161-178",
+      "year": "1980",
+      "url": "https://www.cambridge.org/core/journals/history-in-africa/article/abs/historical-metaphors-in-the-kano-chronicle/16DE46AEC5C9D1713D0C1F81F301A068",
+      "kind": "peer-reviewed historiography (first page and abstract read; full text paywalled)",
+      "rights": "Argument summarised; no text reproduced.",
+      "checked": "Opened 27 Oct 2026 (first page only). Last reads the Chronicle as intellectual history as well as a source of facts, and argues its first edition was completed in the mid-seventeenth century from materials developed in the fifteenth and sixteenth centuries."
+    },
+    "kano-chronicle-gijimasu": {
+      "title": "Gijimasu (with the Kano Chronicle passage on the first wall)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Gijimasu",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts and short phrases cited.",
+      "checked": "Opened 27 Oct 2026. Reign 1095-1134 by the Chronicle's reckoning. \"They began the wall from Raria\", on to the gate of Bazugar, the water gate and the gate of Adama."
+    },
+    "kano-chronicle-yusa": {
+      "title": "Yusa (Tsaraki) (with the Kano Chronicle passage on the walls)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Yusa_(king)",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts cited.",
+      "checked": "Opened 27 Oct 2026. Reign 1136-1194 by the Chronicle's reckoning; the Chronicle says he completed the walls of Kano. The UNESCO tentative-list file instead credits Zamnagawa in the mid-14th century."
+    },
+    "kano-chronicle-rumfa": {
+      "title": "Muhammad Rumfa (with the Kano Chronicle passage on his reign, Palmer 1908)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Muhammad_Rumfa",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts and short phrases cited.",
+      "checked": "Opened 27 Oct 2026. In order: he built the Dakin Rimfa; the next year he entered his house; the next year he extended the walls from Kofan Dagachi towards Kofan Mata, on to Kofan Gertawasa and Kofan Kawayi, and from Kofan Naissa to Kofan Kansakali; he established the Kurmi market. First war with Katsina, 11 years, neither side winning. Ruled 37 years (1463-1499 by later reckoning). The Chronicle itself gives no calendar years and does not name al-Maghili."
+    },
+    "unesco-kano-walls": {
+      "title": "Ancient Kano City Walls and Associated Sites (Tentative List)",
+      "author": "UNESCO World Heritage Centre; submitted by Nigeria's National Commission for Museums and Monuments, 8 Oct 2007",
+      "year": "2007",
+      "url": "https://whc.unesco.org/en/tentativelists/5171/",
+      "kind": "heritage nomination file (the state party's own description, not yet evaluated)",
+      "rights": "Facts cited; no text or images reproduced.",
+      "checked": "Opened 27 Oct 2026. Dala hill: settlement site \"dating back to the 10th century AD\". Wall foundation laid by Gijimasu 1095-1134; completed in the middle of the 14th century under Zamnagawa; extended to its present position in the 16th century. Gates as old as the walls. Kurmi among the oldest markets. Palace built by Muhammadu Rumfa (1463-1499)."
+    },
+    "wiki-dalla-hill": {
+      "title": "Dalla Hill",
+      "author": "Wikipedia contributors (citing Iliffe, Africans: The History of a Continent, 2007, and the Kano Chronicle)",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Dalla_Hill",
+      "kind": "encyclopedia article citing a scholarly survey; secondary",
+      "rights": "Facts cited.",
+      "checked": "Opened 27 Oct 2026. An iron-working community on the hill from about the seventh century (Iliffe). The Kano Chronicle remembers Barbushe as keeper of the Tsumburbura shrine on Dala: oral tradition, undated."
+    },
+    "archnet-gidan-rumfa": {
+      "title": "Gidan Rumfa",
+      "author": "ArchNet (Aga Khan Trust for Culture and MIT Libraries), with bibliography (Dmochowski 1990, Saad 1981)",
+      "year": "checked 2026-10-27",
+      "url": "https://archnet.org/sites/3778",
+      "kind": "architectural history database entry",
+      "rights": "Facts cited; no images reproduced.",
+      "checked": "Opened 27 Oct 2026. Built in the fifteenth century by Sarkin Rumfa, about 1480; its grounds occupy the highest space in Kano. Many gates were originally circular entrance vestibules and became rectangular in an early twentieth-century change; the bold painted designs probably date from the 1930s and 1940s. Gates set up a hierarchy of space through a series of courtyards (processional access)."
+    },
+    "wiki-kurmi-market": {
+      "title": "Kurmi Market",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Kurmi_Market",
+      "kind": "encyclopedia article; secondary",
+      "rights": "Facts cited.",
+      "checked": "Opened 27 Oct 2026. Founded under Muhammad Rumfa in the fifteenth century and still trading in Kano's old city. Its later slave market is not part of this scene."
+    },
+    "verskin-maghili": {
+      "title": "al-Maghili",
+      "author": "Alan Verskin, Encyclopaedia of Islam, Third Edition (2019), author's copy",
+      "year": "2019",
+      "url": "https://www.academia.edu/39085373",
+      "kind": "scholarly reference work",
+      "rights": "Facts cited; no text reproduced.",
+      "checked": "Opened 27 Oct 2026. Muhammad al-Maghili wrote Taj al-din, advice on the duties of kings, for Muhammad Rumfa of Kano (translated by Bedri and Starratt, Kano Studies, 1974)."
+    },
+    "osiboye-2016-kano-walls": {
+      "title": "A Survey of Styles and Functions of Kano Ancient City Wall and Gates",
+      "author": "O. O. Osiboye, Ahmadu Bello University, Zaria",
+      "year": "2016",
+      "url": "https://kubanni.abu.edu.ng/items/1d39d15a-412e-4a83-a15f-d126ac4d13c3/full",
+      "kind": "university thesis (record and abstract read)",
+      "rights": "Facts cited.",
+      "checked": "Opened 27 Oct 2026 (record page). The survey still identifies Kofar Kansakali and Kofar Na'isa among Kano's gates. Gate positions for the fifteenth century are not established here; the setting places gates schematically."
+    },
+    "africanlegacy-kano-walls": {
+      "title": "Kano city walls",
+      "author": "African Legacy project, Bournemouth University",
+      "year": "2001",
+      "url": "https://csweb.bmth.ac.uk/africanlegacy/kano_walls.htm",
+      "kind": "university heritage project page; secondary",
+      "rights": "Facts cited; no images reproduced.",
+      "checked": "Opened 27 Oct 2026. The walls are built of sun-dried earth blocks called tubali, described as pear-shaped."
+    },
+    "wiki-hausa-architecture": {
+      "title": "Hausa architecture",
+      "author": "Wikipedia contributors (after John Moughtin, Hausa Architecture, 1985)",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Hausa_architecture",
+      "kind": "encyclopedia article summarising an architectural study; secondary",
+      "rights": "Facts cited.",
+      "checked": "Opened 27 Oct 2026. Laterite earth as the main building material; walls of tubali; city walls with a sloping profile, crenellated crest and loopholes."
+    }
+  },
+  "status": "Unreviewed draft; rights and historian review required before publication",
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 57.6,
+  "frames": 3456
+}
