@@ -410,10 +410,11 @@ function periodBackground() {
 const map = L.map("map", { zoomSnap: 0, minZoom: 5, maxZoom: 11, attributionControl: true })
   .setView([9.1, 8.6], 6);
 const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
-L.tileLayer(ESRI + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
-  maxZoom: 16, attribution: "&copy; Esri, HERE, Garmin, OpenStreetMap | Historical background: Natural Earth"
-    + " | Borders: GRID3 via geoBoundaries (CC BY 4.0)",
-}).addTo(map);
+// Keep the modern layer detached until a labelled modern-reference scene needs it.
+const modernTiles = L.tileLayer(ESRI + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+  maxZoom: 16, attribution: "&copy; Esri, HERE, Garmin, OpenStreetMap",
+});
+map.attributionControl.addAttribution("Historical background: Natural Earth | Borders: GRID3 via geoBoundaries (CC BY 4.0)");
 periodBackground();
 const svg = L.svg({ padding: 0.5 }).addTo(map);   // one SVG layer, so striped fills can use <pattern>
 const sceneLayer = L.layerGroup().addTo(map);
@@ -1099,6 +1100,8 @@ function render({ animate = true, announce = false } = {}) {
          rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
          card: { now: null }, lower: { now: null }, shownCount: { now: null } };
   $("mapwrap").dataset.base = sc.base;
+  if (sc.base === "modern") modernTiles.addTo(map);
+  else modernTiles.remove();
   if (sc.snapshot) drawSnapshot(ch, sc);
   else if (sc.base !== "deep") drawPlaces(ch, sc);
   drawEffects(ch, sc);
