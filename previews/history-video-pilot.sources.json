@@ -1,8 +1,91 @@
 {
   "width": 1920,
   "height": 1080,
-  "fps": 30,
+  "fps": 60,
   "clips": [
+    {
+      "chapter": "deep",
+      "scene": "gondwana",
+      "duration": 25.6,
+      "contentStart": 3.6,
+      "base": "deep",
+      "sources": [
+        "wiki-gondwana",
+        "merdith-2021"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "africa",
+          "name": "Africa",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "south-america",
+          "name": "South America",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "antarctica",
+          "name": "Antarctica",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "india",
+          "name": "India",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "australia",
+          "name": "Australia",
+          "location": "Today's outline, moved by the plate model.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021",
+            "wiki-gondwana"
+          ]
+        },
+        {
+          "id": "nigeria-today",
+          "name": "Where Nigeria is today",
+          "location": "A point in central Nigeria, moved with its plate.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "merdith-2021"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 5,
+      "seconds": 5
+    },
     {
       "chapter": "deep",
       "scene": "south-atlantic",
@@ -50,8 +133,8 @@
         }
       ],
       "from": 0,
-      "to": 6,
-      "seconds": 6
+      "to": 5,
+      "seconds": 5
     },
     {
       "chapter": "nok",
@@ -100,8 +183,8 @@
         }
       ],
       "from": 0,
-      "to": 6,
-      "seconds": 6
+      "to": 5,
+      "seconds": 5
     },
     {
       "chapter": "nok",
@@ -140,14 +223,14 @@
         }
       ],
       "from": 0,
-      "to": 6,
-      "seconds": 6
+      "to": 5,
+      "seconds": 5
     }
   ],
   "sources": {
     "merdith-2021": {
       "title": "Extending full-plate tectonic models into deep time: plate model, version 1.2.4",
-      "author": "Andrew S. Merdith, Simon E. Williams, Alan S. Collins, Michael G. Tetley, Jacob A. Mulder, Morgan L. Blades, Alexander Young, Sheree E. Armistead, John Cannon, Sabin Zahirovic and R. Dietmar Müller",
+      "author": "Andrew S. Merdith, Simon E. Williams, Alan S. Collins, Michael G. Tetley, Jacob A. Mulder, Morgan L. Blades, Alexander Young, Sheree E. Armistead, John Cannon, Sabin Zahirovic and R. Dietmar M\u00fcller",
       "year": "2021 (Earth-Science Reviews 214); data version 1.2.4, 2022",
       "url": "https://doi.org/10.5281/zenodo.13635864",
       "kind": "plate model (scientific data)",
@@ -228,6 +311,8 @@
     }
   },
   "status": "Unreviewed draft; rights and historian review required before publication",
-  "duration": 21,
-  "frames": 630
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 23,
+  "frames": 1380,
+  "viewing_copy": "Compressed H.264; green credits card rendered with renderCredits(page); no audio."
 }
