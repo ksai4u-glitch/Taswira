@@ -1,0 +1,553 @@
+{
+  "id": "hausa",
+  "title": "Hausa cities: walls, markets and kings",
+  "period": "about 1000 to 1500 CE",
+  "intro": "Walled towns grew across the Hausa lands of today's northern Nigeria. This chapter begins with Kano. Most of its early dates come from the Kano Chronicle, a history compiled from older traditions. It counts reigns by their length, so its years are a later reckoning and are labelled that way. The copy translated in 1908 was written down in the late nineteenth century; the historian Murray Last argues its first edition dates from the mid-1600s.",
+  "features": [
+    {
+      "id": "kano-city",
+      "kind": "point",
+      "name": "Kano · walled city",
+      "short": "Kano",
+      "coordinates": [
+        12.0,
+        8.52
+      ],
+      "what": "Kano grew around Dala hill. By the Kano Chronicle's reckoning its first wall was begun between 1095 and 1134, and Muhammad Rumfa (1463–1499) built a palace, extended the walls through named gates and founded Kurmi market. The palace site, Gidan Rumfa, is still the emir's residence, and Kurmi still trades.",
+      "evidence": "The Kano Chronicle (compiled from older traditions; Palmer's 1908 translation), Nigeria's 2007 heritage file, archaeology cited by Iliffe, and architectural history",
+      "location": "Representative point for the old walled city, rounded; not a survey of the walls or gates.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "kano-chronicle-wiki",
+        "kano-chronicle-rumfa",
+        "kano-chronicle-gijimasu",
+        "unesco-kano-walls",
+        "wiki-dalla-hill",
+        "archnet-gidan-rumfa"
+      ],
+      "monument": {
+        "type": "walled-city",
+        "setting": "walled-city",
+        "from": 900,
+        "to": 1499,
+        "note": "Original schematic stage set of an earth-built city, not a survey or reconstruction. Each part appears at its own date (listed under What appears when). The Chronicle names the gates but does not place them, so gate positions, wall lines, the palace footprint and the market are schematic; the walls are drawn as sun-dried earth (tubali) on a sloping profile with a crenellated crest. Nothing later is added: no present-day palace decoration (mostly 1930s–40s), no 1951 mosque or minaret, no 16th-century wall line, no emblem or bridge.",
+        "sources": [
+          "kano-chronicle-rumfa",
+          "kano-chronicle-gijimasu",
+          "unesco-kano-walls",
+          "archnet-gidan-rumfa",
+          "africanlegacy-kano-walls",
+          "wiki-hausa-architecture"
+        ],
+        "parts": [
+          {
+            "id": "ground",
+            "at": 1.0,
+            "natural": true
+          },
+          {
+            "id": "ground-lines",
+            "at": 1.3,
+            "natural": true
+          },
+          {
+            "id": "dala",
+            "at": 1.5,
+            "natural": true,
+            "label": "Dala hill"
+          },
+          {
+            "id": "goron-dutse",
+            "at": 2.0,
+            "natural": true,
+            "label": "Goron Dutse hill"
+          },
+          {
+            "id": "dala-iron",
+            "at": 2.8,
+            "year": 900,
+            "label": "Iron working on Dala: from the 7th century (Iliffe) or the 10th (UNESCO file); shown from the later date",
+            "sources": [
+              "wiki-dalla-hill",
+              "unesco-kano-walls"
+            ]
+          },
+          {
+            "id": "tradition",
+            "at": 5.4,
+            "until": 9.4,
+            "oral": true,
+            "label": "Barbushe and the shrine on Dala: oral tradition in the Kano Chronicle, shown without a date and without his likeness or rites",
+            "sources": [
+              "wiki-dalla-hill"
+            ]
+          },
+          {
+            "id": "first-wall",
+            "at": 10.4,
+            "year": 1095,
+            "label": "First wall begun under Gijimasu, 1095–1134 (Kano Chronicle reckoning)",
+            "sources": [
+              "kano-chronicle-gijimasu",
+              "unesco-kano-walls"
+            ]
+          },
+          {
+            "id": "gate-bazugar",
+            "at": 11.6,
+            "year": 1095,
+            "label": "Gate of Bazugar, named in the Chronicle; position schematic",
+            "sources": [
+              "kano-chronicle-gijimasu"
+            ]
+          },
+          {
+            "id": "gate-water",
+            "at": 12.4,
+            "year": 1095,
+            "label": "The water gate, named in the Chronicle; position schematic",
+            "sources": [
+              "kano-chronicle-gijimasu"
+            ]
+          },
+          {
+            "id": "gate-adama",
+            "at": 13.2,
+            "year": 1095,
+            "label": "Gate of Adama, named in the Chronicle; position schematic",
+            "sources": [
+              "kano-chronicle-gijimasu"
+            ]
+          },
+          {
+            "id": "first-wall-differs",
+            "at": 16.6,
+            "until": 21.0,
+            "year": 1136,
+            "label": "Rest of the first wall, dashed while its date is in question: Yusa, 1136–1194 (Chronicle) or Zamnagawa, mid-14th century (UNESCO file)",
+            "sources": [
+              "kano-chronicle-yusa",
+              "unesco-kano-walls"
+            ]
+          },
+          {
+            "id": "first-wall-finished",
+            "at": 21.0,
+            "year": 1350,
+            "label": "First wall complete by the mid-14th century on either account",
+            "sources": [
+              "kano-chronicle-yusa",
+              "unesco-kano-walls"
+            ]
+          },
+          {
+            "id": "palace",
+            "at": 21.8,
+            "year": 1463,
+            "label": "Rumfa's palace: the Chronicle's Dakin Rimfa, on the site of today's Gidan Rumfa (about 1480, ArchNet); footprint schematic, no later decoration",
+            "sources": [
+              "kano-chronicle-rumfa",
+              "archnet-gidan-rumfa",
+              "unesco-kano-walls"
+            ]
+          },
+          {
+            "id": "palace-courts",
+            "at": 23.0,
+            "year": 1463,
+            "label": "Courts in sequence behind the gate (processional plan, ArchNet)",
+            "sources": [
+              "archnet-gidan-rumfa"
+            ]
+          },
+          {
+            "id": "palace-gate",
+            "at": 23.8,
+            "year": 1463,
+            "label": "Round gatehouse: the older form before the early 20th century (ArchNet)",
+            "sources": [
+              "archnet-gidan-rumfa"
+            ]
+          },
+          {
+            "id": "rumfa-wall-1",
+            "at": 26.2,
+            "year": 1463,
+            "label": "Rumfa's wall from Kofar Dagachi towards Kofar Mata (Kano Chronicle)",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "gate-dagachi",
+            "at": 26.4,
+            "year": 1463,
+            "label": "Kofar Dagachi, named in the Chronicle; position schematic",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "gate-mata",
+            "at": 27.4,
+            "year": 1463,
+            "label": "Kofar Mata, named in the Chronicle; position schematic",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "rumfa-wall-2",
+            "at": 27.6,
+            "year": 1463,
+            "label": "On to Kofar Gertawasa and Kofar Kawayi (Kano Chronicle)",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "gate-gertawasa",
+            "at": 28.4,
+            "year": 1463,
+            "label": "Kofar Gertawasa, named in the Chronicle; position schematic",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "gate-kawayi",
+            "at": 29.0,
+            "year": 1463,
+            "label": "Kofar Kawayi, named in the Chronicle; position schematic",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "wall-undescribed",
+            "at": 29.2,
+            "year": 1463,
+            "label": "Dotted: the stretch between Kofar Kawayi and Kofar Na'isa, which the Chronicle does not describe",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "rumfa-wall-3",
+            "at": 29.4,
+            "year": 1463,
+            "label": "From Kofar Na'isa to Kofar Kansakali (Kano Chronicle)",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "gate-naisa",
+            "at": 29.6,
+            "year": 1463,
+            "label": "Kofar Na'isa, named in the Chronicle and still identified in 2016; position schematic",
+            "sources": [
+              "kano-chronicle-rumfa",
+              "osiboye-2016-kano-walls"
+            ]
+          },
+          {
+            "id": "gate-kansakali",
+            "at": 30.4,
+            "year": 1463,
+            "label": "Kofar Kansakali, named in the Chronicle and still identified in 2016; position schematic",
+            "sources": [
+              "kano-chronicle-rumfa",
+              "osiboye-2016-kano-walls"
+            ]
+          },
+          {
+            "id": "kurmi",
+            "at": 31.4,
+            "year": 1463,
+            "label": "Kurmi market, founded by Rumfa (Kano Chronicle); open ground, no goods named",
+            "sources": [
+              "kano-chronicle-rumfa",
+              "wiki-kurmi-market"
+            ]
+          },
+          {
+            "id": "kurmi-stalls-1",
+            "at": 32.0,
+            "year": 1463,
+            "label": "Market stalls: simple shelters, number and form schematic",
+            "sources": [
+              "wiki-kurmi-market"
+            ]
+          },
+          {
+            "id": "kurmi-stalls-2",
+            "at": 32.6,
+            "year": 1463,
+            "label": "Market stalls: simple shelters, number and form schematic",
+            "sources": [
+              "wiki-kurmi-market"
+            ]
+          },
+          {
+            "id": "trade-roads",
+            "at": 33.2,
+            "year": 1463,
+            "label": "Roads to the gates: schematic",
+            "sources": [
+              "kano-chronicle-rumfa"
+            ]
+          },
+          {
+            "id": "north-road",
+            "at": 35.2,
+            "year": 1463,
+            "label": "Road from the north: schematic",
+            "sources": [
+              "verskin-maghili"
+            ]
+          },
+          {
+            "id": "manuscript",
+            "at": 35.8,
+            "year": 1463,
+            "label": "Al-Maghili's Taj al-din, advice on kingship written for Rumfa (Verskin 2019)",
+            "sources": [
+              "verskin-maghili"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "katsina",
+      "kind": "point",
+      "name": "Katsina",
+      "coordinates": [
+        12.99,
+        7.6
+      ],
+      "what": "Another Hausa city, north-west of Kano. The Kano Chronicle records that Kano's first war with Katsina came in Rumfa's reign and lasted eleven years, with neither side winning.",
+      "evidence": "Kano Chronicle (Palmer 1908)",
+      "location": "Today's city centre, rounded. The fifteenth-century town's extent is not drawn.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "kano-chronicle-rumfa"
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "kano",
+      "title": "The earth becomes a city",
+      "when": {
+        "from": 1000,
+        "to": 1499,
+        "label": "About 1000–1499 · archaeology and the Kano Chronicle"
+      },
+      "camera": {
+        "center": [
+          12.25,
+          8.52
+        ],
+        "zoom": 8.5
+      },
+      "camera_path": [
+        {
+          "at": 1.2,
+          "center": [
+            12.25,
+            8.52
+          ],
+          "zoom": 8.62,
+          "dur": 37
+        },
+        {
+          "at": 39.4,
+          "center": [
+            12.6,
+            8.1
+          ],
+          "zoom": 6.4,
+          "dur": 3.8
+        }
+      ],
+      "show": [
+        "kano-city",
+        "katsina"
+      ],
+      "appear": {
+        "katsina": 42.2
+      },
+      "dim": [],
+      "text": "Before Kano was a city, it was a hill. People worked iron on Dala. The Kano Chronicle remembers Barbushe, keeper of a shrine on the hill. That memory is tradition, and it has no date. By the Chronicle's reckoning, King Gijimasu began a wall, gate by gate. Who finished it? The Chronicle says Yusa, in the 1100s. Nigeria's heritage file says Zamnagawa, in the 1300s. Then Muhammad Rumfa. The Chronicle says he built a palace and moved in the next year. The year after, he pushed the walls outward, gate by gate. He founded a market, Kurmi, which still trades today. A scholar, al-Maghili, wrote Rumfa a book on how a king should rule. A walled city needs more than walls. Who lived inside them?",
+      "sources": [
+        "kano-chronicle-wiki",
+        "last-1980-kano-chronicle",
+        "kano-chronicle-gijimasu",
+        "kano-chronicle-yusa",
+        "kano-chronicle-rumfa",
+        "unesco-kano-walls",
+        "wiki-dalla-hill",
+        "archnet-gidan-rumfa",
+        "wiki-kurmi-market",
+        "verskin-maghili",
+        "osiboye-2016-kano-walls",
+        "africanlegacy-kano-walls",
+        "wiki-hausa-architecture"
+      ],
+      "disputed": "Who finished Kano's first wall? The Kano Chronicle credits Yusa (1136–1194 by its reckoning); Nigeria's 2007 UNESCO tentative-list file credits Zamnagawa, in the mid-14th century. The age of the Dala settlement also differs: the 7th century (Iliffe) or the 10th (UNESCO file).",
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 44,
+      "scale": "Hausa cities · Kano",
+      "focus_label": "Kano · earth-built city",
+      "beats": [
+        {
+          "at": 0,
+          "text": "Before Kano was a city, it was a hill. People worked iron on Dala.",
+          "pose": 1,
+          "focus": [
+            166,
+            182,
+            1.55
+          ],
+          "when": {
+            "from": 1000,
+            "to": 1000,
+            "label": "Before about 1000",
+            "basis": "archaeology"
+          }
+        },
+        {
+          "at": 5,
+          "text": "The Kano Chronicle remembers Barbushe, keeper of a shrine on the hill. That memory is tradition, and it has no date.",
+          "pose": 6,
+          "focus": [
+            166,
+            168,
+            1.45
+          ],
+          "when": {
+            "label": "Oral tradition · no date",
+            "basis": "oral"
+          }
+        },
+        {
+          "at": 9.8,
+          "text": "By the Chronicle's reckoning, King Gijimasu began a wall, gate by gate.",
+          "pose": 1,
+          "focus": [
+            180,
+            168,
+            1.25
+          ],
+          "when": {
+            "from": 1095,
+            "to": 1134,
+            "label": "1095–1134 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 16,
+          "text": "Who finished it? The Chronicle says Yusa, in the 1100s. Nigeria's heritage file says Zamnagawa, in the 1300s.",
+          "pose": 3,
+          "focus": [
+            182,
+            190,
+            1.15
+          ],
+          "when": {
+            "from": 1136,
+            "to": 1350,
+            "label": "Finished when? Sources differ",
+            "basis": "differ"
+          }
+        },
+        {
+          "at": 21,
+          "text": "Then Muhammad Rumfa. The Chronicle says he built a palace and moved in the next year.",
+          "pose": 5,
+          "focus": [
+            266,
+            236,
+            1.45
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 25.8,
+          "text": "The year after, he pushed the walls outward, gate by gate.",
+          "pose": 1,
+          "focus": [
+            226,
+            208,
+            0.9
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 31,
+          "text": "He founded a market, Kurmi, which still trades today.",
+          "pose": 5,
+          "focus": [
+            190,
+            236,
+            1.3
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 35,
+          "text": "A scholar, al-Maghili, wrote Rumfa a book on how a king should rule.",
+          "pose": 3,
+          "focus": [
+            250,
+            190,
+            1.05
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 39.4,
+          "text": "A walled city needs more than walls. Who lived inside them?",
+          "pose": 0,
+          "focus": [
+            226,
+            200,
+            0.85
+          ],
+          "when": {
+            "from": 1499,
+            "to": 1499,
+            "label": "By 1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        }
+      ]
+    }
+  ]
+}

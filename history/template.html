@@ -185,6 +185,11 @@
   .key svg { flex: none; overflow: visible; }
   .c-text .line { transition: opacity .6s; }
   .c-text .line.waiting { opacity: 0; }
+  .c-beat-when { font: 600 11px/1.4 system-ui,sans-serif; letter-spacing: .06em; color: #d4b57a; }
+  /* Names inside a city setting stay readable when the setting is small; gate names step out */
+  .set-svg text { transform-box: fill-box; transform-origin: center; transform: scale(var(--name-k, 1)); }
+  .set-svg[data-small="true"] text.minor { display: none; }
+  .set-svg text[data-cut] { visibility: hidden; }
   .c-deco, .c-base { font-size: 12px; color: var(--text-muted); }
 
   /* Cinematic layer: decoration on top of the map, switched off by the Effects button */
@@ -862,15 +867,81 @@ function monumentSvg(type) {
   const shape = {
     pyramid: '<path d="M12 81 37 17 57 81Z" fill="#d4b57a"/><path d="M37 17 68 73 57 81Z" fill="#806742"/><path d="M52 81V65h13v16" fill="#ad8c57"/>',
     stele: '<path d="M30 86V14h20v72Z" fill="#d4b57a"/><path d="M50 14 58 20v66h-8Z" fill="#806742"/>' + Array.from({length:7},(_,i)=>'<path d="M34 '+(24+i*8)+'h12" stroke="#806742" stroke-width="3"/>').join(''),
-    tower: '<path d="M8 82V61Q37 48 69 61v21" fill="none" stroke="#a88a58" stroke-width="7"/><path d="M30 80 36 37h9l8 43Z" fill="#d4b57a"/><path d="M36 37h9l8 43H43Z" fill="#9b7e50"/>'
+    tower: '<path d="M8 82V61Q37 48 69 61v21" fill="none" stroke="#a88a58" stroke-width="7"/><path d="M30 80 36 37h9l8 43Z" fill="#d4b57a"/><path d="M36 37h9l8 43H43Z" fill="#9b7e50"/>',
+    'walled-city': '<ellipse cx="38" cy="68" rx="37" ry="16" fill="#2b3a2a"/><path d="M14 64C18 46 28 34 40 32S58 44 62 64Z" fill="#53704f"/><path d="M40 32C50 34 58 46 62 64H43C45 52 43 41 40 32Z" fill="#3e5541"/><ellipse cx="38" cy="64" rx="33" ry="14" fill="none" stroke="#8f5634" stroke-width="8"/><ellipse cx="38" cy="61" rx="33" ry="14" fill="none" stroke="#c98a57" stroke-width="4"/><ellipse cx="38" cy="61" rx="33" ry="14" fill="none" stroke="#e7b37b" stroke-width="1.6" stroke-dasharray="1.4 3"/><path d="M30 84v-11l8-5 8 5v11Z" fill="#c98a57"/><path d="M38 68l8 5v11h-8Z" fill="#8a5434"/><path d="M34.5 84v-5.5a3.5 3.5 0 0 1 7 0v5.5Z" fill="#1a120c"/>'
   }[type];
   return '<svg viewBox="0 0 76 96" aria-hidden="true">'+shape+'<path d="M8 86h60" stroke="#d4b57a" stroke-width="1" opacity=".4"/></svg>';
 }
+// An earth-built city whose parts come from the chapter file, each with its own time and date
+// (monument.parts). Drawings are keyed by part id; the layout is schematic, never a survey.
+// Names sit in a layer above every part, so a later wall never covers an earlier name.
+function cityParts() {
+  const line=(d,c='#d4b57a',w=2,extra='')=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"${extra}/>`;
+  // Sun-dried earth: a dark footing, a face of tubali courses, a lit top and a crenellated crest
+  const earth=(d,w=8)=>'<g transform="translate(0,6)">'+line(d,'#101d17',w+7)+line(d,'url(#set-earth-face)',w+3)+'</g>'+line(d,'#b7794a',w*.6)+line(d,'#e7b37b',2.2,' stroke-dasharray="1.3 3.4"');
+  const gate=(x,y)=>`<path d="M${x-6.5} ${y+4}v-12l6.5-4 6.5 4v12Z" fill="#c98a57"/><path d="M${x} ${y-12}l6.5 4v12h-6.5Z" fill="#8a5434"/><path d="M${x-3} ${y+4}v-5.5a3 3 0 0 1 6 0v5.5Z" fill="#1a120c"/>`;
+  const hill=(x,y,w,h,shade)=>`<path d="M${x-w} ${y}C${x-w*.8} ${y-h*.45} ${x-w*.55} ${y-h*.8} ${x-w*.2} ${y-h*.95}C${x} ${y-h*1.05} ${x+w*.3} ${y-h*.9} ${x+w*.5} ${y-h*.7}C${x+w*.75} ${y-h*.45} ${x+w*.9} ${y-h*.2} ${x+w} ${y}Z" fill="#53704f"/>`
+    +`<path d="M${x-w*.05} ${y-h}C${x+w*.3} ${y-h*.9} ${x+w*.5} ${y-h*.7} ${x+w*.62} ${y-h*.55}C${x+w*.78} ${y-h*.38} ${x+w*.9} ${y-h*.2} ${x+w} ${y}H${x+w*.12}C${x+w*.18} ${y-h*.4} ${x+w*.05} ${y-h*.75} ${x-w*.05} ${y-h}Z" fill="${shade}"/>`
+    +line(`M${x-w*.5} ${y-h*.5}l${w*.18} ${-h*.08}M${x+w*.3} ${y-h*.42}l${w*.2} ${h*.1}`,'#8ea27f',.8,' opacity=".55"');
+  const stall=(x,y)=>line(`M${x-4} ${y+3}v-6M${x+4} ${y+3}v-6`,'#5b4128',1.1)+`<path d="M${x-6} ${y-3} ${x} ${y-7} ${x+6} ${y-3} ${x} ${y+1}Z" fill="#c9a46a" stroke="#7d5a33" stroke-width=".6"/>`;
+  const p=(id,body,o={})=>[id,{body,base:o.base??235,motion:o.motion??'rise',dur:o.dur??1.15,path:o.path,names:o.names||[]}];
+  return Object.fromEntries([
+    p('ground',`<ellipse cx="220" cy="206" rx="210" ry="90" fill="url(#set-ground)"/>`,{motion:'fade',dur:1.4}),
+    // Savanna grass tufts, scattered (a fixed pattern, not a survey of vegetation)
+    p('ground-lines',line([[52,214],[70,186],[96,232],[118,262],[146,286],[214,128],[268,124],[372,152],[404,184],[396,250],[338,284],[230,292],[60,250],[300,200],[226,214],[124,232]]
+      .map(([x,y])=>`M${x-3} ${y}l2-4M${x} ${y}v-5M${x+3} ${y}l-2-4`).join(''),'#7f9a6c',.7,' opacity=".55"'),{motion:'fade',dur:1.2}),
+    p('dala',hill(166,204,50,42,'#3e5541'),{base:204,names:[[150,198,'Dala']]}),
+    p('goron-dutse',hill(332,228,30,30,'#3c523f'),{base:228,names:[[332,192,'Goron Dutse']]}),
+    p('dala-iron',`<ellipse cx="190" cy="190" rx="12" ry="7" fill="url(#set-glow)"/><ellipse cx="190" cy="195" rx="6.5" ry="2.4" fill="#2b1d12"/><path d="M184 195q6-9 12 0" fill="#7a4a2a"/>`+line('M190 186c-3-5 3-8 0-13','#c9b18a',.9,' opacity=".6"'),{base:196}),
+    p('tradition',`<ellipse cx="166" cy="168" rx="34" ry="14" fill="url(#set-glow-gold)"/><rect x="104" y="114" width="124" height="98" rx="10" fill="none" stroke="#d4b57a" stroke-width="1.4" stroke-dasharray="5 4"/>`,{motion:'fade',dur:.7,names:[[166,108,'Oral tradition · Kano Chronicle',9],[166,226,'no date',8]]}),
+    p('first-wall',earth('M95.3 173.4A84 38 0 0 1 260.7 173.4'),{base:166,motion:'draw',dur:2.6}),
+    p('gate-bazugar',gate(106.8,159.9),{base:164,names:[[94,146,'Bazugar gate',8.5,true]]}),
+    p('gate-water',gate(149.3,144.3),{base:148,names:[[149,130,'water gate',8.5,true]]}),
+    p('gate-adama',gate(206.7,144.3),{base:148,names:[[212,130,'Adama gate',8.5,true]]}),
+    p('first-wall-differs',line('M260.7 173.4A84 38 0 1 1 95.3 173.4','#e7b37b',3,' stroke-dasharray="6 5"'),{motion:'draw',dur:1.8,names:[[178,234,'finished: sources differ',8.5]]}),
+    p('first-wall-finished',earth('M260.7 173.4A84 38 0 1 1 95.3 173.4'),{base:218,motion:'draw',dur:1.2}),
+    p('palace',earth('M232 236 282 226 300 244 250 254Z',5.5),{base:254,names:[[268,269,"Rumfa's palace",8]]}),
+    p('palace-courts',line('M237.9 241.9 257.9 237.9M267.9 235.9 287.9 231.9M243.9 247.9 263.9 243.9M273.9 241.9 293.9 237.9','#b7794a',3)+line('M275 249 257 231','#e7b37b',.9,' stroke-dasharray="2 3"'),{base:246,motion:'draw',dur:1.2}),
+    p('palace-gate',`<path d="M268 251v-10h14v10Z" fill="#c98a57"/><ellipse cx="275" cy="241" rx="7" ry="2.6" fill="#e7b37b"/><ellipse cx="275" cy="251" rx="7" ry="2.6" fill="#8a5434"/><path d="M272.4 253v-6a2.6 2.6 0 0 1 5.2 0v6Z" fill="#1a120c"/>`,{base:253}),
+    p('rumfa-wall-1',earth('M240.4 154.6C270 146 320 140 352 156C372 168 384 186 384 204'),{base:204,motion:'draw',dur:1.5}),
+    p('gate-dagachi',gate(295.3,146.1),{base:150,names:[[300,131,'Kofar Dagachi',8.5,true]]}),
+    p('gate-mata',gate(384,204),{base:208,names:[[402,224,'Kofar Mata',8.5,true]]}),
+    p('rumfa-wall-2',earth('M384 204C384 228 370 246 350 254C322 266 294 274 262 276'),{base:276,motion:'draw',dur:1.5}),
+    p('gate-gertawasa',gate(350,254),{base:258,names:[[372,272,'Kofar Gertawasa',8.5,true]]}),
+    p('gate-kawayi',gate(262,276),{base:280,names:[[268,294,'Kofar Kawayi',8.5,true]]}),
+    p('wall-undescribed',line('M262 276C228 280 196 278 162 272','#e7b37b',1.6,' stroke-dasharray="1 5"'),{motion:'draw',dur:.9}),
+    p('rumfa-wall-3',earth('M162 272C128 266 96 254 80 238C70 226 80 204 96.9 189.8'),{base:272,motion:'draw',dur:1.5}),
+    p('gate-naisa',gate(162,272),{base:276,names:[[158,290,"Kofar Na'isa",8.5,true]]}),
+    p('gate-kansakali',gate(80,238),{base:242,names:[[62,258,'Kofar Kansakali',8.5,true]]}),
+    p('kurmi',`<ellipse cx="178" cy="256" rx="30" ry="9" fill="#6b5a3c" opacity=".85"/>`,{motion:'fade',dur:.8,names:[[178,240,'Kurmi market',8]]}),
+    p('kurmi-stalls-1',[160,172,184,196].map(x=>stall(x,253)).join(''),{base:256}),
+    p('kurmi-stalls-2',[166,178,190].map(x=>stall(x,261)).join(''),{base:264}),
+    p('trade-roads',line('M384 204 424 212M262 276 264 294M80 238 22 228','#d4b57a',1.3,' stroke-dasharray="2 4"'),{motion:'draw',dur:1.4}),
+    p('north-road',line('M200 112 206.7 144.3','#d4b57a',1.3,' stroke-dasharray="2 4"'),{motion:'draw',dur:1}),
+    p('manuscript',`<ellipse rx="11" ry="7" fill="url(#set-glow-gold)"/><path d="M-7-4.5h14v9h-14Z" fill="#efe1bd" stroke="#8a5434" stroke-width=".8"/><path d="M0-4.5v9M-5-2h3.5M-5 0h3.5M2-2h3.5M2 0h3.5" stroke="#8a5434" stroke-width=".6"/>`,
+      {motion:'travel',dur:2.8,path:[[200,112],[206.7,144.3],[250,200],[275,240]]})
+  ]);
+}
 // Original symbolic architectural stage sets. Counts/layout are illustrative, never site plans.
-function assemblageSvg(kind) {
+function assemblageSvg(kind,timed) {
   const parts=[];
   const add=(id,at,body,base=235,motion='rise',dur=1.15)=>parts.push(`<g data-set-part="${id}" data-at="${at}" data-base="${base}" data-motion="${motion}" data-duration="${dur}">${body}</g>`);
   const line=(d,c='#d4b57a',w=2)=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  if(timed) {
+    // Times are seconds into the scene; a part with "until" leaves again (oral tradition, a disputed line)
+    const art=cityParts(),names=[];
+    const name=(x,y,text,size=8.5,minor=false)=>`<text${minor?' class="minor"':''} x="${x}" y="${y}" text-anchor="middle" font-family="Georgia,serif" font-size="${size}" fill="#f2e6c4" stroke="#08120e" stroke-width="2.8" stroke-linejoin="round" paint-order="stroke">${esc(text)}</text>`;
+    for(const part of timed) {
+      const a=art[part.id],until=part.until!=null?` data-until="${part.until}"`:'',dur=part.dur??a.dur;
+      parts.push(`<g data-set-part="${part.id}" data-at="${part.at}" data-abs="true" data-base="${a.base}" data-motion="${a.motion}" data-duration="${dur}"`
+        +until+(a.path?` data-path="${a.path.map(q=>q.join(',')).join(' ')}"`:'')+`>${a.body}</g>`);
+      // A part's names fade in once it has mostly arrived
+      if(a.names.length) names.push(`<g data-set-part="${part.id}-names" data-at="${part.at+dur*.6}" data-abs="true" data-base="0" data-motion="fade" data-duration=".5"${until}>${a.names.map(n=>name(...n)).join('')}</g>`);
+    }
+    parts.push(...names);
+    return `<svg class="set-svg" viewBox="0 0 440 300" aria-hidden="true"><defs><pattern id="set-earth-face" width="10" height="7" patternUnits="userSpaceOnUse"><rect width="10" height="7" fill="#8f5634"/><path d="M0 3.5h10M0 7h10" stroke="#6a3c22" stroke-width=".7"/><ellipse cx="2.5" cy="1.8" rx="2" ry="1.25" fill="#b0703f"/><ellipse cx="7.5" cy="1.8" rx="2" ry="1.25" fill="#b0703f"/><ellipse cx="5" cy="5.3" rx="2" ry="1.25" fill="#a5683a"/><ellipse cx="0" cy="5.3" rx="2" ry="1.25" fill="#a5683a"/><ellipse cx="10" cy="5.3" rx="2" ry="1.25" fill="#a5683a"/></pattern>`
+      +`<radialGradient id="set-ground"><stop offset="0" stop-color="#20382b"/><stop offset=".72" stop-color="#1b3025" stop-opacity=".92"/><stop offset="1" stop-color="#1b3025" stop-opacity="0"/></radialGradient><radialGradient id="set-glow"><stop offset="0" stop-color="#ffb35c" stop-opacity=".95"/><stop offset="1" stop-color="#ff7a2a" stop-opacity="0"/></radialGradient><radialGradient id="set-glow-gold"><stop offset="0" stop-color="#f3d58e" stop-opacity=".75"/><stop offset="1" stop-color="#d4b57a" stop-opacity="0"/></radialGradient></defs><g data-set-camera>${parts.join('')}</g></svg>`;
+  }
   const ellipse=(x,y,rx,ry,fill)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${fill}"/>`;
   const wall=(d,colour='#bda16f',width=11)=>'<g transform="translate(0,8)">'+line(d,'#101d17',width+8)+line(d,'url(#set-stone-face)',width+3)+'</g>'+line(d,colour,width*.55)+line(d,'#e0d2a2',.9);
   const house=(x,y,r=15)=>ellipse(x,y,r,r*.36,'#715c3b')+`<path d="M${x-r} ${y}v-16a${r} ${r*.36} 0 0 1 ${r*2} 0v16" fill="#a58a59"/>`+ellipse(x,y-16,r,r*.36,'#d4b57a')+ellipse(x,y-16,r-4,r*.22,'#635b3c');
@@ -955,20 +1026,67 @@ function assemblyFrame(t,live) {
         const height=width*300/440,inner=node.querySelector(".hx-in");
         node.style.width=width+"px";node.style.height=height+"px";node.style.marginLeft=-width/2+"px";node.style.marginTop=-height*.75+"px";
         inner.style.setProperty("--set-width",width+"px");inner.style.setProperty("--set-height",height+"px");
+        // About 10px names on screen at any setting size; below that, only the main places are named
+        const svgEl=inner.querySelector(".set-svg");
+        svgEl.style.setProperty("--name-k",Math.min(2.2,Math.max(1,10/(8.5*width/440))).toFixed(3));svgEl.dataset.small=width<560;
         tip.options.direction="bottom";tip.options.offset=L.point(0,height*.25+7);tip.update();
       }
     }
     if(width===null)continue;
+    // Keep a setting clear of the lower third: lift it, with its name, until it sits above the
+    // caption or title strip. The caption matters more than the small notes at the top, and a
+    // setting's top edge is mostly open ground, so it may rise to just past the map's top. While
+    // playing it eases to a new height when a caption wraps; paused, it goes straight there. The
+    // video export frames its own shots, so it stays where the camera puts it.
+    const height=width*300/440;
+    let lift=0;
+    if(captureClock===null){
+      const box=map.getContainer().getBoundingClientRect(),lower=$("ov-lower").getBoundingClientRect();
+      const y=map.latLngToContainerPoint(set.marker.getLatLng()).y;
+      const floor=lower.height>2?lower.top-box.top-8:box.height,ceiling=-height*.12;
+      lift=Math.max(0,Math.min(y+height*.25-floor,y-height*.75-ceiling));
+      const now=performance.now(),dt=set.liftAt?Math.min(.1,(now-set.liftAt)/1000):1;set.liftAt=now;
+      if(state.playing&&set.liftWidth!=null)lift=(set.lift??0)+(lift-(set.lift??0))*(1-Math.exp(-dt*5));
+    }
+    if(Math.abs((set.lift??0)-lift)>.3||set.liftWidth!==width){
+      set.lift=lift;set.liftWidth=width;
+      node.style.marginTop=-height*.75-lift+"px";
+      tip.options.offset=L.point(0,height*.25+7-lift);tip.update();
+    }
     const camera=set.marker.getElement().querySelector('[data-set-camera]');
     camera.setAttribute('transform',architecturalFocus(scene(),t,live));
+    set.names??=[...node.querySelectorAll('[data-set-part$="-names"] text')];
     for(const el of set.parts) {
-    const authored=scene().beats?.length;
-    const start=Number(el.dataset.at)*(authored?2.8:1);
-    const u=live?clamp01((t-set.at-start)/Number(el.dataset.duration)):1;
-    const v=easeOut(u),base=Number(el.dataset.base),draw=el.dataset.motion==='draw';
-    el.style.opacity=String(draw?v:u>0?Math.min(1,u*4):0);
-    el.setAttribute('transform',draw?'':`translate(0,${18*(1-v)}) translate(220,${base}) scale(1,${.06+.94*v}) translate(-220,${-base})`);
+    const authored=scene().beats?.length,abs=el.dataset.abs==='true';
+    const start=abs?Number(el.dataset.at):Number(el.dataset.at)*(authored?2.8:1);
+    const u=live?clamp01((t-(abs?0:set.at)-start)/Number(el.dataset.duration)):1;
+    const motion=el.dataset.motion,v=easeOut(u),base=Number(el.dataset.base),draw=motion==='draw';
+    // A part with an end time fades out again; a jumped-to scene shows the finished city without it
+    const gone=el.dataset.until==null?0:live?clamp01((t-Number(el.dataset.until))/.6):1;
+    el.style.opacity=String((draw||motion==='fade'?v:u>0?Math.min(1,u*4):0)*(1-gone));
+    if(motion==='travel') {
+      // Along the drawn route at an even pace (set units, not map degrees)
+      const pts=el.dataset.path.split(' ').map(q=>q.split(',').map(Number)),lens=pts.slice(1).map((q,i)=>Math.hypot(q[0]-pts[i][0],q[1]-pts[i][1]));
+      let d=easeInOut(u)*lens.reduce((a,b)=>a+b,0),k=0;
+      while(k<lens.length-1&&d>lens[k]){d-=lens[k];k++;}
+      const w=Math.min(1,d/(lens[k]||1)),x=pts[k][0]+(pts[k+1][0]-pts[k][0])*w,y=pts[k][1]+(pts[k+1][1]-pts[k][1])*w;
+      el.setAttribute('transform',`translate(${x},${y})`);
+    } else el.setAttribute('transform',draw||motion==='fade'?'':`translate(0,${18*(1-v)}) translate(220,${base}) scale(1,${.06+.94*v}) translate(-220,${-base})`);
     }
+  }
+  cutSetNames();
+}
+// A city's own names show only where they are whole: one that the buttons, notes, year, caption or the
+// map's edge would cut hides until the camera brings it back into the clear. (The video export calls
+// this again once its entrance animations are set to the exact moment.)
+function cutSetNames() {
+  const named=fx.sets.filter(set=>set.width!==null&&set.names?.length);
+  if(!named.length)return;
+  const wrap=map.getContainer().getBoundingClientRect(),blocks=overlayBoxes();
+  for(const set of named) for(const el of set.names){
+    const r=edges(el.getBoundingClientRect());
+    if(r.r-r.x<1)continue;
+    el.toggleAttribute("data-cut",r.x<wrap.left+2||r.r>wrap.right-2||r.y<wrap.top+2||r.b>wrap.bottom-2||blocks.some(b=>overlaps(b,r)));
   }
 }
 
@@ -982,7 +1100,8 @@ function drawPlaces(ch, sc) {
   shown.forEach((id, k) => {
     const f = ch.features[id];
     const faded = dim.has(id), form = f.form;
-    const at = POINTS_FROM + k * Math.min(1.2, (sc.duration * 0.4) / Math.max(1, shown.length));   // one after another
+    // One after another, unless the scene says when a place arrives (a later pull-back, say)
+    const at = sc.appear?.[id] ?? POINTS_FROM + k * Math.min(1.2, (sc.duration * 0.4) / Math.max(1, shown.length));
     atOf[id] = at;
     const els = [], raw = [];
     if (f.uncertainty_km) {
@@ -1013,7 +1132,7 @@ function drawPlaces(ch, sc) {
     if (f.monument && sc.monuments !== false) {
       const setting=f.monument.setting,w=setting?(small()?218:430):76,h=setting?w*300/440:96;
       m = L.marker(f.coordinates, {keyboard:false, title:f.name, icon:L.divIcon({className:"hx-monument"+(setting?" hx-assemblage":""),
-        html:'<div class="hx-in" style="--set-width:'+w+'px;--set-height:'+h+'px">'+(setting?assemblageSvg(setting):monumentSvg(f.monument.type))+'</div>'
+        html:'<div class="hx-in" style="--set-width:'+w+'px;--set-height:'+h+'px">'+(setting?assemblageSvg(setting,f.monument.parts):monumentSvg(f.monument.type))+'</div>'
           +(setting?'<div class="hx-glyph-art">'+monumentSvg(f.monument.type)+'</div>':''),iconSize:[w,h],iconAnchor:[w/2,setting?h*.75:86]})});
     } else if (form === "communities") {
       raw.push(textLabel(f.coordinates, "self-governing communities", "field-label"));
@@ -1413,7 +1532,8 @@ function cameraOf(ch, sc) {
   const shown = sc.snapshot ? [] : (sc.show || []).map(id => ch.features[id]);
   const places = shown.filter(f => f.kind === "point");
   if (ch.area === "africa") return {center,zoom: small() ? Math.max(2,zoom-1.3) : zoomFor(zoom)};
-  if (!small() || !places.length) return { center, zoom: zoomFor(zoom) };
+  // An authored camera path frames its own shots, so a phone keeps the same framing, zoomed out
+  if (!small() || !places.length || sc.camera_path) return { center, zoom: zoomFor(zoom) };
   const dated = new Set(shown.flatMap(f => Object.keys(f.dates || {})));
   // Each place's marker and label in pixels around its point. A label's width is guessed from its name.
   const boxes = places.map(f => {
@@ -1440,13 +1560,15 @@ function cameraOf(ch, sc) {
   return { center: map.unproject(mid, lo), zoom: lo };
 }
 
+// A camera path's zoom on this screen, matching how cameraOf treats the chapter's own camera
+const pathZoom = (ch, z) => ch.area === "africa" && small() ? Math.max(2, z - 1.3) : zoomFor(z);
 // Where the camera goes while a scene plays, in seconds into the scene
 function cameraCues(sc) {
   if (sc.base === "deep") return [];
   const { center, zoom } = cameraOf(chapter(), sc), out = [];
   const near = small() ? PHONE_CLOSE_IN : 1;
   out.push(lead() ? { at: -1.1, center, zoom, dur: 2.2 } : { at: 0, center, zoom, dur: 1.4 });
-  if (sc.camera_path) return out.concat(sc.camera_path.map(c=>({...c,zoom:small()?Math.max(2,c.zoom-1.3):zoomFor(c.zoom)})));
+  if (sc.camera_path) return out.concat(sc.camera_path.map(c=>({...c,zoom:pathZoom(chapter(),c.zoom)})));
   const f = fx.focus;
   if (f) {
     const c = L.latLng(center);
@@ -1549,7 +1671,8 @@ function render({ animate = true, announce = false } = {}) {
      <p class="c-when">${esc(sc.when.label)}</p>
      <h2 id="scene-title">${esc(sc.title)}</h2>` +
     (state.s === 0 ? `<p class="c-intro">${esc(ch.intro)}</p>` : "") +
-    `<p class="c-text">${sentences.map(s => `<span class="line">${esc(s)}</span>`).join("")}</p>` +
+    // Authored beats are separate lines; a dated beat carries the date it rests on
+    `<p class="c-text">${sentences.map((s, i) => `<span class="line">${sc.beats?.[i]?.when ? `<b class="c-beat-when">${esc(sc.beats[i].when.label)}.</b> ` : ""}${esc(s)}</span>`).join(" ")}</p>` +
     (sc.disputed ? `<div class="c-disputed"><b>Disputed.</b> ${esc(sc.disputed)}</div>` : "") +
     (sc.unchecked ? `<div class="c-disputed"><b>Not yet checked.</b> ${esc(sc.unchecked)}</div>` : "") +
     (sc.background === "modern-reference" ? `<p class="c-method"><b>Modern reference map.</b> ${esc(sc.background_note)}</p>` : "") +
@@ -1808,8 +1931,12 @@ function frame(now) {
     const start = fx.rollFrom != null && fxOn() ? ROLL : 0;
     year = from + (to - from) * (live ? clamp01((t - start) / (sc.duration * 0.85 - start)) : 0);
   }
+  // A scene told in dated beats shows each beat's own date and its basis instead of a running
+  // year. An oral-tradition beat has no date, so the counter holds still on its label.
+  const dated = live && sc.beats?.[0]?.when ? directedBeat(sc, Math.max(0, t)).beat.when : null;
+  if (dated) { year = dated.from ?? state.shownYear ?? from; blur = 0; }
   state.shownYear = year;
-  setText($("hud-year"), !live ? sc.when.label : sc.campaign_clock ? yearText(Math.floor(year), false) : yearText(year, approx));
+  setText($("hud-year"), !live ? sc.when.label : dated ? dated.label : sc.campaign_clock ? yearText(Math.floor(year), false) : yearText(year, approx));
   $("hud-year").classList.toggle("long", $("hud-year").textContent.length > 14);
   $("hud-year").style.filter = blur > 0.05 ? `blur(${blur.toFixed(1)}px)` : "";
   const jumpT = live ? t : x;
@@ -1841,7 +1968,7 @@ function frame(now) {
     $("story-caption").scrollTop = 0;
     captionLine.classList.remove("fresh"); void captionLine.offsetWidth; captionLine.classList.add("fresh");
   }
-  setText($("story-caption").querySelector(".story-kicker"),[sc.when.label,sc.scale||sc.title].join(" · "));
+  setText($("story-caption").querySelector(".story-kicker"),[dated?dated.label:sc.when.label,sc.scale||sc.title].join(" · "));
   setText($("viewer-status"),sceneCaution(sc));
   // Narration appears sentence by sentence while playing; everything shows when paused
   const gap = (sc.duration * 0.55) / Math.max(1, fx.sentences.length);
@@ -1915,6 +2042,13 @@ function frame(now) {
 // is hidden until there is room again; its point stays, and the name is still in the panel and the
 // text version. Overlays (year, buttons, captions, Zomo) count as taken space.
 const LABEL_SLOTS = [[1, 0], [1, -1], [1, 1], [-1, 0], [-1, -1], [-1, 1], [1, -2], [1, 2]];
+const edges = r => ({ x: r.left, y: r.top, r: r.right, b: r.bottom });
+const overlaps = (a, b) => Math.min(a.r, b.r) - Math.max(a.x, b.x) > 1 && Math.min(a.b, b.b) - Math.max(a.y, b.y) > 1;
+const onScreen = el => el && !el.hidden && el.getClientRects().length && getComputedStyle(el).visibility !== "hidden"
+  && +getComputedStyle(el).opacity > 0.05;
+// Everything drawn over the map that a name must keep clear of
+const overlayBoxes = () => [...document.querySelectorAll("#view-tools, #ov-notes > *, #hud, #ov-lower > *, #story-guide, .leaflet-control-zoom, .leaflet-control-attribution")]
+  .filter(onScreen).map(el => edges(el.getBoundingClientRect()));
 function declutterLabels() {
   if (!fx || !fx.siteLabels.length) return;
   const visible = fx.siteLabels.filter(el => el.isConnected && !el.classList.contains("hx-hidden"));
@@ -1925,34 +2059,31 @@ function declutterLabels() {
   fx.labelKey = key;
   for (const el of fx.siteLabels) { el.style.translate = ""; el.classList.remove("hx-moved", "hx-crowded"); }
   const wrap = $("mapwrap").getBoundingClientRect();
-  const box = r => ({ x: r.left, y: r.top, r: r.right, b: r.bottom });
-  const hits = (a, b) => Math.min(a.r, b.r) - Math.max(a.x, b.x) > 1 && Math.min(a.b, b.b) - Math.max(a.y, b.y) > 1;
-  const shown = el => el && !el.hidden && el.getClientRects().length && getComputedStyle(el).visibility !== "hidden"
-    && +getComputedStyle(el).opacity > 0.05;
-  const taken = [...document.querySelectorAll("#view-tools, #ov-notes > *, #hud, #ov-lower > *, #story-guide, .leaflet-control-zoom, .leaflet-control-attribution")]
-    .filter(shown).map(el => box(el.getBoundingClientRect()));
+  const taken = overlayBoxes();
   // The points themselves (small markers only: halos, uncertainty rings and close-up settings are not obstacles)
   const dots = [];
   for (const pt of fx.points) for (const el of pt.els) {
     if (fx.siteLabels.includes(el) || el.classList?.contains("hx-hidden")) continue;
     const r = el.getBoundingClientRect();
-    if (r.width > 1 && r.width <= 60 && r.height <= 60) dots.push({ pt, ...box(r) });
+    if (r.width > 1 && r.width <= 60 && r.height <= 60) dots.push({ pt, ...edges(r) });
   }
-  const rects = visible.map(el => box(el.getBoundingClientRect()));
+  const rects = visible.map(el => edges(el.getBoundingClientRect()));
   visible.forEach((el, i) => {
     const r0 = rects[i], w = r0.r - r0.x, h = r0.b - r0.y;
     // A setting's name hangs below it and may rise onto the setting itself, over its own point
     const plate = el.classList.contains("leaflet-tooltip-bottom"), own = plate && fx.points.find(pt => pt.els.includes(el));
     const blocks = taken.concat(dots.filter(d => d.pt !== own));
     const fits = r => r.x >= wrap.left + 2 && r.r <= wrap.right - 2 && r.y >= wrap.top + 2 && r.b <= wrap.bottom - 2
-      && !blocks.some(t => hits(t, r));
+      && !blocks.some(t => overlaps(t, r));
     const right = el.classList.contains("leaflet-tooltip-right"), flipBy = w + 28;
-    for (const [side, row] of LABEL_SLOTS) {
+    // A city that names its own parts keeps its name below it, or hides it: risen, it would cover them
+    const named = own && own.els.some(e => e.querySelector?.('[data-set-part$="-names"]'));
+    for (const [side, row] of named ? LABEL_SLOTS.slice(0, 1) : LABEL_SLOTS) {
       let dx = side === 1 ? 0 : right ? -flipBy : flipBy;
       const dy = row * (h + 3);
       let r = { x: r0.x + dx, y: r0.y + dy, r: r0.r + dx, b: r0.b + dy };
       if (!fits(r)) {
-        const steps = blocks.filter(t => hits(t, r)).flatMap(t => [t.x - 2 - r.r, t.r + 2 - r.x])
+        const steps = blocks.filter(t => overlaps(t, r)).flatMap(t => [t.x - 2 - r.r, t.r + 2 - r.x])
           .concat([wrap.left + 2 - r.x, wrap.right - 2 - r.r])
           .filter(s => s && Math.abs(s) <= w * 0.5).sort((a, b) => Math.abs(a) - Math.abs(b));
         const step = steps.find(s => fits({ ...r, x: r.x + s, r: r.r + s }));
@@ -2592,7 +2723,7 @@ function captureCamera(t) {
   const priorChapter = state.s ? chapter() : DATA.chapters[state.c - 1];
   const prior = state.s ? chapter().scenes[state.s - 1] : priorChapter?.scenes.at(-1);
   const terminal = prior?.camera_path?.at(-1);
-  const priorCamera = terminal ? {center:terminal.center,zoom:small()?Math.max(2,terminal.zoom-1.3):zoomFor(terminal.zoom)} : prior && cameraOf(priorChapter, prior);
+  const priorCamera = terminal ? {center:terminal.center,zoom:pathZoom(priorChapter,terminal.zoom)} : prior && cameraOf(priorChapter, prior);
   let position = lead() || !prior || prior.base === "deep"
     ? chapter().area === "africa" ? {center:[0,20],zoom:2.6} : { center: WIDE.center, zoom: zoomFor(WIDE.zoom) } : priorCamera;
   let active = null;
@@ -2715,7 +2846,7 @@ window.taswira = {
       : "Natural Earth · public domain" + (sc.snapshot ? " | Borders: GRID3 via geoBoundaries · CC BY 4.0 · simplified, approximate" : "");
     $("video-time").max = info.duration; $("video-time").value = state.t;
     $("video-seconds").textContent = `${state.t.toFixed(1)} / ${info.duration.toFixed(1)} s`;
-    frame(captureClock); paint(captureClock); captureAnimations(t); showProgress();
+    frame(captureClock); paint(captureClock); captureAnimations(t); cutSetNames(); showProgress();
     $("video-time").setAttribute("aria-valuetext", `${state.t.toFixed(1)} seconds · ${$("hud-year").textContent} · ${sc.title}`);
     return { ...info, elapsed: state.t, year: state.shownYear };
   },

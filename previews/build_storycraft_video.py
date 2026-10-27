@@ -6,6 +6,18 @@ import json
 import sys
 
 
+# Other viewing copies: (what the video shows, link to its notes, link text, download name)
+COPIES = {
+    'directed-video.html': ('A directed Great Zimbabwe sequence: hill, enclosures, passage, domestic spaces and a pullback.',
+                            'https://github.com/ksai4u-glitch/Taswira/blob/agent/history-directed-story/history/research/creative/CLAUDE-HANDOFF-2026-10-27.md',
+                            'Creative handoff and next scene', 'taswira-storycraft.mp4'),
+    'kano-video.html': ('Kano grows from Dala hill into a walled city, about 1000 to 1499. Each part appears at its own date, '
+                        'labelled as archaeology, Kano Chronicle reckoning, sources that differ, or oral tradition with no date.',
+                        'https://github.com/ksai4u-glitch/Taswira/blob/main/history/chapters/hausa.json',
+                        'The Hausa cities chapter and its sources', 'taswira-kano.mp4'),
+}
+
+
 def package(video, output_name="storycraft-video.html"):
     if Path(output_name).name != output_name or not output_name.endswith(".html"):
         raise ValueError("Use an HTML filename")
@@ -30,9 +42,11 @@ def package(video, output_name="storycraft-video.html"):
 <details><summary>Sources and reuse review</summary><p>Sources support the selected sites and historical narration. Source-specific rights and uncertainty remain in the companion JSON; no museum photographs are reproduced. Review is still required before a finished film is published.</p><ul>__SOURCES__</ul></details>
 </main><script>document.getElementById('download').href=document.querySelector('video source').src;</script></html>'''
     if output_name != 'storycraft-video.html':
+        about, notes, label, download = COPIES.get(output_name, COPIES['directed-video.html'])
         page = page.replace('Zomo and the cities that rise.', title).replace('Taswira · Zomo and the cities that rise', title)
-        page = page.replace("Meroe's royal cemetery, Aksum's stelae and tombs, and Great Zimbabwe assemble in layers.", 'A directed Great Zimbabwe sequence: hill, enclosures, passage, domestic spaces and a pullback.')
-        page = page.replace('agent/history-africa-tour', 'agent/history-directed-story')
+        page = page.replace("Meroe's royal cemetery, Aksum's stelae and tombs, and Great Zimbabwe assemble in layers.", html.escape(about))
+        page = page.replace('https://github.com/ksai4u-glitch/Taswira/blob/agent/history-africa-tour/history/research/creative/CLAUDE-HANDOFF-2026-10-27.md', notes)
+        page = page.replace('Creative handoff and next scene', html.escape(label)).replace('taswira-storycraft.mp4', download)
     page = page.replace('__DURATION__', str(manifest['duration'])).replace('__FPS__', str(manifest['fps']))
     page = page.replace('__VIDEO__', encoded).replace('__VTT__', vtt)
     page = page.replace('__CAPTIONS__', html.escape(captions)).replace('__SOURCES__', sources)

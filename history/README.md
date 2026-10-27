@@ -264,7 +264,12 @@ clips one end. A name with no room is hidden until there is room again; it is st
 Architectural settings follow the map. At the scene's camera they are a close-up (never larger
 than the map); each zoom step out halves them with the land, and once they would be smaller than
 about a third of the close-up they become the site's small glyph, so they never cover the
-continent.
+continent. Outside video export a setting is lifted, with its name, until it clears the lower
+third; it may rise a little past the map's top, where its ground is open. A setting that names its
+own parts (Kano) keeps its name plate below it or hides it, and each of those names shows only
+where it is whole: one that a button, note, the year, the caption, Zomo or the map's edge would
+cut waits until the camera brings it back into the clear. City names are about 10 px on screen at
+any setting size; on a small setting only the main places are named, not the gates.
 
 ```
 node tests/history_layout_browser.cjs /tmp/history.html /tmp/history-deps
@@ -445,3 +450,49 @@ playback and focus. It is a modern editorial reference, not an automatic histori
 adds ten seconds of concise credits, or sixteen when a plate model needs its attribution.
 `previews/build_storycraft_video.py <video.mp4> directed-video.html` packages a separate
 viewing copy so the earlier three-setting proof remains available.
+
+## Hausa cities: Kano
+
+`chapters/hausa.json` follows Nok. Its first scene, "The earth becomes a city" (44 seconds), grows
+Kano from Dala hill into a walled city, about 1000 to 1499: the hill and its ironworking, the
+first wall and three of its gates, Rumfa's palace, his walls through named gates, Kurmi market and
+the road north. It ends by pulling back to Katsina. The `walled-city` setting is an original
+schematic stage set: the Chronicle names gates but does not place them, so wall lines, gate
+positions, the palace footprint and the market are schematic, and nothing later is drawn (no
+present-day palace decoration, no 1951 mosque, no 16th-century wall line, no emblem).
+
+**Dated parts.** A setting can list its own `monument.parts`. Each has an `id` (a drawing in the
+template), `at` (scene seconds), optional `until` (it fades out again), a `label`, `sources`, and
+exactly one of `natural: true` (the land), `year` (the date it rests on) or `oral: true`.
+
+**Dated beats.** A beat can carry `when`: `from` and `to` (whole years inside the scene's), a
+`label` and a `basis`, one of `archaeology`, `chronicle` (a Kano Chronicle reckoning: the label
+must say "Chronicle"), `differ` (the sources disagree: the label must say "differ") or `oral` (no
+`from` or `to`, and no digits in the label). If one beat is dated, every beat is. While the scene
+plays, the year and the caption's first line show the beat's label; the scene panel and the text
+version start each beat with it.
+
+`build_history.py --check` refuses a part that appears before its date (the beat on screen must
+start at or after the part's year), an oral part outside an oral beat or still on screen at the
+next dated beat, dated beats that go back in time, and `appear` times for places the scene does
+not show. The text version lists what appears when.
+
+```
+python build_history.py --output <scratch-history.html>
+node tests/history_kano_browser.cjs <scratch-history.html> <local-dependencies>
+python previews/build_act1_preview.py <scratch-history.html> <local-dependencies> --output kano.html --chapter hausa --scene kano --cinema
+node capture_history.cjs <scratch-history.html> <local-dependencies> <kano.mp4> 60 8 history/cuts/kano-city.json
+python previews/build_storycraft_video.py <kano.mp4> kano-video.html
+```
+
+The browser test plays the scene in quarter seconds and checks that the year shows each beat's
+label, that no part is visible under an earlier date, that oral tradition shows only under its
+undated label, that the jumped-to scene is the finished city, that the city becomes its glyph only
+in the pull-back, that repeat video seeks give identical pixels, and that the city's names stay
+whole in three layouts.
+
+Still to check before this is published: the Chronicle's exact wording on Rumfa's gates and
+their order (the positions here are schematic; the ABU survey of the walls could place them),
+whether to add Leo Africanus's description of Kano (about 1515, just after this period), the
+Wangarawa traders' arrival (dated differently by different sources), and a review by a historian
+of Kano and a Hausa speaker for names and spellings.

@@ -5,7 +5,7 @@ const p=await b.newPage({viewport:{width:1440,height:900}}),errors=[];p.on('page
 await p.route('**/*',r=>{const u=r.request().url(),n=u.includes('leaflet.css')?'leaflet.css':u.includes('leaflet.js')?'leaflet.js':u.includes('d3-array')?'d3-array.js':u.includes('d3-geo')?'d3-geo.js':null;return n?r.fulfill({contentType:n.endsWith('.css')?'text/css':'application/javascript',body:fs.readFileSync(path.join(process.argv[3],n))}):r.abort();});
 await p.setContent(fs.readFileSync(process.argv[2],'utf8'));await p.waitForFunction(()=>window.taswira);
 assert.ok(await p.evaluate(()=>DATA.chapters.some(ch=>ch.id==='africa')),'The approved Africa tour must be in the actual player');
-assert.deepEqual(await p.evaluate(()=>DATA.chapters.map(c=>c.id)),['deep','africa','nok','states','key']);
+assert.deepEqual(await p.evaluate(()=>DATA.chapters.map(c=>c.id)),['deep','africa','nok','hausa','states','key']);
 const snapshotYear=await p.evaluate(()=>{goTo(1,1,{live:true,animate:false});state.shownYear=-3100;goTo(1,2,{live:true,animate:false});state.t=.8;frame(performance.now());return state.shownYear;});assert.equal(snapshotYear,-250,'A rising monument must not inherit the prior snapshot’s year');
 await p.evaluate(()=>taswira.seek('africa','origins',8));assert.match(await p.locator('#hud-year').textContent(),/300,000 years ago/);
 await p.evaluate(()=>taswira.seek('africa','egypt',8));assert.match(await p.locator('#hud-year').textContent(),/3100 BCE/);
