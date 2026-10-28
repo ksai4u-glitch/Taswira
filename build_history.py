@@ -26,6 +26,7 @@ Uses only the Python standard library.
 """
 
 import base64
+import copy
 from pathlib import Path
 import struct
 import colorsys
@@ -78,8 +79,9 @@ EFFECTS = ("arc", "pulse", "shatter")
 # Architectural stage sets drawn on the map, and the small glyph each becomes when far out
 SETTINGS = ("royal-cemetery", "stelae-field", "stone-enclosure", "walled-city")
 MONUMENT_TYPES = ("pyramid", "stele", "tower", "walled-city")
-# What a dated beat's date rests on. A Chronicle date says so on screen; oral tradition has no date.
-BEAT_BASES = ("archaeology", "chronicle", "differ", "oral")
+# What a dated beat's date rests on. A Chronicle date says so on screen; oral tradition has no date;
+# an account is a dated written description by a named writer.
+BEAT_BASES = ("archaeology", "chronicle", "differ", "oral", "account")
 
 # The map vocabulary (see history/README.md). How sure each thing on the map is:
 STATUSES = ("firm", "approx", "disputed", "to-check")
@@ -403,6 +405,56 @@ def check_parts(where, m, need, cite):
                  f"{here}: year must be a whole year inside the monument's from/to")
 
 
+def expand_bases(chapters):
+    """A city can carry on from another setting in the same chapter (monument "base"). It starts
+    from the base city as it stands, without the base's passing parts (oral tradition, a disputed
+    line). Base parts named again in its own "parts" take their new time there; the others stand
+    from the start ("standing"). Parts new to this city follow. Returns copies; the files are unchanged,
+    and expanding chapters that are already expanded changes nothing."""
+    out = copy.deepcopy(chapters)
+    for ch in out:
+        feats = [f for f in ch.get("features", []) if isinstance(f, dict)]
+        by_id = {f.get("id"): f for f in feats}
+        for f in feats:
+            m = f.get("monument")
+            if not isinstance(m, dict) or "base" not in m or not isinstance(m.get("parts"), list):
+                continue
+            base = by_id.get(m["base"], {}).get("monument")
+            if not isinstance(base, dict) or "base" in base or not isinstance(base.get("parts"), list):
+                continue  # reported by check()
+            own = {p.get("id"): p for p in m["parts"] if isinstance(p, dict)}
+            known = {p.get("id") for p in base["parts"] if isinstance(p, dict)}
+            parts = []
+            for p in base["parts"]:
+                if not isinstance(p, dict) or p.get("oral") or "until" in p:
+                    continue
+                parts.append({**p, **own[p["id"]]} if p.get("id") in own else {**p, "at": 0, "standing": True})
+            m["parts"] = parts + [p for p in m["parts"] if not (isinstance(p, dict) and p.get("id") in known)]
+    return out
+
+
+def check_bases(chapters, need):
+    """What expand_bases needs: a base that is another dated city of the same chapter, in the same
+    setting, and no return of a part that passed in the base city."""
+    for ch in chapters:
+        feats = {f.get("id"): f for f in ch.get("features", []) if isinstance(f, dict)}
+        for fid, f in feats.items():
+            m = f.get("monument")
+            if not isinstance(m, dict) or "base" not in m:
+                continue
+            where = f"{ch.get('id', '?')}/{fid}"
+            base = feats.get(m["base"], {}).get("monument") if m["base"] != fid else None
+            ok = isinstance(base, dict) and "base" not in base and isinstance(base.get("parts"), list)
+            need(ok and isinstance(m.get("parts"), list),
+                 f"{where}: base must name another city with dated parts in this chapter, and parts must be a list")
+            if not ok:
+                continue
+            need(m.get("setting") == base.get("setting"), f"{where}: a city carries on in its base's setting")
+            passing = {p.get("id") for p in base["parts"] if isinstance(p, dict) and (p.get("oral") or "until" in p)}
+            again = sorted(p.get("id") for p in m.get("parts", []) if isinstance(p, dict) and p.get("id") in passing)
+            need(not again, f"{where}: {', '.join(again)} passed in the base city and cannot return")
+
+
 def beat_in_force(beats, at):
     """The beat on screen at a time in the scene (beats start at zero and are in order)."""
     current = beats[0]
@@ -464,6 +516,8 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
             need(sid in sources, f"{where}: unknown source {sid!r}")
             cited.add(sid)
 
+    check_bases(chapters, need)
+    chapters = expand_bases(chapters)
     seen_chapters = set()
     for ch in chapters:
         cid = ch.get("id", "?")
@@ -720,6 +774,8 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                     need("Chronicle" in label, f"{here}: a date reckoned from a chronicle must say so in its label")
                 if basis == "differ":
                     need("differ" in label.lower(), f"{here}: a disputed date must say that the sources differ")
+                if basis == "account":
+                    need("account" in label.lower(), f"{here}: a date from a writer's account must say so in its label")
                 if isinstance(bw.get("from"), int):
                     need(last_year is None or bw["from"] >= last_year, f"{here}: dated beats must not go back in time")
                     last_year = bw["from"]
@@ -1010,7 +1066,7 @@ def feature_text(f, sc, features, sources, emblems):
         head = f"<strong>{e(f['name'])}{e(form)}.</strong> {e(f['what'])}"
         if f.get("monument") and sc.get("monuments", True):
             head += f" <em>Schematic:</em> {e(f['monument']['note'])}"
-            dated = [p for p in f["monument"].get("parts", []) if not p.get("natural")]
+            dated = [p for p in f["monument"].get("parts", []) if not p.get("natural") and not p.get("standing")]
             if dated:
                 head += " <em>What appears when:</em> " + "; ".join(e(p["label"]) for p in dated) + "."
         if f.get("reach_note"):
@@ -1033,6 +1089,7 @@ def transcript(chapters, sources, states, emblems=None):
     It works without JavaScript and is what screen readers read."""
     e = html.escape
     emblems = emblems or {}
+    chapters = expand_bases(chapters)   # a city carrying on from another lists only what is new
     parts = []
     for ch in chapters:
         parts.append(f'<section class="tr-chapter" id="text-{e(ch["id"])}">')
@@ -1098,6 +1155,7 @@ def build():
         sys.exit("Not building the history page:\n  - " + "\n  - ".join(problems))
     for sid in sorted(set(sources) - cited - MAP_SOURCES):
         print(f"Note: source {sid} is not cited by any scene, feature or emblem.")
+    chapters = expand_bases(chapters)
 
     data = page_data(chapters, sources, states, arcs, users, load_background(), emblems, plates)
     with open(TEMPLATE_PATH, encoding="utf-8") as f:

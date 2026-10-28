@@ -491,8 +491,59 @@ undated label, that the jumped-to scene is the finished city, that the city beco
 in the pull-back, that repeat video seeks give identical pixels, and that the city's names stay
 whole in three layouts.
 
-Still to check before this is published: the Chronicle's exact wording on Rumfa's gates and
-their order (the positions here are schematic; the ABU survey of the walls could place them),
-whether to add Leo Africanus's description of Kano (about 1515, just after this period), the
-Wangarawa traders' arrival (dated differently by different sources), and a review by a historian
-of Kano and a Hausa speaker for names and spellings.
+### Kano 2: who lived inside the walls
+
+The second scene, "Who lived inside the walls" (58 seconds, 1438 to 1526), answers the first
+scene's closing question. It goes back to the city as it stood under Abdullahi Burja (1438–1452 by
+the Chronicle's reckoning) and fills it: homes and townspeople, the roads Burja opened towards
+Bornu and Gwanja, the first camels in Hausaland, the captives taken in raids to the south, books
+and salt in Yakubu's reign (1452–1463), then Rumfa's palace, walls and market rising again, with
+traders, the council of nine and the kakaki trumpets. It pulls back to Katsina (the eleven-year
+war) and Bornu, and ends with Leo Africanus's description, written in 1526, whose visit is doubted.
+
+- **Sensitive beats.** The captives, the eunuch officials and the war are told plainly, with Zomo
+  in the still, solemn pose and nothing but fades. The twenty-one towns of captives are shown as a
+  count in a framed inset while the Chronicle's record is told, because their places are not known;
+  the Chronicle's numbers of people are not repeated.
+- **People.** People, camels and goods are small schematic figures with no faces, dress or
+  likenesses, and their numbers are illustrative.
+- **Kola.** Kola is in the narration only (Lovejoy 1978: probably brought by Wangara merchants in
+  the late 1400s and 1500s). A drawing would appear only after the pull-back, where nobody sees it.
+- **Gwanja.** It is the Chronicle's name for the lands to the south-west; the Gonja state itself was
+  founded later.
+
+**City bases.** A setting can carry on from another city in the same chapter: `monument.base`
+names it, and both must use the same `setting`. The build expands it (`expand_bases`) before the
+checks, the page data and the text version:
+
+- The base's passing parts (oral tradition, anything with `until`) are left out and cannot return.
+- A base part listed again in the city's own `parts` (by `id`, with a new `at` and optional
+  `dur`) rises at that time, keeping the base's label and sources.
+- Every other base part is `standing`: whole from the scene's first frame, names included.
+- New parts follow.
+
+Because a standing part keeps its year, `--check` refuses a base part dated after the scene's first
+beat that is not re-timed (Rumfa's palace cannot stand in 1438). The text version's "What appears
+when" lists only what is new.
+
+**Accounts.** A beat can also rest on `account`, a dated written description by a named writer;
+its label must say "account", for example "1526 · Leo Africanus's account; his visit is doubted".
+
+```
+node capture_history.cjs <scratch-history.html> <local-dependencies> <kano-life.mp4> 60 8 history/cuts/kano-life.json
+python previews/build_storycraft_video.py <kano-life.mp4> kano-life-video.html
+python previews/build_act1_preview.py <scratch-history.html> <local-dependencies> --output kano-life.html --chapter hausa --scene kano-people --cinema
+```
+
+The browser test runs every check above on both scenes. It also checks that the second scene opens
+on the standing city, whole and without Rumfa's parts, once the camera has come in from the first
+scene's pull-back. In the video, a city's names also hide under the caption, the caution, the credit
+and the cinema bars.
+
+Still to check before this is published:
+
+- The Chronicle's exact wording on Rumfa's gates and their order. The positions here are schematic;
+  the ABU survey of the walls could place them.
+- Leo Africanus's own text. Only Fisher's summary, via the Kano article, was used.
+- The Wangarawa traders' arrival, which different sources date differently.
+- A review by a historian of Kano, and by a Hausa speaker for names and spellings.

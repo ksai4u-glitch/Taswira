@@ -885,6 +885,16 @@ function cityParts() {
     +line(`M${x-w*.5} ${y-h*.5}l${w*.18} ${-h*.08}M${x+w*.3} ${y-h*.42}l${w*.2} ${h*.1}`,'#8ea27f',.8,' opacity=".55"');
   const stall=(x,y)=>line(`M${x-4} ${y+3}v-6M${x+4} ${y+3}v-6`,'#5b4128',1.1)+`<path d="M${x-6} ${y-3} ${x} ${y-7} ${x+6} ${y-3} ${x} ${y+1}Z" fill="#c9a46a" stroke="#7d5a33" stroke-width=".6"/>`;
   const p=(id,body,o={})=>[id,{body,base:o.base??235,motion:o.motion??'rise',dur:o.dur??1.15,path:o.path,names:o.names||[]}];
+  // People and goods are schematic: no faces, dress or likenesses, and counts are illustrative
+  const at=(x,y,k,body)=>`<g transform="translate(${x},${y}) scale(${k})">${body}</g>`;
+  const hut=(x,y,c='#a8744a',k=1.4)=>at(x,y,k,`<path d="M-4 0v-4h8v4Z" fill="${c}"/><path d="M-5.5-3.6 0-9 5.5-3.6Z" fill="#7a6238"/><path d="M-1 0v-2.4h2V0Z" fill="#1a120c"/>`);
+  const person=(x,y,c='#d8c49a',k=1.35)=>at(x,y,k,`<circle cy="-6.6" r="1.5" fill="${c}"/><path d="M-2.2 0l.7-4.6q1.5-.9 3 0l.7 4.6Z" fill="${c}"/>`);
+  const seated=(x,y)=>at(x,y,1.35,`<circle cy="-4.6" r="1.4" fill="#d8c49a"/><path d="M-2.4 0q2.4-4.2 4.8 0Z" fill="#d8c49a"/>`);
+  // A camel facing west, the way the caravans come in; load is a salt slab or a bale
+  const camel=(x,y,load)=>`<g transform="translate(${x},${y})" fill="#c9a46a" stroke="#c9a46a"><ellipse cx="1" cy="-6" rx="5" ry="2.4" stroke="none"/><path d="M-2.2-7.2Q1-12.4 4.2-7.2Z" stroke="none"/>`
+    +`<path d="M-3.4-6.6-6.4-10.8M-6.2-11.4h-3.2" fill="none" stroke-width="1.5" stroke-linecap="round"/><path d="M-2.6-4.2v4.2M-.9-4.2v4.2M2.9-4.2v4.2M4.6-4.2v4.2" fill="none" stroke-width=".9"/>`
+    +(load?`<path d="M-.8-12.6h4v2.6h-4Z" fill="${load}" stroke="#5b4128" stroke-width=".4"/>`:'')+'</g>';
+  const book=(x,y)=>at(x,y,1.3,`<path d="M-5-3h10v6h-10Z" fill="#efe1bd" stroke="#8a5434" stroke-width=".7"/><path d="M0-3v6" stroke="#8a5434" stroke-width=".5"/>`);
   return Object.fromEntries([
     p('ground',`<ellipse cx="220" cy="206" rx="210" ry="90" fill="url(#set-ground)"/>`,{motion:'fade',dur:1.4}),
     // Savanna grass tufts, scattered (a fixed pattern, not a survey of vegetation)
@@ -919,7 +929,20 @@ function cityParts() {
     p('trade-roads',line('M384 204 424 212M262 276 264 294M80 238 22 228','#d4b57a',1.3,' stroke-dasharray="2 4"'),{motion:'draw',dur:1.4}),
     p('north-road',line('M200 112 206.7 144.3','#d4b57a',1.3,' stroke-dasharray="2 4"'),{motion:'draw',dur:1}),
     p('manuscript',`<ellipse rx="11" ry="7" fill="url(#set-glow-gold)"/><path d="M-7-4.5h14v9h-14Z" fill="#efe1bd" stroke="#8a5434" stroke-width=".8"/><path d="M0-4.5v9M-5-2h3.5M-5 0h3.5M2-2h3.5M2 0h3.5" stroke="#8a5434" stroke-width=".6"/>`,
-      {motion:'travel',dur:2.8,path:[[200,112],[206.7,144.3],[250,200],[275,240]]})
+      {motion:'travel',dur:2.8,path:[[200,112],[206.7,144.3],[250,200],[275,240]]}),
+    // Who lived inside: homes and townspeople, then the roads, caravans, goods, scholars and court
+    p('homes',[[110,184],[124,163],[228,197],[247,189]].map(([x,y])=>hut(x,y)).join(''),{base:195}),
+    p('townspeople',[[116,196],[122,178],[217,194],[238,192]].map(([x,y])=>person(x,y)).join(''),{motion:'fade',dur:.9}),
+    p('road-bornu',line('M206.7 144.3 295.3 146.1M295.3 146.1 436 136','#d4b57a',1.3,' stroke-dasharray="2 4"'),{motion:'draw',dur:1.2,names:[[412,128,'to Bornu',8.5]]}),
+    p('road-gwanja',line('M106.8 159.9 6 190','#d4b57a',1.3,' stroke-dasharray="2 4"'),{motion:'draw',dur:1.2,names:[[38,172,'to Gwanja',8.5]]}),
+    p('camels',at(0,0,1.5,person(-15,3,'#d8c49a',1)+camel(-6,3)+camel(8,3,'#b98a52')),{motion:'travel',dur:3.2,path:[[436,136],[295.3,146.1],[206.7,144.3],[216,158],[240,166]]}),
+    p('captive-towns',`<rect x="292" y="234" width="136" height="60" rx="6" fill="#0d1a14" fill-opacity=".78" stroke="#9c8a6a" stroke-width="1"/>`
+      +Array.from({length:21},(_,i)=>hut(314+15.3*(i%7),262+10*Math.floor(i/7),'#7d6c52',1)).join(''),{motion:'fade',dur:1.2,names:[[360,250,'21 towns of captives',8.5],[360,289,'places not known',7.5]]}),
+    p('fulani-books',`<ellipse rx="10" ry="7" fill="url(#set-glow-gold)"/>`+book(-6,0)+book(6,1),{motion:'travel',dur:2.8,path:[[4,152],[106.8,159.9],[138,158]]}),
+    p('salt',[[-4,0],[4,0],[0,-2.6]].map(([x,y])=>at(206+x*1.4,166+y*1.4,1.4,`<path d="M-3 0h6l-.8-2.4h-4.4Z" fill="#f2ede0" stroke="#9a8f78" stroke-width=".4"/>`)).join(''),{base:167}),
+    p('kurmi-traders',[[149,259],[207,258],[155,268],[201,268]].map(([x,y])=>person(x,y)).join(''),{motion:'fade',dur:.9}),
+    p('council',Array.from({length:9},(_,i)=>seated(282-18*Math.cos(Math.PI*i/8),224-6*Math.sin(Math.PI*i/8))).join(''),{motion:'fade',dur:1.2,names:[[282,209,'council of nine',8]]}),
+    p('kakaki',[[306,252],[319,248]].map(([x,y])=>person(x,y)+`<g transform="translate(${x+1},${y-7.4}) rotate(-38)"><path d="M0 0h15" stroke="#e7c77a" stroke-width="1.1"/><path d="M14.4 0l4-2.6v5.2Z" fill="#e7c77a"/></g>`).join(''),{motion:'fade',dur:.9,names:[[322,262,'kakaki',8,true]]})
   ]);
 }
 // Original symbolic architectural stage sets. Counts/layout are illustrative, never site plans.
@@ -932,7 +955,8 @@ function assemblageSvg(kind,timed) {
     const art=cityParts(),names=[];
     const name=(x,y,text,size=8.5,minor=false)=>`<text${minor?' class="minor"':''} x="${x}" y="${y}" text-anchor="middle" font-family="Georgia,serif" font-size="${size}" fill="#f2e6c4" stroke="#08120e" stroke-width="2.8" stroke-linejoin="round" paint-order="stroke">${esc(text)}</text>`;
     for(const part of timed) {
-      const a=art[part.id],until=part.until!=null?` data-until="${part.until}"`:'',dur=part.dur??a.dur;
+      // A standing part is already there when the scene opens (a city carrying on from an earlier scene)
+      const a=art[part.id],until=(part.until!=null?` data-until="${part.until}"`:'')+(part.standing?' data-standing':''),dur=part.dur??a.dur;
       parts.push(`<g data-set-part="${part.id}" data-at="${part.at}" data-abs="true" data-base="${a.base}" data-motion="${a.motion}" data-duration="${dur}"`
         +until+(a.path?` data-path="${a.path.map(q=>q.join(',')).join(' ')}"`:'')+`>${a.body}</g>`);
       // A part's names fade in once it has mostly arrived
@@ -1059,7 +1083,7 @@ function assemblyFrame(t,live) {
     for(const el of set.parts) {
     const authored=scene().beats?.length,abs=el.dataset.abs==='true';
     const start=abs?Number(el.dataset.at):Number(el.dataset.at)*(authored?2.8:1);
-    const u=live?clamp01((t-(abs?0:set.at)-start)/Number(el.dataset.duration)):1;
+    const u=live&&el.dataset.standing==null?clamp01((t-(abs?0:set.at)-start)/Number(el.dataset.duration)):1;
     const motion=el.dataset.motion,v=easeOut(u),base=Number(el.dataset.base),draw=motion==='draw';
     // A part with an end time fades out again; a jumped-to scene shows the finished city without it
     const gone=el.dataset.until==null?0:live?clamp01((t-Number(el.dataset.until))/.6):1;
@@ -1077,12 +1101,14 @@ function assemblyFrame(t,live) {
   cutSetNames();
 }
 // A city's own names show only where they are whole: one that the buttons, notes, year, caption or the
-// map's edge would cut hides until the camera brings it back into the clear. (The video export calls
-// this again once its entrance animations are set to the exact moment.)
+// map's edge would cut hides until the camera brings it back into the clear. In the video that includes
+// its caption, caution, credit and the cinema bars. (The video export calls this again once its
+// entrance animations are set to the exact moment.)
 function cutSetNames() {
   const named=fx.sets.filter(set=>set.width!==null&&set.names?.length);
   if(!named.length)return;
-  const wrap=map.getContainer().getBoundingClientRect(),blocks=overlayBoxes();
+  const video=[...document.querySelectorAll(".lb, #video-caption, #video-caution, #video-credit, #video-tools, #exit-video")].filter(onScreen);
+  const wrap=map.getContainer().getBoundingClientRect(),blocks=[...overlayBoxes(),...video.map(el=>edges(el.getBoundingClientRect()))];
   for(const set of named) for(const el of set.names){
     const r=edges(el.getBoundingClientRect());
     if(r.r-r.x<1)continue;
