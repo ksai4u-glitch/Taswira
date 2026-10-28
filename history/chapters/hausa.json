@@ -552,14 +552,18 @@
         12.99,
         7.6
       ],
-      "what": "Another Hausa city, north-west of Kano. The Kano Chronicle records that Kano's first war with Katsina came in Rumfa's reign and lasted eleven years, with neither side winning.",
-      "evidence": "Kano Chronicle (Palmer 1908)",
-      "location": "Today's city centre, rounded. The fifteenth-century town's extent is not drawn.",
+      "what": "Another Hausa city, north-west of Kano, with its own king. Its rulers moved here in the fifteenth century from Durbi ta Kusheyi, and Muhammadu Korau, its first Muslim king, is credited with founding the walled town. The Kano Chronicle records that Kano's first war with Katsina came in Rumfa's reign and lasted eleven years, with neither side winning.",
+      "evidence": "Kano Chronicle (Palmer 1908) and secondary sources",
+      "location": "Today's city centre, rounded. The fifteenth-century town's extent is not drawn, and the earlier seat at Durbi ta Kusheyi, about 29 km to the south-east, is not placed.",
       "status": "approx",
       "disputed": null,
       "sources": [
-        "kano-chronicle-rumfa"
-      ]
+        "kano-chronicle-rumfa",
+        "wiki-katsina-kingdom"
+      ],
+      "form": "city-state",
+      "icon": "walled-town",
+      "label": "left"
     },
     {
       "id": "bornu",
@@ -579,6 +583,187 @@
         "wiki-bornu",
         "kano-chronicle-burja"
       ]
+    },
+    {
+      "id": "daura",
+      "kind": "point",
+      "form": "city-state",
+      "name": "Daura",
+      "coordinates": [
+        13.036,
+        8.318
+      ],
+      "what": "Remembered in Hausa tradition as the mother city of the Hausa states: there, the story says, Bayajidda killed the snake in the Kusugu well and married Queen Daurama. By one historian's reading, tribute to Bornu was sent by way of Daura.",
+      "evidence": "Oral tradition, in secondary sources",
+      "location": "Today's town of the same name.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-hausa",
+        "wiki-places-key"
+      ],
+      "icon": "walled-town"
+    },
+    {
+      "id": "kano",
+      "kind": "point",
+      "form": "city-state",
+      "name": "Kano",
+      "coordinates": [
+        12.0,
+        8.517
+      ],
+      "what": "Kano as one Hausa state among several, each with its own king. Its Chronicle supplies most of this chapter's dates, so Kano's view of its neighbours is the one best recorded.",
+      "evidence": "Kano Chronicle (Palmer 1908) and secondary sources",
+      "location": "Today's old city of Kano.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-hausa",
+        "wiki-places-key",
+        "kano-chronicle-wiki"
+      ],
+      "icon": "walled-town"
+    },
+    {
+      "id": "zazzau",
+      "kind": "point",
+      "form": "city-state",
+      "name": "Zazzau",
+      "coordinates": [
+        11.067,
+        7.7
+      ],
+      "uncertainty_km": 50,
+      "what": "The southern Hausa state. Captives taken in the lands to its south were collected there and sent north to the markets of Kano and Katsina. Its best-known figure, Amina, is dated differently by different sources.",
+      "evidence": "Secondary sources, and the Kano Chronicle on Amina",
+      "location": "Drawn at today's Zaria, which was founded about 1536. Zazzau's earlier capitals, such as Turunku, are not placed: the dashed ring marks the region, not a site.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-zazzau",
+        "wiki-places-hausa",
+        "kano-chronicle-dauda",
+        "wiki-amina"
+      ],
+      "icon": "walled-town"
+    },
+    {
+      "id": "gobir",
+      "kind": "point",
+      "form": "city-state",
+      "name": "Gobir",
+      "coordinates": [
+        14.433,
+        6.767
+      ],
+      "uncertainty_km": 80,
+      "what": "The northernmost Hausa state, which tradition gives the task of war against invaders. Under Tuareg pressure from the north its people moved south more than once.",
+      "evidence": "Oral tradition and secondary sources",
+      "location": "Drawn at today's Birni Lalle in Niger, inside a wide ring, because where Gobir's capital stood in these years is uncertain.",
+      "status": "disputed",
+      "disputed": "One summary makes Birnin Lalle Gobir's capital from about 1450 to 1600, but the same article's text dates the move there to the early eighteenth century, and earlier centres in Asben or at Marandet are also proposed.",
+      "sources": [
+        "wiki-gobir",
+        "wiki-places-hausa",
+        "wiki-hausa"
+      ],
+      "icon": "walled-town"
+    },
+    {
+      "id": "rano",
+      "kind": "point",
+      "form": "city-state",
+      "name": "Rano",
+      "coordinates": [
+        11.557,
+        8.583
+      ],
+      "what": "One of the seven Hausa states of tradition. By the Kano Chronicle's reckoning Kano's king Yaji (1349–1385) drove out its king, and Rano never regained its independence, so it is drawn faintly.",
+      "evidence": "Kano Chronicle (Palmer 1908) and secondary sources",
+      "location": "Today's town of the same name.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "kano-chronicle-yaji",
+        "wiki-hausa",
+        "wiki-places-hausa"
+      ],
+      "icon": "walled-town"
+    },
+    {
+      "id": "biram",
+      "kind": "point",
+      "form": "city-state",
+      "name": "Biram",
+      "coordinates": [
+        12.45,
+        10.033
+      ],
+      "uncertainty_km": 40,
+      "what": "The seventh Hausa state of tradition, founded by Bayajidda's son by a princess of Bornu. One historian counts it, with Kano, among the states that paid tribute to Bornu.",
+      "evidence": "Oral tradition and secondary sources",
+      "location": "Drawn at today's Hadejia, which was once known as Biram. The old town of Biram itself is not placed: the dashed ring marks the area.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-hausa",
+        "wiki-places-hausa"
+      ],
+      "icon": "walled-town"
+    },
+    {
+      "id": "kebbi",
+      "kind": "point",
+      "form": "kingdom",
+      "name": "Kebbi",
+      "coordinates": [
+        13.088,
+        4.899
+      ],
+      "what": "A Hausa-speaking state to the west, which tradition lists among the Banza Bakwai, seven states it ranked below the Hausa seven. In 1516 its leader Kanta rebelled against Songhai and defeated the army sent against him.",
+      "evidence": "Secondary sources, resting partly on the Tarikh al-Sudan",
+      "location": "Drawn at Surame, the walled town Kanta built in the sixteenth century, to stand for Kebbi. His first capital, Birnin Leka, is not placed.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-kanta",
+        "wiki-places-hausa",
+        "wiki-hausa"
+      ]
+    },
+    {
+      "id": "kano-bornu",
+      "kind": "link",
+      "type": "tribute",
+      "from": "kano",
+      "to": "bornu",
+      "name": "Kano's tribute to Bornu",
+      "what": "By the Kano Chronicle's reckoning, Abdullahi Burja (1438–1452) was the first Hausa king to send tribute to Bornu.",
+      "evidence": "Kano Chronicle (Palmer 1908)",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "kano-chronicle-burja",
+        "wiki-hausa"
+      ],
+      "bend": 0.14
+    },
+    {
+      "id": "biram-bornu",
+      "kind": "link",
+      "type": "tribute",
+      "from": "biram",
+      "to": "bornu",
+      "name": "Biram's tribute to Bornu",
+      "what": "The historian M. G. Smith counted Biram, with Kano, among the Hausa states that paid tribute to Bornu, sent by way of Daura.",
+      "evidence": "Secondary source: one historian's reading",
+      "status": "disputed",
+      "disputed": "Whether every Hausa state paid tribute to Bornu, or only Kano and Biram, is unclear, and how long they paid is not known.",
+      "sources": [
+        "wiki-hausa"
+      ],
+      "bend": -0.12
     }
   ],
   "scenes": [
@@ -1037,6 +1222,408 @@
             "label": "1526 · Leo Africanus's account; his visit is doubted",
             "basis": "account"
           }
+        }
+      ]
+    },
+    {
+      "id": "hausa-cities",
+      "title": "Hausa cities side by side",
+      "when": {
+        "from": 1349,
+        "to": 1516,
+        "label": "1349–1516 · Kano Chronicle reckoning and other sources"
+      },
+      "camera": {
+        "center": [
+          12.7,
+          8.4
+        ],
+        "zoom": 7.7
+      },
+      "camera_frame": "video",
+      "camera_path": [
+        {
+          "at": 0.4,
+          "center": [
+            12.85,
+            8.318
+          ],
+          "zoom": 8.8,
+          "dur": 4.0
+        },
+        {
+          "at": 6.4,
+          "center": [
+            12.7,
+            8.4
+          ],
+          "zoom": 7.7,
+          "dur": 3.6
+        },
+        {
+          "at": 19.5,
+          "center": [
+            11.85,
+            8.4
+          ],
+          "zoom": 8.5,
+          "dur": 3.0
+        },
+        {
+          "at": 25,
+          "center": [
+            11.75,
+            8.1
+          ],
+          "zoom": 8.5,
+          "dur": 3.0
+        },
+        {
+          "at": 32,
+          "center": [
+            12.5,
+            10.3
+          ],
+          "zoom": 7.9,
+          "dur": 3.2
+        },
+        {
+          "at": 39,
+          "center": [
+            12.75,
+            8.0
+          ],
+          "zoom": 8.0,
+          "dur": 3.0
+        },
+        {
+          "at": 45,
+          "center": [
+            12.65,
+            8.1
+          ],
+          "zoom": 8.1,
+          "dur": 4.0
+        },
+        {
+          "at": 50,
+          "center": [
+            13.0,
+            6.0
+          ],
+          "zoom": 7.8,
+          "dur": 3.4
+        },
+        {
+          "at": 55.5,
+          "center": [
+            12.75,
+            8.55
+          ],
+          "zoom": 7.6,
+          "dur": 4.0
+        }
+      ],
+      "show": [
+        "daura",
+        "kano",
+        "katsina",
+        "zazzau",
+        "gobir",
+        "rano",
+        "biram",
+        "bornu",
+        "kebbi",
+        "kano-bornu",
+        "biram-bornu"
+      ],
+      "dim": [],
+      "appear": {
+        "daura": 1.2,
+        "kano": 7.2,
+        "katsina": 7.8,
+        "zazzau": 8.4,
+        "gobir": 9.0,
+        "rano": 9.6,
+        "biram": 10.2,
+        "bornu": 32.6,
+        "kano-bornu": 33.4,
+        "biram-bornu": 35.2,
+        "kebbi": 55.9
+      },
+      "text": "Hausa tradition tells of Bayajidda, a prince from the east. At Daura he killed the snake that guarded the well, and married the queen. Their descendants, the story says, founded seven Hausa states. They were never one kingdom: each walled city had its own king, the sarki. In the story each had its task. Kano and Rano dyed cloth with indigo, Katsina and Daura kept the markets, Gobir fought off invaders, and Zazzau supplied slaves. The cities fought each other. Kano's king Yaji drove out the king of Rano, and Rano never ruled itself again. The Chronicle says that in Dauda's reign Zazzau, under Queen Amina, conquered the towns as far as Kwararafa and Nupe. Other sources place her a century or more later. Kano's Abdullahi Burja was the first Hausa king to send tribute to Bornu. Whether every city paid, or only Kano and Biram, is not known. In Katsina, a cleric, Muhammadu Korau, became the first Muslim king. He is credited with the walled town that grew into Katsina city. Kano and Katsina, the two great markets, fought for eleven years in Rumfa's reign, and neither side won. Then Songhai's armies came from the west. Askia Muhammad attacked Katsina; how far Songhai ruled the Hausa cities is disputed. In 1516 Kanta of Kebbi broke with Songhai and beat the army sent against him. The Hausa cities stayed separate until the jihad of 1804.",
+      "beats": [
+        {
+          "at": 0,
+          "text": "Hausa tradition tells of Bayajidda, a prince from the east. At Daura he killed the snake that guarded the well, and married the queen.",
+          "pose": 1,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "label": "Hausa tradition · the Bayajidda story",
+            "basis": "oral"
+          }
+        },
+        {
+          "at": 6,
+          "text": "Their descendants, the story says, founded seven Hausa states. They were never one kingdom: each walled city had its own king, the sarki.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "label": "Hausa tradition · the Bayajidda story",
+            "basis": "oral"
+          }
+        },
+        {
+          "at": 12.5,
+          "text": "In the story each had its task. Kano and Rano dyed cloth with indigo, Katsina and Daura kept the markets, Gobir fought off invaders, and Zazzau supplied slaves.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "label": "Hausa tradition · the seven tasks",
+            "basis": "oral"
+          }
+        },
+        {
+          "at": 19.5,
+          "text": "The cities fought each other. Kano's king Yaji drove out the king of Rano, and Rano never ruled itself again.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1349,
+            "to": 1385,
+            "label": "1349–1385 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 25,
+          "text": "The Chronicle says that in Dauda's reign Zazzau, under Queen Amina, conquered the towns as far as Kwararafa and Nupe. Other sources place her a century or more later.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1421,
+            "to": 1438,
+            "label": "1421–1438 · Kano Chronicle; others differ",
+            "basis": "differ"
+          }
+        },
+        {
+          "at": 32,
+          "text": "Kano's Abdullahi Burja was the first Hausa king to send tribute to Bornu. Whether every city paid, or only Kano and Biram, is not known.",
+          "pose": 3,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1438,
+            "to": 1452,
+            "label": "1438–1452 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 39,
+          "text": "In Katsina, a cleric, Muhammadu Korau, became the first Muslim king. He is credited with the walled town that grew into Katsina city.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1445,
+            "to": 1495,
+            "label": "about 1445–1495 · Katsina Chronicle; others differ",
+            "basis": "differ"
+          }
+        },
+        {
+          "at": 45,
+          "text": "Kano and Katsina, the two great markets, fought for eleven years in Rumfa's reign, and neither side won.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1463,
+            "to": 1499,
+            "label": "1463–1499 · Kano Chronicle reckoning",
+            "basis": "chronicle"
+          }
+        },
+        {
+          "at": 50,
+          "text": "Then Songhai's armies came from the west. Askia Muhammad attacked Katsina; how far Songhai ruled the Hausa cities is disputed.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1512,
+            "to": 1516,
+            "label": "1512–1516 · sources differ",
+            "basis": "differ"
+          }
+        },
+        {
+          "at": 55.5,
+          "text": "In 1516 Kanta of Kebbi broke with Songhai and beat the army sent against him. The Hausa cities stayed separate until the jihad of 1804.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1516,
+            "to": 1516,
+            "label": "1516 · Tarikh al-Sudan, a Timbuktu Chronicle",
+            "basis": "chronicle"
+          }
+        }
+      ],
+      "sources": [
+        "wiki-hausa",
+        "kano-chronicle-wiki",
+        "last-1980-kano-chronicle",
+        "kano-chronicle-yaji",
+        "kano-chronicle-dauda",
+        "wiki-amina",
+        "wiki-zazzau",
+        "kano-chronicle-burja",
+        "wiki-katsina-kingdom",
+        "wiki-gobarau",
+        "kano-chronicle-rumfa",
+        "wiki-askia",
+        "wiki-kanta",
+        "leo-africanus-wiki",
+        "wiki-gobir",
+        "wiki-bornu",
+        "wiki-places-key",
+        "wiki-places-hausa"
+      ],
+      "disputed": "Amina's dates differ by more than a century: the Kano Chronicle puts her in Dauda's reign (1421–1438), a Zaria list in the early sixteenth century, and others after 1576; her name is missing from Zazzau's king lists, and whether she was queen is disputed. Korau of Katsina is dated about 1445–1495 by the Katsina Chronicle, 1492–1541 by another list and to the thirteenth century by a local tradition. Songhai's hold on the Hausa cities is disputed: one account dates Askia's conquest of Katsina to 1512 and has Katsina a vassal until 1554, others say he also took Zazzau and Gobir, and Leo Africanus, whose visit is doubted, adds Kano.",
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 62,
+      "scale": "Hausa cities · side by side",
+      "focus_label": "Hausa cities side by side",
+      "fade": {
+        "rano": 22.0
+      },
+      "notes": [
+        {
+          "place": "daura",
+          "text": "the Kusugu well, in the story",
+          "art": "well",
+          "at": 1.8,
+          "until": 6.8,
+          "oral": true
+        },
+        {
+          "place": "kano",
+          "text": "indigo",
+          "at": 13.4,
+          "until": 19.5,
+          "oral": true,
+          "side": "above"
+        },
+        {
+          "place": "rano",
+          "text": "indigo",
+          "at": 13.4,
+          "until": 19.5,
+          "oral": true
+        },
+        {
+          "place": "katsina",
+          "text": "markets",
+          "at": 14.4,
+          "until": 19.5,
+          "oral": true
+        },
+        {
+          "place": "daura",
+          "text": "markets",
+          "at": 14.4,
+          "until": 19.5,
+          "oral": true
+        },
+        {
+          "place": "gobir",
+          "text": "war",
+          "at": 15.4,
+          "until": 19.5,
+          "oral": true
+        },
+        {
+          "place": "zazzau",
+          "text": "supplied slaves",
+          "at": 16.4,
+          "until": 19.5,
+          "oral": true
+        },
+        {
+          "place": "rano",
+          "text": "taken by Kano",
+          "at": 21.6,
+          "until": 25.0
+        },
+        {
+          "place": "zazzau",
+          "text": "Queen Amina · dates differ",
+          "at": 25.8,
+          "until": 32.0
+        },
+        {
+          "place": "katsina",
+          "text": "first Muslim king",
+          "at": 39.8,
+          "until": 45.0
+        },
+        {
+          "place": "katsina",
+          "text": "eleven years of war",
+          "at": 45.6,
+          "until": 50.0
+        },
+        {
+          "place": "katsina",
+          "text": "attacked by Songhai",
+          "at": 51.0,
+          "until": 55.5
+        },
+        {
+          "place": "kebbi",
+          "text": "Kanta breaks with Songhai",
+          "at": 56.6,
+          "until": 62.0
         }
       ]
     }

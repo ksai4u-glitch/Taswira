@@ -97,7 +97,7 @@ class HausaChapterTests(unittest.TestCase):
     def test_appear_needs_a_shown_place(self):
         ch, sc, _ = self.kano()
         sc["appear"] = {"zazzau": 40}
-        self.assertTrue(any("appear needs places the scene shows" in p for p in self.problems(ch)))
+        self.assertTrue(any("appear needs places or ties the scene shows" in p for p in self.problems(ch)))
 
     def test_nothing_later_is_drawn(self):
         # No mosque, minaret, emblem or bridge, and no part dated after Rumfa's reign
@@ -211,6 +211,144 @@ class KanoPeopleTests(unittest.TestCase):
         appears = life[life.index("What appears when:"):]
         self.assertIn("Twenty-one towns of captives", appears)
         self.assertNotIn("First wall begun under Gijimasu", appears[:appears.index("</p>") if "</p>" in appears else None])
+
+
+class HausaCitiesTests(unittest.TestCase):
+    """The third scene sets Kano among its neighbours: separate walled towns, never one kingdom."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.states, _, _ = bh.load_states()
+        cls.sources = bh.read_json(bh.SOURCES_PATH)
+        cls.hausa = bh.read_json(os.path.join(bh.HISTORY_DIR, "chapters", "hausa.json"))
+
+    def problems(self, ch):
+        return bh.check([ch], self.sources, self.states, set())
+
+    def cities(self):
+        ch = copy.deepcopy(self.hausa)
+        sc = next(s for s in ch["scenes"] if s["id"] == "hausa-cities")
+        return ch, sc, {f["id"]: f for f in ch["features"]}
+
+    def note(self, sc, place, text):
+        return next(n for n in sc["notes"] if n["place"] == place and n["text"] == text)
+
+    def test_tradition_first_then_dated_beats(self):
+        ch, sc, _ = self.cities()
+        self.assertEqual(self.problems(ch), [])
+        oral = [b for b in sc["beats"] if b["when"]["basis"] == "oral"]
+        self.assertEqual([b["at"] for b in oral], [0, 6, 12.5])
+        for b in oral:
+            self.assertNotIn("from", b["when"])
+            self.assertTrue(b["when"]["label"].startswith("Hausa tradition"))
+        dated = [b["when"]["from"] for b in sc["beats"] if "from" in b["when"]]
+        self.assertEqual(dated, sorted(dated))
+        self.assertEqual((sc["when"]["from"], sc["when"]["to"]), (1349, 1516))
+
+    def test_every_city_is_its_own_walled_town(self):
+        _, sc, f = self.cities()
+        towns = [fid for fid in sc["show"] if f[fid].get("icon") == "walled-town"]
+        self.assertEqual(sorted(towns), ["biram", "daura", "gobir", "kano", "katsina", "rano", "zazzau"])
+        for fid in towns:
+            self.assertEqual(f[fid]["form"], "city-state", fid)
+        # Never one kingdom: no shared border or area is drawn
+        self.assertFalse([fid for fid in sc["show"] if f[fid]["kind"] == "area"])
+
+    def test_icon_only_for_its_form(self):
+        ch, _, f = self.cities()
+        f["bornu"]["icon"] = "walled-town"
+        self.assertTrue(any("icon must be one of walled-town" in p for p in self.problems(ch)))
+        ch, _, f = self.cities()
+        f["kano"]["icon"] = "palace"
+        self.assertTrue(any("icon must be one of" in p for p in self.problems(ch)))
+
+    def test_uncertain_places_say_so(self):
+        _, _, f = self.cities()
+        self.assertEqual(f["gobir"]["status"], "disputed")
+        self.assertIn("Birnin Lalle", f["gobir"]["disputed"])
+        for fid in ("gobir", "zazzau", "biram"):
+            self.assertIn("uncertainty_km", f[fid], fid)
+
+    def test_tribute_ties(self):
+        _, sc, f = self.cities()
+        self.assertEqual((f["kano-bornu"]["from"], f["kano-bornu"]["to"], f["kano-bornu"]["type"]), ("kano", "bornu", "tribute"))
+        self.assertEqual(f["kano-bornu"]["status"], "approx")
+        # Biram's tribute rests on one historian's reading: drawn dashed, as disputed
+        self.assertEqual(f["biram-bornu"]["status"], "disputed")
+        # Each tie waits for Burja's beat and for both of its places
+        burja = next(b["at"] for b in sc["beats"] if b["when"].get("from") == 1438)
+        for tie in ("kano-bornu", "biram-bornu"):
+            self.assertGreaterEqual(sc["appear"][tie], burja, tie)
+
+    def test_tie_waits_for_its_places(self):
+        ch, sc, _ = self.cities()
+        sc["appear"]["kano-bornu"] = 32.0          # before Bornu appears at 32.6
+        self.assertTrue(any("tie's appear time must come after both its places" in p for p in self.problems(ch)))
+
+    def test_bend_range(self):
+        for bend in (0, 0.5, -0.41, "a"):
+            ch, _, f = self.cities()
+            f["kano-bornu"]["bend"] = bend
+            self.assertTrue(any("bend curves a tie" in p for p in self.problems(ch)), bend)
+
+    def test_oral_notes_stay_with_the_tradition(self):
+        ch, sc, _ = self.cities()
+        self.note(sc, "zazzau", "supplied slaves")["until"] = 20
+        self.assertTrue(any("must leave before the next dated beat" in p for p in self.problems(ch)))
+        ch, sc, _ = self.cities()
+        self.note(sc, "kano", "indigo").update({"at": 19.6, "until": 21})
+        self.assertTrue(any("oral tradition but appears during a dated beat" in p for p in self.problems(ch)))
+        ch, sc, _ = self.cities()
+        self.note(sc, "rano", "taken by Kano").update({"at": 13, "until": 15})
+        self.assertTrue(any("not marked oral" in p for p in self.problems(ch)))
+
+    def test_note_rules(self):
+        ch, sc, _ = self.cities()
+        self.note(sc, "zazzau", "Queen Amina · dates differ")["place"] = "nok"
+        self.assertTrue(any("needs a place the scene shows" in p for p in self.problems(ch)))
+        ch, sc, _ = self.cities()
+        self.note(sc, "kebbi", "Kanta breaks with Songhai")["text"] = "x" * 41
+        self.assertTrue(any("1 to 40 characters" in p for p in self.problems(ch)))
+        ch, sc, _ = self.cities()
+        self.note(sc, "daura", "the Kusugu well, in the story")["art"] = "snake"
+        self.assertTrue(any("art must be one of well" in p for p in self.problems(ch)))
+        ch, sc, _ = self.cities()
+        self.note(sc, "katsina", "first Muslim king")["until"] = 70
+        self.assertTrue(any("at < until, inside the scene" in p for p in self.problems(ch)))
+
+    def test_rano_fades_after_its_conquest(self):
+        ch, sc, _ = self.cities()
+        yaji = next(b["at"] for b in sc["beats"] if b["when"].get("from") == 1349)
+        self.assertGreater(sc["fade"]["rano"], yaji)
+        sc["dim"] = ["rano"]
+        self.assertTrue(any("fade needs places the scene shows (not already dim)" in p for p in self.problems(ch)))
+
+    def test_camera_frame(self):
+        ch, sc, _ = self.cities()
+        self.assertEqual(sc["camera_frame"], "video")
+        sc["camera_frame"] = "cinema"
+        self.assertTrue(any("camera_frame is" in p for p in self.problems(ch)))
+
+    def test_violence_and_slavery_are_solemn(self):
+        _, sc, _ = self.cities()
+        for beat in sc["beats"]:
+            if any(w in beat["text"] for w in ("fought", "slaves", "conquered", "attacked", "army", "armies")):
+                self.assertEqual(beat["pose"], 7, beat["text"])
+
+    def test_amina_and_songhai_say_sources_differ(self):
+        _, sc, _ = self.cities()
+        amina = next(b for b in sc["beats"] if "Amina" in b["text"])
+        self.assertIn("others differ", amina["when"]["label"])
+        self.assertIn("Other sources place her", amina["text"])
+        songhai = next(b for b in sc["beats"] if "Songhai's armies" in b["text"])
+        self.assertEqual(songhai["when"]["basis"], "differ")
+        self.assertIn("disputed", songhai["text"])
+
+    def test_text_version(self):
+        text = bh.transcript([self.hausa], self.sources, self.states)
+        self.assertIn("<em>Hausa tradition · the seven tasks.</em>", text)
+        self.assertIn("<em>1421–1438 · Kano Chronicle; others differ.</em>", text)
+        self.assertIn("Birnin Lalle", text)
 
 
 if __name__ == "__main__":
