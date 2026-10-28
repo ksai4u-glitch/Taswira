@@ -195,7 +195,7 @@
     "url": "https://en.wikipedia.org/wiki/Hausa_Kingdoms",
     "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
-    "checked": "Opened 27 Oct 2026. Daura the mother city; the Hausa Bakwai as seven states; fortified capital cities; by the 15th century trading centres competing with Kanem-Bornu and Mali; Bornu made the Hausa states vassals in the 15th century, tribute sent through Daura, unsure whether all or only Kano and Biram; Rano conquered by Kano under Yaji I; Tuareg and Fulani migration from the 14th and 15th centuries."
+    "checked": "Opened 27 Oct 2026. Daura the mother city; the Hausa Bakwai as seven states; fortified capital cities; by the 15th century trading centres competing with Kanem-Bornu and Mali; Bornu made the Hausa states vassals in the 15th century, tribute sent through Daura, unsure whether all or only Kano and Biram; Rano conquered by Kano under Yaji I; Tuareg and Fulani migration from the 14th and 15th centuries. Opened again 28 Oct 2026: the Bayajidda story (Daura's Kusugu well, Queen Daurama; Biram from his son by Magira of Bornu); the tasks tradition gives the seven (Amadu 1984): Kano and Rano indigo, Katsina and Daura markets, Gobir war, Zazzau slaves; Banza Bakwai includes Kebbi; Muhammad Korau of Katsina a cleric; that Hausaland was tributary to Songhai is marked 'citation needed'."
   },
   "wiki-bornu": {
     "title": "Bornu Empire (Wikipedia)",
@@ -970,5 +970,95 @@
     "kind": "encyclopedia article; secondary",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
     "checked": "Opened 27 Oct 2026. A long metal trumpet, up to about three metres, played only by men and tied to royalty: in Hausa societies it is played only at a king's or sultan's palace."
+  },
+  "kano-chronicle-yaji": {
+    "title": "Yaji I (with the Kano Chronicle passage on his reign, Palmer 1908)",
+    "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Yaji_I",
+    "kind": "primary source passage reproduced in an encyclopedia article",
+    "rights": "Facts and short phrases cited.",
+    "checked": "Opened 28 Oct 2026. Reign given as 1349–1385 (the article's body says he became king in 1343 and ruled 37 years, which does not match). Palmer's text: he drove the Sarkin Rano from Zamna Gaba, went to Rano and reigned at Bunu two years. Wangara scholars from Mali came in his reign."
+  },
+  "kano-chronicle-dauda": {
+    "title": "Dauda (with the Kano Chronicle passage on his reign, Palmer 1908)",
+    "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Dauda_(sultan)",
+    "kind": "primary source passage reproduced in an encyclopedia article",
+    "rights": "Facts and short phrases cited.",
+    "checked": "Opened 28 Oct 2026. Reign 1421–1438 by later reckoning. Palmer's text: Zaria, under Queen Amina, conquered all the towns as far as Kwararafa and Nupe; every town paid tribute to her; the Sarkin Nupe sent her 40 eunuchs and 10,000 kolas; her conquests extended over 34 years. The passage says nothing of walls."
+  },
+  "wiki-amina": {
+    "title": "Amina of Zazzau (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Amina_of_Zazzau",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 28 Oct 2026. Dated to Dauda's reign (1421–1438) by the Kano Chronicle (accepted by Adeleye and Fisher); to the early sixteenth century from a Zaria list that dates Bakwa Turunku 1492–1522; after 1576 by Abdullahi Smith and tradition (1576–1610). Her name is not on the regnal lists published by Arnett or in the Chronicle of Abuja; palace tradition calls her queen, other traditions a princess. Bello claimed Kano and Katsina paid her tribute, which historians dispute for Kano. The walls credited to her rest on popular works."
+  },
+  "wiki-zazzau": {
+    "title": "Kingdom of Zazzau (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Kingdom_of_Zazzau",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 28 Oct 2026. Capitals about 1010 to 1578: Turunku, Wuciciri, Rikoci, Kawar (Stewart 1989). Zaria founded in 1536 and named after Bakwa's daughter. Zazzau was a collection point for slaves sent to the northern markets of Kano and Katsina, exchanged there for salt (Britannica; M. G. Smith 1960)."
+  },
+  "wiki-gobir": {
+    "title": "Gobir (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Gobir",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 28 Oct 2026. Infobox: capital Asben 1150–1450, Birnin Lalle 1450–1600; the text instead says the move to Birnin Lalle came in the early eighteenth century, and that Gobir was possibly centred on Marandet (Amadu 1984). Tuareg pressure forced the Gobirawa south; the Tuareg replaced Gobir in the Aïr early in the fifteenth century. Descent from Bayajidda's grandson Duma is disputed (Hogben and Kirk-Greene 1966)."
+  },
+  "wiki-katsina-kingdom": {
+    "title": "Kingdom of Katsina (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Kingdom_of_Katsina",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 28 Oct 2026. Capital at Durbi ta Kusheyi, about 18 miles south-east of Katsina, until the fifteenth century, then Katsina. Muhammadu Korau, the first Muslim ruler, credited with founding the walled settlement; dated about 1445–1495 (Katsina Chronicle), 1492/3–1541/2 in a table, and to the thirteenth century by a local tradition. An eleven-year war with Kano under Rumfa was indecisive. Askia Muhammad I conquered Katsina in 1512, and it was a vassal of Gao until the battle of Karfata in 1554."
+  },
+  "wiki-gobarau": {
+    "title": "Gobarau Minaret (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Gobarau_Minaret",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 28 Oct 2026. Built in the fifteenth century in the reign of Muhammadu Korau (1445–1495); one cited title implies a fourteenth-century date. Not drawn: the scene shows no buildings at Katsina."
+  },
+  "wiki-kanta": {
+    "title": "Kanta Kotal (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Kanta_Kotal",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 28 Oct 2026. Reigned 1516–1561. Rebelled against Songhai in 1516 over his share of the spoils of the Aïr campaign (al-Sa'di, Tarikh al-Sudan), two years into Askia Muhammad's Hausaland campaign, which began in 1513, and defeated the army sent against him. First capital Birnin Leka; walled towns at Gungu, Silame and Surame. Later wars with Bornu; died 1561."
+  },
+  "wiki-askia": {
+    "title": "Askia Muhammad I (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Askia_Muhammad_I",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 28 Oct 2026. Citing Levtzion (1977): Askia Muhammad conquered Katsina, Zaria and Gobir before the 1515 Agadez campaign; the Emir of Kebbi rebelled over the spoils, ending Songhai hegemony in Hausaland. No date is given for the Hausa conquests."
+  },
+  "wiki-places-hausa": {
+    "title": "Coordinates for the Hausa cities scene (Wikipedia place articles)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-28",
+    "url": "https://en.wikipedia.org/wiki/Rano",
+    "kind": "gazetteer coordinates of today's towns and one ruined site",
+    "rights": "Coordinates are facts; no text reused.",
+    "checked": "Opened 28 Oct 2026. Rano 11.557 N 8.583 E (one of the seven Hausa states; taken by Kano under Yaji I, never sovereign again); Zaria 11.067 N 7.700 E (founded about 1536); Hadejia 12.450 N 10.033 E (once known as Biram); Birni Lalle, Niger, 14.433 N 6.767 E; Surame 13.088 N 4.899 E (built in the sixteenth century by Kanta of Kebbi, abandoned about 1700)."
   }
 }

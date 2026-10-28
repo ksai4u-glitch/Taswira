@@ -90,6 +90,10 @@ FORMS = ("kingdom", "city-state", "network", "caliphate", "emirate", "communitie
 # Ties between two places, and movements along a path of places
 LINKS = ("allegiance", "tribute", "alliance", "trade", "ritual")
 MOVES = ("migration", "campaign", "trade")
+# A city-state may be drawn as a small walled town (the same symbol for every town, not a plan)
+ICONS = {"walled-town": "city-state"}
+# Drawings a scene's note may carry
+NOTE_ART = ("well",)
 UNCERTAIN = ("start", "end", "whole")
 # A colonial claim on a place: on paper only, occupied, or taken during the scene by a campaign it shows
 CONTROL = ("claimed", "held", "taken")
@@ -405,6 +409,44 @@ def check_parts(where, m, need, cite):
                  f"{here}: year must be a whole year inside the monument's from/to")
 
 
+def check_notes(where, sc, features, need):
+    """A scene's notes and fades. A note is a few words at a shown place for part of the scene. A note
+    from oral tradition (`oral: true`) appears only during an oral-tradition beat and leaves before the
+    next dated one; any other note appears only under a dated beat. A fade dims a place from a moment on."""
+    end = sc.get("duration", reading_seconds(sc.get("text", "")))
+    shown = [fid for fid in sc.get("show", []) if features.get(fid, {}).get("kind") == "point"]
+    beats = [b for b in sc.get("beats", []) if isinstance(b, dict) and isinstance(b.get("at"), (int, float))]
+    oral_at = lambda t: next((b.get("when", {}).get("basis") == "oral" for b in reversed(beats) if b["at"] <= t), None)
+    notes = sc.get("notes", [])
+    need(isinstance(notes, list), f"{where}: notes must be a list")
+    for n in notes if isinstance(notes, list) else []:
+        here = f"{where} note {n.get('text') if isinstance(n, dict) else n!r}"
+        if not isinstance(n, dict):
+            need(False, f"{here}: a note is an object")
+            continue
+        at, until, text = n.get("at"), n.get("until"), n.get("text")
+        need(n.get("place") in shown, f"{here}: a note needs a place the scene shows")
+        need(isinstance(text, str) and 0 < len(text.strip()) <= 40, f"{here}: a note is 1 to 40 characters")
+        need(isinstance(at, (int, float)) and isinstance(until, (int, float)) and 0 <= at < until <= end,
+             f"{here}: a note needs at < until, inside the scene")
+        need(n.get("art") in (None,) + NOTE_ART, f"{here}: art must be one of {', '.join(NOTE_ART)}")
+        need(isinstance(n.get("oral", False), bool), f"{here}: oral must be true or false")
+        need(n.get("side") in (None, "above"), f"{here}: side is \"above\", or left out for below")
+        if not beats or not isinstance(at, (int, float)) or not isinstance(until, (int, float)):
+            continue
+        if n.get("oral"):
+            need(oral_at(at) is True, f"{here} is oral tradition but appears during a dated beat")
+            later = [b["at"] for b in beats if b["at"] > at and b.get("when", {}).get("basis") != "oral"]
+            need(not later or until <= later[0], f"{here} is oral tradition and must leave before the next dated beat")
+        else:
+            need(oral_at(at) is False, f"{here} appears during an oral-tradition beat but is not marked oral")
+    fade = sc.get("fade", {})
+    need(isinstance(fade, dict), f"{where}: fade must map places to seconds")
+    for fid, at in (fade if isinstance(fade, dict) else {}).items():
+        need(fid in shown and fid not in sc.get("dim", []) and isinstance(at, (int, float)) and 0 <= at < end,
+             f"{where}: fade needs places the scene shows (not already dim) and times inside the scene")
+
+
 def expand_bases(chapters):
     """A city can carry on from another setting in the same chapter (monument "base"). It starts
     from the base city as it stands, without the base's passing parts (oral tradition, a disputed
@@ -582,6 +624,9 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                         need(all(type(m.get(k)) is int for k in ("from", "to")) and m.get("from", 1) <= m.get("to", 0),
                              f"{where}: monument needs documented from/to years")
                         cite(where + " monument", m.get("sources"))
+                if "icon" in f:
+                    need(ICONS.get(f["icon"]) == f.get("form"),
+                         f"{where}: icon must be one of {', '.join(ICONS)}, for a place of that form")
                 if "emblem" in f:
                     need(f["emblem"] in emblems, f"{where}: unknown emblem {f['emblem']!r}")
                 if "short" in f:
@@ -638,6 +683,8 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                 need(is_point(end), f"{cid}/{fid}: {end!r} is not a place in this chapter")
             if f.get("kind") == "link":
                 need(f.get("from") != f.get("to"), f"{cid}/{fid}: a link needs two different places")
+                need("bend" not in f or isinstance(f["bend"], (int, float)) and 0 < abs(f["bend"]) <= .4,
+                     f"{cid}/{fid}: bend curves a tie, from -0.4 to 0.4 (sign picks the side)")
 
         snapshots = ch.get("snapshots", {})
         previous = None
@@ -693,6 +740,8 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                      and when["from"] >= PERIOD_BEFORE,
                      f"{where}: modern-reference is only for map scenes from 1914 onward")
             need(sc.get("clock") in CLOCKS + (None,), f"{where}: unknown scene clock")
+            need(sc.get("camera_frame") in (None, "video"),
+                 f"{where}: camera_frame is \"video\" (zooms composed for the 1920x1080 frame), or left out")
             cam = sc.get("camera", {})
             shown = sc.get("show", [])
             for fid in shown + sc.get("dim", []):
@@ -780,11 +829,19 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                     need(last_year is None or bw["from"] >= last_year, f"{here}: dated beats must not go back in time")
                     last_year = bw["from"]
             appear = sc.get("appear", {})
-            need(isinstance(appear, dict), f"{where}: appear must map places to seconds")
-            for fid, at in (appear if isinstance(appear, dict) else {}).items():
-                need(fid in shown and features.get(fid, {}).get("kind") == "point"
+            need(isinstance(appear, dict), f"{where}: appear must map places and ties to seconds")
+            appear = appear if isinstance(appear, dict) else {}
+            for fid, at in appear.items():
+                kind = features.get(fid, {}).get("kind")
+                need(fid in shown and kind in ("point", "link")
                      and isinstance(at, (int, float)) and 0 <= at < sc.get("duration", reading_seconds(sc.get("text", ""))),
-                     f"{where}: appear needs places the scene shows and times inside the scene")
+                     f"{where}: appear needs places or ties the scene shows and times inside the scene")
+                if kind == "link":
+                    # A tie is drawn only once both its places are on the map
+                    ends = [appear.get(features[fid].get(k), 0) for k in ("from", "to")]
+                    need(all(isinstance(e, (int, float)) and isinstance(at, (int, float)) and e < at for e in ends),
+                         f"{where}: a tie's appear time must come after both its places' appear times")
+            check_notes(where, sc, features, need)
             previous_cue = -1
             for cue in sc.get("camera_path", []):
                 valid = isinstance(cue, dict) and placed(cue.get("center"))

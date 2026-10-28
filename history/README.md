@@ -260,6 +260,7 @@ its own fixed 1080p layout.
 Place names never pile up: in the scene's order, each name takes the first free spot beside its
 point, a line above or below, or on the other side, with a short sideways step if something only
 clips one end. A name with no room is hidden until there is room again; it is still in the panel.
+A walled town's name only takes the spots level with its town (see "Hausa cities side by side").
 
 Architectural settings follow the map. At the scene's camera they are a close-up (never larger
 than the map); each zoom step out halves them with the land, and once they would be smaller than
@@ -547,3 +548,70 @@ Still to check before this is published:
 - Leo Africanus's own text. Only Fisher's summary, via the Kano article, was used.
 - The Wangarawa traders' arrival, which different sources date differently.
 - A review by a historian of Kano, and by a Hausa speaker for names and spellings.
+
+### Hausa cities side by side
+
+The third scene, "Hausa cities side by side" (62 seconds, 1349 to 1516), pulls back from Kano to
+its neighbours: Daura, Katsina, Zazzau, Gobir, Rano and Biram, each its own walled town with its own
+king, and never one kingdom, so no shared border or area is drawn. It opens with the Bayajidda story
+and the seven tasks as tradition, with no date. Then come the dated beats: Yaji takes Rano (Rano goes
+faint), Amina of Zazzau (the Chronicle's date, with others that differ), Burja's tribute to Bornu,
+Korau in Katsina, the eleven-year war, Songhai, and Kanta of Kebbi breaking with Songhai in 1516.
+
+- **Places.** Each town is drawn at today's town of the same name, or, where the old capital is not
+  known, inside a dashed ring: Zazzau at Zaria (founded about 1536), Biram at Hadejia, and Gobir at
+  Birni Lalle with a wide ring and a `disputed` note. Bornu stands at Ngazargamu and Kebbi at Surame.
+  Nupe, Kwararafa and Gao are told in the narration, not placed.
+- **Sensitive beats.** Fighting, conquest and the tradition that Zazzau supplied slaves are told with
+  Zomo in the still, solemn pose and nothing but fades.
+- **Sources.** `research/hausa-cities-sources.md` lists where each place is drawn and what each
+  beat rests on. Every date was checked against a source first; Amina's date, Korau's date and
+  Songhai's hold are labelled as differing.
+
+New vocabulary, all checked by `build_history.py --check`:
+
+- **`icon: "walled-town"`** on a city-state draws it as a small walled town: an earth wall with a
+  gate around a few round and flat-roofed houses. It is the same symbol for every town, not a plan.
+  It is larger in Cinema and the video, and grows a little as the camera comes in. Only a
+  `city-state` may carry it.
+- **`notes`** on a scene: `[{place, text, at, until, oral?, art?, side?}]`. A note is up to 40
+  characters at a place the scene shows, under its drawing (or `side: "above"`), from `at` to
+  `until`. A note marked `oral` shows only during an oral-tradition beat and leaves before the next
+  dated beat. Any other note shows only under a dated beat. `art: "well"` adds the Kusugu well of
+  the story.
+- **`fade`** on a scene: `{place: seconds}`. From that moment the place goes faint over 0.8 s. It
+  cannot also be in `dim`.
+- **Ties.** `appear` can now time a tie as well as a place. A tie must come after both of its
+  places. A link's `bend` (from -0.4 to 0.4, not 0) curves it, so that Kano's tribute does not run
+  through Biram. A tie whose `status` is `disputed` is drawn, then left dashed, and the map key
+  explains the dashes.
+- **`camera_frame: "video"`** means the scene's zooms are composed for the 1920×1080 video. A
+  smaller map shows the same area, zoomed out to fit, so the towns keep their spacing.
+
+A walled town's name stays level with its town, on either side, with no other town between them.
+If there is no room, the name hides until there is; it is still in the panel. On a phone some names
+hide in the busiest moments, because a name moved up or down would read as a neighbour's.
+
+```
+node tests/history_hausa_cities_browser.cjs <scratch-history.html> <local-dependencies>
+python previews/build_act1_preview.py <scratch-history.html> <local-dependencies> --output hausa-cities.html --chapter hausa --scene hausa-cities --cinema
+node capture_history.cjs <scratch-history.html> <local-dependencies> <hausa-cities.mp4> 60 8 history/cuts/hausa-cities.json
+python previews/build_storycraft_video.py <hausa-cities.mp4> hausa-cities-video.html
+```
+
+The browser test plays the scene in quarter seconds on a desktop (Cinema and normal) and a phone.
+It checks that the year shows each beat's label, with no date under the tradition, and that each
+town, tie and note waits for its moment, with oral notes only under the tradition. It also checks
+that Rano fades, that the disputed tie stays dashed and the other solid, and that every name shown
+sits beside its own town. In the 1920×1080 video, once the camera has settled, it checks that names
+and notes are never under the caption, caution, credit or bars, and that repeat seeks give
+identical pixels.
+
+Still to check before this is published:
+
+- The Kano Chronicle's wording on Yaji and Rano: Palmer's text and the Wikipedia summary give
+  different reign lengths.
+- Where Gobir's capital stood in these centuries, and where Zazzau's and Biram's early capitals were.
+- How far Songhai ruled the Hausa cities. The Hausa Kingdoms article marks this "citation needed",
+  and Leo Africanus's account is doubted.
+- A review by a historian of the Hausa states, and by a Hausa speaker for names and spellings.

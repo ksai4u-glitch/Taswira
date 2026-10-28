@@ -1,0 +1,505 @@
+{
+  "title": "Taswira · Hausa cities side by side",
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "clips": [
+    {
+      "chapter": "hausa",
+      "scene": "hausa-cities",
+      "duration": 62,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "wiki-hausa",
+        "kano-chronicle-wiki",
+        "last-1980-kano-chronicle",
+        "kano-chronicle-yaji",
+        "kano-chronicle-dauda",
+        "wiki-amina",
+        "wiki-zazzau",
+        "kano-chronicle-burja",
+        "wiki-katsina-kingdom",
+        "wiki-gobarau",
+        "kano-chronicle-rumfa",
+        "wiki-askia",
+        "wiki-kanta",
+        "leo-africanus-wiki",
+        "wiki-gobir",
+        "wiki-bornu",
+        "wiki-places-key",
+        "wiki-places-hausa"
+      ],
+      "disputed": "Amina's dates differ by more than a century: the Kano Chronicle puts her in Dauda's reign (1421–1438), a Zaria list in the early sixteenth century, and others after 1576; her name is missing from Zazzau's king lists, and whether she was queen is disputed. Korau of Katsina is dated about 1445–1495 by the Katsina Chronicle, 1492–1541 by another list and to the thirteenth century by a local tradition. Songhai's hold on the Hausa cities is disputed: one account dates Askia's conquest of Katsina to 1512 and has Katsina a vassal until 1554, others say he also took Zazzau and Gobir, and Leo Africanus, whose visit is doubted, adds Kano.",
+      "unchecked": null,
+      "features": [
+        {
+          "id": "daura",
+          "name": "Daura",
+          "location": "Today's town of the same name.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-hausa",
+            "wiki-places-key"
+          ]
+        },
+        {
+          "id": "kano",
+          "name": "Kano",
+          "location": "Today's old city of Kano.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-hausa",
+            "wiki-places-key",
+            "kano-chronicle-wiki"
+          ]
+        },
+        {
+          "id": "katsina",
+          "name": "Katsina",
+          "location": "Today's city centre, rounded. The fifteenth-century town's extent is not drawn, and the earlier seat at Durbi ta Kusheyi, about 29 km to the south-east, is not placed.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-rumfa",
+            "wiki-katsina-kingdom"
+          ]
+        },
+        {
+          "id": "zazzau",
+          "name": "Zazzau",
+          "location": "Drawn at today's Zaria, which was founded about 1536. Zazzau's earlier capitals, such as Turunku, are not placed: the dashed ring marks the region, not a site.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-zazzau",
+            "wiki-places-hausa",
+            "kano-chronicle-dauda",
+            "wiki-amina"
+          ]
+        },
+        {
+          "id": "gobir",
+          "name": "Gobir",
+          "location": "Drawn at today's Birni Lalle in Niger, inside a wide ring, because where Gobir's capital stood in these years is uncertain.",
+          "status": "disputed",
+          "disputed": "One summary makes Birnin Lalle Gobir's capital from about 1450 to 1600, but the same article's text dates the move there to the early eighteenth century, and earlier centres in Asben or at Marandet are also proposed.",
+          "sources": [
+            "wiki-gobir",
+            "wiki-places-hausa",
+            "wiki-hausa"
+          ]
+        },
+        {
+          "id": "rano",
+          "name": "Rano",
+          "location": "Today's town of the same name.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-yaji",
+            "wiki-hausa",
+            "wiki-places-hausa"
+          ]
+        },
+        {
+          "id": "biram",
+          "name": "Biram",
+          "location": "Drawn at today's Hadejia, which was once known as Biram. The old town of Biram itself is not placed: the dashed ring marks the area.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-hausa",
+            "wiki-places-hausa"
+          ]
+        },
+        {
+          "id": "bornu",
+          "name": "Bornu",
+          "location": "Drawn at Ngazargamu, which became Bornu's capital about 1472. The point stands for the kingdom, not a city.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-bornu",
+            "kano-chronicle-burja"
+          ]
+        },
+        {
+          "id": "kebbi",
+          "name": "Kebbi",
+          "location": "Drawn at Surame, the walled town Kanta built in the sixteenth century, to stand for Kebbi. His first capital, Birnin Leka, is not placed.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-kanta",
+            "wiki-places-hausa",
+            "wiki-hausa"
+          ]
+        },
+        {
+          "id": "kano-bornu",
+          "name": "Kano's tribute to Bornu",
+          "location": null,
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-burja",
+            "wiki-hausa"
+          ]
+        },
+        {
+          "id": "biram-bornu",
+          "name": "Biram's tribute to Bornu",
+          "location": null,
+          "status": "disputed",
+          "disputed": "Whether every Hausa state paid tribute to Bornu, or only Kano and Biram, is unclear, and how long they paid is not known.",
+          "sources": [
+            "wiki-hausa"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 30.5,
+      "seconds": 30.5
+    },
+    {
+      "chapter": "hausa",
+      "scene": "hausa-cities",
+      "duration": 62,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "wiki-hausa",
+        "kano-chronicle-wiki",
+        "last-1980-kano-chronicle",
+        "kano-chronicle-yaji",
+        "kano-chronicle-dauda",
+        "wiki-amina",
+        "wiki-zazzau",
+        "kano-chronicle-burja",
+        "wiki-katsina-kingdom",
+        "wiki-gobarau",
+        "kano-chronicle-rumfa",
+        "wiki-askia",
+        "wiki-kanta",
+        "leo-africanus-wiki",
+        "wiki-gobir",
+        "wiki-bornu",
+        "wiki-places-key",
+        "wiki-places-hausa"
+      ],
+      "disputed": "Amina's dates differ by more than a century: the Kano Chronicle puts her in Dauda's reign (1421–1438), a Zaria list in the early sixteenth century, and others after 1576; her name is missing from Zazzau's king lists, and whether she was queen is disputed. Korau of Katsina is dated about 1445–1495 by the Katsina Chronicle, 1492–1541 by another list and to the thirteenth century by a local tradition. Songhai's hold on the Hausa cities is disputed: one account dates Askia's conquest of Katsina to 1512 and has Katsina a vassal until 1554, others say he also took Zazzau and Gobir, and Leo Africanus, whose visit is doubted, adds Kano.",
+      "unchecked": null,
+      "features": [
+        {
+          "id": "daura",
+          "name": "Daura",
+          "location": "Today's town of the same name.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-hausa",
+            "wiki-places-key"
+          ]
+        },
+        {
+          "id": "kano",
+          "name": "Kano",
+          "location": "Today's old city of Kano.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-hausa",
+            "wiki-places-key",
+            "kano-chronicle-wiki"
+          ]
+        },
+        {
+          "id": "katsina",
+          "name": "Katsina",
+          "location": "Today's city centre, rounded. The fifteenth-century town's extent is not drawn, and the earlier seat at Durbi ta Kusheyi, about 29 km to the south-east, is not placed.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-rumfa",
+            "wiki-katsina-kingdom"
+          ]
+        },
+        {
+          "id": "zazzau",
+          "name": "Zazzau",
+          "location": "Drawn at today's Zaria, which was founded about 1536. Zazzau's earlier capitals, such as Turunku, are not placed: the dashed ring marks the region, not a site.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-zazzau",
+            "wiki-places-hausa",
+            "kano-chronicle-dauda",
+            "wiki-amina"
+          ]
+        },
+        {
+          "id": "gobir",
+          "name": "Gobir",
+          "location": "Drawn at today's Birni Lalle in Niger, inside a wide ring, because where Gobir's capital stood in these years is uncertain.",
+          "status": "disputed",
+          "disputed": "One summary makes Birnin Lalle Gobir's capital from about 1450 to 1600, but the same article's text dates the move there to the early eighteenth century, and earlier centres in Asben or at Marandet are also proposed.",
+          "sources": [
+            "wiki-gobir",
+            "wiki-places-hausa",
+            "wiki-hausa"
+          ]
+        },
+        {
+          "id": "rano",
+          "name": "Rano",
+          "location": "Today's town of the same name.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-yaji",
+            "wiki-hausa",
+            "wiki-places-hausa"
+          ]
+        },
+        {
+          "id": "biram",
+          "name": "Biram",
+          "location": "Drawn at today's Hadejia, which was once known as Biram. The old town of Biram itself is not placed: the dashed ring marks the area.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-hausa",
+            "wiki-places-hausa"
+          ]
+        },
+        {
+          "id": "bornu",
+          "name": "Bornu",
+          "location": "Drawn at Ngazargamu, which became Bornu's capital about 1472. The point stands for the kingdom, not a city.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-bornu",
+            "kano-chronicle-burja"
+          ]
+        },
+        {
+          "id": "kebbi",
+          "name": "Kebbi",
+          "location": "Drawn at Surame, the walled town Kanta built in the sixteenth century, to stand for Kebbi. His first capital, Birnin Leka, is not placed.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-kanta",
+            "wiki-places-hausa",
+            "wiki-hausa"
+          ]
+        },
+        {
+          "id": "kano-bornu",
+          "name": "Kano's tribute to Bornu",
+          "location": null,
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "kano-chronicle-burja",
+            "wiki-hausa"
+          ]
+        },
+        {
+          "id": "biram-bornu",
+          "name": "Biram's tribute to Bornu",
+          "location": null,
+          "status": "disputed",
+          "disputed": "Whether every Hausa state paid tribute to Bornu, or only Kano and Biram, is unclear, and how long they paid is not known.",
+          "sources": [
+            "wiki-hausa"
+          ]
+        }
+      ],
+      "from": 30.5,
+      "to": 62,
+      "seconds": 31.5
+    }
+  ],
+  "sources": {
+    "natural-earth": {
+      "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+      "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+      "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+      "url": "https://www.naturalearthdata.com/",
+      "kind": "background map data",
+      "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+      "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+    },
+    "wiki-hausa": {
+      "title": "Hausa Kingdoms (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Hausa_Kingdoms",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Daura the mother city; the Hausa Bakwai as seven states; fortified capital cities; by the 15th century trading centres competing with Kanem-Bornu and Mali; Bornu made the Hausa states vassals in the 15th century, tribute sent through Daura, unsure whether all or only Kano and Biram; Rano conquered by Kano under Yaji I; Tuareg and Fulani migration from the 14th and 15th centuries. Opened again 28 Oct 2026: the Bayajidda story (Daura's Kusugu well, Queen Daurama; Biram from his son by Magira of Bornu); the tasks tradition gives the seven (Amadu 1984): Kano and Rano indigo, Katsina and Daura markets, Gobir war, Zazzau slaves; Banza Bakwai includes Kebbi; Muhammad Korau of Katsina a cleric; that Hausaland was tributary to Songhai is marked 'citation needed'."
+    },
+    "kano-chronicle-wiki": {
+      "title": "Kano Chronicle",
+      "author": "Wikipedia contributors (describes and links H. R. Palmer, \"The Kano Chronicle\", Journal of the Royal Anthropological Institute 38, 1908, pp. 58-98)",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Kano_Chronicle",
+      "kind": "encyclopedia overview of a primary source; used only to describe the Chronicle and Palmer's translation",
+      "rights": "Facts cited; no text reproduced beyond short names.",
+      "checked": "Opened 27 Oct 2026. The Chronicle is a compilation of oral tradition and older documents; the copy Palmer translated (1908) was written down in the late nineteenth century. It gives reigns by length, so calendar years are reckoned by later editors."
+    },
+    "last-1980-kano-chronicle": {
+      "title": "Historical Metaphors in the Kano Chronicle",
+      "author": "Murray Last, History in Africa 7 (1980), pp. 161-178",
+      "year": "1980",
+      "url": "https://www.cambridge.org/core/journals/history-in-africa/article/abs/historical-metaphors-in-the-kano-chronicle/16DE46AEC5C9D1713D0C1F81F301A068",
+      "kind": "peer-reviewed historiography (first page and abstract read; full text paywalled)",
+      "rights": "Argument summarised; no text reproduced.",
+      "checked": "Opened 27 Oct 2026 (first page only). Last reads the Chronicle as intellectual history as well as a source of facts, and argues its first edition was completed in the mid-seventeenth century from materials developed in the fifteenth and sixteenth centuries."
+    },
+    "kano-chronicle-yaji": {
+      "title": "Yaji I (with the Kano Chronicle passage on his reign, Palmer 1908)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Yaji_I",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts and short phrases cited.",
+      "checked": "Opened 28 Oct 2026. Reign given as 1349–1385 (the article's body says he became king in 1343 and ruled 37 years, which does not match). Palmer's text: he drove the Sarkin Rano from Zamna Gaba, went to Rano and reigned at Bunu two years. Wangara scholars from Mali came in his reign."
+    },
+    "kano-chronicle-dauda": {
+      "title": "Dauda (with the Kano Chronicle passage on his reign, Palmer 1908)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Dauda_(sultan)",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts and short phrases cited.",
+      "checked": "Opened 28 Oct 2026. Reign 1421–1438 by later reckoning. Palmer's text: Zaria, under Queen Amina, conquered all the towns as far as Kwararafa and Nupe; every town paid tribute to her; the Sarkin Nupe sent her 40 eunuchs and 10,000 kolas; her conquests extended over 34 years. The passage says nothing of walls."
+    },
+    "wiki-amina": {
+      "title": "Amina of Zazzau (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Amina_of_Zazzau",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 28 Oct 2026. Dated to Dauda's reign (1421–1438) by the Kano Chronicle (accepted by Adeleye and Fisher); to the early sixteenth century from a Zaria list that dates Bakwa Turunku 1492–1522; after 1576 by Abdullahi Smith and tradition (1576–1610). Her name is not on the regnal lists published by Arnett or in the Chronicle of Abuja; palace tradition calls her queen, other traditions a princess. Bello claimed Kano and Katsina paid her tribute, which historians dispute for Kano. The walls credited to her rest on popular works."
+    },
+    "wiki-zazzau": {
+      "title": "Kingdom of Zazzau (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Kingdom_of_Zazzau",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 28 Oct 2026. Capitals about 1010 to 1578: Turunku, Wuciciri, Rikoci, Kawar (Stewart 1989). Zaria founded in 1536 and named after Bakwa's daughter. Zazzau was a collection point for slaves sent to the northern markets of Kano and Katsina, exchanged there for salt (Britannica; M. G. Smith 1960)."
+    },
+    "kano-chronicle-burja": {
+      "title": "Abdullahi Burja (with the Kano Chronicle passage on his reign, Palmer 1908)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Abdullahi_Burja",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts and short phrases cited.",
+      "checked": "Opened 27 Oct 2026. Ruled 1438-1452 by later reckoning. The first in Hausaland to give Bornu tribute (tsare or gaisua); the first to own camels in Hausaland; he opened roads from Bornu to Gwanja. His Galadima Dauda raided to the south for captives and founded 21 towns of them. The Chronicle's numbers of people are not repeated on the map."
+    },
+    "wiki-katsina-kingdom": {
+      "title": "Kingdom of Katsina (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Kingdom_of_Katsina",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 28 Oct 2026. Capital at Durbi ta Kusheyi, about 18 miles south-east of Katsina, until the fifteenth century, then Katsina. Muhammadu Korau, the first Muslim ruler, credited with founding the walled settlement; dated about 1445–1495 (Katsina Chronicle), 1492/3–1541/2 in a table, and to the thirteenth century by a local tradition. An eleven-year war with Kano under Rumfa was indecisive. Askia Muhammad I conquered Katsina in 1512, and it was a vassal of Gao until the battle of Karfata in 1554."
+    },
+    "wiki-gobarau": {
+      "title": "Gobarau Minaret (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Gobarau_Minaret",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 28 Oct 2026. Built in the fifteenth century in the reign of Muhammadu Korau (1445–1495); one cited title implies a fourteenth-century date. Not drawn: the scene shows no buildings at Katsina."
+    },
+    "kano-chronicle-rumfa": {
+      "title": "Muhammad Rumfa (with the Kano Chronicle passage on his reign, Palmer 1908)",
+      "author": "Wikipedia contributors, quoting Palmer's 1908 translation of the Kano Chronicle",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Muhammad_Rumfa",
+      "kind": "primary source passage reproduced in an encyclopedia article",
+      "rights": "Facts and short phrases cited.",
+      "checked": "Opened 27 Oct 2026. In order: he built the Dakin Rimfa; the next year he entered his house; the next year he extended the walls from Kofan Dagachi towards Kofan Mata, on to Kofan Gertawasa and Kofan Kawayi, and from Kofan Naissa to Kofan Kansakali; he established the Kurmi market. Among his 12 innovations (opened again 27 Oct 2026, evening): the custom of Kulle; giving eunuchs the offices of state; the first to have Kakaki and Figinni and ostrich-feather sandals; the Tara-ta-Kano. First war with Katsina, 11 years, neither side winning. Ruled 37 years (1463-1499 by later reckoning). The article adds that his reign saw a wave of scholars and traders. The Chronicle itself gives no calendar years and does not name al-Maghili."
+    },
+    "wiki-askia": {
+      "title": "Askia Muhammad I (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Askia_Muhammad_I",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 28 Oct 2026. Citing Levtzion (1977): Askia Muhammad conquered Katsina, Zaria and Gobir before the 1515 Agadez campaign; the Emir of Kebbi rebelled over the spoils, ending Songhai hegemony in Hausaland. No date is given for the Hausa conquests."
+    },
+    "wiki-kanta": {
+      "title": "Kanta Kotal (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Kanta_Kotal",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 28 Oct 2026. Reigned 1516–1561. Rebelled against Songhai in 1516 over his share of the spoils of the Aïr campaign (al-Sa'di, Tarikh al-Sudan), two years into Askia Muhammad's Hausaland campaign, which began in 1513, and defeated the army sent against him. First capital Birnin Leka; walled towns at Gungu, Silame and Surame. Later wars with Bornu; died 1561."
+    },
+    "leo-africanus-wiki": {
+      "title": "Leo Africanus (Wikipedia)",
+      "author": "Wikipedia contributors (citing H. J. Fisher 1978 and P. Masonen 2001)",
+      "year": "checked 2026-10-27",
+      "url": "https://en.wikipedia.org/wiki/Leo_Africanus",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Reached Timbuktu about 1510; completed his Description of Africa in 1526; printed by Ramusio in 1550. It is doubtful whether he visited Hausaland and Bornu (Fisher 1978), and possible that he never crossed the Sahara."
+    },
+    "wiki-gobir": {
+      "title": "Gobir (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Gobir",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 28 Oct 2026. Infobox: capital Asben 1150–1450, Birnin Lalle 1450–1600; the text instead says the move to Birnin Lalle came in the early eighteenth century, and that Gobir was possibly centred on Marandet (Amadu 1984). Tuareg pressure forced the Gobirawa south; the Tuareg replaced Gobir in the Aïr early in the fifteenth century. Descent from Bayajidda's grandson Duma is disputed (Hogben and Kirk-Greene 1966)."
+    },
+    "wiki-bornu": {
+      "title": "Bornu Empire (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Bornu_Empire",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Ngazargamu founded c. 1472 on the Yobe; captured and destroyed by the Fulani in 1808; mai Idris III recognised as suzerain of Kano and paid tribute."
+    },
+    "wiki-places-key": {
+      "title": "Coordinates and town facts for the map key (Wikipedia place articles)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Ngazargamu",
+      "kind": "gazetteer coordinates of today's towns and of one ruined capital",
+      "rights": "Coordinates are facts; no text reused.",
+      "checked": "Opened 27 Oct 2026. Bilma 18.687 N 12.919 E; Mao (Kanem region, Chad) 14.119 N 15.313 E; Daura 13.036 N 8.318 E; Katsina 12.989 N 7.601 E (21 km city wall, founded c. 1100); Kano 12.000 N 8.517 E (walls begun under Gijimasu, 1095-1134); Ngazargamu ruins 13.083 N 12.367 E (near Geidam); Benin City 6.333 N 5.622 E; Arochukwu 5.383 N 7.917 E; Oguta 5.712 N 6.809 E (on Oguta Lake); Onitsha 6.167 N 6.783 E (founded 1630-1680, or the 16th century by some sources); Bonny 4.433 N 7.167 E (turned to palm oil after 1807); Sokoto 13.062 N 5.234 E (founded as a ribat in 1809); Gwandu 12.502 N 4.643 E (co-capital overseeing the western and southern lands); Zaria 11.067 N 7.700 E (captured by the Fulani in 1805, taken by British forces under Lugard in 1901)."
+    },
+    "wiki-places-hausa": {
+      "title": "Coordinates for the Hausa cities scene (Wikipedia place articles)",
+      "author": "Wikipedia contributors",
+      "year": "checked 2026-10-28",
+      "url": "https://en.wikipedia.org/wiki/Rano",
+      "kind": "gazetteer coordinates of today's towns and one ruined site",
+      "rights": "Coordinates are facts; no text reused.",
+      "checked": "Opened 28 Oct 2026. Rano 11.557 N 8.583 E (one of the seven Hausa states; taken by Kano under Yaji I, never sovereign again); Zaria 11.067 N 7.700 E (founded about 1536); Hadejia 12.450 N 10.033 E (once known as Biram); Birni Lalle, Niger, 14.433 N 6.767 E; Surame 13.088 N 4.899 E (built in the sixteenth century by Kanta of Kebbi, abandoned about 1700)."
+    }
+  },
+  "status": "Unreviewed draft; rights and historian review required before publication",
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 72,
+  "frames": 4320
+}

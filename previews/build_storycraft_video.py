@@ -19,6 +19,11 @@ COPIES = {
                              'scholars, salt, traders and Rumfa\'s court, each dated by the Kano Chronicle\'s reckoning, and Leo Africanus\'s doubted account.',
                              'https://github.com/ksai4u-glitch/Taswira/blob/main/history/chapters/hausa.json',
                              'The Hausa cities chapter and its sources', 'taswira-kano-life.mp4'),
+    'hausa-cities-video.html': ('The Hausa cities side by side, 1349 to 1516: separate walled towns, each with its own king, never one kingdom. '
+                                'The Bayajidda story as tradition with no date, then Rano, Amina, tribute to Bornu, Korau, the Kano–Katsina war, '
+                                'Songhai and Kanta of Kebbi, each dated by its source, with disputed dates labelled.',
+                                'https://github.com/ksai4u-glitch/Taswira/blob/main/history/research/hausa-cities-sources.md',
+                                'Where each place and date comes from', 'taswira-hausa-cities.mp4'),
 }
 
 

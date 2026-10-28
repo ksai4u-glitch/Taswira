@@ -156,6 +156,31 @@
   .hx-in { transform-origin: center bottom; }
   .hx-mark .hx-in { transform-origin: center; }
   .hx-mark.hx-dim { opacity: .45; }
+  /* A city-state drawn as a small walled town (a symbol, not a plan), larger in Cinema and the video */
+  body { --town: 50px; }
+  body.theatre-mode, body.video-mode { --town: 92px; }
+  @media (max-width: 640px) {
+    body { --town: 36px; }
+    .town-label { padding: 2px 5px; font-size: 11px; }
+    .note-label { font-size: 10px; }
+  }
+  .hx-town .hx-in { width: 0; height: 0; }
+  /* --zk grows the towns a little as the camera comes in, and shrinks them as it pulls back */
+  #mapwrap { --tw: calc(var(--town) * var(--zk, 1)); }
+  .hx-town svg { position: absolute; width: var(--tw); height: auto; left: calc(var(--tw) * -.5); top: calc(var(--tw) * -.5); }
+  .leaflet-tooltip-right.town-label { margin-left: calc(var(--tw) * .5 + 4px); }
+  .leaflet-tooltip-left.town-label { margin-left: calc(var(--tw) * -.5 - 4px); }
+  /* A short note at a place for part of a scene, under its drawing */
+  .note-label { background: none; border: none; box-shadow: none; white-space: nowrap; pointer-events: none;
+                font: italic 600 12px/1.15 Georgia, serif; color: #f4d58d; text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 7px #000; }
+  .note-label::before { display: none; }
+  .note-label .lab-c { transform: translate(-50%, calc(var(--tw) * .3 + 6px)); }
+  .note-label.above .lab-c { transform: translate(-50%, calc(-100% - var(--tw) * .5)); }
+  .note-label.oral { color: #cfe3c8; }
+  body.video-mode .note-label { font-size: 19px; }
+  .note-art { display: block; width: calc(var(--town) * 3.2); margin: 0 auto 3px; padding: 4px 6px 2px; border-radius: 8px;
+              background: rgb(8 18 14 / .82); border: 1px solid #5f7d55; }
+  .note-art svg { display: block; width: 100%; height: auto; }
   .hx-rise { animation: hxrise .7s cubic-bezier(.2, 1.5, .5, 1); }
   @keyframes hxrise { from { transform: scale(0) translateY(6px); opacity: 0; } to { transform: none; opacity: 1; } }
   .em { width: 40px; height: 26px; padding: 2px 3px; border-radius: 6px; color: #f4c95d;
@@ -679,6 +704,10 @@ const WIDE = { center: [9.1, 8.3], zoom: 5.5 };      // the whole country, behin
 const small = () => map.getSize().x < 600;
 const mapName = f => (small() || captureClock !== null) && f.short || f.name;
 const zoomFor = z => z - (small() ? 1 : 0);   // a phone's small map shows the same area zoomed out
+// A scene whose camera is composed for the 1920×1080 video frame (camera_frame: "video") shows the same
+// area on any smaller map, zoomed out to fit, so its places keep their spacing
+const sceneZoom = (sc, z) => sc?.camera_frame === "video"
+  ? z + Math.min(0, Math.log2(Math.min(map.getSize().x / 1920, map.getSize().y / 1080))) : zoomFor(z);
 let defs = null;
 function patternDefs() {
   if (!defs) {
@@ -796,6 +825,37 @@ function markSvg(form) {
   }[form];
   return `<svg viewBox="-13 -13 26 26" width="26" height="26" aria-hidden="true">${inner}</svg>`;
 }
+
+// A city-state as a small walled town: an earth wall with a gate around a few round houses. The same
+// symbol for every city-state, never a plan of a particular town. Drawn around its ground point (0, 0).
+function townSvg() {
+  const at = (x, y, k, body) => `<g transform="translate(${x},${y}) scale(${k})">${body}</g>`;
+  // Round houses with thatched cones, and flat-roofed earth houses with horned corners
+  const round = (x, y, k = 1) => at(x, y, k, `<path d="M-3.6 0v-4h7.2V0Z" fill="#b98457"/><path d="M-4.8-3.6 0-9.4 4.8-3.6Z" fill="#8c7140"/>`
+    + `<path d="M0-9.4 4.8-3.6H1.6Z" fill="#6b5530"/>`);
+  const flat = (x, y, k = 1) => at(x, y, k, `<path d="M-4.5 0v-6h9v6Z" fill="#c48d5c"/><path d="M1.5 0v-6h3v6Z" fill="#9c6a42"/>`
+    + `<path d="M-4.5-6-5.4-8M4.5-6l.9-2" stroke="#c48d5c" stroke-width="1.2" stroke-linecap="round"/><path d="M-1 0v-2.6h2V0Z" fill="#1a120c"/>`);
+  const tree = (x, y) => `<circle cx="${x}" cy="${y - 7}" r="4.2" fill="#3f6a3e"/><circle cx="${x + 2.6}" cy="${y - 9}" r="3" fill="#5a8a4f"/>`
+    + `<path d="M${x} ${y}v-4" stroke="#4a3520" stroke-width="1.2"/>`;
+  const arc = (sweep, dy, c, w) => `<path d="M-32 ${2 + dy}A32 11.5 0 0 ${sweep} 32 ${2 + dy}" fill="none" stroke="${c}" stroke-width="${w}"/>`;
+  return `<svg viewBox="-40 -30 80 58" aria-hidden="true"><ellipse cy="12" rx="38" ry="12" fill="#06100c" opacity=".55"/>`
+    + `<ellipse cy="2" rx="31" ry="10.5" fill="#34452f"/>` + arc(1, 0, "#8f5634", 5) + arc(1, -1.6, "#c98a57", 2.6)
+    + tree(-22, 1) + round(-13, -1) + flat(-2, -3) + round(9, -2, 1.05) + tree(20, 0) + flat(-14, 7, .95) + round(1, 6, 1.1) + flat(14, 6, .9)
+    + arc(0, 4, "#8f5634", 7) + arc(0, 0, "#c98a57", 4.4) + arc(0, 0, "#e7b37b", 1.4).replace('/>', ' stroke-dasharray="1.4 3"/>')
+    + `<path d="M-7 23v-10l7-4.5 7 4.5v10Z" fill="#c98a57"/><path d="M0 8.5l7 4.5v10H0Z" fill="#8a5434"/>`
+    + `<path d="M-3 23v-5a3 3 0 0 1 6 0v5Z" fill="#1a120c"/></svg>`;
+}
+// Small drawings a scene's note may carry, for a story told at a place (see history/README.md)
+const NOTE_ART = {
+  // The well of the Bayajidda story at Daura, with the snake coiled on its rim
+  well: `<svg viewBox="0 0 120 70" aria-hidden="true"><ellipse cx="60" cy="58" rx="40" ry="8" fill="#06100c" opacity=".6"/>`
+    + `<path d="M28 34v18q32 12 64 0V34" fill="#7d6a52"/><path d="M28 40q32 12 64 0M28 46q32 12 64 0" fill="none" stroke="#5c4c39" stroke-width="1.2"/>`
+    + `<ellipse cx="60" cy="34" rx="32" ry="8.5" fill="#a58e6c"/><ellipse cx="60" cy="34.5" rx="24" ry="5.5" fill="#0b1a1f"/>`
+    + `<path d="M40 33c4-9 14-9 18-3s12 6 17-1 9-5 9 1" fill="none" stroke="#8fae6a" stroke-width="4.2" stroke-linecap="round"/>`
+    + `<path d="M40 33c4-9 14-9 18-3s12 6 17-1 9-5 9 1" fill="none" stroke="#c9dc9a" stroke-width="1.2" stroke-dasharray="1 3" stroke-linecap="round"/>`
+    + `<path d="M84 30c3-3 7-2 8 1s-2 5-6 4" fill="#8fae6a"/><circle cx="89" cy="31" r=".9" fill="#0b1a1f"/>`
+    + `<path d="M36 26V10h48v16" fill="none" stroke="#6b5a40" stroke-width="3"/><path d="M60 10v14" stroke="#c9b48a" stroke-width="1"/></svg>`,
+};
 
 // Gradients, patterns and arrowheads the vocabulary needs, made once
 function vocabDefs() {
@@ -1162,6 +1222,9 @@ function drawPlaces(ch, sc) {
           +(setting?'<div class="hx-glyph-art">'+monumentSvg(f.monument.type)+'</div>':''),iconSize:[w,h],iconAnchor:[w/2,setting?h*.75:86]})});
     } else if (form === "communities") {
       raw.push(textLabel(f.coordinates, "self-governing communities", "field-label"));
+    } else if (f.icon === "walled-town") {
+      m = L.marker(f.coordinates, { keyboard: false, title: f.name, icon: L.divIcon({ className: "hx-mark hx-town" + (faded ? " hx-dim" : ""),
+        html: `<div class="hx-in">${townSvg()}</div>`, iconSize: [0, 0], iconAnchor: [0, 0] }) });
     } else if (marked) {
       m = L.marker(f.coordinates, { keyboard: false, title: f.name, icon: L.divIcon({ className: "hx-mark" + (faded ? " hx-dim" : ""),
         html: `<div class="hx-in">${markSvg(form)}</div>`, iconSize: [26, 26], iconAnchor: [13, 13] }) });
@@ -1175,8 +1238,8 @@ function drawPlaces(ch, sc) {
         className: "hx-site" + (furnace.has(id) ? " hx-furnace" : "") });
     }
     if (m) {
-      const off = marked ? 12 : 8;
-      m.bindTooltip(esc(mapName(f)), { permanent: true, direction: left ? "left" : "right", className: "site-label",
+      const town = f.icon === "walled-town", off = town ? 0 : marked ? 12 : 8;
+      m.bindTooltip(esc(mapName(f)), { permanent: true, direction: left ? "left" : "right", className: "site-label" + (town ? " town-label" : ""),
                                    offset: [left ? -off : off, 0], opacity: faded ? .6 : .9 });
       m.on("click", () => pickFeature(id));
       m.addTo(sceneLayer);
@@ -1193,7 +1256,16 @@ function drawPlaces(ch, sc) {
     }
     fx.points.push({ els: els.map(l => l.getElement()).concat(raw), at, now: null, ll: f.coordinates,
                      furnace: furnace.has(id), faded, seed: k + 1, rgb: VOCAB[form] || null, form, reach: f.reach_km || 0 });
+    // A place that loses its independence during the scene goes faint from that moment
+    if (sc.fade?.[id] != null) fx.fades.push({ els: els.map(l => l.getElement()).concat(raw), at: sc.fade[id], now: null });
   });
+  // Short notes at places for part of the scene; oral tradition in its own colour
+  for (const n of sc.notes || []) {
+    const art = n.art ? `<span class="note-art">${NOTE_ART[n.art]}</span>` : "";
+    fx.labels.push({ el: textLabel(ch.features[n.place].coordinates, art + esc(n.text),
+                                   "note-label" + (n.oral ? " oral" : "") + (n.side === "above" ? " above" : "")),
+                     from: n.at, to: n.until, now: null });
+  }
   for (const id of sc.show || []) {
     const f = ch.features[id];
     if (f.kind !== "line" || f.type !== "river") continue;
@@ -1211,15 +1283,18 @@ function drawTies(ch, sc, atOf) {
     const f = ch.features[id];
     if (f.kind !== "link") continue;
     const a = ch.features[f.from].coordinates, b = ch.features[f.to].coordinates, style = TIE[f.type];
-    const at = Math.max(atOf[f.from], atOf[f.to]) + 0.5;
-    const pts = style.dotted ? bend(a, b) : [a, b];
+    const at = sc.appear?.[id] ?? Math.max(atOf[f.from], atOf[f.to]) + 0.5;
+    // A tie may bend (f.bend) so that it does not run through another place on its way
+    const pts = style.dotted ? bend(a, b) : f.bend ? bend(a, b, f.bend) : [a, b];
     const line = L.polyline(pts, { renderer: svg, interactive: false, color: hex(style.rgb), opacity: .9,
       weight: style.dotted ? 2.4 : 1.8, dashArray: style.dotted ? "1 6" : null, lineCap: "round" }).addTo(sceneLayer);
     const el = line.getElement();
     if (style.dotted) fx.timed.push({ els: [el], from: at, to: Infinity, now: null });
     else {
+      // A disputed tie is drawn, then left dashed
       el.setAttribute("pathLength", 1);
-      fx.draws.push({ el, from: at, dur: 1.2, marker: style.arrow ? `url(#hx-arrow-${f.type})` : null, now: null });
+      fx.draws.push({ id, el, from: at, dur: 1.2, marker: style.arrow ? `url(#hx-arrow-${f.type})` : null, now: null,
+                      dash: f.status === "disputed" ? "7 6" : null });
     }
     fx.ties.push({ line: along(pts), at: at + 1.2, rgb: style.rgb, dotted: !!style.dotted, seed: fx.ties.length + 1 });
   }
@@ -1472,9 +1547,10 @@ function keyFor(ch, sc) {
   const used = new Set();
   for (const id of sc.show || []) {
     const f = ch.features[id];
-    used.add(f.kind === "point" ? f.form || "site" : f.kind === "link" ? "tie-" + f.type
+    used.add(f.kind === "point" ? (f.icon === "walled-town" ? "town" : f.form || "site") : f.kind === "link" ? "tie-" + f.type
              : f.kind === "line" ? "line-" + f.type : "move-" + f.type);
     if (f.emblem && DATA.emblems[f.emblem].svg) used.add("emblem");
+    if (f.kind === "link" && f.status === "disputed" && !TIE[f.type].dotted) used.add("tie-disputed");
   }
   for (const how of Object.values(sc.control || {})) used.add(how === "taken" ? "taken" : how);
   if (used.size === 1 && used.has("site")) return "";
@@ -1485,6 +1561,8 @@ function keyFor(ch, sc) {
     site: [sw(`<circle cx="15" cy="9" r="5" fill="#d4b57a" stroke="#f0eee2" stroke-width="1.5"/>`), "Site or town"],
     kingdom: [mark("kingdom"), "Kingdom: its capital. Where a halo is drawn, it fades with distance and is not a border."],
     "city-state": [mark("city-state"), "City-state: a walled town with its own ruler"],
+    town: [`<svg width="30" height="20" viewBox="-40 -24 80 52" aria-hidden="true">${townSvg().replace(/^<svg[^>]*>|<\/svg>$/g, "")}</svg>`,
+      "City-state: a walled town with its own ruler. The drawing is the same symbol for every town, not a plan."],
     network: [mark("network"), "Centre of a network, with dotted threads to the places it reached. No area is filled."],
     caliphate: [mark("caliphate"), "Seat of the caliphate"],
     emirate: [mark("emirate"), "Emirate capital"],
@@ -1492,6 +1570,7 @@ function keyFor(ch, sc) {
     "tie-allegiance": [line(TIE.allegiance.rgb, 'stroke-width="1.8" marker-end="url(#hx-key-arrow-a)"'), "Allegiance, pointing to the overlord"],
     "tie-tribute": [line(TIE.tribute.rgb, 'stroke-width="1.8" marker-end="url(#hx-key-arrow-t)"'), "Tribute, pointing to the overlord"],
     "tie-alliance": [line(TIE.alliance.rgb, 'stroke-width="1.8"'), "Alliance"],
+    "tie-disputed": [line(TIE.tribute.rgb, 'stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#hx-key-arrow-t)"'), "Dashed tie: disputed, whether it existed or how far it reached"],
     "tie-trade": [line(TIE.trade.rgb, 'stroke-width="2.4" stroke-dasharray="1 6"'), "Network thread: trade"],
     "tie-ritual": [line(TIE.ritual.rgb, 'stroke-width="2.4" stroke-dasharray="1 6"'), "Network thread: ritual authority"],
     "move-migration": [sw(`<path d="M2 9 H28" stroke="${hex(VOCAB.migration)}" stroke-opacity=".25" stroke-width="12" stroke-linecap="round"/><path d="M4 9 H28" stroke="${hex(VOCAB.migration)}" stroke-width="3" stroke-dasharray="0.1 8" stroke-linecap="round"/>`),
@@ -1559,7 +1638,7 @@ function cameraOf(ch, sc) {
   const places = shown.filter(f => f.kind === "point");
   if (ch.area === "africa") return {center,zoom: small() ? Math.max(2,zoom-1.3) : zoomFor(zoom)};
   // An authored camera path frames its own shots, so a phone keeps the same framing, zoomed out
-  if (!small() || !places.length || sc.camera_path) return { center, zoom: zoomFor(zoom) };
+  if (!small() || !places.length || sc.camera_path) return { center, zoom: sceneZoom(sc, zoom) };
   const dated = new Set(shown.flatMap(f => Object.keys(f.dates || {})));
   // Each place's marker and label in pixels around its point. A label's width is guessed from its name.
   const boxes = places.map(f => {
@@ -1587,14 +1666,14 @@ function cameraOf(ch, sc) {
 }
 
 // A camera path's zoom on this screen, matching how cameraOf treats the chapter's own camera
-const pathZoom = (ch, z) => ch.area === "africa" && small() ? Math.max(2, z - 1.3) : zoomFor(z);
+const pathZoom = (ch, z, sc) => ch.area === "africa" && small() ? Math.max(2, z - 1.3) : sceneZoom(sc, z);
 // Where the camera goes while a scene plays, in seconds into the scene
 function cameraCues(sc) {
   if (sc.base === "deep") return [];
   const { center, zoom } = cameraOf(chapter(), sc), out = [];
   const near = small() ? PHONE_CLOSE_IN : 1;
   out.push(lead() ? { at: -1.1, center, zoom, dur: 2.2 } : { at: 0, center, zoom, dur: 1.4 });
-  if (sc.camera_path) return out.concat(sc.camera_path.map(c=>({...c,zoom:pathZoom(chapter(),c.zoom)})));
+  if (sc.camera_path) return out.concat(sc.camera_path.map(c=>({...c,zoom:pathZoom(chapter(),c.zoom,sc)})));
   const f = fx.focus;
   if (f) {
     const c = L.latLng(center);
@@ -1647,7 +1726,7 @@ function render({ animate = true, announce = false } = {}) {
   state.drawnC = state.c;
   sceneLayer.clearLayers();
   fx = { sets: [], siteLabels: [], labelKey: null, points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
-         timed: [], draws: [], flips: [], ties: [], arrivals: [], heads: [], drifts: [], goods: [], globeLines: [],
+         timed: [], draws: [], flips: [], ties: [], fades: [], arrivals: [], heads: [], drifts: [], goods: [], globeLines: [],
          rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
          card: { now: null }, lower: { now: null }, shownCount: { now: null } };
   $("mapwrap").dataset.base = sc.base;
@@ -2000,6 +2079,9 @@ function frame(now) {
   const gap = (sc.duration * 0.55) / Math.max(1, fx.sentences.length);
   fx.sentences.forEach((el, i) => el.classList.toggle("waiting", state.playing && live && t < (sc.beats?.[i]?.at ?? i * gap)));
 
+  // Walled towns: about their full size at zoom 8, a little larger closer in and smaller further out
+  if (fx.points.some(pt => pt.els.some(el => el.classList?.contains("hx-town"))))
+    setZoomFactor($("mapwrap"), Math.min(1.15, Math.max(.75, 2 ** ((map.getZoom() - 8) * .5))).toFixed(3));
   assemblyFrame(t,live);
   guideFrame(t,live);
   for (const pt of fx.points) {
@@ -2014,7 +2096,9 @@ function frame(now) {
                                      on => it.els.forEach(el => el.classList.toggle("hx-hidden", !on)));
   for (const d of fx.draws) setOnce(d, Math.round(clamp01((t - d.from) / d.dur) * 100), v => {
     d.el.classList.toggle("hx-hidden", v <= 0);
-    d.el.style.strokeDasharray = v >= 100 ? "" : "1";
+    // pathLength scales dashes too, so a dashed line drops it once drawn
+    if (d.dash) v >= 100 ? d.el.removeAttribute("pathLength") : d.el.setAttribute("pathLength", 1);
+    d.el.style.strokeDasharray = v >= 100 ? d.dash || "" : "1";
     d.el.style.strokeDashoffset = v >= 100 ? "" : String(1 - v / 100);
     if (d.marker && v >= 100) d.el.setAttribute("marker-end", d.marker);    // the arrowhead once the line is complete
     else d.el.removeAttribute("marker-end");
@@ -2037,6 +2121,8 @@ function frame(now) {
     a.el.style.strokeDasharray = v >= 100 ? "" : "1";
     a.el.style.strokeDashoffset = v >= 100 ? "" : String(1 - v / 100);
   });
+  for (const fd of fx.fades) setOnce(fd, Math.round(40 * (live ? clamp01((t - fd.at) / 0.8) : 1)), v =>
+    fd.els.forEach(el => { el.style.opacity = v ? String(1 - .55 * v / 40) : ""; }));
   for (const l of fx.labels) setOnce(l, t >= l.from && (t < l.to || l.to === Infinity), on => {
     l.el.classList.toggle("hx-hidden", !on);
     if (on && live && l.from > 0) l.el.classList.add("hx-pop-label");
@@ -2075,43 +2161,63 @@ const onScreen = el => el && !el.hidden && el.getClientRects().length && getComp
 // Everything drawn over the map that a name must keep clear of
 const overlayBoxes = () => [...document.querySelectorAll("#view-tools, #ov-notes > *, #hud, #ov-lower > *, #story-guide, .leaflet-control-zoom, .leaflet-control-attribution")]
   .filter(onScreen).map(el => edges(el.getBoundingClientRect()));
+// Sets the walled towns' zoom factor, touching the style only when it changes
+function setZoomFactor(el, k) { if (el.dataset.zk !== k) { el.dataset.zk = k; el.style.setProperty("--zk", k); } }
+// Where a walled town's drawing sits once it has risen, whatever its entrance animation is doing now
+function townBox(el) {
+  const p = el.getBoundingClientRect(), svg = el.querySelector("svg"), w = svg.clientWidth, h = svg.clientHeight;
+  return { left: p.left - w / 2, right: p.left + w / 2, top: p.top - w * .5, bottom: p.top - w * .5 + h, width: w, height: h };
+}
 function declutterLabels() {
   if (!fx || !fx.siteLabels.length) return;
   const visible = fx.siteLabels.filter(el => el.isConnected && !el.classList.contains("hx-hidden"));
   const size = map.getSize(), c = map.getCenter();
   const key = [map.getZoom().toFixed(3), c.lat.toFixed(4), c.lng.toFixed(4), size.x, size.y, visible.length,
-    document.body.className, $("ov-top").offsetHeight, $("ov-bottom").offsetHeight].join();   // a new caption can change the free space
+    document.body.className, $("ov-top").offsetHeight, $("ov-bottom").offsetHeight,          // a new caption can change the free space
+    document.querySelectorAll(".note-label:not(.hx-hidden)").length].join();
   if (key === fx.labelKey) return;
   fx.labelKey = key;
   for (const el of fx.siteLabels) { el.style.translate = ""; el.classList.remove("hx-moved", "hx-crowded"); }
   const wrap = $("mapwrap").getBoundingClientRect();
-  const taken = overlayBoxes();
-  // The points themselves (small markers only: halos, uncertainty rings and close-up settings are not obstacles)
+  // In the video, also its caption, caution, credit, tools and cinema bars; and a scene's visible notes
+  const video = [...document.querySelectorAll(".lb, #video-caption, #video-caution, #video-credit, #video-tools, #exit-video")].filter(onScreen);
+  const notes = [...document.querySelectorAll(".note-label:not(.hx-hidden) .lab-c")];
+  const taken = overlayBoxes().concat([...video, ...notes].map(el => edges(el.getBoundingClientRect())));
+  // The points themselves (small markers and walled towns only: halos, uncertainty rings and close-up settings are not obstacles)
   const dots = [];
   for (const pt of fx.points) for (const el of pt.els) {
     if (fx.siteLabels.includes(el) || el.classList?.contains("hx-hidden")) continue;
-    const r = el.getBoundingClientRect();
-    if (r.width > 1 && r.width <= 60 && r.height <= 60) dots.push({ pt, ...edges(r) });
+    const town = el.classList?.contains("hx-town"), r = town ? townBox(el) : el.getBoundingClientRect();
+    if (r.width > 1 && (town || r.width <= 60 && r.height <= 60)) dots.push({ pt, ...edges(r) });
   }
   const rects = visible.map(el => edges(el.getBoundingClientRect()));
   visible.forEach((el, i) => {
     const r0 = rects[i], w = r0.r - r0.x, h = r0.b - r0.y;
     // A setting's name hangs below it and may rise onto the setting itself, over its own point
-    const plate = el.classList.contains("leaflet-tooltip-bottom"), own = plate && fx.points.find(pt => pt.els.includes(el));
+    const plate = el.classList.contains("leaflet-tooltip-bottom"), mine = fx.points.find(pt => pt.els.includes(el));
+    const own = plate && mine;
     const blocks = taken.concat(dots.filter(d => d.pt !== own));
+    // Flipping to the other side clears the place's own drawing: a walled town is wider than a dot
+    const town = el.classList.contains("town-label") && mine.els.find(e => e.classList?.contains("hx-town"));
+    // and no other town may stand between a town and its name
+    const tb = town && edges(townBox(town));
+    const between = r => tb && dots.some(d => d.pt !== mine && overlaps(d, { x: Math.min(r.r, tb.r), r: Math.max(r.x, tb.x), y: r.y, b: r.b }));
     const fits = r => r.x >= wrap.left + 2 && r.r <= wrap.right - 2 && r.y >= wrap.top + 2 && r.b <= wrap.bottom - 2
-      && !blocks.some(t => overlaps(t, r));
-    const right = el.classList.contains("leaflet-tooltip-right"), flipBy = w + 28;
+      && !blocks.some(t => overlaps(t, r)) && !between(r);
+    const right = el.classList.contains("leaflet-tooltip-right"), flipBy = w + 28 + (town ? townBox(town).width : 0);
     // A city that names its own parts keeps its name below it, or hides it: risen, it would cover them
     const named = own && own.els.some(e => e.querySelector?.('[data-set-part$="-names"]'));
-    for (const [side, row] of named ? LABEL_SLOTS.slice(0, 1) : LABEL_SLOTS) {
+    // A walled town's name stays level with it, on either side, or hides: among other towns, a name
+    // moved up or down would read as a neighbour's
+    const slots = named ? LABEL_SLOTS.slice(0, 1) : town ? LABEL_SLOTS.filter(([, row]) => !row) : LABEL_SLOTS;
+    for (const [side, row] of slots) {
       let dx = side === 1 ? 0 : right ? -flipBy : flipBy;
       const dy = row * (h + 3);
       let r = { x: r0.x + dx, y: r0.y + dy, r: r0.r + dx, b: r0.b + dy };
       if (!fits(r)) {
         const steps = blocks.filter(t => overlaps(t, r)).flatMap(t => [t.x - 2 - r.r, t.r + 2 - r.x])
           .concat([wrap.left + 2 - r.x, wrap.right - 2 - r.r])
-          .filter(s => s && Math.abs(s) <= w * 0.5).sort((a, b) => Math.abs(a) - Math.abs(b));
+          .filter(s => s && Math.abs(s) <= (town ? 6 : w * 0.5)).sort((a, b) => Math.abs(a) - Math.abs(b));
         const step = steps.find(s => fits({ ...r, x: r.x + s, r: r.r + s }));
         if (step === undefined) continue;
         r = { ...r, x: r.x + step, r: r.r + step }; dx += step;
@@ -2749,7 +2855,7 @@ function captureCamera(t) {
   const priorChapter = state.s ? chapter() : DATA.chapters[state.c - 1];
   const prior = state.s ? chapter().scenes[state.s - 1] : priorChapter?.scenes.at(-1);
   const terminal = prior?.camera_path?.at(-1);
-  const priorCamera = terminal ? {center:terminal.center,zoom:pathZoom(priorChapter,terminal.zoom)} : prior && cameraOf(priorChapter, prior);
+  const priorCamera = terminal ? {center:terminal.center,zoom:pathZoom(priorChapter,terminal.zoom,prior)} : prior && cameraOf(priorChapter, prior);
   let position = lead() || !prior || prior.base === "deep"
     ? chapter().area === "africa" ? {center:[0,20],zoom:2.6} : { center: WIDE.center, zoom: zoomFor(WIDE.zoom) } : priorCamera;
   let active = null;
