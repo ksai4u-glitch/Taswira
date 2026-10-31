@@ -8,3 +8,6 @@ __pycache__/
 
 # Local database (rebuilt from the API with save_events.py)
 data/
+
+# Temporary files from safe_files.py (removed again unless a run is killed)
+.*.tmp

@@ -6,20 +6,22 @@ How paging works: the API returns one page at a time. Each page includes
 a NextPageUrl pointing to the next page; on the last page it is empty.
 We simply follow those links until there are none left.
 
+Requests go through ucdp_api.py, which retries timeouts and HTTP 429/5xx a
+couple of times and checks that every page still has the expected shape.
+
 Uses only the Python standard library. Reuses load_token() from Stage 1.
 """
 
-import json
 import sys
 import time
-import urllib.error
 import urllib.parse
 
-from fetch_nigeria import is_ucdp_url, load_token, open_ucdp
+import ucdp_api
+from fetch_nigeria import is_ucdp_url, load_token
 from settings import API_VERSION, COUNTRIES, END_DATE, MAX_REQUESTS, PAGE_SIZE, START_DATE
 
 # --- Settings (the values themselves live in settings.py) -------------------
-API_URL = "https://ucdpapi.pcr.uu.se/api/gedevents/"   # + version, e.g. "26.1"
+API_URL = ucdp_api.API_URL   # + version, e.g. "26.1"
 
 
 def params_for(version):
@@ -39,15 +41,14 @@ PAUSE_SECONDS = 1       # wait between requests, to be polite to the server
 
 
 def get_json(url, token):
-    """Send one GET request and return the parsed JSON. Stops the script on any error."""
+    """Fetch one checked page (with retries, see ucdp_api.py). Stops the script on any error."""
     try:
-        with open_ucdp(url, token) as response:
-            return json.load(response)
-    except urllib.error.HTTPError as e:
+        return ucdp_api.get_page(url, token)
+    except ucdp_api.HTTPStatusError as e:
         hint = " Is that dataset version in settings.py published yet?" if e.code == 404 else ""
-        sys.exit(f"HTTP error {e.code}: {e.reason} (url: {url}).{hint}")
-    except urllib.error.URLError as e:
-        sys.exit(f"Could not reach the API: {e.reason}")
+        sys.exit(f"{e}.{hint}")
+    except ucdp_api.UCDPError as e:
+        sys.exit(f"Download stopped: {e}")
 
 
 def fetch_all(token, version=API_VERSION):
@@ -59,7 +60,7 @@ def fetch_all(token, version=API_VERSION):
     for one country at a time and follow NextPageUrl within each country.
     """
     events = []
-    requests_made = 0
+    requests_made = 0          # attempts for this version, retries included
     total_count = 0
 
     for position, country in enumerate(COUNTRIES):
@@ -75,9 +76,10 @@ def fetch_all(token, version=API_VERSION):
             if requests_made > 0:
                 time.sleep(PAUSE_SECONDS)
 
+            before = ucdp_api.requests_made
             data = get_json(url, token)
-            requests_made += 1
-            page_events = data.get("Result", [])
+            requests_made += ucdp_api.requests_made - before   # 1, or more after retries
+            page_events = data["Result"]
             events.extend(page_events)
 
             if first_page:
