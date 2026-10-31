@@ -16,7 +16,8 @@ import urllib.error
 import urllib.request
 
 from fetch_nigeria import load_token
-from settings import CANDIDATE_VERSIONS
+from settings import API_VERSION, CANDIDATE_VERSIONS
+from switch_stable import stable_notice
 
 API_URL = "https://ucdpapi.pcr.uu.se/api/gedevents/"
 SETTINGS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.py")
@@ -82,6 +83,10 @@ def main():
         print(f"New Candidate release(s): {', '.join(new_versions)}. Added to settings.py.")
     else:
         print(f"No new Candidate release yet ({candidate} is not published).")
+
+    notice = stable_notice(API_VERSION, token)  # at most 1 request, only from May of the expected year
+    if notice:
+        print(("::notice::" if os.environ.get("GITHUB_ACTIONS") else "Notice: ") + notice)
 
     # Tell the GitHub Actions workflow what happened, so it knows whether to rebuild
     if os.environ.get("GITHUB_OUTPUT"):

@@ -87,8 +87,47 @@ New repository secret, name `UCDP_TOKEN`, and Settings → Actions → General �
 Actions to create and approve pull requests". You can also start it any time from the
 Actions tab → "Update map with new UCDP releases" → Run workflow.
 
-The yearly stable release (for example 27.1) still needs a manual change of
-`API_VERSION` and the dates in `settings.py`.
+The yearly stable release (for example 27.1) is switched by hand with
+`switch_stable.py`; see the next section. From May of the year the next one is expected
+(May 2027 for 27.1), the weekly check spends 1 more request to see whether it is out and,
+if so, prints a notice in the workflow run. It never switches by itself.
+
+## Yearly stable release
+
+UCDP publishes a new stable GED release each year, around June (`27.1` covers events up
+to the end of 2026). To switch to it:
+
+1. Preview the change (no files written; add `--no-check` if you have no token at hand):
+
+   ```
+   python switch_stable.py 27.1 --dry-run
+   ```
+
+   It checks with 1 API request that 27.1 exists, then shows the diff for `settings.py`:
+   `API_VERSION` becomes `27.1`, `END_DATE` becomes `2026-12-31`, and the Candidate
+   versions now covered by 27.1 (all `26.…` ones) are dropped from `CANDIDATE_VERSIONS`.
+2. If the diff looks right, run it for real on a new branch:
+
+   ```
+   git switch -c ged-27.1
+   python switch_stable.py 27.1
+   ```
+3. Check the warnings it prints. At least one monthly Candidate version (like `27.0.6`)
+   must remain in `CANDIDATE_VERSIONS`, or the weekly check has nothing to count up from.
+4. Download, clean and publish (only the new stable release is downloaded, a few hundred
+   requests):
+
+   ```
+   python save_events.py
+   python clean_events.py
+   python build_map.py
+   python publish.py
+   ```
+5. Look at the map, then commit `settings.py` and `docs/index.html`, push and open a pull
+   request. Merging it publishes the new release.
+6. Optional: update the year in the comments of `settings.py`, the dates in this README
+   ("2020 to 2025 from the stable GED 26.1") and `API_VERSION` in `fetch_nigeria.py`
+   (Stage 1 peek only).
 
 ## History page (draft)
 
