@@ -20,6 +20,7 @@ import build_map  # noqa: E402
 import fetch_all  # noqa: E402
 import fetch_nigeria  # noqa: E402
 import save_events  # noqa: E402
+import ucdp_api  # noqa: E402
 
 
 class UcdpUrlTests(unittest.TestCase):
@@ -94,9 +95,11 @@ class FetchAllTests(unittest.TestCase):
 
         def fake_get_json(url, token):
             calls.append(url)
+            ucdp_api.requests_made += 1     # fetch_all counts the attempts ucdp_api makes
             return responses.pop(0)
 
         with mock.patch.object(fetch_all, "get_json", fake_get_json), \
+             mock.patch.object(ucdp_api, "requests_made", 0), \
              mock.patch.object(fetch_all, "COUNTRIES", [475]), \
              mock.patch.object(fetch_all.time, "sleep"):
             result = fetch_all.fetch_all("SECRET", "26.1")
