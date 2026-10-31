@@ -142,6 +142,26 @@ class SokotoChapterTests(unittest.TestCase):
         sc["show"].append("gwandu")
         self.assertTrue(any("no campaign in the scene reaches it" in p for p in self.problems(ch)))
 
+    def test_conquest_narration_keeps_pace_with_the_campaign_clock(self):
+        # Each sentence that names a year starts while the counter shows that year, or the year before
+        ch, feats, sc = self.copy("conquest")
+        knots = bh.campaign_clock(sc, feats, sc["duration"])["knots"]
+
+        def year_at(t):
+            if t <= knots[0][0]:
+                return knots[0][1]
+            for (t0, y0), (t1, y1) in zip(knots, knots[1:]):
+                if t <= t1:
+                    return y0 + (y1 - y0) * (t - t0) / (t1 - t0)
+            return knots[-1][1]
+        self.assertEqual(" ".join(b["text"] for b in sc["beats"]), sc["text"])
+        for beat in sc["beats"]:
+            self.assertNotIn("when", beat, "the campaign clock, not a beat label, drives the counter")
+            years = [int(y) for y in re.findall(r"\b(1[89]\d\d)\b", beat["text"])]
+            if years:
+                shown = int(year_at(beat["at"] + 0.01))
+                self.assertTrue(max(years) - 1 <= shown <= max(years), f"{beat['text']} at {shown}")
+
     def test_disputed_dates_are_named(self):
         conquest = next(s for s in self.sokoto["scenes"] if s["id"] == "conquest")
         for words in ("13 March", "27 July", "25 or 29 January", "Burmi itself is not placed"):

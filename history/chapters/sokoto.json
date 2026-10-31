@@ -951,8 +951,90 @@
         "wiki-attahiru-i",
         "wiki-places-key"
       ],
+      "beats": [
+        {
+          "at": 0,
+          "text": "From 1897 the caliphate was attacked from the south.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 6.4,
+          "text": "In January 1897 a Royal Niger Company force under George Goldie took Bida, the Nupe capital, and deposed its emir; Ilorin's emir then submitted to the company.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 25.3,
+          "text": "On 1 January 1900 the company handed its territories to the British government, and on paper the emirates lay inside a British protectorate.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 31.0,
+          "text": "British forces took Zaria in 1901.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 40.0,
+          "text": "A force under Colonel Thomas Morland left Zaria at the end of January 1903 and took Kano on 3 February after heavy fighting.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 46.1,
+          "text": "Sokoto fell after a battle on 15 March.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 48.5,
+          "text": "On 21 March Lugard named a new sultan, Attahiru II, and emirs who accepted British rule were kept in office under British officers.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 51.0,
+          "text": "Caliph Attahiru I had left Sokoto with his followers. British forces caught up with them at Burmi, in today's Gombe State, where he and many of his followers were killed on 27 July 1903.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        }
+      ],
       "mood": "decline",
-      "duration": 44,
+      "duration": 54,
       "scale": "Sokoto Caliphate · conquest",
       "focus_label": "The caliphate falls"
     }

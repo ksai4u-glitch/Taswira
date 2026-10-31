@@ -632,11 +632,12 @@ Fodio at Degel to the British conquest of 1903, in three sensitive scenes:
   each emir ruled was never surveyed. Usman's death (20 April 1817), Bello and Abdullahi, the
   tribute of crops, cowries and enslaved people, Ilorin (1823 or 1824, labelled as differing) and
   Yola (1841).
-- **Conquest: the caliphate falls** (44 seconds, January 1897 to July 1903). Two campaigns on one
+- **Conquest: the caliphate falls** (54 seconds, January 1897 to July 1903). Two campaigns on one
   clock: the Royal Niger Company's against Bida and Ilorin (1897), then the British advance from
   Zaria (1901) to Kano (3 February 1903) and Sokoto (15 March 1903). Each town is hatched until its
   stop, then solid. The narration ends with Attahiru II named on 21 March and Attahiru I killed at
-  Burmi on 27 July 1903; Burmi is not placed.
+  Burmi on 27 July 1903; Burmi is not placed. Its beats carry no `when`: the campaign clock drives
+  the counter, and each sentence starts while the counter shows the year it names.
 
 The jihad and emirates scenes use dated beats with the `record` basis (and `differ` where sources
 disagree). Zomo takes the still, solemn pose for war, killing and enslavement, and the scenes are
