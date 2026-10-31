@@ -13,21 +13,29 @@ on:
     - cron: "0 6 * * 1"     # every Monday at 06:00 UTC
   workflow_dispatch:         # plus a "Run workflow" button in the Actions tab
 
-permissions:
-  contents: write            # to push the data/ged-... branch (never main)
-  pull-requests: write       # to open the pull request
+permissions: {}               # nothing by default; the job below asks for what it needs
 
 concurrency:
   group: ucdp-update
-  cancel-in-progress: false
+  cancel-in-progress: false  # never cut a running update short; the next one waits
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    env:
-      UCDP_TOKEN: ${{ secrets.UCDP_TOKEN }}
+    timeout-minutes: 30      # a stuck download must not hold the runner for 6 hours
+    permissions:
+      contents: write        # to push the data/ged-... branch (never main)
+      pull-requests: write   # to list and open pull requests
+    defaults:
+      run:
+        # bash with pipefail: a failing "python publish.py | tee ..." must fail the step
+        shell: bash
     steps:
+      # The git credentials are not left in .git/config while the Python steps run;
+      # only the final step gets a token to push with.
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         with:
@@ -43,8 +51,14 @@ jobs:
           key: taswira-db-${{ github.run_id }}
           restore-keys: taswira-db-
 
+      # Fast, offline tests of the update scripts (API mocked, no token).
+      - name: Test the update scripts
+        run: python -m unittest discover -s tests -p "test_update_*.py"
+
       - name: Check for a new Candidate release (1 request)
         id: check
+        env:
+          UCDP_TOKEN: ${{ secrets.UCDP_TOKEN }}
         run: python update_candidates.py
 
       # One data pull request at a time. Until it is merged, settings.py on main
@@ -55,13 +69,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          waiting=$(gh pr list --state open --json headRefName,url \
-            --jq '[.[] | select(.headRefName | startswith("data/ged-")) | .url] | first // ""')
+          # Only branches in this repository count: a pull request from a fork that
+          # happens to use a data/ged-... branch name must not pause the updates.
+          waiting=$(gh pr list --state open --limit 100 --json headRefName,isCrossRepository,url \
+            --jq '[.[] | select((.headRefName | startswith("data/ged-")) and (.isCrossRepository | not)) | .url] | first // ""')
           echo "waiting=$waiting" >> "$GITHUB_OUTPUT"
           if [ -n "$waiting" ]; then echo "Waiting for $waiting to be merged or closed; nothing to do."; fi
 
       - name: Download, clean and rebuild the public page
         if: steps.check.outputs.new_versions != '' && steps.open.outputs.waiting == ''
+        env:
+          UCDP_TOKEN: ${{ secrets.UCDP_TOKEN }}   # publish.py checks the page does not contain it
         run: |
           python save_events.py
           python clean_events.py
@@ -92,6 +110,7 @@ jobs:
           git switch -c "$branch"
           git add settings.py docs/index.html
           git commit -m "Add GED Candidate $NEW_VERSIONS"
+          gh auth setup-git          # push with GH_TOKEN (checkout did not keep credentials)
           git push --force origin "HEAD:refs/heads/$branch"   # a data/ branch only this workflow writes
 
           {
