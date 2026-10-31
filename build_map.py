@@ -10,6 +10,7 @@ Uses only the Python standard library.
 
 import json
 import os
+import re
 import sqlite3
 import sys
 import webbrowser
@@ -66,8 +67,21 @@ def pack(events):
 
 
 def to_js(data):
-    """JSON that is safe to paste inside a <script> tag."""
-    return json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    """JSON that is safe to paste inside a <script> tag.
+
+    Every "<" becomes \\u003c (the same character to JavaScript), so no text from the
+    data (a place or armed group name) can close the tag ("</script>") or open an HTML
+    comment ("<!--") that would stop the browser seeing the real closing tag."""
+    return (json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+            .replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029"))
+
+
+def fill(page, values):
+    """Replace each __NAME__ placeholder in one pass. Replacing them one after another would
+    also replace placeholder-like text inside values put in earlier, such as an event
+    whose place name contains "__UNMAPPED_JSON__"."""
+    pattern = re.compile("|".join(re.escape(k) for k in sorted(values, key=len, reverse=True)))
+    return pattern.sub(lambda m: values[m.group(0)], page)
 
 
 def shown_period(events):
@@ -81,20 +95,21 @@ def fill_template(mapped, unmapped):
     """Fill map_template.html with the events and settings; return the finished page as text."""
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         page = f.read()
-    page = (page.replace("__EVENTS_JSON__", to_js(pack(mapped)))
-                .replace("__UNMAPPED_JSON__", to_js(pack(unmapped)))
-                .replace("__VERSION__", API_VERSION)
-                .replace("__CANDIDATES__", ", ".join(CANDIDATE_VERSIONS))
-                .replace("__PERIOD__", PERIOD)
-                .replace("__AREA__", AREA_NAME)
-                .replace("__BOUNDS__", json.dumps(BOUNDS))
-                .replace("__HEAT_MAX__", str(HEAT_MAX))
-                # one country on screen: same heat ceiling as the Nigeria-only map
-                .replace("__COUNTRY_HEAT_MAX__", str(AREAS["nigeria"]["heat_max"]))
-                .replace("__BUILT__", date.today().isoformat())
-                .replace("__BUILT_LONG__", f"{date.today().day} {date.today():%B %Y}")
-                .replace("__SHOWN_PERIOD__", shown_period(mapped + unmapped)))
-    return page
+    return fill(page, {
+        "__EVENTS_JSON__": to_js(pack(mapped)),
+        "__UNMAPPED_JSON__": to_js(pack(unmapped)),
+        "__VERSION__": API_VERSION,
+        "__CANDIDATES__": ", ".join(CANDIDATE_VERSIONS),
+        "__PERIOD__": PERIOD,
+        "__AREA__": AREA_NAME,
+        "__BOUNDS__": json.dumps(BOUNDS),
+        "__HEAT_MAX__": str(HEAT_MAX),
+        # one country on screen: same heat ceiling as the Nigeria-only map
+        "__COUNTRY_HEAT_MAX__": str(AREAS["nigeria"]["heat_max"]),
+        "__BUILT__": date.today().isoformat(),
+        "__BUILT_LONG__": f"{date.today().day} {date.today():%B %Y}",
+        "__SHOWN_PERIOD__": shown_period(mapped + unmapped),
+    })
 
 
 def load_all():

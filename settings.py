@@ -38,6 +38,7 @@ END_DATE = "2025-12-31"       # the stable release; Candidate data covers what c
 
 PAGE_SIZE = 1000              # events per request; fewer, bigger pages save requests
 MAX_REQUESTS = 200            # hard cap per dataset version (at least 1 request per country); the daily limit is 5,000
+MAX_REQUESTS_PER_RUN = 2000   # hard cap for one run of a script, all versions and retries included
 
 # Derived values, e.g. "Africa", [402, ...], "2020-2025", "africa_2020-2025"
 AREA_NAME = AREAS[AREA]["name"]

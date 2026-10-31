@@ -73,6 +73,13 @@ again: only the new version is downloaded.
    the map appears at `https://ksai4u-glitch.github.io/Taswira/`.
    Re-run `publish.py` and push again whenever you add a new Candidate release.
 
+   To check the page in a browser (phone layout, keyboard, contrast, chart text), with Node and
+   Playwright installed and Leaflet's `leaflet.js`, `leaflet.css` and `leaflet-heat.js` saved in a folder:
+
+   ```
+   node tests/map_phone_a11y_browser.cjs docs/index.html <that folder> [screenshots folder]
+   ```
+
 ## Automatic updates
 
 A GitHub Actions workflow (`.github/workflows/update.yml`) runs every Monday. It costs
@@ -82,21 +89,78 @@ rebuilds `docs/index.html` and opens a pull request ("Add GED Candidate …") wi
 Nothing goes live until you merge it; merging republishes the map. While one data pull
 request is open, later runs wait for it instead of opening another.
 
+If UCDP is slow or busy (a timeout, HTTP 429 or 5xx), each request is tried up to 3 times
+with a pause in between (`ucdp_api.py`). Every attempt counts towards the daily limit, so one
+run never makes more than `MAX_REQUESTS_PER_RUN` (2,000) requests. If something still fails,
+or UCDP's answer has an unexpected shape, the run stops with a message and a non-zero exit
+code; `settings.py` and `docs/index.html` are only ever replaced in one step, so they are
+never left half-written, and no pull request is opened. The update scripts have offline tests
+(the API is mocked): `python -m unittest discover -s tests -p "test_update_*.py"`.
+
 It needs your token as a repository secret: Settings → Secrets and variables → Actions →
 New repository secret, name `UCDP_TOKEN`, and Settings → Actions → General → "Allow GitHub
 Actions to create and approve pull requests". You can also start it any time from the
 Actions tab → "Update map with new UCDP releases" → Run workflow.
 
-The yearly stable release (for example 27.1) still needs a manual change of
-`API_VERSION` and the dates in `settings.py`.
+The yearly stable release (for example 27.1) is switched by hand with
+`switch_stable.py`; see the next section. From May of the year the next one is expected
+(May 2027 for 27.1), the weekly check spends 1 more request to see whether it is out and,
+if so, prints a notice in the workflow run. It never switches by itself.
+
+## Yearly stable release
+
+UCDP publishes a new stable GED release each year, around June (`27.1` covers events up
+to the end of 2026). To switch to it:
+
+1. Preview the change (no files written; add `--no-check` if you have no token at hand):
+
+   ```
+   python switch_stable.py 27.1 --dry-run
+   ```
+
+   It checks with 1 API request that 27.1 exists, then shows the diff for `settings.py`:
+   `API_VERSION` becomes `27.1`, `END_DATE` becomes `2026-12-31`, and the Candidate
+   versions now covered by 27.1 (all `26.…` ones) are dropped from `CANDIDATE_VERSIONS`.
+2. If the diff looks right, run it for real on a new branch:
+
+   ```
+   git switch -c ged-27.1
+   python switch_stable.py 27.1
+   ```
+3. Check the warnings it prints. At least one monthly Candidate version (like `27.0.6`)
+   must remain in `CANDIDATE_VERSIONS`, or the weekly check has nothing to count up from.
+4. Download, clean and publish (only the new stable release is downloaded, a few hundred
+   requests):
+
+   ```
+   python save_events.py
+   python clean_events.py
+   python build_map.py
+   python publish.py
+   ```
+5. Look at the map, then commit `settings.py` and `docs/index.html`, push and open a pull
+   request. Merging it publishes the new release.
+6. Optional: update the year in the comments of `settings.py`, the dates in this README
+   ("2020 to 2025 from the stable GED 26.1") and `API_VERSION` in `fetch_nigeria.py`
+   (Stage 1 peek only).
 
 ## History page (draft)
 
-`python build_history.py` builds `docs/history.html`, an animated map of chapters of Nigeria's
-history (so far: the Nok culture, and state creation from 1967 to 1996). It reads only the files in
-`history/`, makes no API requests and is separate from `publish.py`. See
-[`history/README.md`](history/README.md) for how chapters and sources are written. Tests:
-`python -m unittest discover -s tests`.
+`python build_history.py` builds `docs/history.html`, an animated map of chapters of African and
+Nigerian history. The chapters so far, in order:
+
+- Deep time: how the land was made
+- Africa: peoples, cities and kingdoms (including Great Zimbabwe)
+- Nok: farmers, sculptors and early iron
+- Hausa cities: walls, markets and kings (Kano, about 1000 to 1526)
+- From four regions to 36 states (1967 to 1996)
+- Map key: how power and movement are drawn
+
+It reads only the files in `history/`, makes no API requests and is separate from `publish.py`.
+See [`history/README.md`](history/README.md) for how chapters and sources are written.
+
+Tests: `python -m unittest discover -s tests` (Python), and the browser tests in `tests/*.cjs`
+(Node with Playwright), for example `node tests/history_browser.cjs`.
 
 ## Agent tasks (Claude + Codex)
 
@@ -107,7 +171,7 @@ push to `main` or deploy. Setup, limits and the stop command (`/agent stop`) are
 in [`.github/agents/SETUP.md`](.github/agents/SETUP.md); the rules both agents
 follow are in [`.github/agents/INSTRUCTIONS.md`](.github/agents/INSTRUCTIONS.md).
 
-## Planned build stages
+## Build stages
 
 1. **Fetch:** one authenticated request for Nigeria events, inspect the JSON fields
 2. **Paginate:** loop through all pages safely, respecting the daily limit
@@ -115,4 +179,5 @@ follow are in [`.github/agents/INSTRUCTIONS.md`](.github/agents/INSTRUCTIONS.md)
 4. **Clean:** select key fields (date, location, deaths estimate, violence type, actors)
 5. **Map:** plot events and build a heatmap for Nigeria
 6. **Expand:** extend to wider Africa, add time filtering and Candidate data (done)
-7. **Publish:** public version with full UCDP attribution ← *current*
+7. **Publish:** public version with full UCDP attribution, updated weekly (done)
+8. **History:** animated chapters of African and Nigerian history (`docs/history.html`) ← *current*

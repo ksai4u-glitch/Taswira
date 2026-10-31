@@ -1,0 +1,1042 @@
+{
+  "id": "sokoto",
+  "title": "The Sokoto Caliphate: jihad, emirates and conquest",
+  "period": "1804 to 1903",
+  "intro": "In 1804 the scholar Usman dan Fodio led a jihad against the Hausa kings. Within a few years most of the Hausa cities were ruled by emirs who owed allegiance to a caliph at Sokoto, and the caliphate grew to the Yoruba town of Ilorin in the south and Adamawa in the east. It is drawn as the caliph's seats with a line from each emirate, not as one border, because how far each emir's rule reached on the ground was never surveyed. It lasted until British forces took Kano and Sokoto in 1903. Most dates here come from encyclopedias that point to the historians they cite; where they disagree, it says so.",
+  "features": [
+    {
+      "id": "degel",
+      "kind": "point",
+      "name": "Degel",
+      "coordinates": [
+        13.331,
+        5.333
+      ],
+      "what": "The town in the Hausa kingdom of Gobir where Usman dan Fodio lived and taught from 1774 to 1804, before the hijra to Gudu.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "Drawn at the position a city database gives for today's Degel, inside a ring: the Wikipedia article on Degel has no coordinates, and the town of 1804 has not been placed from a survey.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-degel",
+        "bamwor-degel"
+      ],
+      "uncertainty_km": 15
+    },
+    {
+      "id": "alkalawa",
+      "kind": "point",
+      "name": "Alkalawa",
+      "coordinates": [
+        13.613,
+        6.26
+      ],
+      "what": "The walled capital of Gobir from the mid-eighteenth century. The jihad's forces took it on 3 October 1808, and Gobir's king Yunfa was killed.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "The abandoned site in today's Sabon Birni area of Sokoto State, rounded from the coordinates in the Alkalawa article.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-alkalawa",
+        "wiki-tabkin-kwatto"
+      ],
+      "form": "city-state",
+      "icon": "walled-town"
+    },
+    {
+      "id": "sokoto",
+      "kind": "point",
+      "name": "Sokoto",
+      "coordinates": [
+        13.062,
+        5.234
+      ],
+      "what": "Muhammad Bello turned the jihad's camp at Sokoto into a town in 1809. It became the seat of the caliph, the Amir al-Mu'minin.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "Today's city of Sokoto.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-sokoto",
+        "wiki-places-key"
+      ],
+      "form": "caliphate",
+      "emblem": "sokoto-caliphate"
+    },
+    {
+      "id": "gwandu",
+      "kind": "point",
+      "name": "Gwandu",
+      "coordinates": [
+        12.502,
+        4.643
+      ],
+      "what": "Abdullahi dan Fodio's seat from 1812. Gwandu's emirs oversaw the western and southern emirates, under the caliph at Sokoto.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "Today's town of Gwandu.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-gwandu-emirate",
+        "wiki-places-key"
+      ],
+      "form": "caliphate",
+      "label": "left",
+      "emblem": "sokoto-caliphate"
+    },
+    {
+      "id": "zaria",
+      "kind": "point",
+      "name": "Zaria",
+      "coordinates": [
+        11.067,
+        7.7
+      ],
+      "what": "Zaria, capital of Zazzau, was captured in 1805 during the jihad, and became the seat of an emirate.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "Today's city of Zaria.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-places-key",
+        "wiki-sokoto"
+      ],
+      "form": "emirate"
+    },
+    {
+      "id": "kano",
+      "kind": "point",
+      "name": "Kano",
+      "coordinates": [
+        12.0,
+        8.517
+      ],
+      "what": "Jihad forces captured Kano in 1807, and an emirate replaced its Hausa king.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "The old city of Kano.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-sokoto",
+        "wiki-places-key"
+      ],
+      "form": "emirate"
+    },
+    {
+      "id": "katsina",
+      "kind": "point",
+      "name": "Katsina",
+      "coordinates": [
+        12.989,
+        7.601
+      ],
+      "what": "The emirate set up in Katsina after the jihad. The year it was taken has not been checked for this chapter, so it is not given.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "The walled city of Katsina.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-sokoto",
+        "wiki-places-key"
+      ],
+      "form": "emirate"
+    },
+    {
+      "id": "bauchi",
+      "kind": "point",
+      "name": "Bauchi",
+      "coordinates": [
+        10.32,
+        9.84
+      ],
+      "what": "The emirate founded by Yakubu, who had received Usman dan Fodio's flag and the title Sarkin Yaki.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "Rounded from the coordinates in the Bauchi Emirate article. Bauchi town itself was founded in the jihad years.",
+      "status": "disputed",
+      "disputed": "One source dates the emirate's founding to 1805; another says its land was conquered between 1809 and 1818.",
+      "sources": [
+        "wiki-bauchi-emirate"
+      ],
+      "form": "emirate"
+    },
+    {
+      "id": "yola",
+      "kind": "point",
+      "name": "Yola",
+      "coordinates": [
+        9.23,
+        12.46
+      ],
+      "what": "The capital of Adamawa from 1841. Modibbo Adama, who had received a flag from Usman dan Fodio, led the jihad there from 1809 and moved his capital several times before settling at Yola.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "Today's town of Yola, rounded. The earlier capitals are not placed.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "britannica-adama",
+        "wiki-yola"
+      ],
+      "form": "emirate"
+    },
+    {
+      "id": "ilorin",
+      "kind": "point",
+      "name": "Ilorin",
+      "coordinates": [
+        8.5,
+        4.55
+      ],
+      "what": "Once a town of the Oyo empire. After Afonja, who had taken it out of Oyo, was killed by his allies, Abd al-Salam, son of the scholar Alimi, became its first emir and pledged allegiance to the caliphate, through Gwandu.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "Rounded from the coordinates in the Ilorin Emirate article.",
+      "status": "disputed",
+      "disputed": "Afonja's death and Abd al-Salam's accession are dated 1823 in one article and 1824 in others; one ruler list gives his reign as 1824 to 1842.",
+      "sources": [
+        "wiki-ilorin",
+        "wiki-ilorin-emirate",
+        "wiki-gwandu-emirate"
+      ],
+      "form": "emirate"
+    },
+    {
+      "id": "bida",
+      "kind": "point",
+      "name": "Bida",
+      "coordinates": [
+        9.083,
+        6.017
+      ],
+      "what": "The capital of the Nupe emirate. A Royal Niger Company force under George Goldie took it in January 1897 and deposed the emir.",
+      "evidence": "Secondary sources (encyclopedia) and newspaper reports of 1897",
+      "location": "Today's town of Bida, rounded.",
+      "status": "disputed",
+      "disputed": "A report of February 1897 has the company's troops advancing on Bida on 25 January; a later account has Goldie entering the town on 29 January.",
+      "sources": [
+        "wiki-bida",
+        "spectator-1897-bida",
+        "paperspast-1897-bida",
+        "wiki-goldie"
+      ],
+      "form": "emirate"
+    },
+    {
+      "id": "gwandu-sokoto",
+      "kind": "link",
+      "type": "allegiance",
+      "from": "gwandu",
+      "to": "sokoto",
+      "name": "Gwandu under the caliph at Sokoto",
+      "what": "Gwandu's emirs were traditionally autonomous, but subordinate to the caliph at Sokoto.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-gwandu-emirate",
+        "wiki-bello"
+      ]
+    },
+    {
+      "id": "katsina-sokoto",
+      "kind": "link",
+      "type": "allegiance",
+      "from": "katsina",
+      "to": "sokoto",
+      "name": "Katsina's allegiance to Sokoto",
+      "what": "Katsina's emir recognised the caliph at Sokoto as overlord, and travelled each year to pledge allegiance and bring tribute.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-sokoto"
+      ],
+      "bend": -0.3
+    },
+    {
+      "id": "kano-sokoto",
+      "kind": "link",
+      "type": "allegiance",
+      "from": "kano",
+      "to": "sokoto",
+      "name": "Kano's allegiance to Sokoto",
+      "what": "Kano's emir recognised the caliph at Sokoto as overlord, and travelled each year to pledge allegiance and bring tribute.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-sokoto"
+      ],
+      "bend": 0.12
+    },
+    {
+      "id": "zaria-sokoto",
+      "kind": "link",
+      "type": "allegiance",
+      "from": "zaria",
+      "to": "sokoto",
+      "name": "Zaria's allegiance to Sokoto",
+      "what": "Zaria's emir recognised the caliph at Sokoto as overlord, and travelled each year to pledge allegiance and bring tribute.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-sokoto"
+      ]
+    },
+    {
+      "id": "bauchi-sokoto",
+      "kind": "link",
+      "type": "allegiance",
+      "from": "bauchi",
+      "to": "sokoto",
+      "name": "Bauchi's allegiance to Sokoto",
+      "what": "Bauchi was one of the eastern emirates, which answered to the caliph at Sokoto.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-bello",
+        "wiki-sokoto"
+      ],
+      "bend": -0.1
+    },
+    {
+      "id": "yola-sokoto",
+      "kind": "link",
+      "type": "allegiance",
+      "from": "yola",
+      "to": "sokoto",
+      "name": "Adamawa's allegiance to Sokoto",
+      "what": "Adamawa was one of the eastern emirates, which answered to the caliph at Sokoto.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-bello",
+        "britannica-adama"
+      ],
+      "bend": -0.12
+    },
+    {
+      "id": "ilorin-gwandu",
+      "kind": "link",
+      "type": "allegiance",
+      "from": "ilorin",
+      "to": "gwandu",
+      "name": "Ilorin's allegiance through Gwandu",
+      "what": "Ilorin, the caliphate's southernmost outpost, was administered through Gwandu.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-gwandu-emirate",
+        "wiki-ilorin"
+      ]
+    },
+    {
+      "id": "rnc-1897",
+      "kind": "move",
+      "type": "campaign",
+      "name": "Royal Niger Company campaign against Bida and Ilorin",
+      "path": [
+        "bida",
+        "ilorin"
+      ],
+      "stops": {
+        "bida": {
+          "date": "1897-01",
+          "precision": "month",
+          "label": "Jan 1897"
+        },
+        "ilorin": {
+          "date": "1897",
+          "precision": "year",
+          "label": "1897"
+        }
+      },
+      "what": "In January 1897 a Royal Niger Company force led by George Goldie took Bida and deposed the Nupe emir. It then marched to Ilorin, whose emir submitted and signed a treaty with the company.",
+      "evidence": "Secondary sources (encyclopedia) and newspaper reports of 1897",
+      "location": "A straight line from Bida to Ilorin in the order the towns were brought under the company. The column's route is not shown.",
+      "status": "disputed",
+      "disputed": "Accounts differ on Ilorin: one says the emir hurried to submit and sign a treaty, another that its leaders were made to surrender by force. The day of Ilorin's submission has not been found, so only the year is given.",
+      "sources": [
+        "wiki-goldie",
+        "spectator-1897-bida",
+        "paperspast-1897-bida",
+        "eb1911-niger-company"
+      ]
+    },
+    {
+      "id": "conquest-1903",
+      "kind": "move",
+      "type": "campaign",
+      "name": "British campaign from Zaria to Kano and Sokoto",
+      "path": [
+        "zaria",
+        "kano",
+        "sokoto"
+      ],
+      "stops": {
+        "zaria": {
+          "date": "1901",
+          "precision": "year",
+          "approximate": true,
+          "label": "taken 1901"
+        },
+        "kano": {
+          "date": "1903-02-03",
+          "precision": "day",
+          "label": "3 Feb 1903"
+        },
+        "sokoto": {
+          "date": "1903-03-15",
+          "precision": "day",
+          "label": "15 Mar 1903"
+        }
+      },
+      "what": "British forces took Zaria in 1901. A force under Colonel Thomas Morland left Zaria at the end of January 1903 and took Kano on 3 February. British forces under Kemball and Morland then took Sokoto after a battle on 15 March.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "Straight lines join the towns in the order they were taken. The columns' routes are not shown, and the line from Kano to Sokoto stands for the British advance, not one column's march.",
+      "status": "disputed",
+      "disputed": "One source dates the battle for Sokoto to 15 March 1903; another says the caliphate's council conceded to Lugard's demands on 13 March.",
+      "sources": [
+        "wiki-places-key",
+        "wiki-battle-kano",
+        "wiki-battle-sokoto",
+        "wiki-colonial-north"
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "jihad",
+      "sensitive": true,
+      "title": "The jihad: from Degel to Sokoto",
+      "when": {
+        "from": 1774,
+        "to": 1809,
+        "label": "1774–1809"
+      },
+      "camera": {
+        "center": [
+          12.35,
+          6.9
+        ],
+        "zoom": 7.3
+      },
+      "camera_path": [
+        {
+          "at": 0.4,
+          "center": [
+            13.35,
+            5.75
+          ],
+          "zoom": 8.6,
+          "dur": 4.0
+        },
+        {
+          "at": 25.5,
+          "center": [
+            12.35,
+            6.9
+          ],
+          "zoom": 7.4,
+          "dur": 3.6
+        },
+        {
+          "at": 37.5,
+          "center": [
+            13.3,
+            5.8
+          ],
+          "zoom": 8.4,
+          "dur": 3.6
+        }
+      ],
+      "show": [
+        "degel",
+        "alkalawa",
+        "zaria",
+        "kano",
+        "sokoto"
+      ],
+      "dim": [],
+      "appear": {
+        "degel": 1.0,
+        "alkalawa": 7.2,
+        "zaria": 26.8,
+        "kano": 32.6,
+        "sokoto": 44.6
+      },
+      "fade": {
+        "alkalawa": 39.5
+      },
+      "notes": [
+        {
+          "place": "degel",
+          "text": "Usman's home, 1774–1804",
+          "at": 1.6,
+          "until": 12.5
+        },
+        {
+          "place": "alkalawa",
+          "text": "Gobir's capital",
+          "at": 7.8,
+          "until": 19.0
+        },
+        {
+          "place": "zaria",
+          "text": "taken 1805",
+          "at": 27.4,
+          "until": 31.6
+        },
+        {
+          "place": "kano",
+          "text": "taken 1807",
+          "at": 33.2,
+          "until": 37.6
+        },
+        {
+          "place": "alkalawa",
+          "text": "fell 3 Oct 1808",
+          "at": 38.6,
+          "until": 43.6
+        },
+        {
+          "place": "sokoto",
+          "text": "the camp becomes a town",
+          "at": 45.2,
+          "until": 50.5,
+          "side": "above"
+        }
+      ],
+      "text": "Usman dan Fodio, a Fulani scholar and preacher, lived and taught at Degel, in the Hausa kingdom of Gobir. Gobir's king, Yunfa, turned against him. In February 1804 Usman and his community left Degel for Gudu, about 48 km to the north-west: their hijra. At Gudu his followers named him Amir al-Mu'minin, commander of the faithful. On 21 February 1804 Yunfa declared war on him. On 21 June 1804, at the lake of Kwatto, the jihad's army defeated Yunfa's. Where the lake lay is not certain, so no place is drawn. Across Hausaland, leaders who carried Usman's flag rose against their kings. Zaria fell to the jihad in 1805. In 1807 jihad forces captured Kano, and an emirate replaced its Hausa king. On 3 October 1808 Alkalawa, Gobir's capital, fell, and Yunfa was killed. In 1809 Usman's son Muhammad Bello turned the camp at Sokoto into a town. It became the seat of the caliphate.",
+      "beats": [
+        {
+          "at": 0,
+          "text": "Usman dan Fodio, a Fulani scholar and preacher, lived and taught at Degel, in the Hausa kingdom of Gobir.",
+          "pose": 1,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1774,
+            "to": 1804,
+            "label": "1774–1804 · Usman at Degel",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 6.5,
+          "text": "Gobir's king, Yunfa, turned against him. In February 1804 Usman and his community left Degel for Gudu, about 48 km to the north-west: their hijra.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1804,
+            "to": 1804,
+            "label": "February 1804",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 13,
+          "text": "At Gudu his followers named him Amir al-Mu'minin, commander of the faithful. On 21 February 1804 Yunfa declared war on him.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1804,
+            "to": 1804,
+            "label": "February 1804",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 19.5,
+          "text": "On 21 June 1804, at the lake of Kwatto, the jihad's army defeated Yunfa's. Where the lake lay is not certain, so no place is drawn.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1804,
+            "to": 1804,
+            "label": "21 June 1804",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 26,
+          "text": "Across Hausaland, leaders who carried Usman's flag rose against their kings. Zaria fell to the jihad in 1805.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1805,
+            "to": 1805,
+            "label": "1805",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 32,
+          "text": "In 1807 jihad forces captured Kano, and an emirate replaced its Hausa king.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1807,
+            "to": 1807,
+            "label": "1807",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 38,
+          "text": "On 3 October 1808 Alkalawa, Gobir's capital, fell, and Yunfa was killed.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1808,
+            "to": 1808,
+            "label": "3 October 1808",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 44,
+          "text": "In 1809 Usman's son Muhammad Bello turned the camp at Sokoto into a town. It became the seat of the caliphate.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1809,
+            "to": 1809,
+            "label": "1809",
+            "basis": "record"
+          }
+        }
+      ],
+      "sources": [
+        "wiki-sokoto",
+        "wiki-jihad-fodio",
+        "wiki-degel",
+        "wiki-tabkin-kwatto",
+        "wiki-alkalawa",
+        "wiki-places-key"
+      ],
+      "disputed": "Most sources give 21 February 1804 for Yunfa's declaration of war and 21 June 1804 for the battle at Kwatto, but where the lake lay is not settled. Alkalawa's founding as Gobir's capital is dated to 1756, 1757 or the 1760s. The date Sokoto first served as the jihad's camp is also given as 1804 or 1805, with the town founded in 1809.",
+      "unchecked": null,
+      "mood": "decline",
+      "duration": 51,
+      "scale": "Sokoto Caliphate · the jihad",
+      "focus_label": "From Degel to Sokoto"
+    },
+    {
+      "id": "emirates",
+      "sensitive": true,
+      "title": "A caliphate of emirates",
+      "when": {
+        "from": 1812,
+        "to": 1841,
+        "label": "1812–1841"
+      },
+      "camera": {
+        "center": [
+          11.0,
+          8.4
+        ],
+        "zoom": 6.6
+      },
+      "camera_path": [
+        {
+          "at": 0.4,
+          "center": [
+            12.8,
+            5.2
+          ],
+          "zoom": 8.2,
+          "dur": 3.6
+        },
+        {
+          "at": 20.5,
+          "center": [
+            11.6,
+            7.2
+          ],
+          "zoom": 7.1,
+          "dur": 3.6
+        },
+        {
+          "at": 30,
+          "center": [
+            10.6,
+            5.6
+          ],
+          "zoom": 7.2,
+          "dur": 3.4
+        },
+        {
+          "at": 38,
+          "center": [
+            11.0,
+            8.4
+          ],
+          "zoom": 6.6,
+          "dur": 3.8
+        }
+      ],
+      "show": [
+        "sokoto",
+        "gwandu",
+        "katsina",
+        "kano",
+        "zaria",
+        "bauchi",
+        "ilorin",
+        "yola",
+        "gwandu-sokoto",
+        "katsina-sokoto",
+        "kano-sokoto",
+        "zaria-sokoto",
+        "bauchi-sokoto",
+        "ilorin-gwandu",
+        "yola-sokoto"
+      ],
+      "dim": [],
+      "appear": {
+        "gwandu": 0.8,
+        "gwandu-sokoto": 13.5,
+        "katsina": 21.2,
+        "kano": 21.8,
+        "zaria": 22.4,
+        "bauchi": 23.0,
+        "katsina-sokoto": 24.2,
+        "kano-sokoto": 24.8,
+        "zaria-sokoto": 25.4,
+        "bauchi-sokoto": 26.0,
+        "ilorin": 31.0,
+        "ilorin-gwandu": 33.0,
+        "yola": 38.6,
+        "yola-sokoto": 41.0
+      },
+      "notes": [
+        {
+          "place": "gwandu",
+          "text": "Abdullahi's seat",
+          "at": 1.4,
+          "until": 6.0
+        },
+        {
+          "place": "sokoto",
+          "text": "Usman dies, 20 April 1817",
+          "at": 6.6,
+          "until": 12.0,
+          "side": "above"
+        },
+        {
+          "place": "sokoto",
+          "text": "eastern emirates",
+          "at": 14.0,
+          "until": 20.5,
+          "side": "above"
+        },
+        {
+          "place": "gwandu",
+          "text": "western and southern",
+          "at": 14.0,
+          "until": 20.5
+        },
+        {
+          "place": "ilorin",
+          "text": "first emir · dates differ",
+          "at": 31.6,
+          "until": 38.0
+        },
+        {
+          "place": "yola",
+          "text": "capital from 1841",
+          "at": 39.2,
+          "until": 46.0
+        }
+      ],
+      "text": "By 1812 Usman's brother Abdullahi ruled from Gwandu, west of Sokoto. Usman dan Fodio died at Sokoto on 20 April 1817. His son Muhammad Bello became caliph. Abdullahi at first refused to recognise Bello. The caliphate came to be run in two halves: the eastern emirates answered to Sokoto, the western and southern ones to Gwandu, under the caliph. Each emir was appointed by the caliph and ruled with wide self-rule. Every year he travelled to pledge allegiance and bring tribute: crops, cowries and enslaved people. In the south, Afonja, who had taken Ilorin out of the Oyo empire, was killed by his allies. Abd al-Salam became Ilorin's first emir, under Gwandu. In 1841, after several moves, Modibbo Adama settled the capital of Adamawa at Yola, far to the east. He had led its jihad since 1809.",
+      "beats": [
+        {
+          "at": 0,
+          "text": "By 1812 Usman's brother Abdullahi ruled from Gwandu, west of Sokoto.",
+          "pose": 1,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1812,
+            "to": 1812,
+            "label": "1812",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 6,
+          "text": "Usman dan Fodio died at Sokoto on 20 April 1817. His son Muhammad Bello became caliph.",
+          "pose": 3,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1817,
+            "to": 1817,
+            "label": "20 April 1817",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 12,
+          "text": "Abdullahi at first refused to recognise Bello. The caliphate came to be run in two halves: the eastern emirates answered to Sokoto, the western and southern ones to Gwandu, under the caliph.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1817,
+            "to": 1829,
+            "label": "1817–1829 · Bello and Abdullahi",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 20.5,
+          "text": "Each emir was appointed by the caliph and ruled with wide self-rule. Every year he travelled to pledge allegiance and bring tribute: crops, cowries and enslaved people.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1817,
+            "to": 1841,
+            "label": "1817–1841 · the emirates",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 30,
+          "text": "In the south, Afonja, who had taken Ilorin out of the Oyo empire, was killed by his allies. Abd al-Salam became Ilorin's first emir, under Gwandu.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1823,
+            "to": 1824,
+            "label": "1823–1824 · sources differ",
+            "basis": "differ"
+          }
+        },
+        {
+          "at": 38,
+          "text": "In 1841, after several moves, Modibbo Adama settled the capital of Adamawa at Yola, far to the east. He had led its jihad since 1809.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1841,
+            "to": 1841,
+            "label": "1841",
+            "basis": "record"
+          }
+        }
+      ],
+      "sources": [
+        "wiki-sokoto",
+        "wiki-usman",
+        "wiki-bello",
+        "wiki-abdullahi",
+        "wiki-gwandu-emirate",
+        "wiki-bauchi-emirate",
+        "wiki-ilorin",
+        "wiki-ilorin-emirate",
+        "britannica-adama",
+        "wiki-yola",
+        "wiki-places-key"
+      ],
+      "disputed": "Gwandu's founding as an emirate is dated 1805, 1809 or 1812 by different sources; Abdullahi's rule there is dated from 1812. Ilorin's first emir is dated from 1823 or 1824. Bauchi's founding is dated 1805 by one source and to conquests between 1809 and 1818 by another.",
+      "unchecked": null,
+      "mood": "calm",
+      "duration": 46,
+      "scale": "Sokoto Caliphate · emirates",
+      "focus_label": "A caliphate of emirates"
+    },
+    {
+      "id": "conquest",
+      "sensitive": true,
+      "title": "Conquest: the caliphate falls",
+      "when": {
+        "from": 1897,
+        "to": 1903,
+        "label": "January 1897 to July 1903"
+      },
+      "camera": {
+        "center": [
+          11.0,
+          6.6
+        ],
+        "zoom": 6.8
+      },
+      "show": [
+        "bida",
+        "ilorin",
+        "zaria",
+        "kano",
+        "sokoto",
+        "rnc-1897",
+        "conquest-1903"
+      ],
+      "control": {
+        "bida": "taken",
+        "ilorin": "taken",
+        "zaria": "taken",
+        "kano": "taken",
+        "sokoto": "taken"
+      },
+      "text": "From 1897 the caliphate was attacked from the south. In January 1897 a Royal Niger Company force under George Goldie took Bida, the Nupe capital, and deposed its emir; Ilorin's emir then submitted to the company. On 1 January 1900 the company handed its territories to the British government, and on paper the emirates lay inside a British protectorate. British forces took Zaria in 1901. A force under Colonel Thomas Morland left Zaria at the end of January 1903 and took Kano on 3 February after heavy fighting. Sokoto fell after a battle on 15 March. On 21 March Lugard named a new sultan, Attahiru II, and emirs who accepted British rule were kept in office under British officers. Caliph Attahiru I had left Sokoto with his followers. British forces caught up with them at Burmi, in today's Gombe State, where he and many of his followers were killed on 27 July 1903.",
+      "disputed": "The day Goldie's force took Bida is given as 25 or 29 January 1897, and accounts differ on whether Ilorin submitted or was forced to. One source dates the battle for Sokoto to 15 March 1903, another has the caliphate's council concede to Lugard on 13 March. Attahiru I's death is dated 27 July 1903 at Burmi in most sources, but June, 29 July or August 1903 in others. Burmi itself is not placed: no checked position was found.",
+      "sources": [
+        "wiki-goldie",
+        "spectator-1897-bida",
+        "paperspast-1897-bida",
+        "eb1911-niger-company",
+        "wiki-rnc",
+        "wiki-battle-kano",
+        "wiki-battle-sokoto",
+        "wiki-colonial-north",
+        "wiki-attahiru-ii",
+        "countrystudies-lugard",
+        "wiki-burmi-campaign",
+        "wiki-attahiru-i",
+        "wiki-places-key"
+      ],
+      "beats": [
+        {
+          "at": 0,
+          "text": "From 1897 the caliphate was attacked from the south.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 6.4,
+          "text": "In January 1897 a Royal Niger Company force under George Goldie took Bida, the Nupe capital, and deposed its emir; Ilorin's emir then submitted to the company.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 25.3,
+          "text": "On 1 January 1900 the company handed its territories to the British government, and on paper the emirates lay inside a British protectorate.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 31.0,
+          "text": "British forces took Zaria in 1901.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 40.0,
+          "text": "A force under Colonel Thomas Morland left Zaria at the end of January 1903 and took Kano on 3 February after heavy fighting.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 46.1,
+          "text": "Sokoto fell after a battle on 15 March.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 48.5,
+          "text": "On 21 March Lugard named a new sultan, Attahiru II, and emirs who accepted British rule were kept in office under British officers.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        },
+        {
+          "at": 51.0,
+          "text": "Caliph Attahiru I had left Sokoto with his followers. British forces caught up with them at Burmi, in today's Gombe State, where he and many of his followers were killed on 27 July 1903.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ]
+        }
+      ],
+      "mood": "decline",
+      "duration": 54,
+      "scale": "Sokoto Caliphate · conquest",
+      "focus_label": "The caliphate falls"
+    }
+  ]
+}

@@ -52,7 +52,7 @@ PLATES_PATH = os.path.join(HISTORY_DIR, "geo", "plates.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
-CHAPTERS = ["deep", "africa", "nok", "kanem", "hausa", "states", "key"]
+CHAPTERS = ["deep", "africa", "nok", "kanem", "hausa", "sokoto", "states", "key"]
 
 # Modern reference maps are never allowed before this year. Later historical scenes also
 # use the neutral background unless a modern locator is explicitly requested and explained.
@@ -71,7 +71,14 @@ AFRICA_LON = (-25.0, 55.0)
 # A chapter with "clock": "ago" counts in years ago (million years ago, then years ago)
 CLOCKS = ("ago", "label")
 SLUG = re.compile(r"^[a-z0-9-]+$")
-UNSAFE_SVG = re.compile(r"<script|<foreignObject|\son\w+\s*=|href", re.I)
+# A drawing goes into the page as raw SVG, so anything that can run script or load something
+# is refused: script-like elements, any on...= handler (after a space, "/" or quote, as in
+# <svg/onload=...>), links, and animations that would set a handler or link.
+UNSAFE_SVG = re.compile(
+    r"<\s*(script|foreignObject|iframe|embed|object|use|image|style)\b"
+    r"|(^|[\s/\"'])on\w+\s*="
+    r"|href|javascript:"
+    r"|attributeName\s*=\s*[\"']?\s*(on|href|xlink)", re.I)
 
 # Moods set the decoration while a scene with places plays (see history/README.md)
 MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation", "calm", "delta", "greening")
@@ -81,7 +88,7 @@ SETTINGS = ("royal-cemetery", "stelae-field", "stone-enclosure", "walled-city")
 MONUMENT_TYPES = ("pyramid", "stele", "tower", "walled-city")
 # What a dated beat's date rests on. A Chronicle date says so on screen; oral tradition has no date;
 # an account is a dated written description by a named writer.
-BEAT_BASES = ("archaeology", "chronicle", "differ", "oral", "account")
+BEAT_BASES = ("archaeology", "chronicle", "differ", "oral", "account", "record")
 
 # The map vocabulary (see history/README.md). How sure each thing on the map is:
 STATUSES = ("firm", "approx", "disputed", "to-check")
