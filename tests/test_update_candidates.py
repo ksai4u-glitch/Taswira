@@ -143,7 +143,10 @@ class MainTests(unittest.TestCase):
         with open(self.settings, encoding="utf-8") as f:
             self.original = f.read()
         patches = [mock.patch.object(uc, "load_token", return_value=TOKEN),
-                   mock.patch.dict(os.environ, {"GITHUB_OUTPUT": self.output})]
+                   mock.patch.dict(os.environ, {"GITHUB_OUTPUT": self.output}),
+                   # The yearly-release notice (tested in test_switch_stable.py) asks the
+                   # API once from May of the expected year; keep it out of these counts.
+                   mock.patch.object(uc, "stable_notice", return_value=None)]
         for p in patches:
             p.start()
             self.addCleanup(p.stop)

@@ -21,6 +21,8 @@ import sys
 import ucdp_api
 from fetch_nigeria import load_token
 from safe_files import write_text
+from settings import API_VERSION
+from switch_stable import stable_notice
 
 SETTINGS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.py")
 MAX_NEW = 3     # never add more than this many versions in one run
@@ -142,6 +144,10 @@ def main(settings_path=SETTINGS_PATH):
         print(f"New Candidate release(s): {', '.join(new_versions)}. Added to settings.py.")
     else:
         print(f"No new Candidate release yet ({unpublished} is not published).")
+
+    notice = stable_notice(API_VERSION, token)  # at most 1 request, only from May of the expected year
+    if notice:
+        print(("::notice::" if os.environ.get("GITHUB_ACTIONS") else "Notice: ") + notice)
 
     # Tell the GitHub Actions workflow what happened, so it knows whether to rebuild
     if os.environ.get("GITHUB_OUTPUT"):
