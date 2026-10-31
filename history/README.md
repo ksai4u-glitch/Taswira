@@ -468,8 +468,9 @@ exactly one of `natural: true` (the land), `year` (the date it rests on) or `ora
 
 **Dated beats.** A beat can carry `when`: `from` and `to` (whole years inside the scene's), a
 `label` and a `basis`, one of `archaeology`, `chronicle` (a Kano Chronicle reckoning: the label
-must say "Chronicle"), `differ` (the sources disagree: the label must say "differ") or `oral` (no
-`from` or `to`, and no digits in the label). If one beat is dated, every beat is. While the scene
+must say "Chronicle"), `differ` (the sources disagree: the label must say "differ"), `oral` (no
+`from` or `to`, and no digits in the label), `account` (see below) or `record` (a date from written
+records and the histories built on them, as for the Sokoto Caliphate; no label rule). If one beat is dated, every beat is. While the scene
 plays, the year and the caption's first line show the beat's label; the scene panel and the text
 version start each beat with it.
 
@@ -615,3 +616,55 @@ Still to check before this is published:
 - How far Songhai ruled the Hausa cities. The Hausa Kingdoms article marks this "citation needed",
   and Leo Africanus's account is doubted.
 - A review by a historian of the Hausa states, and by a Hausa speaker for names and spellings.
+
+## The Sokoto Caliphate
+
+`chapters/sokoto.json` follows the Hausa cities and plays before the states. It runs from Usman dan
+Fodio at Degel to the British conquest of 1903, in three sensitive scenes:
+
+- **The jihad: from Degel to Sokoto** (51 seconds, 1774 to 1809). Degel, the hijra to Gudu and the
+  declaration of war in February 1804, the battle at the lake of Kwatto, Zaria (1805) and Kano
+  (1807) taken, Alkalawa's fall on 3 October 1808 (it goes faint), and Sokoto becoming a town in
+  1809. Gudu and the lake of Kwatto are told, not placed: no checked position was found.
+- **A caliphate of emirates** (46 seconds, 1812 to 1841). Sokoto and Gwandu are the caliph's seats
+  (`caliphate`), each emirate a ring (`emirate`) tied to its seat by an `allegiance` link: the
+  eastern emirates to Sokoto, Ilorin through Gwandu. No border or halo is drawn, because how far
+  each emir ruled was never surveyed. Usman's death (20 April 1817), Bello and Abdullahi, the
+  tribute of crops, cowries and enslaved people, Ilorin (1823 or 1824, labelled as differing) and
+  Yola (1841).
+- **Conquest: the caliphate falls** (54 seconds, January 1897 to July 1903). Two campaigns on one
+  clock: the Royal Niger Company's against Bida and Ilorin (1897), then the British advance from
+  Zaria (1901) to Kano (3 February 1903) and Sokoto (15 March 1903). Each town is hatched until its
+  stop, then solid. The narration ends with Attahiru II named on 21 March and Attahiru I killed at
+  Burmi on 27 July 1903; Burmi is not placed. Its beats carry no `when`: the campaign clock drives
+  the counter, and each sentence starts while the counter shows the year it names.
+
+The jihad and emirates scenes use dated beats with the `record` basis (and `differ` where sources
+disagree). Zomo takes the still, solemn pose for war, killing and enslavement, and the scenes are
+`sensitive`, so no celebratory effects play. The Sokoto Caliphate emblem stays `none`: no flag is
+drawn. `research/sokoto-sources.md` lists where each place is drawn and what each beat rests on.
+
+```
+python build_history.py --output <scratch-history.html>
+node tests/history_sokoto_browser.cjs <scratch-history.html> <local-dependencies>
+node capture_history.cjs <scratch-history.html> <local-dependencies> <sokoto.mp4> 60 8 history/cuts/sokoto.json
+python previews/build_storycraft_video.py <sokoto.mp4> sokoto-video.html
+```
+
+The browser test plays the jihad and emirates scenes in quarter seconds on a desktop (Cinema and
+normal) and a phone, and checks each beat's label on the counter, each place, tie and note at its
+moment, and Alkalawa fading only after its fall. In the conquest it checks that each town turns
+solid exactly at its dated stop, with the counter on that stop's year, and that no celebratory
+effect plays. In the 1920×1080 video it checks that names and notes stay clear of the overlays and
+that repeat seeks give identical pixels.
+
+Still to check before this is published:
+
+- The sources added for this chapter were seen through web search results, because Wikipedia was
+  blocked in the session that wrote it. Each says so in its `checked` note; re-check them on the
+  pages themselves.
+- Degel's position, and where Gudu, the lake of Kwatto and Burmi lay.
+- When Katsina was taken, and the dates of Tabkin Kwatto and Bauchi's founding in a scholarly
+  history (Last 1967; Smaldone 1977).
+- Human consequences of the jihad and the conquest, as sourced ranges on their own cards.
+- A review by a historian of the caliphate, and by Hausa and Fulfulde speakers for names and spellings.

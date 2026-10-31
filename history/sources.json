@@ -1069,5 +1069,212 @@
     "kind": "gazetteer coordinates of today's towns and one ruined site",
     "rights": "Coordinates are facts; no text reused.",
     "checked": "Opened 28 Oct 2026. Rano 11.557 N 8.583 E (one of the seven Hausa states; taken by Kano under Yaji I, never sovereign again); Zaria 11.067 N 7.700 E (founded about 1536); Hadejia 12.450 N 10.033 E (once known as Biram); Birni Lalle, Niger, 14.433 N 6.767 E; Surame 13.088 N 4.899 E (built in the sixteenth century by Kanta of Kebbi, abandoned about 1700)."
+  },
+  "wiki-jihad-fodio": {
+    "title": "Jihad of Usman dan Fodio (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Jihad_of_Usman_dan_Fodio",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. After Yunfa of Gobir restricted him, Usman made his hijra to Gudu, 30 miles (48 km) to the north-west, in February 1804; Yunfa declared war on him and threatened anyone who joined him on 21 Feb 1804. Usman was proclaimed Amir al-Mu'minin at Gudu. Yunfa won the earlier clash at Tsuntua; Tabkin Kwatto is called the turning point."
+  },
+  "wiki-tabkin-kwatto": {
+    "title": "Battle of Tabkin Kwatto (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Battle_of_Tabkin_Kwatto",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Infobox: 21 June 1804, a decisive victory for the jihad; Yunfa commanded for Gobir, Abdullahi dan Fodio, Ali Jedo and Muhammad Bello for the jihad. It followed Yunfa's capture of Matankari. Some sources place the lake near Alkalawa and one gives another site name, so no place is drawn. A scholarly check (Smaldone 1977, Warfare in the Sokoto Caliphate) is still to do."
+  },
+  "wiki-alkalawa": {
+    "title": "Alkalawa (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Alkalawa",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Abandoned Gobir capital in Sabon Birni, Sokoto State, at 13 deg 36' 47\" N, 6 deg 15' 36\" E. Taken by Usman dan Fodio's forces on 3 Oct 1808, when Sarki Yunfa was killed; earlier raids in 1804, 1806 and 1807. Its founding as capital is dated to the 1760s (article), 1756 (Gobir infobox) or a 1757 victory over Zamfara (an archaeological paper)."
+  },
+  "wiki-degel": {
+    "title": "Degel (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Degel",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. A town in Sokoto State, once part of Gobir, home of Usman dan Fodio from 1774 to 1804. The article has no coordinates."
+  },
+  "bamwor-degel": {
+    "title": "Degel, Sokoto (Bamwor city listing)",
+    "author": "Bamwor",
+    "year": "checked 2026-10-31",
+    "url": "https://bamwor.com/en/countries/nigeria/cities/degel-sokoto-2345006",
+    "kind": "city database (aggregated gazetteer coordinates)",
+    "rights": "Coordinates are facts; no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results quoting the page: Degel at 13.3307 N, 5.3334 E. An aggregator, not a survey, so the point is drawn as approximate inside a 15 km ring. Check against GeoNames before publishing."
+  },
+  "wiki-usman": {
+    "title": "Usman dan Fodio (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Usman_dan_Fodio",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Died 20 April 1817 at Sokoto, aged about 62; succeeded by his son Muhammad Bello."
+  },
+  "wiki-bello": {
+    "title": "Muhammed Bello (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Muhammed_Bello",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Succeeded his father in 1817. After a clash with his uncle Abdullahi the caliphate was nominally divided: the eastern emirates under Bello at Sokoto, the western territories under Abdullahi at Gwandu, while Bello's supreme authority as caliph was upheld."
+  },
+  "wiki-abdullahi": {
+    "title": "Abdullahi dan Fodio (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Abdullahi_dan_Fodio",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Reign at Gwandu 1812 to 8 July 1829. After Usman's death he at first refused to recognise Bello as Amir al-Mu'minin."
+  },
+  "wiki-gwandu-emirate": {
+    "title": "Gwandu Emirate (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Gwandu_Emirate",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Founding dated 1805 (capture of Birnin Kebbi), 1809 or 1812 by different sources; Abdullahi dan Fodio first ruler from 1812. Co-capital with Sokoto; its emirs were subordinate to the caliph but traditionally autonomous, and responsible for the western and southern territories. Ilorin, the southernmost outpost, was administered through Gwandu."
+  },
+  "wiki-bauchi-emirate": {
+    "title": "Bauchi Emirate (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Bauchi_Emirate",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Founded by Yakubu, a flag-bearer of the jihad with the title Sarkin Yaki; established 1805 by one source, conquered 1809 to 1818 by another. Coordinates about 10.32 N, 9.84 E. No flag is described."
+  },
+  "britannica-adama": {
+    "title": "Modibbo Adama (Encyclopaedia Britannica)",
+    "author": "Encyclopaedia Britannica",
+    "year": "checked 2026-10-31",
+    "url": "https://www.britannica.com/biography/Modibbo-Adama",
+    "kind": "encyclopedia (secondary)",
+    "rights": "All rights reserved; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results quoting the page: Adama led the jihad in Adamawa from 1809 and, after moving his capital several times, settled it at Yola in 1841. An academic article in the same results says he received a flag from Usman dan Fodio. The page itself was not opened from this session; re-check it before publishing."
+  },
+  "wiki-yola": {
+    "title": "Yola, Nigeria (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Yola,_Nigeria",
+    "kind": "gazetteer coordinates of today's town",
+    "rights": "Coordinates are facts; no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Coordinates 9 deg 13' 48\" N, 12 deg 27' 36\" E; other listings give 9.208 N, 12.481 E. Drawn rounded at 9.23 N, 12.46 E."
+  },
+  "wiki-ilorin": {
+    "title": "Ilorin (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Ilorin",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Afonja had taken Ilorin out of the Oyo empire; after Afonja and Shehu Alimi died, Alimi's son Abd al-Salam became the first ruler and pledged allegiance to the Sokoto Caliphate in 1823. Other sources date Afonja's killing by his allies to 1824."
+  },
+  "wiki-ilorin-emirate": {
+    "title": "Ilorin Emirate (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Ilorin_Emirate",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Infobox coordinates 8 deg 30' N, 4 deg 33' E; the ruler list gives Abdusalami 1824 to 1842."
+  },
+  "wiki-bida": {
+    "title": "Bida (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Bida",
+    "kind": "gazetteer coordinates of today's town",
+    "rights": "Coordinates are facts; no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Coordinates 9 deg 05' N, 6 deg 01' E."
+  },
+  "wiki-goldie": {
+    "title": "George Taubman Goldie (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/George_Taubman_Goldie",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. The 1897 expedition against Nupe and Ilorin was organised and personally directed by Goldie and was completely successful."
+  },
+  "spectator-1897-bida": {
+    "title": "\"The Battle of Bida\", The Spectator, 13 February 1897, p. 6",
+    "author": "The Spectator",
+    "year": "1897, checked 2026-10-31",
+    "url": "https://archive.spectator.co.uk/article/13th-february-1897/6/the-battle-of-bida",
+    "kind": "newspaper report of the time (primary, from the British side)",
+    "rights": "Archive page; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results quoting the page: the Niger Company's troops, accompanied by Goldie, advanced on Bida on 25 January 1897. Force numbers in the report are not repeated. The page itself was not opened from this session; re-check it before publishing."
+  },
+  "paperspast-1897-bida": {
+    "title": "Report of the Bida expedition (Papers Past, 27 March 1897)",
+    "author": "Papers Past, National Library of New Zealand",
+    "year": "1897, checked 2026-10-31",
+    "url": "https://paperspast.natlib.govt.nz/newspapers/THS18970327.2.13",
+    "kind": "newspaper report of the time, reprinted (primary, from the British side)",
+    "rights": "Out of copyright newspaper text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results quoting the page: on 29 January 1897 Goldie entered Bida at the head of the column; the town was taken and the emir deposed. The page itself was not opened from this session; re-check it before publishing."
+  },
+  "eb1911-niger-company": {
+    "title": "Encyclopaedia Britannica (1911), vol. 19, \"Niger Company\"",
+    "author": "Encyclopaedia Britannica, 11th edition (on Wikisource)",
+    "year": "1911, checked 2026-10-31",
+    "url": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_19.djvu/708",
+    "kind": "encyclopedia of the time (secondary, colonial perspective)",
+    "rights": "Public domain; facts cited only.",
+    "checked": "Seen 31 Oct 2026 in web search results quoting this page through a mirror: from Bida the expedition marched to Ilorin, where the district submitted to the company; the transfer to the Crown took place on 1 January 1900. Another account in the same results says Ilorin's leaders were made to surrender by force, so the scene says accounts differ. The page itself was not opened from this session; re-check it before publishing."
+  },
+  "wiki-burmi-campaign": {
+    "title": "Burmi campaign (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Burmi_campaign",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. 4 June to 27 July 1903; at the Battle of Burmi, in Gombe Emirate (today's Gombe State), on 27 July 1903, Attahiru I and much of his following were killed. A related page places the battle ground near Nafada or Bajoga; no checked coordinates were found, so Burmi is not placed."
+  },
+  "wiki-attahiru-i": {
+    "title": "Muhammadu Attahiru I (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Muhammadu_Attahiru_I",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Gives 29 July 1903 for the attack at Burmi in its text and August 1903 in its infobox, against 27 July in the battle articles."
+  },
+  "wiki-attahiru-ii": {
+    "title": "Muhammadu Attahiru II (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "checked 2026-10-31",
+    "url": "https://en.wikipedia.org/wiki/Muhammadu_Attahiru_II",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Seen 31 Oct 2026 in web search results that quote this page; the page itself could not be opened from this session, because Wikipedia was blocked by its network. Re-check on the page before publishing. Named Sultan by Lugard on 21 March 1903, when much of the office's political power was removed."
+  },
+  "countrystudies-lugard": {
+    "title": "Nigeria: a country study, \"Frederick Lugard\" (Library of Congress, 1991)",
+    "author": "Helen Chapin Metz (ed.), Federal Research Division, Library of Congress",
+    "year": "1991, checked 2026-10-31",
+    "url": "https://www.countrystudies.us/nigeria/17.htm",
+    "kind": "government country study (secondary)",
+    "rights": "US government work, public domain; facts cited only.",
+    "checked": "Seen 31 Oct 2026 in web search results quoting the page: emirs who accepted British authority, abandoned the slave trade and cooperated with British officials were confirmed in office, under British officers with final authority. The page itself was not opened from this session; re-check it before publishing."
   }
 }
