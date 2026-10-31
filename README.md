@@ -73,6 +73,13 @@ again: only the new version is downloaded.
    the map appears at `https://ksai4u-glitch.github.io/Taswira/`.
    Re-run `publish.py` and push again whenever you add a new Candidate release.
 
+   To check the page in a browser (phone layout, keyboard, contrast, chart text), with Node and
+   Playwright installed and Leaflet's `leaflet.js`, `leaflet.css` and `leaflet-heat.js` saved in a folder:
+
+   ```
+   node tests/map_phone_a11y_browser.cjs docs/index.html <that folder> [screenshots folder]
+   ```
+
 ## Automatic updates
 
 A GitHub Actions workflow (`.github/workflows/update.yml`) runs every Monday. It costs
