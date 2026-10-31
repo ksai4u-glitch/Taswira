@@ -46,13 +46,13 @@ const { chromium } = require('playwright');
     assert.ok(ping,'Sensitive trade scenes must not retain decorative CSS pulses');
     const advance=await page.evaluate(()=>{
       const results=[];
-      for(const id of ['deep','africa','nok','hausa','states']){
+      for(const id of ['deep','africa','nok','kanem','hausa','states']){
         const c=DATA.chapters.findIndex(c=>c.id===id);goTo(c,DATA.chapters[c].scenes.length-1,{live:true,animate:false});
         state.playing=true;state.t=scene().duration+lead()+1;state.last=performance.now();loop(performance.now());
         results.push({chapter:chapter().id,playing:state.playing});setPlaying(false);
       }return results;
     });
-    assert.deepEqual(advance,[{chapter:'africa',playing:true},{chapter:'nok',playing:true},{chapter:'hausa',playing:true},{chapter:'states',playing:true},{chapter:'states',playing:false}]);
+    assert.deepEqual(advance,[{chapter:'africa',playing:true},{chapter:'nok',playing:true},{chapter:'kanem',playing:true},{chapter:'hausa',playing:true},{chapter:'states',playing:true},{chapter:'states',playing:false}]);
     assert.ok(await page.locator('#chapters button').last().textContent().then(t=>t.includes('reference')));
     await page.locator('#chapters button').last().click();
     assert.equal(await page.evaluate(()=>chapter().id),'key');

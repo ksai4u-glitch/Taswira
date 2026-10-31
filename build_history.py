@@ -52,7 +52,7 @@ PLATES_PATH = os.path.join(HISTORY_DIR, "geo", "plates.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
-CHAPTERS = ["deep", "africa", "nok", "hausa", "states", "key"]
+CHAPTERS = ["deep", "africa", "nok", "kanem", "hausa", "states", "key"]
 
 # Modern reference maps are never allowed before this year. Later historical scenes also
 # use the neutral background unless a modern locator is explicitly requested and explained.
