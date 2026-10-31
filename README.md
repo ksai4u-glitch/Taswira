@@ -82,6 +82,14 @@ rebuilds `docs/index.html` and opens a pull request ("Add GED Candidate …") wi
 Nothing goes live until you merge it; merging republishes the map. While one data pull
 request is open, later runs wait for it instead of opening another.
 
+If UCDP is slow or busy (a timeout, HTTP 429 or 5xx), each request is tried up to 3 times
+with a pause in between (`ucdp_api.py`). Every attempt counts towards the daily limit, so one
+run never makes more than `MAX_REQUESTS_PER_RUN` (2,000) requests. If something still fails,
+or UCDP's answer has an unexpected shape, the run stops with a message and a non-zero exit
+code; `settings.py` and `docs/index.html` are only ever replaced in one step, so they are
+never left half-written, and no pull request is opened. The update scripts have offline tests
+(the API is mocked): `python -m unittest discover -s tests -p "test_update_*.py"`.
+
 It needs your token as a repository secret: Settings → Secrets and variables → Actions →
 New repository secret, name `UCDP_TOKEN`, and Settings → Actions → General → "Allow GitHub
 Actions to create and approve pull requests". You can also start it any time from the

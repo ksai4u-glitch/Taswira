@@ -6,6 +6,8 @@ committing docs/index.html and pushing it is what publishes the map.
 
 Reads the clean_events table (no API requests), builds the same page as
 build_map.py, runs a few safety checks, then writes docs/index.html.
+The page is written in one step (safe_files.py): if a check or the write
+fails, the old docs/index.html is left exactly as it was.
 Uses only the Python standard library.
 """
 
@@ -14,21 +16,21 @@ import sys
 
 from build_map import fill_template, load_all
 from fetch_nigeria import load_token
+from safe_files import write_text
 from settings import API_VERSION, CANDIDATE_VERSIONS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_PATH = os.path.join(HERE, "docs", "index.html")
 
+# Placeholders fill_template() must have replaced; one left over means a broken page.
+PLACEHOLDERS = ["__EVENTS_JSON__", "__UNMAPPED_JSON__", "__VERSION__", "__CANDIDATES__"]
 
-def check(page, mapped, unmapped):
-    """Stop before writing anything public if a basic rule is broken."""
+
+def problems_with(page, mapped, unmapped, token):
+    """Every rule the page breaks, as a list of short descriptions (empty if it is fine)."""
     problems = []
 
     # 1. The token must never end up on a public page.
-    try:
-        token = load_token()
-    except SystemExit:          # no token on this computer: nothing that could leak
-        token = None
     if token and token in page:
         problems.append("the page contains your UCDP token")
 
@@ -41,6 +43,23 @@ def check(page, mapped, unmapped):
         if "preliminary" not in page or not all(v in page for v in CANDIDATE_VERSIONS):
             problems.append("preliminary Candidate events are not labelled")
 
+    # 4. The page must actually hold the data.
+    if not mapped:
+        problems.append("there are no events to put on the map")
+    left = [p for p in PLACEHOLDERS if p in page]
+    if left:
+        problems.append("the template was not filled in (" + ", ".join(left) + ")")
+
+    return problems
+
+
+def check(page, mapped, unmapped):
+    """Stop before writing anything public if a basic rule is broken."""
+    try:
+        token = load_token()
+    except SystemExit:          # no token on this computer: nothing that could leak
+        token = None
+    problems = problems_with(page, mapped, unmapped, token)
     if problems:
         sys.exit("Not publishing: " + "; ".join(problems) + ".")
 
@@ -51,8 +70,7 @@ def main():
     check(page, mapped, unmapped)
 
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        f.write(page)
+    write_text(OUTPUT_PATH, page)
 
     prelim = sum(e["preliminary"] for e in mapped + unmapped)
     size_mb = os.path.getsize(OUTPUT_PATH) / 1_000_000
