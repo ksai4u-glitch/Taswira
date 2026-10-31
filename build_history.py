@@ -71,7 +71,14 @@ AFRICA_LON = (-25.0, 55.0)
 # A chapter with "clock": "ago" counts in years ago (million years ago, then years ago)
 CLOCKS = ("ago", "label")
 SLUG = re.compile(r"^[a-z0-9-]+$")
-UNSAFE_SVG = re.compile(r"<script|<foreignObject|\son\w+\s*=|href", re.I)
+# A drawing goes into the page as raw SVG, so anything that can run script or load something
+# is refused: script-like elements, any on...= handler (after a space, "/" or quote, as in
+# <svg/onload=...>), links, and animations that would set a handler or link.
+UNSAFE_SVG = re.compile(
+    r"<\s*(script|foreignObject|iframe|embed|object|use|image|style)\b"
+    r"|(^|[\s/\"'])on\w+\s*="
+    r"|href|javascript:"
+    r"|attributeName\s*=\s*[\"']?\s*(on|href|xlink)", re.I)
 
 # Moods set the decoration while a scene with places plays (see history/README.md)
 MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation", "calm", "delta", "greening")
