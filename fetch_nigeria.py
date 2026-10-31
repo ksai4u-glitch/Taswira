@@ -47,14 +47,51 @@ def load_token():
     sys.exit("No token found. Set UCDP_TOKEN or create a .env file (see .env.example).")
 
 
+# The token may only ever be sent to the UCDP API over HTTPS.
+UCDP_HOST = "ucdpapi.pcr.uu.se"
+
+
+def is_ucdp_url(url):
+    """True only for https://ucdpapi.pcr.uu.se/... (the one place the token may go)."""
+    try:
+        parts = urllib.parse.urlsplit(url or "")
+        port = parts.port
+    except ValueError:
+        return False
+    return parts.scheme == "https" and parts.hostname == UCDP_HOST and port in (None, 443) \
+        and not parts.username and not parts.password
+
+
+class _StayOnUcdp(urllib.request.HTTPRedirectHandler):
+    """urllib copies every header, the token included, to wherever a redirect points.
+    Refuse any redirect that leaves the UCDP API, so the token cannot follow it."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if not is_ucdp_url(newurl):
+            raise urllib.error.HTTPError(
+                req.full_url, code, f"refused a redirect away from {UCDP_HOST} (the token is not sent there)",
+                headers, fp)
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+_OPENER = urllib.request.build_opener(_StayOnUcdp)
+
+
+def open_ucdp(url, token, timeout=30):
+    """Open a UCDP API URL with the token header. Refuses any other address."""
+    if not is_ucdp_url(url):
+        raise ValueError(f"not a UCDP API address, so the token is not sent: {url}")
+    request = urllib.request.Request(url, headers={"x-ucdp-access-token": token})
+    return _OPENER.open(request, timeout=timeout)
+
+
 def fetch(token):
     """Send one GET request and return the parsed JSON."""
     url = BASE_URL + "?" + urllib.parse.urlencode(PARAMS)
     print(f"Requesting: {url}\n")
 
-    request = urllib.request.Request(url, headers={"x-ucdp-access-token": token})
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
+        with open_ucdp(url, token) as response:
             return json.load(response)
     except urllib.error.HTTPError as e:
         # 401/403 usually means a bad or missing token

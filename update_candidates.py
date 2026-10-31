@@ -15,7 +15,7 @@ import sys
 import urllib.error
 import urllib.request
 
-from fetch_nigeria import load_token
+from fetch_nigeria import load_token, open_ucdp
 from settings import CANDIDATE_VERSIONS
 
 API_URL = "https://ucdpapi.pcr.uu.se/api/gedevents/"
@@ -42,9 +42,8 @@ def last_monthly(versions):
 def is_published(version, token):
     """Ask the API for one event from this version. True if it exists, False if not yet."""
     url = f"{API_URL}{version}?pagesize=1&Country=475"
-    request = urllib.request.Request(url, headers={"x-ucdp-access-token": token})
     try:
-        with urllib.request.urlopen(request, timeout=30):
+        with open_ucdp(url, token):
             return True
     except urllib.error.HTTPError as e:
         if e.code in (401, 403):

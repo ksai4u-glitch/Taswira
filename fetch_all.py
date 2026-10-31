@@ -14,9 +14,8 @@ import sys
 import time
 import urllib.error
 import urllib.parse
-import urllib.request
 
-from fetch_nigeria import load_token
+from fetch_nigeria import is_ucdp_url, load_token, open_ucdp
 from settings import API_VERSION, COUNTRIES, END_DATE, MAX_REQUESTS, PAGE_SIZE, START_DATE
 
 # --- Settings (the values themselves live in settings.py) -------------------
@@ -41,9 +40,8 @@ PAUSE_SECONDS = 1       # wait between requests, to be polite to the server
 
 def get_json(url, token):
     """Send one GET request and return the parsed JSON. Stops the script on any error."""
-    request = urllib.request.Request(url, headers={"x-ucdp-access-token": token})
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
+        with open_ucdp(url, token) as response:
             return json.load(response)
     except urllib.error.HTTPError as e:
         hint = " Is that dataset version in settings.py published yet?" if e.code == 404 else ""
@@ -97,6 +95,9 @@ def fetch_all(token, version=API_VERSION):
                 print(f"    request {requests_made}: got {len(page_events)} more")
 
             url = data.get("NextPageUrl") or None   # empty on the last page -> next country
+            if url and not is_ucdp_url(url):
+                # The token goes with every request, so only ever follow links back to the API
+                sys.exit(f"Stopped: NextPageUrl does not point to the UCDP API over https ({url}).")
 
     print(f"GED {version}: API reports {total_count} events in total across {len(COUNTRIES)} countries.")
     return events, total_count, requests_made
