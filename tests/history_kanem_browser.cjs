@@ -3,6 +3,7 @@
 
    Every scene, jumped to, shows its full date label. While a scene plays, each place waits for its
    "appear" moment and a faded place (Kanem after the move west, Ngazargamu after 1808) goes faint.
+   Scenes whose narrated dates jump show their date label while playing, not a rolling year.
    The scenes about war and death draw no celebratory canvas effects. On a desktop and a phone,
    playing and with reduced motion, there are no page errors. In the 1920×1080 video, place names
    stay clear of the caption, caution, credit and bars, and seeking twice gives identical pixels. */
@@ -54,16 +55,17 @@ const SETUP = `
           frame(performance.now());
           const hidden = Object.fromEntries(places.map((id, i) => [id, fx.points[i].els.every(el => el.classList.contains('hx-hidden'))]));
           const faded = fx.fades.map(f => +(f.els[0].style.opacity || 1));
-          steps.push({ t, hidden, faded });
+          steps.push({ t, hidden, faded, hud: $('hud-year').textContent });
         }
         const calm = SC.sensitive ? paint(performance.now()) === false : true;
-        return { id: SC.id, jumped, appear: SC.appear || {}, fade: SC.fade || {}, steps, calm };
+        return { id: SC.id, jumped, label: SC.clock === 'label' ? SC.when.label : null, appear: SC.appear || {}, fade: SC.fade || {}, steps, calm };
       }));
       for (const sc of run) {
         const where = `${where0} ${sc.id}`;
         assert.equal(sc.jumped.hud, sc.jumped.want, `${where}: a jumped-to scene shows its date label`);
         assert.ok(sc.calm, `${where}: a sensitive scene draws no celebratory effects`);
         for (const f of sc.steps) {
+          if (sc.label) assert.equal(f.hud, sc.label, `${where} t=${f.t}: a label-clock scene shows its label, not a rolling year`);
           for (const [id, at] of Object.entries(sc.appear)) assert.equal(f.hidden[id], f.t < at, `${where} t=${f.t}: ${id} appears at ${at} s`);
           Object.values(sc.fade).forEach((at, i) => assert.ok(f.t < at ? f.faded[i] === 1 : f.t < at + 0.8 || f.faded[i] < 0.6,
             `${where} t=${f.t}: a place fades after ${at} s (${f.faded[i]})`));

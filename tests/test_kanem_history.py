@@ -79,6 +79,18 @@ class KanemChapterTests(unittest.TestCase):
         for sid in ("sayfawa", "bornu", "idris-alooma"):
             self.assertIn("differ", scenes[sid]["when"]["label"], sid)
 
+    def test_scenes_whose_dates_jump_show_their_label_not_a_rolling_year(self):
+        # A rolling counter would show, say, 1442 while the narration dates the move west to 1380-1387
+        _, _, scenes = self.chapter()
+        for sid in ("sayfawa", "bornu", "idris-alooma", "sayfawa-end"):
+            self.assertEqual(scenes[sid].get("clock"), "label", sid)
+
+    def test_the_move_ends_in_a_region_not_at_the_later_capital(self):
+        _, features, scenes = self.chapter()
+        self.assertEqual(features["move-west"]["path"], ["kanem", "bornu"])
+        self.assertNotIn("ngazargamu", scenes["bornu"]["show"])     # built a century after the move
+        self.assertGreaterEqual(features["bornu"]["uncertainty_km"], 100)
+
     def test_scenes_about_war_and_death_are_sensitive(self):
         _, _, scenes = self.chapter()
         for sid in ("bornu", "idris-alooma", "sayfawa-end"):

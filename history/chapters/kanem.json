@@ -110,6 +110,30 @@
       ]
     },
     {
+      "id": "bornu",
+      "kind": "point",
+      "form": "kingdom",
+      "name": "Bornu, west of the lake",
+      "short": "Bornu",
+      "coordinates": [
+        13.083,
+        12.367
+      ],
+      "uncertainty_km": 120,
+      "what": "The land west of Lake Chad where the Kanembu settled after leaving Kanem. For decades the court had no lasting seat there, until Ngazargamu was built.",
+      "evidence": "Secondary sources",
+      "location": "A regional anchor at the site of the later capital, Ngazargamu, inside a wide ring. Where the court stayed between the 1380s and Ngazargamu's founding is not placed.",
+      "status": "approx",
+      "disputed": null,
+      "emblem": "kanem-bornu",
+      "sources": [
+        "lc-chad-kanem",
+        "wiki-kanem",
+        "wiki-ngazargamu",
+        "wiki-places-key"
+      ]
+    },
+    {
       "id": "ngazargamu",
       "kind": "point",
       "form": "kingdom",
@@ -156,7 +180,7 @@
       "name": "The Kanembu move west to Bornu",
       "path": [
         "kanem",
-        "ngazargamu"
+        "bornu"
       ],
       "period": "late 1300s",
       "uncertain": "whole",
@@ -362,7 +386,8 @@
             1
           ]
         }
-      ]
+      ],
+      "clock": "label"
     },
     {
       "id": "bornu",
@@ -370,8 +395,7 @@
       "when": {
         "from": 1376,
         "to": 1488,
-        "label": "1376 to about 1488 · sources differ",
-        "approx": false
+        "label": "1376 to about 1488 · sources differ"
       },
       "camera": {
         "center": [
@@ -384,17 +408,17 @@
         "lake-chad",
         "kanem",
         "bulala",
-        "move-west",
-        "ngazargamu"
+        "bornu",
+        "move-west"
       ],
       "appear": {
         "lake-chad": 0.6,
         "kanem": 1.2,
         "bulala": 2.4,
-        "ngazargamu": 28.4
+        "bornu": 9.6
       },
       "fade": {
-        "kanem": 10.2
+        "kanem": 16.0
       },
       "text": "From around Lake Fitri, to the east, came the Bulala. By one account they killed five of the six kings who reigned between 1376 and 1400. Mai Umar ibn Idris left Njimi and led the Kanembu west, to Bornu, on the far side of the lake. The move is dated from about 1380 to 1387. In Bornu the Kanembu married into the peoples already there, and from them came the Kanuri. For decades the court had no lasting seat. Then Mai Ali Gaji built Ngazargamu, between two rivers. Its founding is dated anywhere from about 1460 to 1488.",
       "sources": [
@@ -488,7 +512,8 @@
             1
           ]
         }
-      ]
+      ],
+      "clock": "label"
     },
     {
       "id": "idris-alooma",
@@ -595,7 +620,8 @@
             1
           ]
         }
-      ]
+      ],
+      "clock": "label"
     },
     {
       "id": "sayfawa-end",
@@ -717,7 +743,8 @@
             1
           ]
         }
-      ]
+      ],
+      "clock": "label"
     }
   ]
 }

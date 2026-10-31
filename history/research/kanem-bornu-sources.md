@@ -17,6 +17,7 @@ there. Everything below should be checked against the full texts before publishi
 | Kanem | 14.119 N 15.313 E (Mao), 120 km ring | disputed (founding date) | `wiki-kanem`, `wiki-njimi`, `wiki-places-key`, `frobenius-kanem`, `magnavita-2025` |
 | Bilma (Kawar) | 18.687 N 12.919 E | firm | `wiki-trans-saharan`, `wiki-places-key` |
 | Bulala (Lake Fitri) | 12.809 N 17.503 E, 60 km ring | approx | `lc-chad-kanem`, `wiki-bilala`, `wiki-lake-fitri` |
+| Bornu, west of the lake | 13.083 N 12.367 E (Ngazargamu's site), 120 km ring; scene "From Kanem to Bornu" only | approx | `lc-chad-kanem`, `wiki-kanem`, `wiki-ngazargamu`, `wiki-places-key` |
 | Ngazargamu | 13.083 N 12.367 E, the ruins near Geidam | disputed (founding date) | `wiki-ngazargamu`, `wiki-bornu`, `wiki-places-key` |
 | Kukawa | 12.925 N 13.568 E | firm | `wiki-al-kanemi` |
 
@@ -28,8 +29,9 @@ been sourced for these centuries. The sources seen say the lake's level rose and
 lake in the Bodélé depression dried out about 1,000 years ago, and that the lake has shrunk to less
 than a tenth of its 1960s area. The lake point has no `reach_km`, so no disc pretends to be its size.
 
-**The move west** is a `migration` drawn faintly (`uncertain: "whole"`): the route, and where the
-court stopped before Ngazargamu, are not known to this page.
+**The move west** is a `migration` drawn faintly (`uncertain: "whole"`) from Kanem to a Bornu ring
+anchored at Ngazargamu's site: the route, and where the court stopped before Ngazargamu was
+built, are not known to this page. Ngazargamu itself is drawn only from the Idris Alooma scene on.
 
 ## Scenes
 
