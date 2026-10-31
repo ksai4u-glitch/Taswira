@@ -24,6 +24,11 @@ COPIES = {
                                 'Songhai and Kanta of Kebbi, each dated by its source, with disputed dates labelled.',
                                 'https://github.com/ksai4u-glitch/Taswira/blob/main/history/research/hausa-cities-sources.md',
                                 'Where each place and date comes from', 'taswira-hausa-cities.mp4'),
+    'sokoto-video.html': ('The Sokoto Caliphate, 1774 to 1903: Usman dan Fodio at Degel, the hijra and jihad of 1804, the fall of Alkalawa, '
+                          'Sokoto and Gwandu with their emirates drawn as ties of allegiance, not one border, and the conquest of 1897 to 1903, '
+                          'each town marked on its dated stop, with disputed dates labelled.',
+                          'https://github.com/ksai4u-glitch/Taswira/blob/main/history/research/sokoto-sources.md',
+                          'Where each place and date comes from', 'taswira-sokoto.mp4'),
 }
 
 

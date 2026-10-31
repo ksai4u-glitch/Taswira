@@ -52,7 +52,7 @@ PLATES_PATH = os.path.join(HISTORY_DIR, "geo", "plates.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
-CHAPTERS = ["deep", "africa", "nok", "hausa", "states", "key"]
+CHAPTERS = ["deep", "africa", "nok", "hausa", "sokoto", "states", "key"]
 
 # Modern reference maps are never allowed before this year. Later historical scenes also
 # use the neutral background unless a modern locator is explicitly requested and explained.
@@ -81,7 +81,7 @@ SETTINGS = ("royal-cemetery", "stelae-field", "stone-enclosure", "walled-city")
 MONUMENT_TYPES = ("pyramid", "stele", "tower", "walled-city")
 # What a dated beat's date rests on. A Chronicle date says so on screen; oral tradition has no date;
 # an account is a dated written description by a named writer.
-BEAT_BASES = ("archaeology", "chronicle", "differ", "oral", "account")
+BEAT_BASES = ("archaeology", "chronicle", "differ", "oral", "account", "record")
 
 # The map vocabulary (see history/README.md). How sure each thing on the map is:
 STATUSES = ("firm", "approx", "disputed", "to-check")
