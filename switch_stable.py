@@ -25,8 +25,9 @@ import os
 import re
 import sys
 import urllib.error
-import urllib.request
 from datetime import date
+
+from fetch_nigeria import open_ucdp
 
 API_URL = "https://ucdpapi.pcr.uu.se/api/gedevents/"
 SETTINGS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.py")
@@ -128,9 +129,9 @@ def show_diff(old, new):
 def version_exists(version, token):
     """Ask the API for one event from this version (1 request). True, False, or None if unsure."""
     url = f"{API_URL}{version}?pagesize=1&Country=475"
-    request = urllib.request.Request(url, headers={"x-ucdp-access-token": token})
     try:
-        with urllib.request.urlopen(request, timeout=30):
+        # open_ucdp sends the token only to the UCDP API and refuses redirects away from it
+        with open_ucdp(url, token, timeout=30):
             return True
     except urllib.error.HTTPError as e:
         if e.code in (401, 403):

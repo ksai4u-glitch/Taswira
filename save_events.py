@@ -57,6 +57,25 @@ def already_saved(db, version):
     ).fetchone()
 
 
+def quote_name(name):
+    """A field name as a quoted SQL identifier. The names come from the API's JSON, so a
+    double quote inside one is doubled rather than allowed to end the identifier."""
+    return '"' + str(name).replace('"', '""') + '"'
+
+
+def incomplete(events, total_count):
+    """Why a download should not be saved, or None if it is complete.
+
+    Matching the count is not enough: if pages shifted while we were paging, one
+    event can arrive twice and another not at all, and the count would still match."""
+    if len(events) != total_count:
+        return f"collected {len(events)} events but the API said {total_count}"
+    unique = len({e.get("id") for e in events})
+    if unique != total_count:
+        return f"collected {total_count} events but only {unique} different ids (pages shifted while downloading?)"
+    return None
+
+
 def save(db, events, version):
     """Create the events table from the fields UCDP sends, then insert or update every event."""
     fields = list(events[0].keys())          # the 49 UCDP field names
@@ -68,7 +87,7 @@ def save(db, events, version):
             print(f"  Note: GED {version} has fields the table lacks, not saved: {', '.join(extra)}")
         fields = [f for f in fields if f in existing]
     columns = ["dataset_version"] + fields
-    column_list = ", ".join(f'"{c}"' for c in columns)   # quoted, e.g. "id", "best"
+    column_list = ", ".join(quote_name(c) for c in columns)   # quoted, e.g. "id", "best"
 
     # The same event id can appear in different dataset versions (e.g. 26.1 and a
     # monthly Candidate), so an event is identified by (id, dataset_version).
@@ -142,8 +161,9 @@ def main():
         token = token or load_token()
         print(f"GED {version}: downloading...")
         events, total_count, requests_made = fetch_all(token, version)
-        if len(events) != total_count:
-            sys.exit(f"Not saving: collected {len(events)} events but the API said {total_count}.")
+        problem = incomplete(events, total_count)
+        if problem:
+            sys.exit(f"Not saving: {problem}. Run it again later.")
         if events:
             save(db, events, version)
         log_fetch(db, version, len(events))

@@ -24,8 +24,8 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    env:
-      UCDP_TOKEN: ${{ secrets.UCDP_TOKEN }}
+    # The UCDP token is given only to the two steps that call the API or check the page
+    # for it, not to every step (checkout, cache, git push, gh).
     steps:
       - uses: actions/checkout@v4
 
@@ -45,6 +45,8 @@ jobs:
 
       - name: Check for a new Candidate release (1 request)
         id: check
+        env:
+          UCDP_TOKEN: ${{ secrets.UCDP_TOKEN }}
         run: python update_candidates.py
 
       # One data pull request at a time. Until it is merged, settings.py on main
@@ -54,15 +56,22 @@ jobs:
         if: steps.check.outputs.new_versions != ''
         env:
           GH_TOKEN: ${{ github.token }}
+        # Only this repository's own data/ged-… branches count: anyone can open a pull request
+        # from a fork with a branch of that name, which must not hold up the updates.
         run: |
-          waiting=$(gh pr list --state open --json headRefName,url \
-            --jq '[.[] | select(.headRefName | startswith("data/ged-")) | .url] | first // ""')
+          waiting=$(gh pr list --state open --json headRefName,url,isCrossRepository \
+            --jq '[.[] | select(.isCrossRepository | not) | select(.headRefName | startswith("data/ged-")) | .url] | first // ""')
           echo "waiting=$waiting" >> "$GITHUB_OUTPUT"
           if [ -n "$waiting" ]; then echo "Waiting for $waiting to be merged or closed; nothing to do."; fi
 
       - name: Download, clean and rebuild the public page
         if: steps.check.outputs.new_versions != '' && steps.open.outputs.waiting == ''
+        env:
+          UCDP_TOKEN: ${{ secrets.UCDP_TOKEN }}
         run: |
+          # Without pipefail, "publish.py | tee" passes even when publish.py refuses to
+          # write the page, and a pull request would open with the old page.
+          set -o pipefail
           python save_events.py
           python clean_events.py
           python publish.py | tee publish.log

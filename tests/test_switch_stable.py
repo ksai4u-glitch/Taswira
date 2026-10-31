@@ -14,6 +14,7 @@ from datetime import date
 from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import fetch_nigeria  # noqa: E402
 import switch_stable as ss  # noqa: E402
 
 SETTINGS = '''"""Settings."""
@@ -95,7 +96,7 @@ class SwitchTextTests(unittest.TestCase):
 
 class ApiTests(unittest.TestCase):
     def test_version_exists(self):
-        with mock.patch("urllib.request.urlopen", return_value=FakeResponse()) as urlopen:
+        with mock.patch.object(fetch_nigeria._OPENER, "open", return_value=FakeResponse()) as urlopen:
             self.assertTrue(ss.version_exists("27.1", "secret"))
         request = urlopen.call_args[0][0]
         self.assertIn("/gedevents/27.1?pagesize=1", request.full_url)
@@ -105,23 +106,23 @@ class ApiTests(unittest.TestCase):
         cases = [(http_error(404), False), (http_error(400), False), (http_error(401), None),
                  (http_error(500), None), (urllib.error.URLError("down"), None)]
         for error, expected in cases:
-            with mock.patch("urllib.request.urlopen", side_effect=error):
+            with mock.patch.object(fetch_nigeria._OPENER, "open", side_effect=error):
                 self.assertIs(ss.version_exists("27.1", "secret"), expected)
 
     def test_notice_costs_nothing_before_may(self):
-        with mock.patch("urllib.request.urlopen") as urlopen:
+        with mock.patch.object(fetch_nigeria._OPENER, "open") as urlopen:
             self.assertIsNone(ss.stable_notice("26.1", "secret", today=date(2027, 4, 30)))
         urlopen.assert_not_called()
 
     def test_notice_when_published(self):
-        with mock.patch("urllib.request.urlopen", return_value=FakeResponse()) as urlopen:
+        with mock.patch.object(fetch_nigeria._OPENER, "open", return_value=FakeResponse()) as urlopen:
             notice = ss.stable_notice("26.1", "secret", today=date(2027, 6, 15))
         self.assertIn("switch_stable.py 27.1", notice)
         self.assertEqual(urlopen.call_count, 1)
 
     def test_notice_silent_when_missing_or_failing(self):
         for error in (http_error(404), http_error(500), urllib.error.URLError("down")):
-            with mock.patch("urllib.request.urlopen", side_effect=error):
+            with mock.patch.object(fetch_nigeria._OPENER, "open", side_effect=error):
                 self.assertIsNone(ss.stable_notice("26.1", "secret", today=date(2027, 6, 15)))
 
 
@@ -146,7 +147,7 @@ class MainTests(unittest.TestCase):
         return out.getvalue()
 
     def test_dry_run_writes_nothing(self):
-        with mock.patch("urllib.request.urlopen") as urlopen:
+        with mock.patch.object(fetch_nigeria._OPENER, "open") as urlopen:
             out = self.run_main("27.1", "--dry-run", "--no-check")
         urlopen.assert_not_called()
         self.assertEqual(self.read(), SETTINGS)
@@ -156,7 +157,7 @@ class MainTests(unittest.TestCase):
 
     def test_writes_after_check(self):
         with mock.patch("fetch_nigeria.load_token", return_value="secret"), \
-             mock.patch("urllib.request.urlopen", return_value=FakeResponse()) as urlopen:
+             mock.patch.object(fetch_nigeria._OPENER, "open", return_value=FakeResponse()) as urlopen:
             out = self.run_main("27.1")
         self.assertEqual(urlopen.call_count, 1)
         self.assertIn('API_VERSION = "27.1"', self.read())
@@ -166,7 +167,7 @@ class MainTests(unittest.TestCase):
 
     def test_unpublished_version_changes_nothing(self):
         with mock.patch("fetch_nigeria.load_token", return_value="secret"), \
-             mock.patch("urllib.request.urlopen", side_effect=http_error(404)):
+             mock.patch.object(fetch_nigeria._OPENER, "open", side_effect=http_error(404)):
             with self.assertRaises(SystemExit), redirect_stdout(io.StringIO()):
                 ss.main(["27.1"])
         self.assertEqual(self.read(), SETTINGS)

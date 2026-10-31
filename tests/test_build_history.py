@@ -141,6 +141,13 @@ class HistoryDataTests(unittest.TestCase):
         emblems = copy.deepcopy(self.emblems)
         emblems["benin-leopard"]["svg"] = '<svg onload="alert(1)"><path d="M0 0"/></svg>'
         self.assertTrue(any("plain shapes" in p for p in self.emblem_problems(emblems)))
+        # Handlers hidden behind "/" instead of a space, and animations that set a handler
+        for svg in ('<svg/onload=alert(1)><path d="M0 0"/></svg>',
+                    '<svg><animate/onbegin=alert(1) attributeName="x" dur="1s"/></svg>',
+                    '<svg><set attributeName="onmouseover" to="alert(1)"/></svg>',
+                    '<svg><iframe srcdoc="x"></iframe></svg>', '<svg><use x="0"/></svg>'):
+            emblems["benin-leopard"]["svg"] = svg
+            self.assertTrue(any("plain shapes" in p for p in self.emblem_problems(emblems)), svg)
         emblems["benin-leopard"]["svg"] = None             # the drawing file is missing
         self.assertTrue(any("no drawing" in p for p in self.emblem_problems(emblems)))
 

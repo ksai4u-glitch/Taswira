@@ -78,6 +78,13 @@ class Paths(unittest.TestCase):
                   "../outside", "a/../docs/index.html"]:
             self.assertTrue(at.check_paths([p], "implement", self.TD), p)
 
+    def test_case_and_git_folder(self):
+        # The maintainer's Windows checkout treats these as the protected paths
+        for p in ["Docs/index.html", ".GitHub/workflows/x.yml", "agents.md", "Claude.md", ".GITIGNORE",
+                  ".git/hooks/post-commit", "history/.git/config", "history/.GIT/HEAD"]:
+            self.assertTrue(at.check_paths([p], "implement", self.TD), p)
+        self.assertEqual(at.check_paths(["history/docs-notes.md", "gitnotes/.gitkeep"], "implement", self.TD), [])
+
     def test_symlink_text(self):
         self.assertTrue(at.check_patch_text("diff --git a/x b/x\nnew file mode 120000\n"))
         self.assertEqual(at.check_patch_text("diff --git a/x b/x\nnew file mode 100644\n"), [])
@@ -201,6 +208,27 @@ class Records(unittest.TestCase):
             u = at.usage_from_execution(p)
             self.assertEqual((u["num_turns"], u["input_tokens"], u["models"]), (4, 10, ["m"]))
             self.assertFalse(at.usage_from_execution(os.path.join(d, "missing"))["available"])
+
+
+class Outputs(unittest.TestCase):
+    def test_multiline_output_cannot_end_early(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "out")
+            value = "line one\n__AGENT_EOF__\nnext=stop"
+            old = os.environ.get("GITHUB_OUTPUT")
+            os.environ["GITHUB_OUTPUT"] = path
+            try:
+                at.write_output("summary", value)
+            finally:
+                if old is None:
+                    del os.environ["GITHUB_OUTPUT"]
+                else:
+                    os.environ["GITHUB_OUTPUT"] = old
+            lines = open(path, encoding="utf-8").read().split("\n")
+            delimiter = lines[0].split("<<", 1)[1]
+            self.assertNotIn(delimiter, value)
+            self.assertEqual(lines[1:4], value.split("\n"))
+            self.assertEqual(lines[4], delimiter)
 
 
 if __name__ == "__main__":

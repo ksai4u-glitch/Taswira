@@ -14,6 +14,7 @@ import argparse
 import json
 import os
 import re
+import secrets
 import subprocess
 import sys
 
@@ -48,7 +49,9 @@ def write_output(name, value):
         return
     with open(path, "a", encoding="utf-8") as f:
         if "\n" in value:
-            f.write(f"{name}<<__AGENT_EOF__\n{value}\n__AGENT_EOF__\n")
+            # A random delimiter, so no line inside the value can end it early and set other outputs
+            eof = f"__AGENT_EOF_{secrets.token_hex(8)}__"
+            f.write(f"{name}<<{eof}\n{value}\n{eof}\n")
         else:
             f.write(f"{name}={value}\n")
 
@@ -238,11 +241,17 @@ def check_paths(paths, mode, task_dir):
     work = task_dir.rstrip("/") + "/work/"
     for p in paths:
         norm = os.path.normpath(p).replace("\\", "/")
+        # Compared in lower case: the maintainer's Windows checkout treats Docs/ and docs/,
+        # or .GitHub/ and .github/, as the same folder.
+        low = norm.lower()
         if norm.startswith("../") or norm.startswith("/") or norm != p:
             problems.append(f"{p}: unusual path")
+        elif ".git" in low.split("/"):
+            problems.append(f"{p}: protected path (.git)")
         elif mode == "review" and not norm.startswith(work):
             problems.append(f"{p}: review tasks may only write under {work}")
-        elif norm in DENIED_FILES or any(norm == d.rstrip("/") or norm.startswith(d) for d in DENIED_PREFIXES):
+        elif (low in {f.lower() for f in DENIED_FILES}
+              or any(low == d.rstrip("/").lower() or low.startswith(d.lower()) for d in DENIED_PREFIXES)):
             problems.append(f"{p}: protected path")
         elif norm.startswith("agent-tasks/") and not norm.startswith(work):
             problems.append(f"{p}: only this task's work/ folder may be changed under agent-tasks/")
