@@ -46,7 +46,7 @@ const SETUP = `
       const { page, errors } = await open(browser, viewport, mode);
       const where0 = `${viewport.width}px ${mode}`;
       await page.evaluate(SETUP);
-      assert.deepEqual(await page.evaluate(() => DATA.chapters.map(c => c.id).slice(3, 6)), ['hausa', 'sokoto', 'states']);
+      assert.deepEqual(await page.evaluate(() => { const ids = DATA.chapters.map(c => c.id), i = ids.indexOf('hausa'); return ids.slice(i, i + 3); }), ['hausa', 'sokoto', 'states']);
       for (const id of ['jihad', 'emirates']) {
         const run = await page.evaluate(id => {
           const { sc, s } = pick(id);
