@@ -1,7 +1,7 @@
 """A stand-in for the UCDP API, so tests never touch the network or need a token.
 
     with FakeUCDP([page(...), http_error(503), timeout()]) as api:
-        ...            # each urllib.request.urlopen call takes the next answer
+        ...            # each request to the UCDP API takes the next answer
     api.urls           # the URLs that were asked for, in order
 """
 
@@ -14,6 +14,7 @@ import urllib.error
 from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import fetch_nigeria  # noqa: E402
 import ucdp_api  # noqa: E402
 
 TOKEN = "test-token-not-real-1234"
@@ -50,7 +51,7 @@ class _Response(io.BytesIO):
 
 
 class FakeUCDP:
-    """Patch urlopen and sleep; answers are dicts (sent as JSON), bytes (sent raw) or exceptions."""
+    """Patch the UCDP opener and sleep; answers are dicts (sent as JSON), bytes (sent raw) or exceptions."""
 
     def __init__(self, answers):
         self.answers = list(answers)
@@ -69,7 +70,8 @@ class FakeUCDP:
 
     def __enter__(self):
         self._patches = [
-            mock.patch.object(ucdp_api.urllib.request, "urlopen", self._urlopen),
+            # requests go through fetch_nigeria.open_ucdp (UCDP-only, no redirects away)
+            mock.patch.object(fetch_nigeria._OPENER, "open", self._urlopen),
             mock.patch.object(ucdp_api.time, "sleep", self.sleeps.append),
             mock.patch.object(ucdp_api, "requests_made", 0),
         ]

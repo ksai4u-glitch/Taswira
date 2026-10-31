@@ -18,8 +18,8 @@ import http.client
 import json
 import time
 import urllib.error
-import urllib.request
 
+from fetch_nigeria import is_ucdp_url, open_ucdp
 from settings import MAX_REQUESTS_PER_RUN
 
 API_URL = "https://ucdpapi.pcr.uu.se/api/gedevents/"   # + version, e.g. "26.1"
@@ -61,7 +61,9 @@ def _retry_after(error):
 def get_json(url, token):
     """GET url with the token header and return the parsed JSON, retrying transient failures."""
     global requests_made
-    request = urllib.request.Request(url, headers={"x-ucdp-access-token": token})
+    if not is_ucdp_url(url):
+        # never send the token anywhere but the UCDP API over https
+        raise UCDPError(f"not a UCDP API address, so the token is not sent: {url}")
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
         if requests_made >= MAX_REQUESTS_PER_RUN:
@@ -71,7 +73,8 @@ def get_json(url, token):
         wait = BACKOFF_SECONDS[min(attempt, len(BACKOFF_SECONDS)) - 1]
 
         try:
-            with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
+            # open_ucdp also refuses redirects that leave the UCDP API
+            with open_ucdp(url, token, timeout=TIMEOUT_SECONDS) as response:
                 body = response.read()
             return json.loads(body)
         except urllib.error.HTTPError as e:
@@ -117,7 +120,7 @@ def check_page(data, url):
     if not all(isinstance(e, dict) and "id" in e for e in data["Result"]):
         raise bad("an event without an id")
     next_url = data.get("NextPageUrl")
-    if next_url and not (isinstance(next_url, str) and next_url.startswith(API_URL)):
+    if next_url and not (isinstance(next_url, str) and is_ucdp_url(next_url)):
         # never send the token anywhere but the UCDP API
         raise bad("NextPageUrl does not point at the UCDP API")
     return data

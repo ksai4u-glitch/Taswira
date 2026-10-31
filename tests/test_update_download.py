@@ -43,6 +43,14 @@ class GetPageTests(unittest.TestCase):
             ucdp_api.get_page("https://ucdpapi.pcr.uu.se/api/gedevents/26.1", TOKEN)
             self.assertEqual(ucdp_api.requests_made, 3)
 
+    def test_token_is_only_sent_to_the_ucdp_api(self):
+        for url in ("https://evil.example/api/gedevents/26.1",
+                    "http://ucdpapi.pcr.uu.se/api/gedevents/26.1"):
+            with self.subTest(url=url), FakeUCDP([]) as fake, \
+                    self.assertRaises(ucdp_api.UCDPError):
+                ucdp_api.get_page(url, TOKEN)
+            self.assertEqual(fake.urls, [])          # nothing was sent
+
     def test_shape_checks(self):
         url = "https://ucdpapi.pcr.uu.se/api/gedevents/26.1"
         bad = [page(total=-1), page(total="3"), page(total=True), dict(page(), Result={}),

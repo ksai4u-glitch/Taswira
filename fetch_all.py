@@ -17,7 +17,7 @@ import time
 import urllib.parse
 
 import ucdp_api
-from fetch_nigeria import load_token
+from fetch_nigeria import is_ucdp_url, load_token
 from settings import API_VERSION, COUNTRIES, END_DATE, MAX_REQUESTS, PAGE_SIZE, START_DATE
 
 # --- Settings (the values themselves live in settings.py) -------------------
@@ -97,6 +97,9 @@ def fetch_all(token, version=API_VERSION):
                 print(f"    request {requests_made}: got {len(page_events)} more")
 
             url = data.get("NextPageUrl") or None   # empty on the last page -> next country
+            if url and not is_ucdp_url(url):
+                # The token goes with every request, so only ever follow links back to the API
+                sys.exit(f"Stopped: NextPageUrl does not point to the UCDP API over https ({url}).")
 
     print(f"GED {version}: API reports {total_count} events in total across {len(COUNTRIES)} countries.")
     return events, total_count, requests_made
