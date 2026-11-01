@@ -52,7 +52,7 @@ PLATES_PATH = os.path.join(HISTORY_DIR, "geo", "plates.json")
 OUTPUT_PATH = os.path.join(HERE, "docs", "history.html")
 
 # Chapters in the order the page plays them
-CHAPTERS = ["deep", "africa", "nok", "kanem", "hausa", "sokoto", "states", "key"]
+CHAPTERS = ["deep", "africa", "nok", "kanem", "hausa", "sokoto", "colonial", "states", "key"]
 
 # Modern reference maps are never allowed before this year. Later historical scenes also
 # use the neutral background unless a modern locator is explicitly requested and explained.
@@ -112,8 +112,11 @@ TIERS = ("flag", "symbol", "none")
 # a lake drawn as a soft disc of its area (its shoreline is not drawn), and a volcano drawn as a
 # small cone (one symbol for every volcano or volcanic field, not a drawing of a particular mountain)
 NATURE = ("landmass", "lake", "volcano")
-# Lines drawn on the globe, with the years (million years ago) they were active
-LINE_TYPES = ("rift", "river")
+# Works rather than rulers: a port (an anchor; "seaward" points ships out to sea)
+WORKS = ("port",)
+# Lines: a rift (on the globe, with the years in million years ago it was active), a river, and a
+# railway (on the map, drawn as a schematic line between the towns its sources name, with when it opened)
+LINE_TYPES = ("rift", "river", "railway")
 
 # Deep time: scenes with "view": "globe" show the whole Earth, with the continents where the
 # plate model puts them. The plate file covers the last 600 million years.
@@ -653,7 +656,10 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
             if kind == "point":
                 need(placed(f.get("coordinates")), f"{where}: coordinates [lat, lon] are outside the map area")
                 if "form" in f:
-                    need(f["form"] in FORMS + NATURE, f"{where}: form must be one of {', '.join(FORMS + NATURE)}")
+                    need(f["form"] in FORMS + NATURE + WORKS, f"{where}: form must be one of {', '.join(FORMS + NATURE + WORKS)}")
+                if "seaward" in f:
+                    need(f.get("form") == "port" and placed(f["seaward"]),
+                         f"{where}: seaward is a [lat, lon] out to sea, for a port only")
                 if "reach_km" in f or f.get("form") == "communities":
                     need(isinstance(f.get("reach_km"), (int, float)) and 5 <= f["reach_km"] <= 600
                          and f.get("reach_note"), f"{where}: a halo or field needs reach_km (5 to 600) and a "
@@ -695,7 +701,12 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                 need(len(path) >= 2 and all(placed(ll) for ll in path),
                      f"{where}: a line needs a path of two or more [lat, lon] inside the map area")
                 active = f.get("active")
-                need(f.get("type") == "river" or (isinstance(active, list) and len(active) == 2 and all(isinstance(v, (int, float)) for v in active)
+                if f.get("type") == "railway":
+                    op = f.get("opened")
+                    need(isinstance(op, dict) and type(op.get("from")) is int and type(op.get("to")) is int
+                         and op["from"] <= op["to"] and isinstance(op.get("label"), str) and op["label"].strip(),
+                         f"{where}: a railway needs opened: from and to (whole years) and a label")
+                need(f.get("type") in ("river", "railway") or (isinstance(active, list) and len(active) == 2 and all(isinstance(v, (int, float)) for v in active)
                      and active[0] >= active[1] >= 0),
                      f"{where}: active must be [from, to] in million years ago, older first")
             elif kind == "link":
@@ -835,7 +846,7 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
                      and (2 <= cam.get("zoom", 0) <= 11 if ch.get("area") == "africa" else 4 <= cam.get("zoom", 0) <= 11), f"{where}: camera centre or zoom out of range")
                 for fid in shown:
                     f = features.get(fid, {})
-                    need((f.get("kind") != "line" or f.get("type") == "river") and f.get("form") != "landmass",
+                    need((f.get("kind") != "line" or f.get("type") in ("river", "railway")) and f.get("form") != "landmass",
                          f"{where}: {fid} can only be shown on the globe")
             previous_beat = -1
             beats = sc.get("beats", [])
@@ -890,7 +901,7 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
             appear = appear if isinstance(appear, dict) else {}
             for fid, at in appear.items():
                 kind = features.get(fid, {}).get("kind")
-                need(fid in shown and kind in ("point", "link")
+                need(fid in shown and (kind in ("point", "link") or features.get(fid, {}).get("type") == "railway")
                      and isinstance(at, (int, float)) and 0 <= at < sc.get("duration", reading_seconds(sc.get("text", ""))),
                      f"{where}: appear needs places or ties the scene shows and times inside the scene")
                 if kind == "link":
@@ -1138,7 +1149,7 @@ def source_links(ids, sources):
 
 STATUS_WORDS = {"firm": "Firm", "approx": "Approximate", "disputed": "Disputed", "to-check": "To check"}
 TIER_WORDS = {"flag": "Flag", "symbol": "Symbol, not a flag", "none": "Nothing documented"}
-FORM_WORDS = {"landmass": "Continent", "lake": "Lake", "volcano": "Volcano or volcanic field", "kingdom": "Kingdom", "city-state": "City-state", "network": "Centre of a network",
+FORM_WORDS = {"landmass": "Continent", "lake": "Lake", "volcano": "Volcano or volcanic field", "port": "Port", "kingdom": "Kingdom", "city-state": "City-state", "network": "Centre of a network",
               "caliphate": "Seat of the caliphate", "emirate": "Emirate", "communities": "Self-governing communities"}
 LINK_WORDS = {"allegiance": "Allegiance", "tribute": "Tribute", "alliance": "Alliance", "trade": "Trade",
               "ritual": "Ritual authority"}
@@ -1179,6 +1190,8 @@ def feature_text(f, sc, features, sources, emblems):
             head += f" <em>Uncertain part of the route:</em> {e(f['uncertain'])}."
     elif kind == "line" and f.get("type") == "river":
         head = f"<strong>{e(f['name'])}.</strong> Physical river locator. {e(f['what'])}"
+    elif kind == "line" and f.get("type") == "railway":
+        head = f"<strong>{e(f['name'])}.</strong> Railway, {e(f['opened']['label'])}. {e(f['what'])}"
     elif kind == "line":
         head = (f"<strong>{e(f['name'])}.</strong> {e(LINE_WORDS[f['type']])}, active about {f['active'][0]} "
                 f"to {f['active'][1]} million years ago. {e(f['what'])}")

@@ -1410,7 +1410,7 @@
     "url": "https://en.wikipedia.org/wiki/Cameroon_line",
     "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. A page derived from the article gives radiometric ages from about 51.8 million years ago to the present; a K-Ar and Rb-Sr dating study seen in the same search puts the start about 66 million years ago. The page shows this as disputed."
+    "checked": "Opened 1 Nov 2026. Some geologists see a mantle plume under the region for about 140 million years, stationary under the Oku area since about 66 million years ago; one hypothesis dates the later development of the line to around 30 million years ago. Biu Plateau and Jos Plateau are named as related to the line. The page shows the start as disputed. A figure of about 51.8 million years, seen earlier through a search excerpt, is not in the current article and is no longer used."
   },
   "wiki-biu-plateau": {
     "title": "Biu Plateau (Wikipedia)",
@@ -1419,7 +1419,7 @@
     "url": "https://en.wikipedia.org/wiki/Biu_Plateau",
     "kind": "encyclopedia (secondary)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Some geologists associate the plateau's volcanism with the Cameroon line to the south."
+    "checked": "Opened 1 Nov 2026. Some geologists consider the volcanic activity of the Biu Plateau associated with the activity of the Cameroon line to the south."
   },
   "wiki-mount-cameroon": {
     "title": "Mount Cameroon (Wikipedia)",
@@ -1428,7 +1428,7 @@
     "url": "https://en.wikipedia.org/wiki/Mount_Cameroon",
     "kind": "encyclopedia (secondary)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Flank eruptions from 28 March to 22 April 1999 and from 28 May to 19 June 2000; the 1999 lava came within about 200 m of the sea; a brief eruption on 3 February 2012."
+    "checked": "Opened 1 Nov 2026. Historical records list major eruptions in 1909, 1922, 1925, 1954, 1959, 1982, 1999, 2000 and 2012; the 1999 eruption came within 200 m of the sea; the most recent eruption was on 3 February 2012. Summit at 4°13'00\" N, 9°10'21\" E."
   },
   "nonnotte-2008": {
     "title": "New K-Ar age determinations of Kilimanjaro volcano in the North Tanzanian diverging rift, East Africa",
@@ -1437,7 +1437,7 @@
     "url": "https://hal-insu.archives-ouvertes.fr/insu-00304458",
     "kind": "peer-reviewed article (geochronology)",
     "rights": "Facts cited only; no text or figures reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Seventeen K-Ar ages from the three centres. Summaries of the paper put the start of activity at about 2.5 million years ago at Shira, with Mawenzi and Kibo active from about 1 million years ago; Kibo is dormant, not extinct. These figures come from summaries, not the paper's own text."
+    "checked": "Opened 1 Nov 2026. The abstract (HAL record): seventeen K-Ar ages; the oldest activity began at about 2.5 Ma in the Shira vent, with important phases around 1.9 Ma; activity then shifted east to Mawenzi and Kibo, where initial volcanism is dated at about 1 Ma; Kibo's present cone was built between 274 and 170 ka, and the last activity around 200 to 150 ka formed its summit crater."
   },
   "wiki-nyiragongo": {
     "title": "Mount Nyiragongo (Wikipedia)",
@@ -1446,7 +1446,7 @@
     "url": "https://en.wikipedia.org/wiki/Mount_Nyiragongo",
     "kind": "encyclopedia (secondary)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. 1977: the lava lake drained in under an hour and flows ran at up to 60 km/h on the upper slopes. 2002: eruption from 17 January; lava covered about 13% of Goma. 2021: eruption from 22 May; lava ended near Goma's airport. Death and displacement figures differ between sources."
+    "checked": "Opened 1 Nov 2026. On 10 January 1977 the crater walls fractured and the lava lake drained in less than an hour; lava ran down the flanks at up to 60 km/h on the upper slopes, the fastest recorded. In 2002 a fissure opened on the south flank and lava reached the city. An eruption began on 22 May 2021. Summit at 1°31'19\" S, 29°14'58\" E. Casualty figures are not used."
   },
   "usgs-nyiragongo": {
     "title": "Volcano Watch: Central African metropolis again threatened by looming volcanic eruption",
@@ -1464,16 +1464,16 @@
     "url": "https://pubmed.ncbi.nlm.nih.gov/16469920/",
     "kind": "peer-reviewed article (geology)",
     "rights": "Facts cited only; no text or figures reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Wind-blown dune deposits about 7 million years old in the northern Chad Basin, described as the oldest known evidence of desert in the Sahara. Most earlier data had placed the desert's start between 2 and 3 million years ago."
+    "checked": "Opened 1 Nov 2026. The PubMed abstract: 7,000,000-year-old eolian dune deposits from the northern Chad Basin, the oldest known evidence for desert occurrence in the Sahara. The figure of 2 to 3 million years for earlier estimates comes from news reports of the paper and the Nature news piece."
   },
   "nature-news-sahara-2014": {
-    "title": "News report on Zhang and others (2014), Aridification of the Sahara desert caused by Tethys Sea shrinkage during the Late Miocene",
+    "title": "Climate simulation doubles Sahara's age",
     "author": "Nature news",
     "year": "2014",
     "url": "https://www.nature.com/articles/nature.2014.15954",
     "kind": "science news (secondary, reporting a peer-reviewed article)",
     "rights": "Facts cited only; no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. The 2014 study points to the Tortonian, about 11 to 7 million years ago, as the time North Africa dried, linked to the shrinking Tethys Sea, and cites the 2006 Chad dunes as support. One geologist quoted did not accept it."
+    "checked": "Opened 1 Nov 2026. A shrinking sea off northern Africa, the Tethys, triggered the desert's formation about 7 million years ago, a climate simulation suggests (Zhang and others, Nature 513, 401-404, 2014; the Wikipedia Sahara article cites the same paper and the Tortonian). Not all researchers accept it."
   },
   "wiki-places-volcanoes": {
     "title": "Coordinates of the volcanoes in the deep-time chapter (Wikipedia place articles)",
@@ -1482,6 +1482,204 @@
     "url": "https://en.wikipedia.org/wiki/Mount_Cameroon",
     "kind": "gazetteer coordinates of today's places",
     "rights": "Coordinates are facts; no text reused.",
-    "checked": "Not opened: this session's network policy blocked the sites. The coordinates are standard gazetteer values, not read from the pages this session: Mount Cameroon 4.203 N 9.170 E, Biu 10.61 N 12.19 E, Kilimanjaro 3.076 S 37.353 E, Nyiragongo 1.52 S 29.25 E, and a point on the Ethiopian plateau at 11.5 N 38.5 E. Re-check on the pages before publishing."
+    "checked": "Opened 1 Nov 2026. Coordinates from the place articles: Mount Cameroon 4°13'00\" N, 9°10'21\" E (4.217, 9.173); Kilimanjaro 3°04'33\" S, 37°21'12\" E (-3.076, 37.353); Nyiragongo 1°31'19\" S, 29°14'58\" E (-1.522, 29.249). Biu is placed at the town (10.61 N, 12.19 E) and the Ethiopian basalts at a point on the plateau (11.5 N, 38.5 E); those two are approximate and still to re-check on their pages."
+  },
+  "wiki-colonial-nigeria": {
+    "title": "Colonial Nigeria (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Colonial_Nigeria",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Britain annexed Lagos in 1861 and established the Oil River Protectorate in 1884; other powers acknowledged British dominance at the 1885 Berlin Conference; from 1886 to 1899 much of the area was ruled by the Royal Niger Company under charter; in 1900 the Southern and Northern Nigeria Protectorates passed from the company to the Crown; Lagos Colony was merged into Southern Nigeria (1906) and in 1914 Southern and Northern Nigeria were combined as the Colony and Protectorate of Nigeria; independence on 1 October 1960."
+  },
+  "wiki-lagos-colony": {
+    "title": "Lagos Colony (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Lagos_Colony",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. In August 1861 a British naval force entered Lagos and annexed it as a British colony by the Lagos Treaty of Cession."
+  },
+  "wiki-calabar": {
+    "title": "Calabar (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Calabar",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. A seaport since the 16th century, exporting palm oil; a major port of the Atlantic slave trade; headquarters of the European administration in the Niger Delta until 1906, when the seat of government moved to Lagos. Coordinates 4.977 N 8.338 E."
+  },
+  "wiki-benin-1897": {
+    "title": "Benin Expedition of 1897 (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Benin_Expedition_of_1897",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. On 9 February 1897 the invasion of the Kingdom of Benin began. After Benin City was taken, houses, sacred sites and palaces were looted and many buildings burned, the palace on 21 February. The expedition led to the looting of the Benin Bronzes, the exile of Oba Ovonramwen and the annexation of Benin to the Niger Coast Protectorate."
+  },
+  "wiki-anglo-aro-war": {
+    "title": "Anglo-Aro War (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Anglo-Aro_War",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. A conflict of 1901 to 1902 between the Aro Confederacy in present-day eastern Nigeria and the British Empire; the British prepared to invade Arochukwu in November 1901. The stated purpose, per the historian Adiele Afigbo, was to suppress the slave trade still carried on by some states."
+  },
+  "wiki-attahiru-ii-2026": {
+    "title": "Muhammadu Attahiru II (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Muhammadu_Attahiru_II",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. In 1906 a Mahdist rebellion broke out outside the city of Sokoto, in the village of Satiru."
+  },
+  "wiki-rail-nigeria": {
+    "title": "Rail transport in Nigeria (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Rail_transport_in_Nigeria",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Construction from Lagos to Ibadan began in March 1896; the Lagos Government Railway began operations in March 1901 and was extended to Minna in 1911, where it met the Baro-Kano railway built by Northern Nigeria between 1907 and 1911; the two were amalgamated in 1912; the railway reached Nguru in 1930. After coal was discovered at Udi, the Eastern Railway was built to Port Harcourt between 1913 and 1916, extended to Kaduna via Kafanchan in 1927, and to Maiduguri between 1958 and 1964."
+  },
+  "wiki-baro": {
+    "title": "Baro, Nigeria (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Baro,_Nigeria",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. A small port town on the Niger, at the limit of river navigation; the starting point of the Baro to Kano railway, built by the Northern Nigerian Protectorate under Lugard from 1907 to 1911. Coordinates 8.583 N 6.417 E."
+  },
+  "wiki-jebba": {
+    "title": "Jebba (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Jebba",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. A ferry carried people across the Niger from 1911 while the bridges were built; the article says the railway line reached Jebba in 1916. Coordinates 9.154 N 4.812 E. This differs from the railway overview, which has the line at Minna in 1911."
+  },
+  "wiki-port-harcourt": {
+    "title": "Port Harcourt (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Port_Harcourt",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Founded in 1912 by Lugard to export the coal that the geologist Albert Ernest Kitson had discovered at Enugu in 1909; the colonial government made the people of Diobu cede their land, and building the port-town began in 1912; named Port Harcourt in August 1913 after Lewis Harcourt, Secretary of State for the Colonies. Coordinates 4.824 N 7.034 E."
+  },
+  "wiki-enugu": {
+    "title": "Enugu (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Enugu_(city)",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. By 1909 coal was found under the village of Enugwu Ngwo in the Udi area; by 1913 it was confirmed in commercially viable quantities, and land was acquired for the Eastern Line railway and a colliery. Coordinates 6.453 N 7.511 E."
+  },
+  "wiki-zungeru": {
+    "title": "Zungeru (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Zungeru",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Capital of the British protectorate of Northern Nigeria from 1902 until 1916; British forces occupied it in September 1902; Lugard chose it over Jebba and Lokoja for its central position. Coordinates 9.8 N 6.15 E."
+  },
+  "wiki-kaduna": {
+    "title": "Kaduna (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Kaduna",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Capital of the former Northern Region from 1917 to 1967. Coordinates 10.523 N 7.44 E."
+  },
+  "wiki-apapa": {
+    "title": "Apapa Port Complex (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Apapa_Port_Complex",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Dredging of Lagos harbour and two stone moles: in 1913 the works were completed and ocean-going ships could enter. In 1919 a 180-foot wharf was built at Apapa, chosen as the terminus of the western railway; by the late 1920s it was the busiest port for produce from the Western and Northern provinces."
+  },
+  "wiki-kafanchan": {
+    "title": "Kafanchan (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Kafanchan",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. A railway junction town; its station was built in 1927. Coordinates 9.583 N 8.293 E."
+  },
+  "wiki-makurdi": {
+    "title": "Makurdi (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Makurdi",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Divided by the River Benue; the railway bridge was built in 1932; on the main line north from Port Harcourt. Coordinates 7.733 N 8.5 E."
+  },
+  "wiki-maiduguri": {
+    "title": "Maiduguri (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Maiduguri",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. The railway was extended here in 1964, at the end of the line from Port Harcourt through Enugu, Kafanchan, Kuru and Bauchi. Coordinates 11.837 N 13.154 E."
+  },
+  "wiki-federation-nigeria": {
+    "title": "Federation of Nigeria (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Federation_of_Nigeria",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. A predecessor of modern Nigeria from 1954 to 1963, with its capital at Lagos; independent on 1 October 1960 by the Nigeria Independence Act 1960."
+  },
+  "wiki-independence-day-ng": {
+    "title": "Independence Day (Nigeria) (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Independence_Day_(Nigeria)",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Marks Nigeria's proclamation of independence from British rule on 1 October 1960."
+  },
+  "countrystudies-british-control": {
+    "title": "Nigeria: a country study, \"Extension of British Control\" (Library of Congress, 1991)",
+    "author": "Helen Chapin Metz (ed.), Federal Research Division, Library of Congress",
+    "year": "1991",
+    "url": "https://www.countrystudies.us/nigeria/16.htm",
+    "kind": "government country study (secondary)",
+    "rights": "US government work, public domain; facts cited only.",
+    "checked": "Opened 1 Nov 2026. The protectorate's purpose was to control trade coming down the Niger; in 1894 it became the Niger Coast Protectorate, from Calabar to Lagos; the conquest of Benin in 1897 completed the occupation of the south-west; the Royal Niger Company had access from Lokoja along the Niger and Benue above their confluence, without effective control; on 31 December 1899 Britain revoked its charter."
+  },
+  "countrystudies-unification": {
+    "title": "Nigeria: a country study, \"Unification of Nigeria\" (Library of Congress, 1991)",
+    "author": "Helen Chapin Metz (ed.), Federal Research Division, Library of Congress",
+    "year": "1991",
+    "url": "https://www.countrystudies.us/nigeria/18.htm",
+    "kind": "government country study (secondary)",
+    "rights": "US government work, public domain; facts cited only.",
+    "checked": "Opened 1 Nov 2026. Lugard returned in 1912 to set in motion the merger of the northern and southern protectorates; harbour dredging and road and railway building opened Nigeria to economic development; port and transport improvements during the First World War furthered it."
+  },
+  "wiki-places-colonial": {
+    "title": "Coordinates for the colonial chapter (place articles) (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Lokoja",
+    "kind": "gazetteer coordinates of today's places",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Coordinates from the place articles: Lagos 6.456 N 3.394 E; Ibadan 7.396 N 3.917 E; Lokoja 7.802 N 6.744 E; Benin City 6.333 N 5.622 E; Arochukwu 5.383 N 7.917 E; Minna 9.614 N 6.557 E; Nguru 12.879 N 10.453 E; Bauchi 10.307 N 9.813 E (from the state article). Kano and Sokoto as in the Sokoto chapter."
   }
 }

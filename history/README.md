@@ -17,7 +17,8 @@ state each of today's states belonged to on a date), and `scenes`.
 
 A feature is a `point` (a place, with `coordinates` inside the map area: latitude 2 to 20, longitude
 0 to 18), a `link` (a tie between two places, `from` and `to`), a `move` (a `path` through two or
-more places) or a `line` (on the globe only, see "Deep time" below). Links and moves join places of the same chapter, and a scene that shows one also
+more places) or a `line` (a rift on the globe, see "Deep time" below; a river; or a railway, see
+"Railways and ports" below). Links and moves join places of the same chapter, and a scene that shows one also
 shows its places. Every feature records separately:
 
 | Field | Meaning |
@@ -46,7 +47,8 @@ A point's `form` says what kind of power sat there:
 | `emirate` | a ring, tied to the caliphate by `allegiance` links |
 | `communities` | a dotted field with a soft edge (`reach_km` and `reach_note`), for self-governing towns and villages with no ruler over them |
 
-Three forms are about the land, not power: `lake`, a lake of the time, drawn as a blue dot with a halo
+A `port` form marks a port with an anchor (one symbol for every port); its optional `seaward`
+`[lat, lon]` sends steamers out from it to the sea while the scene plays. Three forms are about the land, not power: `lake`, a lake of the time, drawn as a blue dot with a halo
 of `reach_km`; `volcano`, one small cone with a glowing vent for every volcano or volcanic field (a
 symbol, never a drawing of the mountain); and `landmass`, a continent's name on the globe (see "Deep
 time" below).
@@ -119,15 +121,16 @@ match no plate, or if a line or continent is shown on the map instead of the glo
 
 **Volcanoes and the Sahara.** After the coal swamps, "Fire from below" (34 seconds) follows
 Africa's volcanoes in date order, each beat with its own date: the Cameroon line (Biu Plateau and
-Mount Cameroon; its start is given as about 66 or about 52 million years ago, so that beat says
+Mount Cameroon; its start is given as about 66 or about 30 million years ago, so that beat says
 "sources differ"), the Ethiopian flood basalts about 31 to 29 million years ago, Kilimanjaro from
 about 2.5 million years ago, and the eruptions of 1999 to 2021. Mount Cameroon and the Ethiopian
 basalts erupt; Nyiragongo smokes but does not, because its lava killed people in Goma and the
 scene tells that with Zomo still. "The Sahara is born" shows the oldest known desert dunes, about
 7 million years old, in the northern Chad Basin (`desert-born`), and the green Sahara now greens
 northwards and dries from the north, with Lake Mega-Chad swelling and shrinking. The sources for
-these scenes could be seen only through search excerpts in the session that added them, and each
-says so and asks for a re-check on the page.
+these scenes were first seen only through search excerpts; most were opened and re-checked on
+1 November 2026. Hofmann et al. (1997) and the USGS note still refused automated requests, so they
+still ask for a re-check.
 
 `previews/fire-and-sand-video.html` is a 98-second proof of these scenes (1920×1080, 30 fps,
 silent), made with:
@@ -715,3 +718,33 @@ Still to check before this is published:
   history (Last 1967; Smaldone 1977).
 - Human consequences of the jihad and the conquest, as sourced ranges on their own cards.
 - A review by a historian of the caliphate, and by Hausa and Fulfulde speakers for names and spellings.
+
+## Colonial rule, railways and ports
+
+`chapters/colonial.json` follows the Sokoto Caliphate, 1861 to 1960, in six scenes told in dated
+beats: Lagos annexed in 1861, the Oil Rivers Protectorate and the Royal Niger Company, and the
+protectorates of 1900; conquest and resistance (Benin 1897, the Aro war of 1901 to 1902, Satiru
+1906; `sensitive`, `calm`, Zomo still, no sparks); the railway from Lagos (1896 to 1901), the
+Baro-Kano line (1907 to 1911) and the meeting at Minna (1911, one railway from 1912), with the Jebba
+crossing dated 1911 or 1916 ("sources differ"); the Enugu coal of 1909, Port Harcourt (1912, named
+1913) and the eastern line (1913 to 1916), tied back to the deep-time coal swamps; one colony
+(Zungeru, the 1906 merger, 1914, Kaduna from 1917); and the network (Lagos harbour 1913, Apapa
+1919, Kafanchan 1927, Nguru 1930, Makurdi bridge 1932, Maiduguri 1958 to 1964), ending on
+independence on 1 October 1960 at Lagos. All its sources were opened on 1 November 2026.
+
+`previews/iron-roads-video.html` is a 146-second proof of the railway and port scenes (1920×1080,
+30 fps, silent), made with `node capture_history.cjs <built-history> <local-dependencies>
+<iron-roads.mp4> 30 8 history/cuts/iron-roads.json` and `python previews/build_storycraft_video.py
+<iron-roads.mp4> iron-roads-video.html`.
+
+### Railways and ports
+
+- A `line` with `"type": "railway"` has a `path` of `[lat, lon]` through the towns its sources name
+  and `opened`: `from` and `to` (whole years) and a `label`. It is drawn as a schematic line (a dark
+  bed, a rail and cross-ties), never as the route of the track. A scene's `appear` can time a railway
+  like a place: it draws itself from that moment, and once it is complete a train (a locomotive with
+  its lamp lit, two wagons and steam) runs to and fro along it. Dimmed railways get no train.
+- A port with `seaward` sends two steamers at a time out to sea, with smoke and a widening wake.
+- Trains and steamers are decoration: they show a line or port is open, not a timetable or a count
+  of shipping. Like every effect, they are not drawn in a scene marked `sensitive`.
+

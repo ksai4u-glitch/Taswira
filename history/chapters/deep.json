@@ -204,7 +204,7 @@
       "kind": "point",
       "form": "volcano",
       "name": "Mount Cameroon",
-      "coordinates": [4.203, 9.17],
+      "coordinates": [4.217, 9.173],
       "what": "The most active volcano of the Cameroon line, close to the sea. It erupted from its flanks in 1999 and 2000, when the lava came within about 200 m of the sea, and briefly in 2012.",
       "evidence": "Geology and eruption records (secondary sources)",
       "location": "The summit, from a gazetteer.",
@@ -230,7 +230,7 @@
       "kind": "point",
       "form": "volcano",
       "name": "Nyiragongo",
-      "coordinates": [-1.52, 29.25],
+      "coordinates": [-1.522, 29.249],
       "what": "A volcano above the city of Goma, in the western branch of the East African Rift. Its lava is unusually runny: in 1977 it ran down the upper slopes at up to 60 km/h. In 2002 and 2021 lava reached Goma. Sources give different numbers of people killed and displaced, so none are given here.",
       "evidence": "Eruption records (secondary sources)",
       "location": "The summit, from a gazetteer.",
@@ -327,7 +327,7 @@
         {"at": 0, "text": "Africa's volcanoes rise where its plates are stretching apart, or where hot rock wells up from deep inside the Earth.", "pose": 1, "focus": [220, 150, 1],
          "when": {"from": -66000000, "to": 2021, "label": "about 66 million years ago to today", "basis": "geology"}},
         {"at": 3.6, "text": "In the west, a line of volcanoes runs from the Gulf of Guinea inland. Nigeria's Biu Plateau is linked to it, and Mount Cameroon is its most active volcano.", "pose": 5, "focus": [220, 150, 1],
-         "when": {"from": -66000000, "to": 2021, "label": "from about 66 or 52 million years ago: sources differ", "basis": "differ"}},
+         "when": {"from": -66000000, "to": 2021, "label": "from about 66 or about 30 million years ago: sources differ", "basis": "differ"}},
         {"at": 11.0, "text": "About 30 million years ago, floods of lava poured out in Ethiopia, most of them within about a million years, and built the Ethiopian highlands.", "pose": 3, "focus": [220, 150, 1],
          "when": {"from": -31000000, "to": -29000000, "label": "about 31 to 29 million years ago", "basis": "geology"}},
         {"at": 17.0, "text": "In the East African Rift, Kilimanjaro began to grow about two and a half million years ago.", "pose": 5, "focus": [220, 150, 1],
@@ -336,7 +336,7 @@
          "when": {"from": 1999, "to": 2021, "label": "1999 to 2021", "basis": "record"}}
       ],
       "text": "Africa's volcanoes rise where its plates are stretching apart, or where hot rock wells up from deep inside the Earth. In the west, a line of volcanoes runs from the Gulf of Guinea inland. Nigeria's Biu Plateau is linked to it, and Mount Cameroon is its most active volcano. About 30 million years ago, floods of lava poured out in Ethiopia, most of them within about a million years, and built the Ethiopian highlands. In the East African Rift, Kilimanjaro began to grow about two and a half million years ago. In recent decades Mount Cameroon erupted in 1999, 2000 and 2012, and the runny lava of Nyiragongo reached the city of Goma in 2002 and 2021, killing people and forcing many to flee.",
-      "disputed": "Sources give different starts for the volcanoes of the Cameroon line, from about 66 to about 52 million years ago, and different dates for Kilimanjaro's first activity. Death tolls for Nyiragongo's eruptions also differ, so none are given.",
+      "disputed": "Sources differ on when the Cameroon line began: a plume under the Oku area since about 66 million years ago, or the line's development from around 30 million years ago. Death tolls for Nyiragongo's eruptions also differ, so none are given.",
       "sources": ["hofmann-1997", "wiki-cameroon-line", "wiki-biu-plateau", "wiki-mount-cameroon", "nonnotte-2008", "wiki-nyiragongo", "usgs-nyiragongo"]
     },
     {

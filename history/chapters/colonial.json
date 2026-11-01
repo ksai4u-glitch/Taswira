@@ -1,0 +1,1165 @@
+{
+  "id": "colonial",
+  "title": "Colonial Nigeria: rule, railways and ports",
+  "period": "1861 to 1960",
+  "intro": "After the Sokoto Caliphate fell, all of today's Nigeria came under British rule. This chapter follows how: Lagos annexed in 1861, a company ruling the Niger, conquest and the resistance to it, and the railways and ports built to carry coal and farm produce to the sea, until independence in 1960. Railways are drawn as schematic lines between the towns their sources name, when each part opened, not as the route of the track.",
+  "method": "Each scene is told in dated beats; the year shows each beat's own date. Hatched discs are claims on paper and solid ones are places held, as in the map key. The trains, steamers and moving water are decoration: they show that a line or port is open, not a timetable or a count of shipping. The scenes about conquest stay calm, with no sparks.",
+  "features": [
+    {
+      "id": "lagos",
+      "kind": "point",
+      "name": "Lagos",
+      "form": "port",
+      "coordinates": [6.456, 3.394],
+      "seaward": [6.18, 3.42],
+      "what": "Annexed as a British colony in August 1861; from 1906 the seat of government, and the capital at independence in 1960. Its harbour opened to ocean-going ships in 1913, and the wharf at Apapa became the end of the western railway from 1919.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-lagos-colony",
+        "wiki-apapa",
+        "wiki-federation-nigeria",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "calabar",
+      "kind": "point",
+      "name": "Calabar",
+      "form": "port",
+      "coordinates": [4.977, 8.338],
+      "seaward": [4.58, 8.44],
+      "what": "A seaport since the 16th century, for palm oil and, during the Atlantic slave trade, enslaved people. Headquarters of the British administration of the Niger Delta until 1906.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-calabar"
+      ]
+    },
+    {
+      "id": "lokoja",
+      "kind": "point",
+      "name": "Lokoja",
+      "coordinates": [7.802, 6.744],
+      "what": "Where the Niger and the Benue meet. Above it, along both rivers, the Royal Niger Company had access but no effective control.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "countrystudies-british-control",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "benin-city",
+      "kind": "point",
+      "name": "Benin City",
+      "coordinates": [6.333, 5.622],
+      "what": "Capital of the Kingdom of Benin, invaded by a British force in February 1897.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-benin-1897",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "arochukwu",
+      "kind": "point",
+      "name": "Arochukwu",
+      "coordinates": [5.383, 7.917],
+      "what": "Centre of the Aro Confederacy, invaded by British forces in 1901 to 1902.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-anglo-aro-war",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "satiru",
+      "kind": "point",
+      "name": "Satiru, outside Sokoto",
+      "coordinates": [13.062, 5.234],
+      "short": "Satiru",
+      "uncertainty_km": 30,
+      "what": "A village outside Sokoto where a Mahdist rising broke out in 1906.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "The village is not placed: it is drawn at Sokoto inside a ring, since the source says only that it lay outside the city.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-attahiru-ii-2026",
+        "wiki-places-key"
+      ]
+    },
+    {
+      "id": "ibadan",
+      "kind": "point",
+      "name": "Ibadan",
+      "coordinates": [7.396, 3.917],
+      "what": "The first end of the railway from Lagos, reached in 1901.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-rail-nigeria",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "jebba",
+      "kind": "point",
+      "name": "Jebba",
+      "coordinates": [9.154, 4.812],
+      "what": "Where the western railway crossed the Niger: by ferry from 1911 while the bridges were built.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "disputed",
+      "disputed": "The railway overview has the line at Minna, beyond Jebba, by 1911; the Jebba article says the line reached Jebba in 1916.",
+      "sources": [
+        "wiki-jebba"
+      ]
+    },
+    {
+      "id": "minna",
+      "kind": "point",
+      "name": "Minna",
+      "coordinates": [9.614, 6.557],
+      "what": "Where the line from Lagos met the Baro-Kano railway in 1911.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-rail-nigeria",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "baro",
+      "kind": "point",
+      "name": "Baro",
+      "form": "port",
+      "coordinates": [8.583, 6.417],
+      "what": "A river port on the Niger, at the limit of navigation, where the Baro-Kano railway began.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-baro"
+      ]
+    },
+    {
+      "id": "kaduna",
+      "kind": "point",
+      "name": "Kaduna",
+      "coordinates": [10.523, 7.44],
+      "what": "On the line to Kano; capital of the north from 1917, and from 1927 the junction with the eastern railway.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-kaduna",
+        "wiki-rail-nigeria"
+      ]
+    },
+    {
+      "id": "kano",
+      "kind": "point",
+      "name": "Kano",
+      "coordinates": [12.0, 8.517],
+      "what": "The northern end of the Baro-Kano railway, reached in 1911.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-rail-nigeria",
+        "wiki-places-key"
+      ]
+    },
+    {
+      "id": "enugu",
+      "kind": "point",
+      "name": "Enugu coal",
+      "coordinates": [6.453, 7.511],
+      "short": "Enugu",
+      "what": "Coal found in 1909 under the village of Enugwu Ngwo in the Udi area, confirmed as worth mining by 1913. It formed in the swamps of about 70 million years ago told in the deep-time chapter.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-enugu",
+        "wiki-port-harcourt"
+      ]
+    },
+    {
+      "id": "port-harcourt",
+      "kind": "point",
+      "name": "Port Harcourt",
+      "form": "port",
+      "coordinates": [4.824, 7.034],
+      "seaward": [4.33, 7.12],
+      "what": "Founded in 1912 to export the Enugu coal, on land the people of Diobu were made to cede, and named in August 1913.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-port-harcourt"
+      ]
+    },
+    {
+      "id": "zungeru",
+      "kind": "point",
+      "name": "Zungeru",
+      "coordinates": [9.8, 6.15],
+      "what": "Capital of the Northern Nigeria protectorate from 1902 until 1916.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-zungeru"
+      ]
+    },
+    {
+      "id": "kafanchan",
+      "kind": "point",
+      "name": "Kafanchan",
+      "coordinates": [9.583, 8.293],
+      "what": "A railway junction; its station was built in 1927, when the eastern line was carried north to Kaduna.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-kafanchan",
+        "wiki-rail-nigeria"
+      ]
+    },
+    {
+      "id": "makurdi",
+      "kind": "point",
+      "name": "Makurdi",
+      "coordinates": [7.733, 8.5],
+      "what": "Where the eastern railway crosses the Benue; the railway bridge was built in 1932.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-makurdi"
+      ]
+    },
+    {
+      "id": "nguru",
+      "kind": "point",
+      "name": "Nguru",
+      "coordinates": [12.879, 10.453],
+      "what": "The north-eastern end of the line from Kano, reached in 1930.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-rail-nigeria",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "maiduguri",
+      "kind": "point",
+      "name": "Maiduguri",
+      "coordinates": [11.837, 13.154],
+      "what": "The end of the eastern railway, reached between 1958 and 1964.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-maiduguri",
+        "wiki-rail-nigeria"
+      ]
+    },
+    {
+      "id": "rail-lagos-ibadan",
+      "kind": "line",
+      "type": "railway",
+      "name": "Lagos to Ibadan",
+      "path": [
+        [6.456, 3.394],
+        [7.396, 3.917]
+      ],
+      "opened": {
+        "from": 1896,
+        "to": 1901,
+        "label": "built from 1896, running from 1901"
+      },
+      "what": "The first railway: building began in March 1896 and trains ran from March 1901.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "A schematic line between the towns the sources name, not the route of the track.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-rail-nigeria"
+      ]
+    },
+    {
+      "id": "rail-ibadan-minna",
+      "kind": "line",
+      "type": "railway",
+      "name": "Ibadan to Minna, across the Niger at Jebba",
+      "path": [
+        [7.396, 3.917],
+        [9.154, 4.812],
+        [9.614, 6.557]
+      ],
+      "opened": {
+        "from": 1911,
+        "to": 1916,
+        "label": "to Minna in 1911; the Jebba crossing dated 1911 or 1916"
+      },
+      "what": "The western line carried north across the Niger at Jebba to meet the Baro-Kano railway at Minna.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "A schematic line between the towns the sources name, not the route of the track.",
+      "status": "disputed",
+      "disputed": "The overview has the line at Minna by 1911; the Jebba article says the line reached Jebba in 1916, with a ferry from 1911.",
+      "sources": [
+        "wiki-rail-nigeria",
+        "wiki-jebba"
+      ]
+    },
+    {
+      "id": "rail-baro-kano",
+      "kind": "line",
+      "type": "railway",
+      "name": "Baro to Kano",
+      "path": [
+        [8.583, 6.417],
+        [9.614, 6.557],
+        [10.523, 7.44],
+        [12.0, 8.517]
+      ],
+      "opened": {
+        "from": 1907,
+        "to": 1911,
+        "label": "built 1907 to 1911"
+      },
+      "what": "Built by the Northern Nigeria protectorate from the river port of Baro, through Minna and Kaduna, to Kano.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "A schematic line between the towns the sources name, not the route of the track.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-baro",
+        "wiki-rail-nigeria"
+      ]
+    },
+    {
+      "id": "rail-eastern",
+      "kind": "line",
+      "type": "railway",
+      "name": "Port Harcourt to Enugu",
+      "path": [
+        [4.824, 7.034],
+        [6.453, 7.511]
+      ],
+      "opened": {
+        "from": 1913,
+        "to": 1916,
+        "label": "built 1913 to 1916"
+      },
+      "what": "The eastern railway, built to carry the Enugu coal to the new port.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "A schematic line between the towns the sources name, not the route of the track.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-rail-nigeria",
+        "wiki-port-harcourt"
+      ]
+    },
+    {
+      "id": "rail-eastern-north",
+      "kind": "line",
+      "type": "railway",
+      "name": "Enugu to Kaduna, through Makurdi and Kafanchan",
+      "path": [
+        [6.453, 7.511],
+        [7.733, 8.5],
+        [9.583, 8.293],
+        [10.523, 7.44]
+      ],
+      "opened": {
+        "from": 1927,
+        "to": 1932,
+        "label": "to Kaduna in 1927; the Makurdi bridge in 1932"
+      },
+      "what": "The eastern line carried north to join the western railway at Kaduna.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "A schematic line between the towns the sources name, not the route of the track.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-rail-nigeria",
+        "wiki-kafanchan",
+        "wiki-makurdi"
+      ]
+    },
+    {
+      "id": "rail-nguru",
+      "kind": "line",
+      "type": "railway",
+      "name": "Kano to Nguru",
+      "path": [
+        [12.0, 8.517],
+        [12.879, 10.453]
+      ],
+      "opened": {
+        "from": 1930,
+        "to": 1930,
+        "label": "reached Nguru in 1930"
+      },
+      "what": "The north-eastern branch from Kano.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "A schematic line between the towns the sources name, not the route of the track.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-rail-nigeria"
+      ]
+    },
+    {
+      "id": "rail-maiduguri",
+      "kind": "line",
+      "type": "railway",
+      "name": "Kafanchan to Maiduguri, through Bauchi",
+      "path": [
+        [9.583, 8.293],
+        [10.307, 9.813],
+        [11.837, 13.154]
+      ],
+      "opened": {
+        "from": 1958,
+        "to": 1964,
+        "label": "built 1958 to 1964"
+      },
+      "what": "The last extension of the eastern line, through Kuru and Bauchi to Maiduguri.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "A schematic line between the towns the sources name, not the route of the track.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-maiduguri",
+        "wiki-rail-nigeria"
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "lagos-1861",
+      "title": "A colony at Lagos, a company on the Niger",
+      "when": {
+        "from": 1861,
+        "to": 1900,
+        "label": "1861 to 1900"
+      },
+      "camera": {
+        "center": [6.9, 5.9],
+        "zoom": 6.4
+      },
+      "duration": 30,
+      "show": [
+        "lagos",
+        "calabar",
+        "lokoja"
+      ],
+      "appear": {
+        "lagos": 1.0,
+        "calabar": 7.4,
+        "lokoja": 14.4
+      },
+      "control": {
+        "lagos": "held",
+        "calabar": "claimed",
+        "lokoja": "claimed"
+      },
+      "beats": [
+        {
+          "at": 0,
+          "text": "In August 1861 a British naval force entered Lagos and annexed it as a colony.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1861,
+            "to": 1861,
+            "label": "August 1861",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 7,
+          "text": "In 1884 Britain proclaimed a protectorate along the Oil Rivers, run from Calabar, and in 1885 the Berlin Conference recognised its claim.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1884,
+            "to": 1885,
+            "label": "1884 and 1885",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 14,
+          "text": "From 1886 the Royal Niger Company ruled much of the land along the Niger and the Benue above Lokoja, under a charter.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1886,
+            "to": 1899,
+            "label": "1886 to 1899",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 21,
+          "text": "On 1 January 1900 it handed its territories to the British government, which made them the protectorates of Northern and Southern Nigeria.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1900,
+            "to": 1900,
+            "label": "1 January 1900",
+            "basis": "record"
+          }
+        }
+      ],
+      "sources": [
+        "wiki-lagos-colony",
+        "wiki-colonial-nigeria",
+        "countrystudies-british-control",
+        "wiki-rnc",
+        "wiki-calabar"
+      ],
+      "text": "In August 1861 a British naval force entered Lagos and annexed it as a colony. In 1884 Britain proclaimed a protectorate along the Oil Rivers, run from Calabar, and in 1885 the Berlin Conference recognised its claim. From 1886 the Royal Niger Company ruled much of the land along the Niger and the Benue above Lokoja, under a charter. On 1 January 1900 it handed its territories to the British government, which made them the protectorates of Northern and Southern Nigeria."
+    },
+    {
+      "id": "resistance",
+      "title": "Conquest and resistance",
+      "sensitive": true,
+      "mood": "calm",
+      "when": {
+        "from": 1897,
+        "to": 1906,
+        "label": "1897 to 1906"
+      },
+      "camera": {
+        "center": [6.3, 6.8],
+        "zoom": 6.6
+      },
+      "camera_path": [
+        {
+          "at": 21.6,
+          "center": [12.4, 5.6],
+          "zoom": 6.6,
+          "dur": 3.0
+        }
+      ],
+      "duration": 32,
+      "show": [
+        "benin-city",
+        "arochukwu",
+        "satiru"
+      ],
+      "appear": {
+        "benin-city": 3.6,
+        "arochukwu": 14.6,
+        "satiru": 22.6
+      },
+      "beats": [
+        {
+          "at": 0,
+          "text": "British rule was imposed by force, and it was resisted.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1897,
+            "to": 1906,
+            "label": "1897 to 1906",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 3.4,
+          "text": "On 9 February 1897 a British force invaded the Kingdom of Benin. Benin City was looted and burned, the Benin Bronzes were carried off, and the oba, Ovonramwen, was sent into exile.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1897,
+            "to": 1897,
+            "label": "February 1897",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 14.4,
+          "text": "In 1901 and 1902 British forces fought the Aro Confederacy and invaded Arochukwu.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1901,
+            "to": 1902,
+            "label": "1901 to 1902",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 22.4,
+          "text": "In 1906 a Mahdist rising broke out at Satiru, a village outside Sokoto.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1906,
+            "to": 1906,
+            "label": "1906",
+            "basis": "record"
+          }
+        }
+      ],
+      "sources": [
+        "wiki-benin-1897",
+        "wiki-anglo-aro-war",
+        "wiki-attahiru-ii-2026",
+        "countrystudies-british-control"
+      ],
+      "text": "British rule was imposed by force, and it was resisted. On 9 February 1897 a British force invaded the Kingdom of Benin. Benin City was looted and burned, the Benin Bronzes were carried off, and the oba, Ovonramwen, was sent into exile. In 1901 and 1902 British forces fought the Aro Confederacy and invaded Arochukwu. In 1906 a Mahdist rising broke out at Satiru, a village outside Sokoto."
+    },
+    {
+      "id": "rail-north",
+      "title": "Iron roads to the north",
+      "when": {
+        "from": 1896,
+        "to": 1916,
+        "label": "1896 to 1916"
+      },
+      "camera": {
+        "center": [9.3, 5.9],
+        "zoom": 6.0
+      },
+      "duration": 36,
+      "show": [
+        "lagos",
+        "ibadan",
+        "rail-lagos-ibadan",
+        "baro",
+        "kaduna",
+        "kano",
+        "rail-baro-kano",
+        "minna",
+        "rail-ibadan-minna",
+        "jebba"
+      ],
+      "appear": {
+        "lagos": 0.8,
+        "ibadan": 2.4,
+        "rail-lagos-ibadan": 2.8,
+        "baro": 8.8,
+        "kaduna": 10.0,
+        "kano": 10.6,
+        "rail-baro-kano": 9.4,
+        "minna": 16.6,
+        "rail-ibadan-minna": 17.0,
+        "jebba": 23.4
+      },
+      "camera_path": [
+        {
+          "at": 8.0,
+          "center": [10.3, 7.3],
+          "zoom": 6.3,
+          "dur": 3.0
+        },
+        {
+          "at": 16.0,
+          "center": [9.0, 5.6],
+          "zoom": 6.3,
+          "dur": 3.0
+        },
+        {
+          "at": 22.6,
+          "center": [9.15, 4.9],
+          "zoom": 7.4,
+          "dur": 2.6
+        },
+        {
+          "at": 30.0,
+          "center": [9.3, 5.9],
+          "zoom": 6.0,
+          "dur": 4.0
+        }
+      ],
+      "beats": [
+        {
+          "at": 0,
+          "text": "The railway began at Lagos. Building started in March 1896, and trains ran to Ibadan from March 1901.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1896,
+            "to": 1901,
+            "label": "1896 to 1901",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 8.4,
+          "text": "In the north, the protectorate built its own line from Baro, a port on the Niger, to Kano, between 1907 and 1911.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1907,
+            "to": 1911,
+            "label": "1907 to 1911",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 16.4,
+          "text": "In 1911 the line from Lagos reached Minna and met it, and in 1912 the two became one railway.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1911,
+            "to": 1912,
+            "label": "1911 and 1912",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 23,
+          "text": "Where it crossed the Niger at Jebba, a ferry carried the trains while the bridges were built; the line is said to have reached Jebba in 1916.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1911,
+            "to": 1916,
+            "label": "1911 or 1916 · sources differ",
+            "basis": "differ"
+          }
+        }
+      ],
+      "sources": [
+        "wiki-rail-nigeria",
+        "wiki-baro",
+        "wiki-jebba"
+      ],
+      "text": "The railway began at Lagos. Building started in March 1896, and trains ran to Ibadan from March 1901. In the north, the protectorate built its own line from Baro, a port on the Niger, to Kano, between 1907 and 1911. In 1911 the line from Lagos reached Minna and met it, and in 1912 the two became one railway. Where it crossed the Niger at Jebba, a ferry carried the trains while the bridges were built; the line is said to have reached Jebba in 1916."
+    },
+    {
+      "id": "coal-port",
+      "title": "Coal, and a port to ship it",
+      "when": {
+        "from": 1909,
+        "to": 1916,
+        "label": "1909 to 1916"
+      },
+      "camera": {
+        "center": [5.7, 7.3],
+        "zoom": 7.2
+      },
+      "duration": 30,
+      "show": [
+        "enugu",
+        "port-harcourt",
+        "rail-eastern"
+      ],
+      "appear": {
+        "enugu": 1.0,
+        "port-harcourt": 8.4,
+        "rail-eastern": 16.4
+      },
+      "beats": [
+        {
+          "at": 0,
+          "text": "In 1909 the geologist Albert Kitson found coal under the village of Enugwu Ngwo, in the Udi area: coal laid down in swamps about 70 million years before.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1909,
+            "to": 1909,
+            "label": "1909",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 8,
+          "text": "To ship it, building began in 1912 on a port, on land the people of Diobu were made to cede; in August 1913 Lugard named it Port Harcourt.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1912,
+            "to": 1913,
+            "label": "1912 to 1913",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 16,
+          "text": "The eastern railway was built from Port Harcourt to the coal at Enugu between 1913 and 1916.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1913,
+            "to": 1916,
+            "label": "1913 to 1916",
+            "basis": "record"
+          }
+        }
+      ],
+      "sources": [
+        "wiki-enugu",
+        "wiki-port-harcourt",
+        "wiki-rail-nigeria"
+      ],
+      "text": "In 1909 the geologist Albert Kitson found coal under the village of Enugwu Ngwo, in the Udi area: coal laid down in swamps about 70 million years before. To ship it, building began in 1912 on a port, on land the people of Diobu were made to cede; in August 1913 Lugard named it Port Harcourt. The eastern railway was built from Port Harcourt to the coal at Enugu between 1913 and 1916."
+    },
+    {
+      "id": "one-colony",
+      "title": "One colony",
+      "when": {
+        "from": 1902,
+        "to": 1917,
+        "label": "1902 to 1917"
+      },
+      "camera": {
+        "center": [7.9, 6.3],
+        "zoom": 6.0
+      },
+      "duration": 32,
+      "show": [
+        "zungeru",
+        "calabar",
+        "lagos",
+        "kaduna"
+      ],
+      "appear": {
+        "zungeru": 1.0,
+        "calabar": 7.0,
+        "lagos": 7.6,
+        "kaduna": 23.4
+      },
+      "fade": {
+        "calabar": 9.6,
+        "zungeru": 24.0
+      },
+      "effects": [
+        {
+          "type": "arc",
+          "from": [9.8, 6.15],
+          "to": [6.456, 3.394],
+          "from_label": "Northern Nigeria",
+          "to_label": "One colony, 1914",
+          "at": 0.5
+        }
+      ],
+      "beats": [
+        {
+          "at": 0,
+          "text": "Northern Nigeria was ruled from Zungeru, from 1902 until 1916.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1902,
+            "to": 1916,
+            "label": "1902 to 1916",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 7,
+          "text": "In 1906 Lagos Colony was merged into Southern Nigeria, and the seat of government moved from Calabar to Lagos.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1906,
+            "to": 1906,
+            "label": "1906",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 15,
+          "text": "Lugard returned in 1912 to merge the two protectorates, and in 1914 they were combined as the Colony and Protectorate of Nigeria.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1912,
+            "to": 1914,
+            "label": "1912 to 1914",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 23,
+          "text": "The north's capital moved from Zungeru to Kaduna, its capital from 1917.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1917,
+            "to": 1917,
+            "label": "1917",
+            "basis": "record"
+          }
+        }
+      ],
+      "sources": [
+        "wiki-zungeru",
+        "wiki-colonial-nigeria",
+        "wiki-calabar",
+        "countrystudies-unification",
+        "wiki-kaduna"
+      ],
+      "text": "Northern Nigeria was ruled from Zungeru, from 1902 until 1916. In 1906 Lagos Colony was merged into Southern Nigeria, and the seat of government moved from Calabar to Lagos. Lugard returned in 1912 to merge the two protectorates, and in 1914 they were combined as the Colony and Protectorate of Nigeria. The north's capital moved from Zungeru to Kaduna, its capital from 1917."
+    },
+    {
+      "id": "network",
+      "title": "Harbours, junctions and independence",
+      "when": {
+        "from": 1913,
+        "to": 1964,
+        "label": "1913 to 1964"
+      },
+      "camera": {
+        "center": [8.6, 8.4],
+        "zoom": 5.8
+      },
+      "duration": 38,
+      "show": [
+        "lagos",
+        "port-harcourt",
+        "kano",
+        "enugu",
+        "kaduna",
+        "makurdi",
+        "kafanchan",
+        "nguru",
+        "maiduguri",
+        "rail-lagos-ibadan",
+        "rail-ibadan-minna",
+        "rail-baro-kano",
+        "rail-eastern",
+        "rail-eastern-north",
+        "rail-nguru",
+        "rail-maiduguri"
+      ],
+      "appear": {
+        "lagos": 0.6,
+        "port-harcourt": 0.8,
+        "kano": 1.0,
+        "enugu": 1.2,
+        "kaduna": 1.4,
+        "rail-lagos-ibadan": 0.6,
+        "rail-ibadan-minna": 0.8,
+        "rail-baro-kano": 1.0,
+        "rail-eastern": 1.2,
+        "makurdi": 8.6,
+        "kafanchan": 9.0,
+        "rail-eastern-north": 8.8,
+        "nguru": 16.6,
+        "rail-nguru": 16.8,
+        "maiduguri": 23.0,
+        "rail-maiduguri": 23.2
+      },
+      "camera_path": [
+        {
+          "at": 29.0,
+          "center": [6.9, 4.6],
+          "zoom": 6.8,
+          "dur": 3.0
+        }
+      ],
+      "beats": [
+        {
+          "at": 0,
+          "text": "In 1913 dredging and two stone moles opened Lagos harbour to ocean-going ships, and from 1919 a wharf at Apapa was the end of the western railway.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1913,
+            "to": 1919,
+            "label": "1913 to 1919",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 8.4,
+          "text": "In 1927 the eastern line was carried north through Kafanchan to Kaduna, joining the two railways, and in 1932 a railway bridge crossed the Benue at Makurdi.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1927,
+            "to": 1932,
+            "label": "1927 to 1932",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 16.4,
+          "text": "In the north-east the line from Kano reached Nguru in 1930.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1930,
+            "to": 1930,
+            "label": "1930",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 22.6,
+          "text": "The eastern line was carried on through Bauchi to Maiduguri between 1958 and 1964.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1958,
+            "to": 1964,
+            "label": "1958 to 1964",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 29.6,
+          "text": "On 1 October 1960 Nigeria became independent, with its capital at Lagos.",
+          "pose": 1,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1960,
+            "to": 1960,
+            "label": "1 October 1960",
+            "basis": "record"
+          }
+        }
+      ],
+      "text": "In 1913 dredging and two stone moles opened Lagos harbour to ocean-going ships, and from 1919 a wharf at Apapa was the end of the western railway. In 1927 the eastern line was carried north through Kafanchan to Kaduna, joining the two railways, and in 1932 a railway bridge crossed the Benue at Makurdi. In the north-east the line from Kano reached Nguru in 1930. The eastern line was carried on through Bauchi to Maiduguri between 1958 and 1964. On 1 October 1960 Nigeria became independent, with its capital at Lagos.",
+      "sources": [
+        "wiki-apapa",
+        "wiki-rail-nigeria",
+        "wiki-kafanchan",
+        "wiki-makurdi",
+        "wiki-maiduguri",
+        "wiki-federation-nigeria",
+        "wiki-independence-day-ng"
+      ]
+    }
+  ]
+}
