@@ -754,3 +754,28 @@ independence on 1 October 1960 at Lagos. All its sources were opened on 1 Novemb
 - Trains and steamers are decoration: they show a line or port is open, not a timetable or a count
   of shipping. Like every effect, they are not drawn in a scene marked `sensitive`.
 
+
+## The Civil War: from independence to 1970
+
+`chapters/civil-war.json` follows the colonial chapter and comes before the states, 1960 to 1970, in
+five scenes told in dated beats and in the order the rules for war ask: context first (a federation
+of three regions in 1960, the Mid-Western Region in June 1963, the republic on 1 October 1963), then
+the crisis (the coups of 15 January and 29 July 1966, the massacres of Igbo people and other
+easterners in the north from May 1966, Aburi, twelve states and Biafra's declaration on 30 May 1967),
+the war (6 July 1967 to 19 May 1968: Nsukka, the Mid-West and Benin City, Enugu, Asaba, Calabar and
+Port Harcourt), the blockade and its human cost in its own scene, and the end and aftermath (Umuahia,
+Owerri and Uli taken, the surrender on 15 January 1970, the £20 policy, houses taken as abandoned
+property, continued military rule).
+
+- Every scene after the first is `sensitive` and `calm`, with Zomo still: no effects, eruptions,
+  warships, beacons or pop animations play over killing, hunger or flight.
+- Captured towns are dated points; Enugu goes faint once taken. No fronts, halos or filled
+  territory are drawn, and the Western and Eastern Regions are labels, not outlines.
+- Numbers of the dead and displaced are given only as the sources' ranges (8,000 to 30,000 in
+  1966; 500 to 800 at Asaba; 500,000 to 3 million, and separately 500,000 to one million, from
+  starvation; 45,000 to 100,000 soldiers; two to four and a half million displaced), the famine
+  estimates under a "differ" basis. The killings at Asaba have their own beat.
+- All its sources were opened on 1 November 2026.
+- The chapter's button reads "The Civil War"; with ten chapters the phone buttons are slightly
+  smaller (34 px tall, 13 px text) so the bar stays shorter than before.
+

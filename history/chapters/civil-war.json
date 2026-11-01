@@ -1,0 +1,750 @@
+{
+  "id": "civil-war",
+  "title": "The Civil War: from independence to 1970",
+  "period": "1960 to 1970",
+  "intro": "Nigeria became independent in 1960 as a federation of three regions. Six years later two coups and the killing of thousands of Igbo people in the north led the Eastern Region to declare itself the Republic of Biafra, and a civil war followed from 1967 to 1970. Most of those who died were civilians, many of them children, who starved under a blockade. This chapter is told plainly and calmly: no effects play over killing, hunger or flight.",
+  "method": "Each scene is told in dated beats; the year shows each beat's own date. Places are marked on the dates the sources give; a captured town is a point, never a filled area, and no front lines are drawn between dated places. Numbers of the dead and the displaced appear only as the ranges the sources give, never as counters, and estimates that disagree are given separately.",
+  "features": [
+    {
+      "id": "lagos",
+      "kind": "point",
+      "name": "Lagos",
+      "coordinates": [6.456, 3.394],
+      "what": "The federal capital at independence.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-federation-nigeria",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "kaduna",
+      "kind": "point",
+      "name": "Kaduna",
+      "coordinates": [10.523, 7.44],
+      "what": "Capital of the Northern Region, where the Northern Premier, Ahmadu Bello, was killed in January 1966.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-kaduna",
+        "wiki-coup-1966"
+      ]
+    },
+    {
+      "id": "west",
+      "kind": "point",
+      "name": "Western Region",
+      "coordinates": [7.396, 3.917],
+      "what": "One of the three regions at independence.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "A label placed at Ibadan. The region is not outlined, and its capital is not claimed here.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-first-republic",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "east",
+      "kind": "point",
+      "name": "Eastern Region",
+      "coordinates": [6.453, 7.511],
+      "what": "One of the three regions at independence; declared independent as Biafra on 30 May 1967.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "A label placed at Enugu. The region is not outlined.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-first-republic",
+        "wiki-nigerian-civil-war",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "benin-city",
+      "kind": "point",
+      "name": "Benin City",
+      "coordinates": [6.333, 5.622],
+      "what": "Capital of the Mid-Western Region, formed in June 1963; Biafran forces passed through it in August 1967, and federal forces retook it on 22 September.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-midwest-region",
+        "wiki-nigerian-civil-war",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "ibadan",
+      "kind": "point",
+      "name": "Ibadan",
+      "coordinates": [7.396, 3.917],
+      "what": "Where the head of state, Johnson Aguiyi-Ironsi, was killed in the counter-coup of July 1966.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-counter-coup-1966",
+        "wiki-places-colonial"
+      ]
+    },
+    {
+      "id": "enugu",
+      "kind": "point",
+      "name": "Enugu",
+      "coordinates": [6.453, 7.511],
+      "what": "Biafra's first capital, where independence was declared on 30 May 1967; taken by federal troops on 4 October 1967.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-nigerian-civil-war",
+        "wiki-umuahia",
+        "wiki-enugu"
+      ]
+    },
+    {
+      "id": "nsukka",
+      "kind": "point",
+      "name": "Nsukka",
+      "coordinates": [6.857, 7.396],
+      "what": "Taken by federal troops on 14 July 1967, in the first week of the war.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-nigerian-civil-war",
+        "wiki-places-civil-war"
+      ]
+    },
+    {
+      "id": "umuahia",
+      "kind": "point",
+      "name": "Umuahia",
+      "coordinates": [5.533, 7.483],
+      "what": "Biafra's capital after Enugu fell, until it was taken on 24 December 1969.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-umuahia",
+        "wiki-nigerian-civil-war"
+      ]
+    },
+    {
+      "id": "asaba",
+      "kind": "point",
+      "name": "Asaba",
+      "coordinates": [6.183, 6.733],
+      "what": "Where federal soldiers killed an estimated 500 to 800 civilians on 5 to 7 October 1967.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-asaba-massacre",
+        "wiki-places-civil-war"
+      ]
+    },
+    {
+      "id": "calabar",
+      "kind": "point",
+      "name": "Calabar",
+      "coordinates": [4.977, 8.338],
+      "what": "Invaded by federal forces from 17 October 1967.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-nigerian-civil-war",
+        "wiki-calabar"
+      ]
+    },
+    {
+      "id": "port-harcourt",
+      "kind": "point",
+      "name": "Port Harcourt",
+      "coordinates": [4.824, 7.034],
+      "what": "Captured on 19 May 1968, after which Biafra was surrounded; after the war, Igbo-owned houses here were taken as abandoned property.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-nigerian-civil-war",
+        "wiki-port-harcourt"
+      ]
+    },
+    {
+      "id": "uli",
+      "kind": "point",
+      "name": "Uli airstrip",
+      "coordinates": [5.783, 6.867],
+      "short": "Uli",
+      "what": "Codenamed Airstrip Annabelle, Biafra's only working airport, where relief flights landed at night from 1967 to 1969; taken on 11 January 1970.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "Placed at the town of Uli; the airstrip itself is not drawn.",
+      "status": "approx",
+      "disputed": null,
+      "sources": [
+        "wiki-biafran-airlift",
+        "wiki-nigerian-civil-war",
+        "wiki-places-civil-war"
+      ]
+    },
+    {
+      "id": "owerri",
+      "kind": "point",
+      "name": "Owerri",
+      "coordinates": [5.485, 7.035],
+      "what": "Biafra's last capital, retaken by Biafran forces in 1969 and taken by federal forces on 9 January 1970.",
+      "evidence": "Secondary sources (encyclopedia)",
+      "location": "From the place article's coordinates.",
+      "status": "firm",
+      "disputed": null,
+      "sources": [
+        "wiki-nigerian-civil-war",
+        "wiki-umuahia",
+        "wiki-places-civil-war"
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "republic",
+      "title": "A federation of regions",
+      "when": {
+        "from": 1960,
+        "to": 1963,
+        "label": "1960 to 1963"
+      },
+      "camera": {
+        "center": [7.7, 6.2],
+        "zoom": 6.3
+      },
+      "duration": 26,
+      "show": [
+        "lagos",
+        "kaduna",
+        "west",
+        "east",
+        "benin-city"
+      ],
+      "appear": {
+        "lagos": 1.0,
+        "kaduna": 2.2,
+        "west": 3.0,
+        "east": 3.8,
+        "benin-city": 9.4
+      },
+      "beats": [
+        {
+          "at": 0,
+          "text": "Nigeria became independent on 1 October 1960 as a federation of three regions, the North, the West and the East, each with its own government.",
+          "pose": 1,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1960,
+            "to": 1960,
+            "label": "1 October 1960",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 9,
+          "text": "In June 1963 a fourth, the Mid-Western Region, was formed from the West, with its capital at Benin City.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1963,
+            "to": 1963,
+            "label": "June 1963",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 16,
+          "text": "On 1 October 1963 Nigeria became a republic, with Nnamdi Azikiwe as its first president.",
+          "pose": 5,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1963,
+            "to": 1963,
+            "label": "1 October 1963",
+            "basis": "record"
+          }
+        }
+      ],
+      "text": "Nigeria became independent on 1 October 1960 as a federation of three regions, the North, the West and the East, each with its own government. In June 1963 a fourth, the Mid-Western Region, was formed from the West, with its capital at Benin City. On 1 October 1963 Nigeria became a republic, with Nnamdi Azikiwe as its first president.",
+      "sources": [
+        "wiki-first-republic",
+        "wiki-nigerian-civil-war",
+        "wiki-midwest-region",
+        "wiki-federation-nigeria"
+      ]
+    },
+    {
+      "id": "crisis",
+      "title": "Coups and killings",
+      "sensitive": true,
+      "mood": "calm",
+      "when": {
+        "from": 1966,
+        "to": 1967,
+        "label": "January 1966 to May 1967"
+      },
+      "camera": {
+        "center": [7.9, 6.0],
+        "zoom": 6.2
+      },
+      "duration": 38,
+      "show": [
+        "lagos",
+        "kaduna",
+        "ibadan",
+        "enugu"
+      ],
+      "appear": {
+        "kaduna": 1.0,
+        "lagos": 1.4,
+        "ibadan": 9.4,
+        "enugu": 27.4
+      },
+      "beats": [
+        {
+          "at": 0,
+          "text": "On 15 January 1966 soldiers led by Kaduna Nzeogwu and four others killed 22 people, among them the Prime Minister, Abubakar Tafawa Balewa, and the Northern Premier, Ahmadu Bello.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1966,
+            "to": 1966,
+            "label": "15 January 1966",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 9,
+          "text": "On the night of 29 July 1966 northern soldiers mutinied in a counter-coup; the head of state, Johnson Aguiyi-Ironsi, was killed at Ibadan, and Yakubu Gowon became head of state.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1966,
+            "to": 1966,
+            "label": "29 July 1966",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 18,
+          "text": "From May 1966, and most of all after 29 September, Igbo people and other easterners living in the north were massacred. Estimates of the dead range from 8,000 to 30,000, and more than a million fled to the east.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1966,
+            "to": 1966,
+            "label": "May to October 1966",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 27,
+          "text": "Federal and Eastern leaders met at Aburi, in Ghana, in January 1967. On 27 May Gowon divided Nigeria into twelve states, and on 30 May Ojukwu declared the Eastern Region independent as the Republic of Biafra.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1967,
+            "to": 1967,
+            "label": "January to 30 May 1967",
+            "basis": "record"
+          }
+        }
+      ],
+      "text": "On 15 January 1966 soldiers led by Kaduna Nzeogwu and four others killed 22 people, among them the Prime Minister, Abubakar Tafawa Balewa, and the Northern Premier, Ahmadu Bello. On the night of 29 July 1966 northern soldiers mutinied in a counter-coup; the head of state, Johnson Aguiyi-Ironsi, was killed at Ibadan, and Yakubu Gowon became head of state. From May 1966, and most of all after 29 September, Igbo people and other easterners living in the north were massacred. Estimates of the dead range from 8,000 to 30,000, and more than a million fled to the east. Federal and Eastern leaders met at Aburi, in Ghana, in January 1967. On 27 May Gowon divided Nigeria into twelve states, and on 30 May Ojukwu declared the Eastern Region independent as the Republic of Biafra.",
+      "sources": [
+        "wiki-coup-1966",
+        "wiki-counter-coup-1966",
+        "wiki-nigerian-civil-war",
+        "wiki-pogrom-1966",
+        "wiki-aburi"
+      ]
+    },
+    {
+      "id": "war",
+      "title": "The war: 1967 to 1968",
+      "sensitive": true,
+      "mood": "calm",
+      "when": {
+        "from": 1967,
+        "to": 1968,
+        "label": "6 July 1967 to 19 May 1968"
+      },
+      "camera": {
+        "center": [5.65, 6.95],
+        "zoom": 7.4
+      },
+      "duration": 42,
+      "show": [
+        "nsukka",
+        "benin-city",
+        "enugu",
+        "umuahia",
+        "asaba",
+        "calabar",
+        "port-harcourt"
+      ],
+      "appear": {
+        "nsukka": 1.0,
+        "benin-city": 8.4,
+        "enugu": 16.4,
+        "umuahia": 17.4,
+        "asaba": 24.4,
+        "calabar": 32.4,
+        "port-harcourt": 33.4
+      },
+      "fade": {
+        "enugu": 18.0
+      },
+      "beats": [
+        {
+          "at": 0,
+          "text": "The war began on 6 July 1967, when federal troops advanced into Biafra in two columns. Nsukka fell on 14 July.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1967,
+            "to": 1967,
+            "label": "6 to 14 July 1967",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 8,
+          "text": "In August Biafran forces crossed into the Mid-West, through Benin City, until they were stopped at Ore on 21 August. Federal forces retook Benin City on 22 September.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1967,
+            "to": 1967,
+            "label": "August to 22 September 1967",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 16,
+          "text": "On 4 October federal troops took Enugu, Biafra's capital, and Ojukwu moved his government to Umuahia.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1967,
+            "to": 1967,
+            "label": "4 October 1967",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 24,
+          "text": "At Asaba, on 5 to 7 October, federal soldiers killed civilians. Estimates of the dead range from 500 to 800.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1967,
+            "to": 1967,
+            "label": "5 to 7 October 1967",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 32,
+          "text": "Calabar was invaded from 17 October, and Port Harcourt was taken on 19 May 1968. Biafra was surrounded.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1967,
+            "to": 1968,
+            "label": "17 October 1967 to 19 May 1968",
+            "basis": "record"
+          }
+        }
+      ],
+      "text": "The war began on 6 July 1967, when federal troops advanced into Biafra in two columns. Nsukka fell on 14 July. In August Biafran forces crossed into the Mid-West, through Benin City, until they were stopped at Ore on 21 August. Federal forces retook Benin City on 22 September. On 4 October federal troops took Enugu, Biafra's capital, and Ojukwu moved his government to Umuahia. At Asaba, on 5 to 7 October, federal soldiers killed civilians. Estimates of the dead range from 500 to 800. Calabar was invaded from 17 October, and Port Harcourt was taken on 19 May 1968. Biafra was surrounded.",
+      "sources": [
+        "wiki-nigerian-civil-war",
+        "wiki-midwest-region",
+        "wiki-umuahia",
+        "wiki-asaba-massacre"
+      ]
+    },
+    {
+      "id": "blockade",
+      "title": "Blockade and hunger",
+      "sensitive": true,
+      "mood": "calm",
+      "when": {
+        "from": 1968,
+        "to": 1970,
+        "label": "1968 to 1970"
+      },
+      "camera": {
+        "center": [5.6, 7.2],
+        "zoom": 7.6
+      },
+      "duration": 36,
+      "show": [
+        "uli",
+        "umuahia",
+        "owerri"
+      ],
+      "appear": {
+        "umuahia": 1.0,
+        "owerri": 1.4,
+        "uli": 9.4
+      },
+      "beats": [
+        {
+          "at": 0,
+          "text": "Once Biafra was surrounded, a blockade was imposed as a deliberate policy, and its civilians starved.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1968,
+            "to": 1970,
+            "label": "1968 to 1970",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 9,
+          "text": "Relief flights, most of them run by Joint Church Aid, landed at night at Uli, Biafra's only working airstrip, some aircraft four times a night.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1968,
+            "to": 1969,
+            "label": "1968 to 1969",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 18,
+          "text": "How many died is not known. Estimates of the civilians who died of starvation range from 500,000 to 3 million, mostly women and children. Another estimate gives 500,000 to one million deaths from famine during the blockade.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1968,
+            "to": 1970,
+            "label": "1967 to 1970 · estimates differ",
+            "basis": "differ"
+          }
+        },
+        {
+          "at": 28,
+          "text": "Between 45,000 and 100,000 soldiers were killed, and between two and four and a half million people were driven from their homes.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1968,
+            "to": 1970,
+            "label": "1967 to 1970 · estimates",
+            "basis": "record"
+          }
+        }
+      ],
+      "text": "Once Biafra was surrounded, a blockade was imposed as a deliberate policy, and its civilians starved. Relief flights, most of them run by Joint Church Aid, landed at night at Uli, Biafra's only working airstrip, some aircraft four times a night. How many died is not known. Estimates of the civilians who died of starvation range from 500,000 to 3 million, mostly women and children. Another estimate gives 500,000 to one million deaths from famine during the blockade. Between 45,000 and 100,000 soldiers were killed, and between two and four and a half million people were driven from their homes.",
+      "sources": [
+        "wiki-nigerian-civil-war",
+        "wiki-biafran-airlift"
+      ]
+    },
+    {
+      "id": "end",
+      "title": "The end of the war, and after",
+      "sensitive": true,
+      "mood": "calm",
+      "when": {
+        "from": 1969,
+        "to": 1970,
+        "label": "24 December 1969 to 1970"
+      },
+      "camera": {
+        "center": [5.6, 7.2],
+        "zoom": 7.4
+      },
+      "duration": 34,
+      "show": [
+        "umuahia",
+        "owerri",
+        "uli",
+        "port-harcourt"
+      ],
+      "appear": {
+        "umuahia": 1.0,
+        "owerri": 3.4,
+        "uli": 4.4,
+        "port-harcourt": 17.4
+      },
+      "fade": {
+        "umuahia": 2.0,
+        "owerri": 4.0,
+        "uli": 5.0
+      },
+      "camera_path": [
+        {
+          "at": 16.6,
+          "center": [5.0, 7.1],
+          "zoom": 7.4,
+          "dur": 2.6
+        }
+      ],
+      "beats": [
+        {
+          "at": 0,
+          "text": "Umuahia was taken on 24 December 1969, Owerri on 9 January 1970 and Uli on 11 January.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1969,
+            "to": 1970,
+            "label": "24 December 1969 to 11 January 1970",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 8,
+          "text": "Ojukwu fled to Ivory Coast, and on 15 January 1970 Philip Effiong surrendered Biafra to Nigeria.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1970,
+            "to": 1970,
+            "label": "15 January 1970",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 17,
+          "text": "After the war each easterner was given only £20 for whatever they had had in the bank, and many returned to find their houses taken as abandoned property, especially around Port Harcourt.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1970,
+            "to": 1970,
+            "label": "1970",
+            "basis": "record"
+          }
+        },
+        {
+          "at": 26,
+          "text": "Military government continued for many years.",
+          "pose": 7,
+          "focus": [
+            220,
+            150,
+            1
+          ],
+          "when": {
+            "from": 1970,
+            "to": 1970,
+            "label": "from 1970",
+            "basis": "record"
+          }
+        }
+      ],
+      "text": "Umuahia was taken on 24 December 1969, Owerri on 9 January 1970 and Uli on 11 January. Ojukwu fled to Ivory Coast, and on 15 January 1970 Philip Effiong surrendered Biafra to Nigeria. After the war each easterner was given only £20 for whatever they had had in the bank, and many returned to find their houses taken as abandoned property, especially around Port Harcourt. Military government continued for many years.",
+      "sources": [
+        "wiki-umuahia",
+        "wiki-nigerian-civil-war",
+        "wiki-biafra"
+      ]
+    }
+  ]
+}

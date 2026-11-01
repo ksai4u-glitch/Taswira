@@ -33,7 +33,7 @@ class ColonialChapterTests(unittest.TestCase):
 
     def test_chapter_sits_between_sokoto_and_the_states_and_passes(self):
         self.assertEqual(bh.CHAPTERS.index("colonial"), bh.CHAPTERS.index("sokoto") + 1)
-        self.assertEqual(bh.CHAPTERS.index("states"), bh.CHAPTERS.index("colonial") + 1)
+        self.assertEqual(bh.CHAPTERS.index("civil-war"), bh.CHAPTERS.index("colonial") + 1)
         self.assertEqual(self.problems(copy.deepcopy(self.ch)), [])
 
     def test_scenes_and_beats_run_forward_in_time(self):

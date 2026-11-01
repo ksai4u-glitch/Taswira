@@ -1681,5 +1681,113 @@
     "kind": "gazetteer coordinates of today's places",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
     "checked": "Opened 1 Nov 2026. Coordinates from the place articles: Lagos 6.456 N 3.394 E; Ibadan 7.396 N 3.917 E; Lokoja 7.802 N 6.744 E; Benin City 6.333 N 5.622 E; Arochukwu 5.383 N 7.917 E; Minna 9.614 N 6.557 E; Nguru 12.879 N 10.453 E; Bauchi 10.307 N 9.813 E (from the state article). Kano and Sokoto as in the Sokoto chapter."
+  },
+  "wiki-nigerian-civil-war": {
+    "title": "Nigerian Civil War (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Nigerian_Civil_War",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. War from 6 July 1967 to 15 January 1970. The colonial administration divided Nigeria into three regions, North, West and East. Night of 29 July 1966: northern soldiers at Abeokuta mutinied, beginning a counter-coup. 27 May 1967: Gowon proclaimed twelve states; 30 May 1967: Ojukwu declared the Eastern Region the Republic of Biafra. Federal troops advanced in two columns on 6 July 1967; Nsukka fell on 14 July. Biafran forces passed through Benin City and were stopped at Ore on 21 August; Benin City was retaken on 22 September. Enugu was captured on 4 October 1967; Ojukwu moved his government to Umuahia. Calabar was invaded on 17 October 1967; Port Harcourt was captured on 19 May 1968. A blockade was imposed as a deliberate policy, which led to mass starvation of Biafran civilians. Owerri fell on 9 January 1970 and Uli on 11 January. Estimates: 45,000 to 100,000 combatants killed; 500,000 to 3 million Biafran civilians, mostly women and children, died of starvation; another estimate gives 500,000 to one million from famine during the blockade; 2 to 4.5 million displaced. After the war each easterner was given only N£20 whatever they had in the bank, and Igbo-owned houses, especially around Port Harcourt, were taken as abandoned property; military government continued for many years."
+  },
+  "wiki-first-republic": {
+    "title": "First Nigerian Republic (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/First_Nigerian_Republic",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. The country was split into three regions, Western, Eastern and Northern; Nnamdi Azikiwe was the first president from 1 October 1963 to 16 January 1966, having been governor-general from 16 November 1960."
+  },
+  "wiki-coup-1966": {
+    "title": "1966 Nigerian coup d'état (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/1966_Nigerian_coup_d%27%C3%A9tat",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. On 15 January 1966 soldiers led by Kaduna Nzeogwu and four others killed 22 people, including Prime Minister Abubakar Tafawa Balewa and Northern Premier Ahmadu Bello."
+  },
+  "wiki-counter-coup-1966": {
+    "title": "1966 Nigerian counter-coup (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/1966_Nigerian_counter-coup",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. The counter-coup killed the military head of state, Johnson Aguiyi-Ironsi, and Lt Col Adekunle Fajuyi at Ibadan; Yakubu Gowon was appointed head of state."
+  },
+  "wiki-pogrom-1966": {
+    "title": "1966 anti-Igbo pogrom (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/1966_anti-Igbo_pogrom",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Massacres of Igbo and other southern Nigerians in northern Nigeria from May 1966, peaking after 29 September 1966. Between 8,000 and 30,000 are estimated to have been killed, and more than one million returned or fled to the Eastern Region."
+  },
+  "wiki-aburi": {
+    "title": "Aburi Accord (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Aburi_Accord",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. A meeting on 4 and 5 January 1967 at Aburi, Ghana, between the federal government and Eastern delegates led by Ojukwu."
+  },
+  "wiki-midwest-region": {
+    "title": "Mid-Western Region, Nigeria (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Mid-Western_Region,_Nigeria",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Formed in June 1963 from the Benin and Delta provinces of the Western Region; capital Benin City; briefly under Biafran occupation in 1967."
+  },
+  "wiki-asaba-massacre": {
+    "title": "Asaba massacre (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Asaba_massacre",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. 5 to 7 October 1967 at Asaba during the war; an estimated 500 to 800 people were killed (Elizabeth Bird and Fraser Ottanelli). The war article gives 700."
+  },
+  "wiki-biafran-airlift": {
+    "title": "Biafran airlift (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Biafran_airlift",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Relief flights from 1967 to 1969 landed at Uli, codenamed Airstrip Annabelle, the only operational airport in Biafra; most aircraft were operated or contracted by Joint Church Aid, flying from Sao Tome and Cotonou; each aircraft made up to four round trips a night."
+  },
+  "wiki-biafra": {
+    "title": "Biafra (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Biafra",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Ojukwu fled into exile in Ivory Coast; Philip Effiong, vice president and chief of general staff, oversaw the surrender of Biafran forces on 15 January 1970."
+  },
+  "wiki-umuahia": {
+    "title": "Umuahia (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Umuahia",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Capital of Biafra after Enugu fell; captured on 24 December 1969, after which Owerri was the last capital. Coordinates 5.533 N 7.483 E."
+  },
+  "wiki-places-civil-war": {
+    "title": "Coordinates for the civil-war chapter (place articles) (Wikipedia)",
+    "author": "Wikipedia contributors",
+    "year": "accessed 2026",
+    "url": "https://en.wikipedia.org/wiki/Asaba",
+    "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+    "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+    "checked": "Opened 1 Nov 2026. Asaba 6.183 N 6.733 E; Nsukka 6.857 N 7.396 E; Owerri 5.485 N 7.035 E; Uli 5.783 N 6.867 E (Uli, Anambra State). Lagos, Kaduna, Ibadan, Enugu, Benin City, Calabar and Port Harcourt as in the colonial chapter."
   }
 }
