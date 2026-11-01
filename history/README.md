@@ -732,6 +732,11 @@ crossing dated 1911 or 1916 ("sources differ"); the Enugu coal of 1909, Port Har
 1919, Kafanchan 1927, Nguru 1930, Makurdi bridge 1932, Maiduguri 1958 to 1964), ending on
 independence on 1 October 1960 at Lagos. All its sources were opened on 1 November 2026.
 
+`previews/iron-roads-video.html` is a 146-second proof of the railway and port scenes (1920×1080,
+30 fps, silent), made with `node capture_history.cjs <built-history> <local-dependencies>
+<iron-roads.mp4> 30 8 history/cuts/iron-roads.json` and `python previews/build_storycraft_video.py
+<iron-roads.mp4> iron-roads-video.html`.
+
 ### Railways and ports
 
 - A `line` with `"type": "railway"` has a `path` of `[lat, lon]` through the towns its sources name

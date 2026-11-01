@@ -1,0 +1,636 @@
+{
+  "title": "Taswira · Iron roads and harbours: Nigeria's railways and ports, 1896 to 1960",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "clips": [
+    {
+      "chapter": "colonial",
+      "scene": "rail-north",
+      "duration": 36,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "wiki-rail-nigeria",
+        "wiki-baro",
+        "wiki-jebba"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "lagos",
+          "name": "Lagos",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-lagos-colony",
+            "wiki-apapa",
+            "wiki-federation-nigeria",
+            "wiki-places-colonial"
+          ]
+        },
+        {
+          "id": "ibadan",
+          "name": "Ibadan",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-places-colonial"
+          ]
+        },
+        {
+          "id": "rail-lagos-ibadan",
+          "name": "Lagos to Ibadan",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria"
+          ]
+        },
+        {
+          "id": "baro",
+          "name": "Baro",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-baro"
+          ]
+        },
+        {
+          "id": "kaduna",
+          "name": "Kaduna",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-kaduna",
+            "wiki-rail-nigeria"
+          ]
+        },
+        {
+          "id": "kano",
+          "name": "Kano",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-places-key"
+          ]
+        },
+        {
+          "id": "rail-baro-kano",
+          "name": "Baro to Kano",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-baro",
+            "wiki-rail-nigeria"
+          ]
+        },
+        {
+          "id": "minna",
+          "name": "Minna",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-places-colonial"
+          ]
+        },
+        {
+          "id": "rail-ibadan-minna",
+          "name": "Ibadan to Minna, across the Niger at Jebba",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "disputed",
+          "disputed": "The overview has the line at Minna by 1911; the Jebba article says the line reached Jebba in 1916, with a ferry from 1911.",
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-jebba"
+          ]
+        },
+        {
+          "id": "jebba",
+          "name": "Jebba",
+          "location": "From the place article's coordinates.",
+          "status": "disputed",
+          "disputed": "The railway overview has the line at Minna, beyond Jebba, by 1911; the Jebba article says the line reached Jebba in 1916.",
+          "sources": [
+            "wiki-jebba"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 36,
+      "seconds": 36
+    },
+    {
+      "chapter": "colonial",
+      "scene": "coal-port",
+      "duration": 30,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "wiki-enugu",
+        "wiki-port-harcourt",
+        "wiki-rail-nigeria"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "enugu",
+          "name": "Enugu coal",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-enugu",
+            "wiki-port-harcourt"
+          ]
+        },
+        {
+          "id": "port-harcourt",
+          "name": "Port Harcourt",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-port-harcourt"
+          ]
+        },
+        {
+          "id": "rail-eastern",
+          "name": "Port Harcourt to Enugu",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-port-harcourt"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 30,
+      "seconds": 30
+    },
+    {
+      "chapter": "colonial",
+      "scene": "one-colony",
+      "duration": 32,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "wiki-zungeru",
+        "wiki-colonial-nigeria",
+        "wiki-calabar",
+        "countrystudies-unification",
+        "wiki-kaduna"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "zungeru",
+          "name": "Zungeru",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-zungeru"
+          ]
+        },
+        {
+          "id": "calabar",
+          "name": "Calabar",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-calabar"
+          ]
+        },
+        {
+          "id": "lagos",
+          "name": "Lagos",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-lagos-colony",
+            "wiki-apapa",
+            "wiki-federation-nigeria",
+            "wiki-places-colonial"
+          ]
+        },
+        {
+          "id": "kaduna",
+          "name": "Kaduna",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-kaduna",
+            "wiki-rail-nigeria"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 32,
+      "seconds": 32
+    },
+    {
+      "chapter": "colonial",
+      "scene": "network",
+      "duration": 38,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "wiki-apapa",
+        "wiki-rail-nigeria",
+        "wiki-kafanchan",
+        "wiki-makurdi",
+        "wiki-maiduguri",
+        "wiki-federation-nigeria",
+        "wiki-independence-day-ng"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "lagos",
+          "name": "Lagos",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-lagos-colony",
+            "wiki-apapa",
+            "wiki-federation-nigeria",
+            "wiki-places-colonial"
+          ]
+        },
+        {
+          "id": "port-harcourt",
+          "name": "Port Harcourt",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-port-harcourt"
+          ]
+        },
+        {
+          "id": "kano",
+          "name": "Kano",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-places-key"
+          ]
+        },
+        {
+          "id": "enugu",
+          "name": "Enugu coal",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-enugu",
+            "wiki-port-harcourt"
+          ]
+        },
+        {
+          "id": "kaduna",
+          "name": "Kaduna",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-kaduna",
+            "wiki-rail-nigeria"
+          ]
+        },
+        {
+          "id": "makurdi",
+          "name": "Makurdi",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-makurdi"
+          ]
+        },
+        {
+          "id": "kafanchan",
+          "name": "Kafanchan",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-kafanchan",
+            "wiki-rail-nigeria"
+          ]
+        },
+        {
+          "id": "nguru",
+          "name": "Nguru",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-places-colonial"
+          ]
+        },
+        {
+          "id": "maiduguri",
+          "name": "Maiduguri",
+          "location": "From the place article's coordinates.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-maiduguri",
+            "wiki-rail-nigeria"
+          ]
+        },
+        {
+          "id": "rail-lagos-ibadan",
+          "name": "Lagos to Ibadan",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria"
+          ]
+        },
+        {
+          "id": "rail-ibadan-minna",
+          "name": "Ibadan to Minna, across the Niger at Jebba",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "disputed",
+          "disputed": "The overview has the line at Minna by 1911; the Jebba article says the line reached Jebba in 1916, with a ferry from 1911.",
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-jebba"
+          ]
+        },
+        {
+          "id": "rail-baro-kano",
+          "name": "Baro to Kano",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-baro",
+            "wiki-rail-nigeria"
+          ]
+        },
+        {
+          "id": "rail-eastern",
+          "name": "Port Harcourt to Enugu",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-port-harcourt"
+          ]
+        },
+        {
+          "id": "rail-eastern-north",
+          "name": "Enugu to Kaduna, through Makurdi and Kafanchan",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria",
+            "wiki-kafanchan",
+            "wiki-makurdi"
+          ]
+        },
+        {
+          "id": "rail-nguru",
+          "name": "Kano to Nguru",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-rail-nigeria"
+          ]
+        },
+        {
+          "id": "rail-maiduguri",
+          "name": "Kafanchan to Maiduguri, through Bauchi",
+          "location": "A schematic line between the towns the sources name, not the route of the track.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-maiduguri",
+            "wiki-rail-nigeria"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 38,
+      "seconds": 38
+    }
+  ],
+  "sources": {
+    "natural-earth": {
+      "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+      "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+      "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+      "url": "https://www.naturalearthdata.com/",
+      "kind": "background map data",
+      "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+      "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+    },
+    "wiki-rail-nigeria": {
+      "title": "Rail transport in Nigeria (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Rail_transport_in_Nigeria",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. Construction from Lagos to Ibadan began in March 1896; the Lagos Government Railway began operations in March 1901 and was extended to Minna in 1911, where it met the Baro-Kano railway built by Northern Nigeria between 1907 and 1911; the two were amalgamated in 1912; the railway reached Nguru in 1930. After coal was discovered at Udi, the Eastern Railway was built to Port Harcourt between 1913 and 1916, extended to Kaduna via Kafanchan in 1927, and to Maiduguri between 1958 and 1964."
+    },
+    "wiki-baro": {
+      "title": "Baro, Nigeria (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Baro,_Nigeria",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. A small port town on the Niger, at the limit of river navigation; the starting point of the Baro to Kano railway, built by the Northern Nigerian Protectorate under Lugard from 1907 to 1911. Coordinates 8.583 N 6.417 E."
+    },
+    "wiki-jebba": {
+      "title": "Jebba (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Jebba",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. A ferry carried people across the Niger from 1911 while the bridges were built; the article says the railway line reached Jebba in 1916. Coordinates 9.154 N 4.812 E. This differs from the railway overview, which has the line at Minna in 1911."
+    },
+    "wiki-lagos-colony": {
+      "title": "Lagos Colony (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Lagos_Colony",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. In August 1861 a British naval force entered Lagos and annexed it as a British colony by the Lagos Treaty of Cession."
+    },
+    "wiki-apapa": {
+      "title": "Apapa Port Complex (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Apapa_Port_Complex",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. Dredging of Lagos harbour and two stone moles: in 1913 the works were completed and ocean-going ships could enter. In 1919 a 180-foot wharf was built at Apapa, chosen as the terminus of the western railway; by the late 1920s it was the busiest port for produce from the Western and Northern provinces."
+    },
+    "wiki-federation-nigeria": {
+      "title": "Federation of Nigeria (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Federation_of_Nigeria",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. A predecessor of modern Nigeria from 1954 to 1963, with its capital at Lagos; independent on 1 October 1960 by the Nigeria Independence Act 1960."
+    },
+    "wiki-places-colonial": {
+      "title": "Coordinates for the colonial chapter (place articles) (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Lokoja",
+      "kind": "gazetteer coordinates of today's places",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. Coordinates from the place articles: Lagos 6.456 N 3.394 E; Ibadan 7.396 N 3.917 E; Lokoja 7.802 N 6.744 E; Benin City 6.333 N 5.622 E; Arochukwu 5.383 N 7.917 E; Minna 9.614 N 6.557 E; Nguru 12.879 N 10.453 E; Bauchi 10.307 N 9.813 E (from the state article). Kano and Sokoto as in the Sokoto chapter."
+    },
+    "wiki-kaduna": {
+      "title": "Kaduna (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Kaduna",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. Capital of the former Northern Region from 1917 to 1967. Coordinates 10.523 N 7.44 E."
+    },
+    "wiki-places-key": {
+      "title": "Coordinates and town facts for the map key (Wikipedia place articles)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Ngazargamu",
+      "kind": "gazetteer coordinates of today's towns and of one ruined capital",
+      "rights": "Coordinates are facts; no text reused.",
+      "checked": "Opened 27 Oct 2026. Bilma 18.687 N 12.919 E; Mao (Kanem region, Chad) 14.119 N 15.313 E; Daura 13.036 N 8.318 E; Katsina 12.989 N 7.601 E (21 km city wall, founded c. 1100); Kano 12.000 N 8.517 E (walls begun under Gijimasu, 1095-1134); Ngazargamu ruins 13.083 N 12.367 E (near Geidam); Benin City 6.333 N 5.622 E; Arochukwu 5.383 N 7.917 E; Oguta 5.712 N 6.809 E (on Oguta Lake); Onitsha 6.167 N 6.783 E (founded 1630-1680, or the 16th century by some sources); Bonny 4.433 N 7.167 E (turned to palm oil after 1807); Sokoto 13.062 N 5.234 E (founded as a ribat in 1809); Gwandu 12.502 N 4.643 E (co-capital overseeing the western and southern lands); Zaria 11.067 N 7.700 E (captured by the Fulani in 1805, taken by British forces under Lugard in 1901)."
+    },
+    "wiki-enugu": {
+      "title": "Enugu (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Enugu_(city)",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. By 1909 coal was found under the village of Enugwu Ngwo in the Udi area; by 1913 it was confirmed in commercially viable quantities, and land was acquired for the Eastern Line railway and a colliery. Coordinates 6.453 N 7.511 E."
+    },
+    "wiki-port-harcourt": {
+      "title": "Port Harcourt (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Port_Harcourt",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. Founded in 1912 by Lugard to export the coal that the geologist Albert Ernest Kitson had discovered at Enugu in 1909; the colonial government made the people of Diobu cede their land, and building the port-town began in 1912; named Port Harcourt in August 1913 after Lewis Harcourt, Secretary of State for the Colonies. Coordinates 4.824 N 7.034 E."
+    },
+    "wiki-zungeru": {
+      "title": "Zungeru (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Zungeru",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. Capital of the British protectorate of Northern Nigeria from 1902 until 1916; British forces occupied it in September 1902; Lugard chose it over Jebba and Lokoja for its central position. Coordinates 9.8 N 6.15 E."
+    },
+    "wiki-colonial-nigeria": {
+      "title": "Colonial Nigeria (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Colonial_Nigeria",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. Britain annexed Lagos in 1861 and established the Oil River Protectorate in 1884; other powers acknowledged British dominance at the 1885 Berlin Conference; from 1886 to 1899 much of the area was ruled by the Royal Niger Company under charter; in 1900 the Southern and Northern Nigeria Protectorates passed from the company to the Crown; Lagos Colony was merged into Southern Nigeria (1906) and in 1914 Southern and Northern Nigeria were combined as the Colony and Protectorate of Nigeria; independence on 1 October 1960."
+    },
+    "wiki-calabar": {
+      "title": "Calabar (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Calabar",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. A seaport since the 16th century, exporting palm oil; a major port of the Atlantic slave trade; headquarters of the European administration in the Niger Delta until 1906, when the seat of government moved to Lagos. Coordinates 4.977 N 8.338 E."
+    },
+    "countrystudies-unification": {
+      "title": "Nigeria: a country study, \"Unification of Nigeria\" (Library of Congress, 1991)",
+      "author": "Helen Chapin Metz (ed.), Federal Research Division, Library of Congress",
+      "year": "1991",
+      "url": "https://www.countrystudies.us/nigeria/18.htm",
+      "kind": "government country study (secondary)",
+      "rights": "US government work, public domain; facts cited only.",
+      "checked": "Opened 1 Nov 2026. Lugard returned in 1912 to set in motion the merger of the northern and southern protectorates; harbour dredging and road and railway building opened Nigeria to economic development; port and transport improvements during the First World War furthered it."
+    },
+    "wiki-kafanchan": {
+      "title": "Kafanchan (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Kafanchan",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. A railway junction town; its station was built in 1927. Coordinates 9.583 N 8.293 E."
+    },
+    "wiki-makurdi": {
+      "title": "Makurdi (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Makurdi",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. Divided by the River Benue; the railway bridge was built in 1932; on the main line north from Port Harcourt. Coordinates 7.733 N 8.5 E."
+    },
+    "wiki-maiduguri": {
+      "title": "Maiduguri (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Maiduguri",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. The railway was extended here in 1964, at the end of the line from Port Harcourt through Enugu, Kafanchan, Kuru and Bauchi. Coordinates 11.837 N 13.154 E."
+    },
+    "wiki-independence-day-ng": {
+      "title": "Independence Day (Nigeria) (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Independence_Day_(Nigeria)",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 1 Nov 2026. Marks Nigeria's proclamation of independence from British rule on 1 October 1960."
+    }
+  },
+  "status": "Unreviewed draft; rights and historian review required before publication",
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 146,
+  "frames": 4380
+}
