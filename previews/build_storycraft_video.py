@@ -29,6 +29,11 @@ COPIES = {
                           'each town marked on its dated stop, with disputed dates labelled.',
                           'https://github.com/ksai4u-glitch/Taswira/blob/main/history/research/sokoto-sources.md',
                           'Where each place and date comes from', 'taswira-sokoto.mp4'),
+    'fire-and-sand-video.html': ('Africa\'s volcanoes in date order, from the Cameroon line and the Ethiopian flood basalts to Kilimanjaro, '
+                                 'Mount Cameroon and Nyiragongo; then the oldest known Sahara dunes, about 7 million years old, and the green '
+                                 'Sahara greening north and drying back as Lake Mega-Chad swells and shrinks. Disputed dates are labelled.',
+                                 'https://github.com/ksai4u-glitch/Taswira/blob/main/history/chapters/deep.json',
+                                 'The deep-time chapter and its sources', 'taswira-fire-and-sand.mp4'),
 }
 
 

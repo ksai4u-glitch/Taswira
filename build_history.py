@@ -81,14 +81,16 @@ UNSAFE_SVG = re.compile(
     r"|attributeName\s*=\s*[\"']?\s*(on|href|xlink)", re.I)
 
 # Moods set the decoration while a scene with places plays (see history/README.md)
-MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation", "calm", "delta", "greening")
+MOODS = ("survey", "farming", "sculpture", "iron", "decline", "excavation", "calm", "delta", "greening",
+         "volcanic", "desert-born")
 EFFECTS = ("arc", "pulse", "shatter")
 # Architectural stage sets drawn on the map, and the small glyph each becomes when far out
 SETTINGS = ("royal-cemetery", "stelae-field", "stone-enclosure", "walled-city")
 MONUMENT_TYPES = ("pyramid", "stele", "tower", "walled-city")
 # What a dated beat's date rests on. A Chronicle date says so on screen; oral tradition has no date;
 # an account is a dated written description by a named writer.
-BEAT_BASES = ("archaeology", "chronicle", "differ", "oral", "account", "record")
+# geology: an age from dating rocks (radiometric dates and the studies built on them).
+BEAT_BASES = ("archaeology", "chronicle", "differ", "oral", "account", "record", "geology")
 
 # The map vocabulary (see history/README.md). How sure each thing on the map is:
 STATUSES = ("firm", "approx", "disputed", "to-check")
@@ -107,8 +109,9 @@ CONTROL = ("claimed", "held", "taken")
 # What is documented about an actor's emblem: a flag, a symbol that is not a flag, or nothing
 TIERS = ("flag", "symbol", "none")
 # Forms for the land rather than its rulers: a name written across a continent (on the globe),
-# and a lake drawn as a soft disc of its area (its shoreline is not drawn)
-NATURE = ("landmass", "lake")
+# a lake drawn as a soft disc of its area (its shoreline is not drawn), and a volcano drawn as a
+# small cone (one symbol for every volcano or volcanic field, not a drawing of a particular mountain)
+NATURE = ("landmass", "lake", "volcano")
 # Lines drawn on the globe, with the years (million years ago) they were active
 LINE_TYPES = ("rift", "river")
 
@@ -163,7 +166,54 @@ def load_background(path=BACKGROUND_PATH):
             break
     if problems:
         sys.exit("Not building the history page:\n  - " + "\n  - ".join(problems))
-    return {key: bg[key] for key in ("land", "lakes", "rivers")}
+    out = {key: bg[key] for key in ("land", "lakes", "rivers")}
+    out["rivers"] = orient_rivers(out["rivers"])
+    return out
+
+
+def _ends(flat):
+    """First and last point of an encoded line, in thousandths of a degree."""
+    lat = sum(flat[0::2]); lon = sum(flat[1::2])
+    return (flat[0], flat[1]), (lat, lon)
+
+
+def _reverse(flat):
+    """The same encoded line, drawn from its other end."""
+    pts, lat, lon = [], 0, 0
+    for i in range(0, len(flat), 2):
+        lat += flat[i]; lon += flat[i + 1]; pts.append((lat, lon))
+    pts.reverse()
+    out, plat, plon = [], 0, 0
+    for lat, lon in pts:
+        out += [lat - plat, lon - plon]; plat, plon = lat, lon
+    return out
+
+
+def orient_rivers(rivers):
+    """Point every river segment downstream, so water drawn moving along it flows the right way.
+
+    Natural Earth draws most segments from source to mouth, but a few run the other way. Where
+    two segments both start at one point and nothing ends there, and two both end at another point
+    and nothing starts there, the segment joining those two points is drawn backwards: rivers do
+    not split at their source or vanish at an inland junction. Each such segment is turned round,
+    and the check repeats until nothing changes."""
+    rivers = [[rank, list(flat)] for rank, flat in rivers]
+    for _ in range(20):
+        starts, ends = {}, {}
+        for i, (_, flat) in enumerate(rivers):
+            a, b = _ends(flat)
+            starts.setdefault(a, []).append(i); ends.setdefault(b, []).append(i)
+        flipped = False
+        for i, (_, flat) in enumerate(rivers):
+            a, b = _ends(flat)
+            split_at_source = len(starts.get(a, [])) >= 2 and not ends.get(a)
+            lost_inland = len(ends.get(b, [])) >= 2 and not starts.get(b)
+            if split_at_source and lost_inland:
+                rivers[i][1] = _reverse(flat); flipped = True
+                break
+        if not flipped:
+            break
+    return [[rank, flat] for rank, flat in rivers]
 
 
 def base_for(scene):
@@ -903,6 +953,12 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
             need("{" not in sc.get("text", ""), f"{where}: text still has a {{placeholder}}")
             for fid in sc.get("furnace", []):
                 need(fid in sc.get("show", []), f"{where}: furnace glow on {fid!r}, which the scene does not show")
+            for fid in sc.get("erupt", []):
+                need(fid in sc.get("show", []) and features.get(fid, {}).get("form") == "volcano",
+                     f"{where}: erupt needs volcanoes the scene shows, got {fid!r}")
+            if sc.get("erupt"):
+                need(sc.get("mood") == "volcanic" and not sc.get("sensitive"),
+                     f"{where}: eruptions are drawn only in a volcanic scene that is not marked sensitive")
             if "mood" in sc:
                 need(sc["mood"] in MOODS, f"{where}: mood must be one of {', '.join(MOODS)}")
             if any(features.get(fid, {}).get("type") == "campaign" for fid in shown):
@@ -932,8 +988,9 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
 # --- Building the page ---------------------------------------------------------------
 
 def reading_seconds(text):
-    """Time to show a scene while playing: enough to read it at a calm pace."""
-    return max(8, round(len(text.split()) * 0.33 + 4))
+    """Time to show a scene while playing: enough to read it at a calm pace. The narration is
+    revealed over the first NARRATE share of the scene, so the map keeps changing while it is read."""
+    return max(8, round(len(text.split()) * 0.3 + 3))
 
 
 def parse_campaign_stop(stop):
@@ -1081,7 +1138,7 @@ def source_links(ids, sources):
 
 STATUS_WORDS = {"firm": "Firm", "approx": "Approximate", "disputed": "Disputed", "to-check": "To check"}
 TIER_WORDS = {"flag": "Flag", "symbol": "Symbol, not a flag", "none": "Nothing documented"}
-FORM_WORDS = {"landmass": "Continent", "lake": "Lake", "kingdom": "Kingdom", "city-state": "City-state", "network": "Centre of a network",
+FORM_WORDS = {"landmass": "Continent", "lake": "Lake", "volcano": "Volcano or volcanic field", "kingdom": "Kingdom", "city-state": "City-state", "network": "Centre of a network",
               "caliphate": "Seat of the caliphate", "emirate": "Emirate", "communities": "Self-governing communities"}
 LINK_WORDS = {"allegiance": "Allegiance", "tribute": "Tribute", "alliance": "Alliance", "trade": "Trade",
               "ritual": "Ritual authority"}

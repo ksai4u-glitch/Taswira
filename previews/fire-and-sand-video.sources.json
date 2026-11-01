@@ -1,0 +1,287 @@
+{
+  "title": "Taswira · Fire and sand: Africa's volcanoes and the Sahara",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "clips": [
+    {
+      "chapter": "deep",
+      "scene": "fire-below",
+      "duration": 34,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "hofmann-1997",
+        "wiki-cameroon-line",
+        "wiki-biu-plateau",
+        "wiki-mount-cameroon",
+        "nonnotte-2008",
+        "wiki-nyiragongo",
+        "usgs-nyiragongo"
+      ],
+      "disputed": "Sources give different starts for the volcanoes of the Cameroon line, from about 66 to about 52 million years ago, and different dates for Kilimanjaro's first activity. Death tolls for Nyiragongo's eruptions also differ, so none are given.",
+      "unchecked": null,
+      "features": [
+        {
+          "id": "biu-plateau",
+          "name": "Biu Plateau",
+          "location": "Placed at the town of Biu, on the plateau. The volcanic field is wider and is not drawn.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-biu-plateau",
+            "wiki-places-volcanoes"
+          ]
+        },
+        {
+          "id": "mount-cameroon",
+          "name": "Mount Cameroon",
+          "location": "The summit, from a gazetteer.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-mount-cameroon",
+            "wiki-places-volcanoes"
+          ]
+        },
+        {
+          "id": "ethiopian-traps",
+          "name": "Ethiopian flood basalts",
+          "location": "A point on the Ethiopian plateau. The lava covered a much wider area, which is not drawn.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "hofmann-1997",
+            "wiki-places-volcanoes"
+          ]
+        },
+        {
+          "id": "kilimanjaro",
+          "name": "Kilimanjaro",
+          "location": "The summit, from a gazetteer.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "nonnotte-2008",
+            "wiki-places-volcanoes"
+          ]
+        },
+        {
+          "id": "nyiragongo",
+          "name": "Nyiragongo",
+          "location": "The summit, from a gazetteer.",
+          "status": "firm",
+          "disputed": null,
+          "sources": [
+            "wiki-nyiragongo",
+            "usgs-nyiragongo",
+            "wiki-places-volcanoes"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 34,
+      "seconds": 34
+    },
+    {
+      "chapter": "deep",
+      "scene": "sahara-born",
+      "duration": 22,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "schuster-2006",
+        "nature-news-sahara-2014"
+      ],
+      "disputed": "Not all researchers accept the early date or the Tethys explanation.",
+      "unchecked": null,
+      "features": [
+        {
+          "id": "chad-dunes",
+          "name": "Northern Chad Basin",
+          "location": "A point in the northern Chad Basin, as the sources describe it. The find spot is not drawn; the dashed ring shows the uncertainty.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "schuster-2006"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 22,
+      "seconds": 22
+    },
+    {
+      "chapter": "deep",
+      "scene": "green-sahara",
+      "duration": 32,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "wiki-african-humid-period",
+        "kuper-kropelin-2006",
+        "cambridge-lake-chad-2019",
+        "wiki-places-deep"
+      ],
+      "disputed": null,
+      "unchecked": null,
+      "features": [
+        {
+          "id": "mega-chad",
+          "name": "Lake Mega-Chad",
+          "location": "Centred on today's Lake Chad.",
+          "status": "disputed",
+          "disputed": "Its size is given as about 330,000 km² in one source and about 400,000 km² in another.",
+          "sources": [
+            "wiki-african-humid-period",
+            "wiki-places-deep"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 32,
+      "seconds": 32
+    }
+  ],
+  "sources": {
+    "natural-earth": {
+      "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+      "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+      "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+      "url": "https://www.naturalearthdata.com/",
+      "kind": "background map data",
+      "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+      "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+    },
+    "hofmann-1997": {
+      "title": "Timing of the Ethiopian flood basalt event and implications for plume birth and global change",
+      "author": "C. Hofmann and others, Nature 389, 838-841",
+      "year": "1997",
+      "url": "https://doi.org/10.1038/39853",
+      "kind": "peer-reviewed article (geochronology)",
+      "rights": "Facts cited only; no text or figures reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. The bulk of the traps, inferred to mark the Ethiopian-Afar plume head reaching the surface, erupted about 30 million years ago, over 1 million years or less. A review seen in the same search gives about 31 to 29 million years ago for the flood basalts in Afar."
+    },
+    "wiki-cameroon-line": {
+      "title": "Cameroon line (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Cameroon_line",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. A page derived from the article gives radiometric ages from about 51.8 million years ago to the present; a K-Ar and Rb-Sr dating study seen in the same search puts the start about 66 million years ago. The page shows this as disputed."
+    },
+    "wiki-biu-plateau": {
+      "title": "Biu Plateau (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Biu_Plateau",
+      "kind": "encyclopedia (secondary)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Some geologists associate the plateau's volcanism with the Cameroon line to the south."
+    },
+    "wiki-mount-cameroon": {
+      "title": "Mount Cameroon (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Mount_Cameroon",
+      "kind": "encyclopedia (secondary)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Flank eruptions from 28 March to 22 April 1999 and from 28 May to 19 June 2000; the 1999 lava came within about 200 m of the sea; a brief eruption on 3 February 2012."
+    },
+    "nonnotte-2008": {
+      "title": "New K-Ar age determinations of Kilimanjaro volcano in the North Tanzanian diverging rift, East Africa",
+      "author": "P. Nonnotte and others, Journal of Volcanology and Geothermal Research",
+      "year": "2008",
+      "url": "https://hal-insu.archives-ouvertes.fr/insu-00304458",
+      "kind": "peer-reviewed article (geochronology)",
+      "rights": "Facts cited only; no text or figures reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Seventeen K-Ar ages from the three centres. Summaries of the paper put the start of activity at about 2.5 million years ago at Shira, with Mawenzi and Kibo active from about 1 million years ago; Kibo is dormant, not extinct. These figures come from summaries, not the paper's own text."
+    },
+    "wiki-nyiragongo": {
+      "title": "Mount Nyiragongo (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Mount_Nyiragongo",
+      "kind": "encyclopedia (secondary)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. 1977: the lava lake drained in under an hour and flows ran at up to 60 km/h on the upper slopes. 2002: eruption from 17 January; lava covered about 13% of Goma. 2021: eruption from 22 May; lava ended near Goma's airport. Death and displacement figures differ between sources."
+    },
+    "usgs-nyiragongo": {
+      "title": "Volcano Watch: Central African metropolis again threatened by looming volcanic eruption",
+      "author": "USGS Hawaiian Volcano Observatory",
+      "year": "accessed 2026",
+      "url": "https://www.usgs.gov/observatories/hvo/news/volcano-watch-central-african-metropolis-again-threatened-looming-volcanic",
+      "kind": "government science note (secondary)",
+      "rights": "US government work; facts cited only.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Nyiragongo's lava is exceptionally fluid because of its very low silica content, which explains the fast flows of 1977."
+    },
+    "wiki-places-volcanoes": {
+      "title": "Coordinates of the volcanoes in the deep-time chapter (Wikipedia place articles)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Mount_Cameroon",
+      "kind": "gazetteer coordinates of today's places",
+      "rights": "Coordinates are facts; no text reused.",
+      "checked": "Not opened: this session's network policy blocked the sites. The coordinates are standard gazetteer values, not read from the pages this session: Mount Cameroon 4.203 N 9.170 E, Biu 10.61 N 12.19 E, Kilimanjaro 3.076 S 37.353 E, Nyiragongo 1.52 S 29.25 E, and a point on the Ethiopian plateau at 11.5 N 38.5 E. Re-check on the pages before publishing."
+    },
+    "schuster-2006": {
+      "title": "The Age of the Sahara Desert",
+      "author": "Mathieu Schuster and others, Science 311, 821",
+      "year": "2006",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16469920/",
+      "kind": "peer-reviewed article (geology)",
+      "rights": "Facts cited only; no text or figures reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Wind-blown dune deposits about 7 million years old in the northern Chad Basin, described as the oldest known evidence of desert in the Sahara. Most earlier data had placed the desert's start between 2 and 3 million years ago."
+    },
+    "nature-news-sahara-2014": {
+      "title": "News report on Zhang and others (2014), Aridification of the Sahara desert caused by Tethys Sea shrinkage during the Late Miocene",
+      "author": "Nature news",
+      "year": "2014",
+      "url": "https://www.nature.com/articles/nature.2014.15954",
+      "kind": "science news (secondary, reporting a peer-reviewed article)",
+      "rights": "Facts cited only; no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. The 2014 study points to the Tortonian, about 11 to 7 million years ago, as the time North Africa dried, linked to the shrinking Tethys Sea, and cites the 2006 Chad dunes as support. One geologist quoted did not accept it."
+    },
+    "wiki-african-humid-period": {
+      "title": "African humid period (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/African_humid_period",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Began about 14,600 to 14,500 years ago and ended 6,000 to 5,000 years ago, apparently in several steps and at different times in different places; Lake Megachad about 330,000 km²; humans gradually abandoned the desert for places with more secure water, such as the Nile valley. It does not say that people moved south towards the Niger or Lake Chad."
+    },
+    "kuper-kropelin-2006": {
+      "title": "Climate-Controlled Holocene Occupation in the Sahara: Motor of Africa's Evolution",
+      "author": "Rudolph Kuper and Stefan Kröpelin, Science 313, 803-807",
+      "year": "2006",
+      "url": "https://www.uni-koeln.de/sfb389/sonstiges/kroepelin/242%202006%20Kuper%20Kroepelin%20Science%20313%20%20(11%20August%202006).pdf",
+      "kind": "peer-reviewed article (archaeology and climate)",
+      "rights": "Cited and described; no text or figures reused.",
+      "checked": "Opened 27 Oct 2026 (author copy at the University of Cologne). About the eastern Sahara (Egypt, Sudan and adjacent Libya and Chad): humid from 8500 to 5300 BCE; regular rains stopped reaching the Egyptian Sahara by 5300 BCE and full desert returned about 3500 BCE; people moved to the Nile valley and ecological refuges, and towards today's Sahel and the Sudanese plains. The authors suggest the process applied to the whole Sahara, an inference rather than a finding for the central and western Sahara."
+    },
+    "cambridge-lake-chad-2019": {
+      "title": "Burial Practices, Settlement and Regional Connections around the Southern Lake Chad Basin, 1500 BC-AD 1500",
+      "author": "chapter 13 in Burials, Migration and Identity in the Ancient Sahara and Beyond, eds M. C. Gatto, D. J. Mattingly, N. Ray and M. Sterry (Cambridge University Press)",
+      "year": "2019",
+      "url": "https://www.cambridge.org/core/books/burials-migration-and-identity-in-the-ancient-sahara-and-beyond/burial-practices-settlement-and-regional-connections-around-the-southern-lake-chad-basin-1500-bcad-1500/7428F6A83AD5127E8A53DB7C813D6CBD",
+      "kind": "book chapter (archaeology); only the summary was read",
+      "rights": "Cited and described; no text reused. The full chapter is not open access.",
+      "checked": "Chapter page opened 27 Oct 2026; only its summary was read. From c. 1800 BC agro-pastoral systems developed and permanent settlements expanded south of Lake Chad, first on Gajiganna Culture sites; environmental change involved periodic population exchanges between the southern Sahara and the Lake Chad Basin."
+    },
+    "wiki-places-deep": {
+      "title": "Coordinates and facts for the deep-time chapter (Wikipedia place articles)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Lake_Chad",
+      "kind": "gazetteer coordinates of today's places",
+      "rights": "Coordinates are facts; no text reused.",
+      "checked": "Opened 27 Oct 2026. Lake Chad 13.099 N 14.533 E (Lake Mega-Chad: four highstands between 39,000 BC and 300 BC, about 400,000 km², over 180 m deep, draining to the Benue through the Mayo Kebbi); Enugu State 6.500 N 7.500 E (coal in the Udi Hills around Enugu, first shipped to Britain by 1914); Abakaliki 6.333 N 8.100 E; Makurdi 7.733 N 8.500 E (on the Benue); the Gongola joins the Benue opposite Numan (page geotag 9.500 N 12.067 E)."
+    }
+  },
+  "status": "Unreviewed draft; rights and historian review required before publication",
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 98,
+  "frames": 2940
+}

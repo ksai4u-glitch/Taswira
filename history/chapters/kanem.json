@@ -199,6 +199,7 @@
   "scenes": [
     {
       "id": "kanem-east",
+      "duration": 30,
       "title": "Kanem, north-east of Lake Chad",
       "when": {
         "from": 700,
@@ -294,6 +295,7 @@
     },
     {
       "id": "sayfawa",
+      "duration": 33,
       "title": "The Sayfawa kings",
       "when": {
         "from": 1068,
@@ -391,6 +393,7 @@
     },
     {
       "id": "bornu",
+      "duration": 36,
       "title": "From Kanem to Bornu",
       "when": {
         "from": 1376,
@@ -517,6 +520,7 @@
     },
     {
       "id": "idris-alooma",
+      "duration": 42,
       "title": "Idris Alooma",
       "when": {
         "from": 1571,
@@ -625,6 +629,7 @@
     },
     {
       "id": "sayfawa-end",
+      "duration": 37,
       "title": "The end of the Sayfawa",
       "when": {
         "from": 1808,
