@@ -1410,7 +1410,7 @@
     "url": "https://en.wikipedia.org/wiki/Cameroon_line",
     "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. A page derived from the article gives radiometric ages from about 51.8 million years ago to the present; a K-Ar and Rb-Sr dating study seen in the same search puts the start about 66 million years ago. The page shows this as disputed."
+    "checked": "Opened 1 Nov 2026. Some geologists see a mantle plume under the region for about 140 million years, stationary under the Oku area since about 66 million years ago; one hypothesis dates the later development of the line to around 30 million years ago. Biu Plateau and Jos Plateau are named as related to the line. The page shows the start as disputed. A figure of about 51.8 million years, seen earlier through a search excerpt, is not in the current article and is no longer used."
   },
   "wiki-biu-plateau": {
     "title": "Biu Plateau (Wikipedia)",
@@ -1419,7 +1419,7 @@
     "url": "https://en.wikipedia.org/wiki/Biu_Plateau",
     "kind": "encyclopedia (secondary)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Some geologists associate the plateau's volcanism with the Cameroon line to the south."
+    "checked": "Opened 1 Nov 2026. Some geologists consider the volcanic activity of the Biu Plateau associated with the activity of the Cameroon line to the south."
   },
   "wiki-mount-cameroon": {
     "title": "Mount Cameroon (Wikipedia)",
@@ -1428,7 +1428,7 @@
     "url": "https://en.wikipedia.org/wiki/Mount_Cameroon",
     "kind": "encyclopedia (secondary)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Flank eruptions from 28 March to 22 April 1999 and from 28 May to 19 June 2000; the 1999 lava came within about 200 m of the sea; a brief eruption on 3 February 2012."
+    "checked": "Opened 1 Nov 2026. Historical records list major eruptions in 1909, 1922, 1925, 1954, 1959, 1982, 1999, 2000 and 2012; the 1999 eruption came within 200 m of the sea; the most recent eruption was on 3 February 2012. Summit at 4°13'00\" N, 9°10'21\" E."
   },
   "nonnotte-2008": {
     "title": "New K-Ar age determinations of Kilimanjaro volcano in the North Tanzanian diverging rift, East Africa",
@@ -1437,7 +1437,7 @@
     "url": "https://hal-insu.archives-ouvertes.fr/insu-00304458",
     "kind": "peer-reviewed article (geochronology)",
     "rights": "Facts cited only; no text or figures reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Seventeen K-Ar ages from the three centres. Summaries of the paper put the start of activity at about 2.5 million years ago at Shira, with Mawenzi and Kibo active from about 1 million years ago; Kibo is dormant, not extinct. These figures come from summaries, not the paper's own text."
+    "checked": "Opened 1 Nov 2026. The abstract (HAL record): seventeen K-Ar ages; the oldest activity began at about 2.5 Ma in the Shira vent, with important phases around 1.9 Ma; activity then shifted east to Mawenzi and Kibo, where initial volcanism is dated at about 1 Ma; Kibo's present cone was built between 274 and 170 ka, and the last activity around 200 to 150 ka formed its summit crater."
   },
   "wiki-nyiragongo": {
     "title": "Mount Nyiragongo (Wikipedia)",
@@ -1446,7 +1446,7 @@
     "url": "https://en.wikipedia.org/wiki/Mount_Nyiragongo",
     "kind": "encyclopedia (secondary)",
     "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. 1977: the lava lake drained in under an hour and flows ran at up to 60 km/h on the upper slopes. 2002: eruption from 17 January; lava covered about 13% of Goma. 2021: eruption from 22 May; lava ended near Goma's airport. Death and displacement figures differ between sources."
+    "checked": "Opened 1 Nov 2026. On 10 January 1977 the crater walls fractured and the lava lake drained in less than an hour; lava ran down the flanks at up to 60 km/h on the upper slopes, the fastest recorded. In 2002 a fissure opened on the south flank and lava reached the city. An eruption began on 22 May 2021. Summit at 1°31'19\" S, 29°14'58\" E. Casualty figures are not used."
   },
   "usgs-nyiragongo": {
     "title": "Volcano Watch: Central African metropolis again threatened by looming volcanic eruption",
@@ -1464,16 +1464,16 @@
     "url": "https://pubmed.ncbi.nlm.nih.gov/16469920/",
     "kind": "peer-reviewed article (geology)",
     "rights": "Facts cited only; no text or figures reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. Wind-blown dune deposits about 7 million years old in the northern Chad Basin, described as the oldest known evidence of desert in the Sahara. Most earlier data had placed the desert's start between 2 and 3 million years ago."
+    "checked": "Opened 1 Nov 2026. The PubMed abstract: 7,000,000-year-old eolian dune deposits from the northern Chad Basin, the oldest known evidence for desert occurrence in the Sahara. The figure of 2 to 3 million years for earlier estimates comes from news reports of the paper and the Nature news piece."
   },
   "nature-news-sahara-2014": {
-    "title": "News report on Zhang and others (2014), Aridification of the Sahara desert caused by Tethys Sea shrinkage during the Late Miocene",
+    "title": "Climate simulation doubles Sahara's age",
     "author": "Nature news",
     "year": "2014",
     "url": "https://www.nature.com/articles/nature.2014.15954",
     "kind": "science news (secondary, reporting a peer-reviewed article)",
     "rights": "Facts cited only; no text reused.",
-    "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 1 Nov 2026. Re-check on the page before publishing. The 2014 study points to the Tortonian, about 11 to 7 million years ago, as the time North Africa dried, linked to the shrinking Tethys Sea, and cites the 2006 Chad dunes as support. One geologist quoted did not accept it."
+    "checked": "Opened 1 Nov 2026. A shrinking sea off northern Africa, the Tethys, triggered the desert's formation about 7 million years ago, a climate simulation suggests (Zhang and others, Nature 513, 401-404, 2014; the Wikipedia Sahara article cites the same paper and the Tortonian). Not all researchers accept it."
   },
   "wiki-places-volcanoes": {
     "title": "Coordinates of the volcanoes in the deep-time chapter (Wikipedia place articles)",
@@ -1482,6 +1482,6 @@
     "url": "https://en.wikipedia.org/wiki/Mount_Cameroon",
     "kind": "gazetteer coordinates of today's places",
     "rights": "Coordinates are facts; no text reused.",
-    "checked": "Not opened: this session's network policy blocked the sites. The coordinates are standard gazetteer values, not read from the pages this session: Mount Cameroon 4.203 N 9.170 E, Biu 10.61 N 12.19 E, Kilimanjaro 3.076 S 37.353 E, Nyiragongo 1.52 S 29.25 E, and a point on the Ethiopian plateau at 11.5 N 38.5 E. Re-check on the pages before publishing."
+    "checked": "Opened 1 Nov 2026. Coordinates from the place articles: Mount Cameroon 4°13'00\" N, 9°10'21\" E (4.217, 9.173); Kilimanjaro 3°04'33\" S, 37°21'12\" E (-3.076, 37.353); Nyiragongo 1°31'19\" S, 29°14'58\" E (-1.522, 29.249). Biu is placed at the town (10.61 N, 12.19 E) and the Ethiopian basalts at a point on the plateau (11.5 N, 38.5 E); those two are approximate and still to re-check on their pages."
   }
 }

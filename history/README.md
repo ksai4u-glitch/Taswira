@@ -119,15 +119,16 @@ match no plate, or if a line or continent is shown on the map instead of the glo
 
 **Volcanoes and the Sahara.** After the coal swamps, "Fire from below" (34 seconds) follows
 Africa's volcanoes in date order, each beat with its own date: the Cameroon line (Biu Plateau and
-Mount Cameroon; its start is given as about 66 or about 52 million years ago, so that beat says
+Mount Cameroon; its start is given as about 66 or about 30 million years ago, so that beat says
 "sources differ"), the Ethiopian flood basalts about 31 to 29 million years ago, Kilimanjaro from
 about 2.5 million years ago, and the eruptions of 1999 to 2021. Mount Cameroon and the Ethiopian
 basalts erupt; Nyiragongo smokes but does not, because its lava killed people in Goma and the
 scene tells that with Zomo still. "The Sahara is born" shows the oldest known desert dunes, about
 7 million years old, in the northern Chad Basin (`desert-born`), and the green Sahara now greens
 northwards and dries from the north, with Lake Mega-Chad swelling and shrinking. The sources for
-these scenes could be seen only through search excerpts in the session that added them, and each
-says so and asks for a re-check on the page.
+these scenes were first seen only through search excerpts; most were opened and re-checked on
+1 November 2026. Hofmann et al. (1997) and the USGS note still refused automated requests, so they
+still ask for a re-check.
 
 `previews/fire-and-sand-video.html` is a 98-second proof of these scenes (1920×1080, 30 fps,
 silent), made with:

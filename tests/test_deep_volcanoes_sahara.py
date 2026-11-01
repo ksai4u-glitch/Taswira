@@ -122,12 +122,16 @@ class DeepTimeAdditionsTests(unittest.TestCase):
         self.assertTrue(feats["chad-dunes"]["uncertainty_km"])
         self.assertTrue(sc["disputed"])
 
-    def test_sources_seen_only_through_search_ask_for_a_recheck(self):
-        new = ["hofmann-1997", "wiki-cameroon-line", "wiki-biu-plateau", "wiki-mount-cameroon", "nonnotte-2008",
-               "wiki-nyiragongo", "usgs-nyiragongo", "schuster-2006", "nature-news-sahara-2014", "wiki-places-volcanoes"]
-        for sid in new:
-            self.assertIn("Re-check", self.sources[sid]["checked"], sid)
+    def test_each_source_says_whether_it_was_opened(self):
+        # Opened and re-checked on 1 Nov 2026; the two still refused stay marked for a re-check
+        opened = ["wiki-cameroon-line", "wiki-biu-plateau", "wiki-mount-cameroon", "nonnotte-2008", "wiki-nyiragongo",
+                  "schuster-2006", "nature-news-sahara-2014", "wiki-places-volcanoes"]
+        for sid in opened:
+            self.assertTrue(self.sources[sid]["checked"].startswith("Opened 1 Nov 2026"), sid)
+        for sid in ["hofmann-1997", "usgs-nyiragongo"]:
             self.assertIn("Not opened", self.sources[sid]["checked"], sid)
+            self.assertIn("Re-check", self.sources[sid]["checked"], sid)
+        self.assertNotIn("52 million", self.sources["wiki-cameroon-line"]["checked"].split("no longer used")[-1])
 
 
 class PacingTests(unittest.TestCase):

@@ -60,7 +60,7 @@ async function open(browser, viewport) {
         const mc = fx.mentions.find(m => m.id === 'mount-cameroon'), appear = scene().appear['mount-cameroon'];
         return { years: out, mcAfterAppear: mc.at > appear };
       });
-      assert.deepEqual(playing.years, ['about 66 million years ago to today', 'from about 66 or 52 million years ago: sources differ',
+      assert.deepEqual(playing.years, ['about 66 million years ago to today', 'from about 66 or about 30 million years ago: sources differ',
         'about 31 to 29 million years ago', 'about 2.5 million years ago', '1999 to 2021']);
       assert.ok(playing.mcAfterAppear, 'a mention waits until its place is on the map');
 
