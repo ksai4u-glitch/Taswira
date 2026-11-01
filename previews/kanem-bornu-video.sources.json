@@ -1,0 +1,224 @@
+{
+  "title": "Taswira · From Kanem to Bornu",
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "clips": [
+    {
+      "chapter": "kanem",
+      "scene": "bornu",
+      "duration": 36,
+      "contentStart": 0,
+      "base": "period",
+      "sources": [
+        "lc-chad-kanem",
+        "wiki-bilala",
+        "wiki-kanem",
+        "wiki-ngazargamu",
+        "wiki-bornu"
+      ],
+      "disputed": "The Bulala are said to have taken Njimi in 1363 by one account, or to have driven the Sayfawa out by 1376 and taken Kanem by 1388 by another. The move to Bornu is dated about 1380 or about 1387, and Ngazargamu's founding from about 1460 to about 1488.",
+      "unchecked": null,
+      "features": [
+        {
+          "id": "lake-chad",
+          "name": "Lake Chad",
+          "location": "The dot marks today's lake, and the background draws today's outline. That is not the shoreline of any period in this chapter; no older shoreline is drawn, because none has been sourced.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "wiki-places-deep",
+            "armitage-2015",
+            "nasa-lake-chad"
+          ]
+        },
+        {
+          "id": "kanem",
+          "name": "Kanem",
+          "location": "A regional anchor at today's Mao, not a capital. Njimi is not placed, and Tié's exact position has not been checked for this page. The ring marks the region.",
+          "status": "disputed",
+          "disputed": "Kanem's founding is usually dated to about 700, but some sources give about 600 or about 900.",
+          "sources": [
+            "wiki-kanem",
+            "wiki-njimi",
+            "wiki-places-key",
+            "frobenius-kanem",
+            "magnavita-2025"
+          ]
+        },
+        {
+          "id": "bulala",
+          "name": "Bulala (Lake Fitri)",
+          "location": "Drawn at Lake Fitri. Where the Bulala rulers sat while they held Kanem is not placed.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "lc-chad-kanem",
+            "wiki-bilala",
+            "wiki-lake-fitri"
+          ]
+        },
+        {
+          "id": "bornu",
+          "name": "Bornu, west of the lake",
+          "location": "A regional anchor at the site of the later capital, Ngazargamu, inside a wide ring. Where the court stayed between the 1380s and Ngazargamu's founding is not placed.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "lc-chad-kanem",
+            "wiki-kanem",
+            "wiki-ngazargamu",
+            "wiki-places-key"
+          ]
+        },
+        {
+          "id": "move-west",
+          "name": "The Kanembu move west to Bornu",
+          "location": "Schematic: from the Kanem region to the land west of the lake. The way they went, and where the court stopped before Ngazargamu, are not drawn.",
+          "status": "approx",
+          "disputed": null,
+          "sources": [
+            "lc-chad-kanem",
+            "wiki-kanem",
+            "wiki-bilala"
+          ]
+        }
+      ],
+      "from": 0,
+      "to": 36,
+      "seconds": 36
+    }
+  ],
+  "sources": {
+    "natural-earth": {
+      "title": "Natural Earth: 1:10m and 1:50m land, 1:10m lakes, 1:10m rivers and lake centrelines",
+      "author": "Natural Earth (Nathaniel Vaughn Kelso, Tom Patterson and contributors)",
+      "year": "version 5.2.0-pre, repository commit ca96624 (downloaded 27 Oct 2026)",
+      "url": "https://www.naturalearthdata.com/",
+      "kind": "background map data",
+      "rights": "Public domain (Natural Earth terms of use). Cut and simplified for this page.",
+      "checked": "Terms of use opened 27 Oct 2026. Reservoirs (such as Kainji, 1968) are left out because they did not exist before 1914; see history/geo/README.md."
+    },
+    "lc-chad-kanem": {
+      "title": "Chad: a country study, \"Precolonial history: Kanem-Borno\"",
+      "author": "Federal Research Division, Library of Congress (ed. Thomas Collelo)",
+      "year": "1988",
+      "url": "https://countrystudies.us/chad/6.htm",
+      "kind": "government reference work (secondary); seen only in search excerpts",
+      "rights": "US government work; facts cited, no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 31 Oct 2026. The nomadic Sayfawa pushed south into Kanem before the twelfth century; Bulala invaders from around Lake Fitri, to the east, killed five of the six mais who reigned between 1376 and 1400; they forced Mai Umar Idrismi to leave Njimi and move the Kanembu to Borno; the Kanuri emerged from intermarriage of Kanembu and Borno peoples; Kanem-Borno peaked under Mai Idris Aluma (about 1571-1603), who required major political figures to live at court and made alliances by marriage; by the early nineteenth century the empire was in decline, and in 1808 Fulani warriors conquered Ngazargamu."
+    },
+    "wiki-bilala": {
+      "title": "Bilala dynasty (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "seen 2026-10-31",
+      "url": "https://en.wikipedia.org/wiki/Bilala_dynasty",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites); seen only in search excerpts",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 31 Oct 2026. By 1376 the Bulala (Bilala) had driven the Sayfawa from their capital and by 1388 had taken Kanem; another account dates the capture of Njimi to 1363. They ruled Kanem until they lost it about 1630 (in the 17th century), after which they settled around Lake Fitri."
+    },
+    "wiki-kanem": {
+      "title": "Kanem Empire (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Kanem_Empire",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Core territory in Kanem, north-east of Lake Chad; the site of Njimi has never been located; founding typically dated to c. 700, with c. 600 and c. 900 also given; the Bilala took Njimi around 1380 and the court moved to Bornu; exported salt, ivory, slaves and animal products."
+    },
+    "wiki-ngazargamu": {
+      "title": "Ngazargamu and Ali Gazi (Wikipedia and copies of it)",
+      "author": "Wikipedia contributors",
+      "year": "seen 2026-10-31",
+      "url": "https://en.wikipedia.org/wiki/Ngazargamu",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites); seen only in search excerpts",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 31 Oct 2026. Built by Mai Ali Gaji (Ali Gazi), in the fork of the Komadugu Gana and Komadugu Yobe near today's Geidam, Yobe State; the first lasting capital after the loss of Njimi; abandoned in the early 1800s in the Fulani war. Its founding is dated about 1460, about 1462, by 1472 and about 1488 in different copies and articles, and Ali Gaji's reign 1455-1487, 1470-1503 or 1472-1504."
+    },
+    "wiki-bornu": {
+      "title": "Bornu Empire (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Bornu_Empire",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites)",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Opened 27 Oct 2026. Ngazargamu founded c. 1472 on the Yobe; captured and destroyed by the Fulani in 1808; mai Idris III recognised as suzerain of Kano and paid tribute."
+    },
+    "wiki-places-deep": {
+      "title": "Coordinates and facts for the deep-time chapter (Wikipedia place articles)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Lake_Chad",
+      "kind": "gazetteer coordinates of today's places",
+      "rights": "Coordinates are facts; no text reused.",
+      "checked": "Opened 27 Oct 2026. Lake Chad 13.099 N 14.533 E (Lake Mega-Chad: four highstands between 39,000 BC and 300 BC, about 400,000 km², over 180 m deep, draining to the Benue through the Mayo Kebbi); Enugu State 6.500 N 7.500 E (coal in the Udi Hills around Enugu, first shipped to Britain by 1914); Abakaliki 6.333 N 8.100 E; Makurdi 7.733 N 8.500 E (on the Benue); the Gongola joins the Benue opposite Numan (page geotag 9.500 N 12.067 E)."
+    },
+    "armitage-2015": {
+      "title": "Extreme fluctuations of Lake Mega-Chad and the Holocene drying of the Sahara (PNAS 112)",
+      "author": "Simon J. Armitage, Charlie S. Bristow and Nick A. Drake",
+      "year": "2015",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4507243",
+      "kind": "peer-reviewed article (open access); seen only in search excerpts",
+      "rights": "Cited and described; no text or figures reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 31 Oct 2026. Lake Mega-Chad's highstand lasted until about 5,000 years ago, then levels fell rapidly across the basin; the northern basin (the Bodele depression, today the world's greatest dust source) held a small lake until about 1,000 years ago, when it became dry."
+    },
+    "nasa-lake-chad": {
+      "title": "The Rise and Fall of Africa's Great Lake",
+      "author": "NASA Earth Observatory",
+      "year": "seen 2026-10-31",
+      "url": "https://earthobservatory.nasa.gov/features/LakeChad",
+      "kind": "science agency feature; seen only in search excerpts",
+      "rights": "NASA text is generally public domain; facts cited, no text or images reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 31 Oct 2026. Lake Chad now covers less than a tenth of the area it covered in the 1960s; in the mid-1980s its level fell about 3 m below the 1900-2010 mean."
+    },
+    "wiki-njimi": {
+      "title": "Njimi (Wikipedia)",
+      "author": "Wikipedia contributors",
+      "year": "seen 2026-10-31",
+      "url": "https://en.wikipedia.org/wiki/Njimi",
+      "kind": "encyclopedia (secondary, used as a pointer to the works it cites); seen only in search excerpts",
+      "rights": "CC BY-SA 4.0 text; facts cited only, no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 31 Oct 2026. Njimi was in the Kanem region east of Lake Chad, but its precise location has yet to be securely identified; first recorded in twelfth-century texts, probably the original capital, though one source suggests Manan came first."
+    },
+    "wiki-places-key": {
+      "title": "Coordinates and town facts for the map key (Wikipedia place articles)",
+      "author": "Wikipedia contributors",
+      "year": "accessed 2026",
+      "url": "https://en.wikipedia.org/wiki/Ngazargamu",
+      "kind": "gazetteer coordinates of today's towns and of one ruined capital",
+      "rights": "Coordinates are facts; no text reused.",
+      "checked": "Opened 27 Oct 2026. Bilma 18.687 N 12.919 E; Mao (Kanem region, Chad) 14.119 N 15.313 E; Daura 13.036 N 8.318 E; Katsina 12.989 N 7.601 E (21 km city wall, founded c. 1100); Kano 12.000 N 8.517 E (walls begun under Gijimasu, 1095-1134); Ngazargamu ruins 13.083 N 12.367 E (near Geidam); Benin City 6.333 N 5.622 E; Arochukwu 5.383 N 7.917 E; Oguta 5.712 N 6.809 E (on Oguta Lake); Onitsha 6.167 N 6.783 E (founded 1630-1680, or the 16th century by some sources); Bonny 4.433 N 7.167 E (turned to palm oil after 1807); Sokoto 13.062 N 5.234 E (founded as a ribat in 1809); Gwandu 12.502 N 4.643 E (co-capital overseeing the western and southern lands); Zaria 11.067 N 7.700 E (captured by the Fulani in 1805, taken by British forces under Lugard in 1901)."
+    },
+    "frobenius-kanem": {
+      "title": "The Lake Chad Region as a Crossroads: first archaeological and oral historical investigations into early Kanem-Borno and its intra-African connections",
+      "author": "Frobenius Institute",
+      "year": "checked 2026-10-27",
+      "url": "https://www.frobenius-institut.de/en/research/beendete-projekte/the-lake-chad-region-as-a-crossroads-first-archaeological-and-oral-historical-investigations-into-early-kanem-borno-and-its-intra-african-connections",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "No reusable asset licence established. Cite facts in original prose; no images copied.",
+      "checked": "Opened 27 Oct 2026. Project results, lines12–16: eastern Lake Chad study region; uncertain formative archaeology; later flourishing; Tié/Njimi hypothesis and excavated building attributes. "
+    },
+    "magnavita-2025": {
+      "title": "New Luminescence and Radiocarbon Dates for Kanem-Borno Fired-Brick Elite Sites in Kanem, Chad: Bayesian Chronological Modelling of Settlement Construction",
+      "author": "Research source",
+      "year": "2025-01-25",
+      "url": "https://link.springer.com/article/10.1007/s10437-025-09611-1",
+      "kind": "institutional or scholarly evidence; see checked passage",
+      "rights": "Article CC BY4.0 verified. Third-party credit-line exceptions apply. No figure asset selected or copied.",
+      "checked": "Opened 27 Oct 2026. HTML Introduction68–81; Sites101–112; Model2 discussion230–250; Rights393–395. Full article and23-page PDF opened. Figure1 caption checked; no exact coordinate extracted. "
+    },
+    "wiki-lake-fitri": {
+      "title": "Lake Fitri (Wikipedia) and its Ramsar site record",
+      "author": "Wikipedia contributors; Ramsar Sites Information Service (site 486)",
+      "year": "seen 2026-10-31",
+      "url": "https://rsis.ramsar.org/ris/486",
+      "kind": "gazetteer coordinates; seen only in search excerpts",
+      "rights": "Coordinates are facts; no text reused.",
+      "checked": "Not opened: this session's network policy blocked the site, so the page was seen only through web-search excerpts on 31 Oct 2026. Wikipedia gives 12 48 33 N 17 30 09 E (12.809 N 17.503 E); the Ramsar record gives 12 49 N 17 30 E. Yao, on the lake shore, is the capital of Fitri department in Batha and the seat of a sultanate that Wikipedia links with the Bulala."
+    }
+  },
+  "status": "Unreviewed draft; rights and historian review required before publication",
+  "transition": "0.45-second dissolve into each later shot",
+  "duration": 46,
+  "frames": 2760
+}

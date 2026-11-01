@@ -30,7 +30,7 @@ class HausaChapterTests(unittest.TestCase):
         return ch, sc, {p["id"]: p for p in city["monument"]["parts"]}
 
     def test_chapter_follows_nok(self):
-        self.assertEqual(bh.CHAPTERS.index("hausa"), bh.CHAPTERS.index("nok") + 1)
+        self.assertGreater(bh.CHAPTERS.index("hausa"), bh.CHAPTERS.index("nok"))
         self.assertEqual(self.problems(copy.deepcopy(self.hausa)), [])
 
     def test_every_dated_part_waits_for_its_date(self):
