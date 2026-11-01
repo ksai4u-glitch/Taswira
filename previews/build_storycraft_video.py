@@ -34,6 +34,11 @@ COPIES = {
                                  'Sahara greening north and drying back as Lake Mega-Chad swells and shrinks. Disputed dates are labelled.',
                                  'https://github.com/ksai4u-glitch/Taswira/blob/main/history/chapters/deep.json',
                                  'The deep-time chapter and its sources', 'taswira-fire-and-sand.mp4'),
+    'iron-roads-video.html': ('Nigeria\'s railways and ports, 1896 to 1960: the line from Lagos and the Baro-Kano railway meeting at Minna, '
+                              'the Enugu coal and the founding of Port Harcourt, one colony in 1914, and the network to Maiduguri, ending on '
+                              'independence on 1 October 1960. Lines are drawn when they opened, as schematic lines between named towns.',
+                              'https://github.com/ksai4u-glitch/Taswira/blob/main/history/chapters/colonial.json',
+                              'The colonial chapter and its sources', 'taswira-iron-roads.mp4'),
 }
 
 
