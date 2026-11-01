@@ -33,7 +33,7 @@ class SokotoChapterTests(unittest.TestCase):
 
     def test_chapter_follows_hausa_and_passes_the_checks(self):
         self.assertEqual(bh.CHAPTERS.index("sokoto"), bh.CHAPTERS.index("hausa") + 1)
-        self.assertEqual(bh.CHAPTERS.index("states"), bh.CHAPTERS.index("sokoto") + 1)
+        self.assertEqual(bh.CHAPTERS.index("colonial"), bh.CHAPTERS.index("sokoto") + 1)
         self.assertEqual(self.problems(copy.deepcopy(self.sokoto)), [])
         self.assertFalse(self.sokoto.get("reference", False), "the chapter is part of the film, not reference")
 
