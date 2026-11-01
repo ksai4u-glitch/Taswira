@@ -129,6 +129,14 @@ northwards and dries from the north, with Lake Mega-Chad swelling and shrinking.
 these scenes could be seen only through search excerpts in the session that added them, and each
 says so and asks for a re-check on the page.
 
+`previews/fire-and-sand-video.html` is a 98-second proof of these scenes (1920×1080, 30 fps,
+silent), made with:
+
+```
+node capture_history.cjs <built-history> <local-dependencies> <fire-and-sand.mp4> 30 8 history/cuts/fire-and-sand.json
+python previews/build_storycraft_video.py <fire-and-sand.mp4> fire-and-sand-video.html
+```
+
 ### Not yet checked
 
 Anything with status `to-check`, a feature or a drawn emblem, may only be shown in a scene whose
