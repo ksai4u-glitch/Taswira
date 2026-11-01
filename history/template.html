@@ -621,6 +621,12 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const clamp01 = v => Math.max(0, Math.min(1, v));
 const easeOut = u => 1 - (1 - u) ** 3;
+// How wet a greening scene is at time t: the rains come in over its first quarter and fail over
+// its last 30%. A paused or jumped-to scene shows it wet.
+const wetness = (sc, t, live) => { const u = live ? clamp01(t / sc.duration) : 0.5;
+  return clamp01(u / 0.25) * (1 - clamp01((u - 0.7) / 0.3)); };
+// A lake's drawn size as a share of its largest, from dry (today's small lake) to wet
+const lakeShare = wet => 0.14 + 0.86 * wet;
 const easeInOut = u => (u < .5 ? 4 * u ** 3 : 1 - (-2 * u + 2) ** 3 / 2);
 const setText = (el, s) => { if (el.textContent !== s) el.textContent = s; };
 
@@ -636,6 +642,7 @@ const fxOn = () => captureClock !== null || fxPref && !lessMotion.matches;
 // (see history/geo/README.md).
 // Stored as [lat, lon, dlat, dlon, ...] in thousandths of a degree; drawn on a canvas in its own
 // pane under the scene, with no borders, roads or names.
+let flowRivers = [];
 function periodBackground() {
   const bg = DATA.background;
   const decode = flat => {
@@ -652,6 +659,14 @@ function periodBackground() {
   const fill = colour => ({ renderer, interactive: false, stroke: false, fill: true, fillColor: colour, fillOpacity: 1 });
   const land = bg.land.map(poly => poly.map(decode)), lakes = bg.lakes.map(poly => poly.map(decode));
   const rivers = bg.rivers.map(([rank, flat]) => [rank, decode(flat)]);
+  // The larger rivers again, for water drawn moving along them (the build points each one downstream)
+  flowRivers = rivers.filter(([rank, line]) => rank <= 7 && line.length > 1).map(([rank, line]) => {
+    const cum = [0];
+    for (let i = 1; i < line.length; i++) cum.push(cum[i - 1] + Math.hypot(line[i][0] - line[i - 1][0], line[i][1] - line[i - 1][1]));
+    const lats = line.map(p => p[0]), lons = line.map(p => p[1]);
+    return { rank, line, cum, len: cum[cum.length - 1],
+             box: [Math.min(...lats), Math.min(...lons), Math.max(...lats), Math.max(...lons)] };
+  }).filter(r => r.len > 0.05);
   // The land covers the whole world, so pulling back never reaches an edge. A wide screen zoomed
   // far out shows more than 360 degrees of longitude and Leaflet does not repeat vector layers,
   // so the world is drawn three times side by side.
@@ -665,6 +680,9 @@ function periodBackground() {
     // Big rivers always; smaller ones only once the camera is close enough for them to help
     for (const [rank, line] of rivers) {
       if (rank > 6 && dx) continue;
+      // A soft band of water under the larger rivers, so they read as water rather than as lines
+      if (rank <= 5) L.polyline(at(line), { renderer, interactive: false, color: "#3e8f8c", opacity: .22,
+        weight: rank <= 3 ? 7 : 5, lineCap: "round", lineJoin: "round" }).addTo(map);
       L.polyline(at(line), { renderer, interactive: false, color: "#659482", opacity: .9,
         weight: rank <= 3 ? 2.4 : rank <= 5 ? 1.7 : rank <= 7 ? 1.2 : 0.9, lineCap: "round", lineJoin: "round" })
         .addTo(rank <= 6 ? map : minor);
@@ -789,6 +807,9 @@ function todaysBorders() {
 }
 
 const POINTS_FROM = 1.0;    // seconds into a scene when the first place appears
+// Share of a scene over which its narration appears, line by line. The rest is a short hold to
+// finish reading; the map keeps moving through it (rivers, moods, places glowing as they are named).
+const NARRATE = 0.75;
 
 // --- Map vocabulary ------------------------------------------------------------------
 // Each kind of political order, tie and movement has its own look (see history/README.md).
@@ -796,7 +817,7 @@ const POINTS_FROM = 1.0;    // seconds into a scene when the first place appears
 const VOCAB = {
   kingdom: [244, 201, 93], "city-state": [236, 159, 110], network: [111, 211, 193], caliphate: [195, 169, 255],
   emirate: [195, 169, 255], communities: [201, 215, 122], migration: [234, 217, 176], campaign: [255, 91, 79],
-  trade: [247, 165, 65], claim: [255, 138, 101], site: [76, 201, 224], lake: [96, 170, 230],
+  trade: [247, 165, 65], claim: [255, 138, 101], site: [76, 201, 224], lake: [96, 170, 230], volcano: [255, 112, 52],
 };
 const hex = rgb => "#" + rgb.map(v => v.toString(16).padStart(2, "0")).join("");
 // Ties between places. Allegiance and tribute point to the overlord; networks are dotted threads.
@@ -829,6 +850,11 @@ function markSvg(form) {
     network: `<g stroke="${c}" stroke-width="2" stroke-linecap="round">${spokes}</g><circle r="6" fill="${d}" stroke="${c}" stroke-width="2"/><circle r="2.8" fill="${c}"/>`,
     caliphate: `<circle r="10" fill="${d}" stroke="${c}" stroke-width="2"/><circle r="6.2" fill="none" stroke="${c}" stroke-width="1.6"/><circle r="2.8" fill="${c}"/>`,
     emirate: `<circle r="6.6" fill="${d}" stroke="${c}" stroke-width="2.4"/><circle r="2.4" fill="${c}"/>`,
+    // One cone for every volcano or volcanic field, with a glowing vent: a symbol, not a drawing of the mountain
+    volcano: `<path d="M-11 9 -3.2-6.5h6.4L11 9Z" fill="#3a2a22" stroke="${d}" stroke-width="1.6" stroke-linejoin="round"/>`
+      + `<path d="M-3.2-6.5h6.4L5.4-2.6C2.6-1.2-.4-3.4-3.4-1.6L-5-2.9Z" fill="#5a3b2a"/>`
+      + `<path d="M-2.6-6.6Q0-8.6 2.6-6.6" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round"/>`
+      + `<path d="M.6-6.2C.2-2 2.2 1.4 1.2 5.6" fill="none" stroke="${c}" stroke-width="1.4" stroke-linecap="round" opacity=".85"/>`,
   }[form];
   return `<svg viewBox="-13 -13 26 26" width="26" height="26" aria-hidden="true">${inner}</svg>`;
 }
@@ -1207,6 +1233,7 @@ function drawPlaces(ch, sc) {
       const area = L.circle(f.coordinates, { renderer: svg, radius: f.reach_km * 1000, stroke: false, fillColor: fill,
         fillOpacity: faded ? .45 : 1, interactive: false }).addTo(sceneLayer);
       if (form === "communities") area.getElement().setAttribute("mask", "url(#hx-soft)");
+      if (form === "lake" && sc.mood === "greening") fx.lakes.push({ area, km: f.reach_km, now: null });
       els.push(area);
     }
     // A colonial claim: hatched while on paper, solid once occupation is documented
@@ -1261,7 +1288,7 @@ function drawPlaces(ch, sc) {
       els.push(L.marker(f.coordinates, { interactive: false, keyboard: false, icon: L.divIcon({ className: "hx-emblem",
         html: `<div class="hx-in em em-${em.tier}">${em.svg}</div>`, iconSize: [40, 26], iconAnchor: [20, 42] }) }).addTo(sceneLayer));
     }
-    fx.points.push({ els: els.map(l => l.getElement()).concat(raw), at, now: null, ll: f.coordinates,
+    fx.points.push({ id, els: els.map(l => l.getElement()).concat(raw), at, now: null, ll: f.coordinates,
                      furnace: furnace.has(id), faded, seed: k + 1, rgb: VOCAB[form] || null, form, reach: f.reach_km || 0 });
     // A place that loses its independence during the scene goes faint from that moment
     if (sc.fade?.[id] != null) fx.fades.push({ els: els.map(l => l.getElement()).concat(raw), at: sc.fade[id], now: null });
@@ -1591,6 +1618,7 @@ function keyFor(ch, sc) {
     emblem: [sw(`<rect x="3" y="2" width="24" height="14" rx="3" fill="#08120e" stroke="#5b4a1e"/><circle cx="15" cy="9" r="3" fill="#f4c95d"/>`), "Badge: a documented flag or symbol (see its entry above)"],
     landmass: [sw(`<rect x="1" y="3" width="28" height="12" rx="5" fill="${LAND_LIT}"/>`), "A continent the scene is about (lit); others are dim"],
     lake: [sw(`<circle cx="15" cy="9" r="8" fill="url(#hx-halo-lake)"/>`), "A lake drawn as a soft disc of its area. Its shoreline is not drawn."],
+    volcano: [mark("volcano"), "Volcano or volcanic field: one symbol for all, not a drawing of the mountain. The glow and smoke are decoration."],
     "line-river": [line([168,210,182], 'stroke-width="3"'), "Generalised physical river locator; not a boundary, migration or trade route"],
     "line-rift": [line(RIFT, 'stroke-width="3"'), "A rift: bright while it was opening, grey once it stopped"],
   };
@@ -1734,6 +1762,7 @@ function render({ animate = true, announce = false } = {}) {
   sceneLayer.clearLayers();
   fx = { sets: [], siteLabels: [], labelKey: null, points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
          timed: [], draws: [], flips: [], ties: [], fades: [], arrivals: [], heads: [], drifts: [], goods: [], globeLines: [],
+         flow: [], mentions: [], lakes: [], erupt: new Set(sc.erupt || []),
          rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
          card: { now: null }, lower: { now: null }, shownCount: { now: null } };
   $("mapwrap").dataset.base = sc.base;
@@ -1791,6 +1820,19 @@ function render({ animate = true, announce = false } = {}) {
     legend(ch, sc) + `<h3>Sources for this scene</h3>${sourceList(sc.sources)}`;
   $("card").scrollTop = 0;
   fx.sentences = [...$("card").querySelectorAll(".c-text .line")];
+  // A place named in the narration glows on the map as its sentence appears (decoration: the
+  // panel already says it). Matched on the place's full or short name, once per sentence.
+  if (sc.base !== "deep" && !sc.snapshot) {
+    const gap = sc.duration * NARRATE / Math.max(1, sentences.length);
+    const named = (sc.show || []).map(id => ch.features[id]).filter(f => f.kind === "point" && f.form !== "landmass");
+    sentences.forEach((line, i) => {
+      const at = sc.beats?.[i]?.at ?? i * gap, low = line.toLowerCase();
+      for (const f of named) {
+        const names = [f.name, f.short].filter(Boolean).map(n => n.toLowerCase().replace(/\s*\(.*\)$/, ""));
+        if (names.some(n => n.length > 2 && low.includes(n))) fx.mentions.push({ at: Math.max(at, 0.4, (fx.points.find(q => q.id === f.id)?.at ?? 0) + 0.6), ll: f.coordinates, id: f.id });
+      }
+    });
+  }
 
   document.querySelectorAll("#chapters button").forEach((b, i) => b.setAttribute("aria-current", i === state.c));
   drawRuler();
@@ -2071,7 +2113,7 @@ function frame(now) {
   } else setText($("hud-sub"), sc.title);
 
   const storyLines = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
-  const storyGap = sc.duration*.55/storyLines.length;
+  const storyGap = sc.duration*NARRATE/storyLines.length;
   const storyLine = !live ? sc.text : directedBeat(sc,t)?.beat.text || storyLines[Math.min(storyLines.length-1,Math.max(0,Math.floor(t/storyGap)))].trim();
   const captionLine = $("story-caption").querySelector(".story-line");
   $("story-caption").classList.toggle("whole", !live);
@@ -2083,7 +2125,7 @@ function frame(now) {
   setText($("story-caption").querySelector(".story-kicker"),[dated?dated.label:sc.when.label,sc.scale||sc.title].join(" · "));
   setText($("viewer-status"),sceneCaution(sc));
   // Narration appears sentence by sentence while playing; everything shows when paused
-  const gap = (sc.duration * 0.55) / Math.max(1, fx.sentences.length);
+  const gap = (sc.duration * NARRATE) / Math.max(1, fx.sentences.length);
   fx.sentences.forEach((el, i) => el.classList.toggle("waiting", state.playing && live && t < (sc.beats?.[i]?.at ?? i * gap)));
 
   // Walled towns: about their full size at zoom 8, a little larger closer in and smaller further out
@@ -2099,6 +2141,9 @@ function frame(now) {
       if (inner) inner.classList.toggle("hx-rise", on && live && !sc.sensitive && !sc.campaign_clock);
     }));
   }
+  // A lake in a greening scene grows as the rains come and shrinks back as they fail
+  for (const lk of fx.lakes) setOnce(lk, Math.round(lakeShare(wetness(sc, t, live)) * 200),
+                                     v => lk.area.setRadius(lk.km * 1000 * v / 200));
   for (const it of fx.timed) setOnce(it, t >= it.from && (t < it.to || it.to === Infinity),
                                      on => it.els.forEach(el => el.classList.toggle("hx-hidden", !on)));
   for (const d of fx.draws) setOnce(d, Math.round(clamp01((t - d.from) / d.dur) * 100), v => {
@@ -2457,15 +2502,103 @@ function delta(ll, W, grow) {
   }
   glow(p.x, p.y + R * 0.25, R * (0.6 + 0.7 * grow), COL.sand, 0.12 + 0.04 * Math.sin(W * 1.5));
 }
-// Green Sahara: patches of grass spreading over the desert, then sand blowing back in as it dries
+// Where the Sahara lies today, roughly: soft patches spread over about 16 to 31° N and 15° W to
+// 33° E. Decoration only, never an outline of the desert at any date.
+const SAHARA = Array.from({ length: 64 }, (_, i) => [16 + 15 * rnd(61, i), -15 + 48 * rnd(62, i)]);
+// Green Sahara: grass spreads north as the monsoon reaches further, then dries from the north back
+// south, and sand and dunes return
 function greening(W, wet) {
-  for (let i = 0; i < 170; i++) {
-    const on = clamp01(wet * 1.6 - rnd(43, i) * 0.6);      // patches turn green one after another
-    dot(rnd(41, i) * cvW + Math.sin(W * 0.8 + i) * 2, rnd(42, i) * cvH, 1.4 + 2 * rnd(44, i), COL.green,
-        0.4 * on * (0.7 + 0.3 * Math.sin(W * 2 + i)));
+  SAHARA.forEach(([lat, lon], i) => {
+    const reach = (lat - 16) / 15;                       // the southern patches green first and stay longest
+    const on = clamp01((wet - reach * 0.75) / 0.25);
+    if (on <= 0) return;
+    const p = xy([lat, lon]), r = kmToPx([lat, lon], 260 + 140 * rnd(63, i));
+    glow(p.x, p.y, r, COL.green, 0.16 * on * (0.85 + 0.15 * Math.sin(W * 0.9 + i)));
+    for (let k = 0; k < 4; k++) dot(p.x + (rnd(64, i * 4 + k) - 0.5) * r, p.y + (rnd(65, i * 4 + k) - 0.5) * r * 0.7,
+                                   1.4 + 1.6 * rnd(66, i * 4 + k), COL.green, 0.45 * on * (0.7 + 0.3 * Math.sin(W * 2 + i + k)));
+  });
+  glow(cvW / 2, cvH * 0.45, Math.max(cvW, cvH) * 0.55, COL.green, 0.05 * wet);
+  if (wet < 1) desert(W, 1 - wet);
+}
+// The desert: sand over the Sahara, crescent dunes whose horns point downwind, and sand blowing
+// with the north-east wind. sand from 0 (none) to 1 (all of it).
+function desert(W, sand) {
+  if (sand <= 0) return;
+  SAHARA.forEach(([lat, lon], i) => {
+    const on = clamp01((sand - (1 - (lat - 16) / 15) * 0.5) / 0.5);   // the north dries first
+    if (on <= 0) return;
+    const p = xy([lat, lon]), r = kmToPx([lat, lon], 300 + 120 * rnd(67, i));
+    glow(p.x, p.y, r, COL.sand, 0.11 * on);
+    // A dune creeping south-west, a crescent opening downwind
+    const drift = (W * 0.6 + 40 * rnd(68, i)) % 40, s = Math.max(5, r * 0.09);
+    const dx = p.x - drift * 0.9 + (rnd(69, i) - 0.5) * r, dy = p.y + drift * 0.45 + (rnd(70, i) - 0.5) * r * 0.6;
+    g.strokeStyle = rgba(COL.sand, 0.55 * on * Math.sin(Math.PI * drift / 40)); g.lineWidth = 1.6;
+    g.beginPath(); g.arc(dx, dy, s, Math.PI * 0.15, Math.PI * 1.15); g.stroke();
+  });
+  // Sand on the wind, from the north-east towards the south-west
+  const w = cvW + 80, h = cvH + 80;
+  for (let i = 0; i < 90; i++) {
+    const sp = 30 * (0.6 + rnd(71, i)), px = ((rnd(72, i) * w - W * sp) % w + w) % w - 40;
+    const py = ((rnd(73, i) * h + W * sp * 0.45 + Math.sin(W + i) * 6) % h + h) % h - 40;
+    g.strokeStyle = rgba(COL.sand, 0.4 * sand * (0.5 + 0.5 * rnd(74, i))); g.lineWidth = 1;
+    g.beginPath(); g.moveTo(px, py); g.lineTo(px + 7, py - 3.2); g.stroke();
   }
-  glow(cvW / 2, cvH * 0.45, Math.max(cvW, cvH) * 0.55, COL.green, 0.07 * wet);
-  if (wet < 1) motes(W, 17, { n: 80, c: COL.sand, speed: 34, rise: -0.1, a: 0.5 * (1 - wet), size: 1.4 });
+}
+// A volcano: heat at the vent, a plume of smoke leaning with the wind, glowing lava on the flanks,
+// and for a scene's erupting volcanoes a fountain of embers every few seconds
+function volcano(x, y, W, seed, erupting, since) {
+  const flick = 0.75 + 0.25 * Math.sin(W * 7 + seed * 3);
+  glow(x, y - 4, 64, COL.ember, 0.32 * flick);             // the land lit from below
+  glow(x, y - 7, 26, [255, 170, 80], 0.6 * flick);
+  glow(x, y - 7, 8, [255, 236, 180], 0.95 * flick);
+  for (let i = 0; i < 9; i++) {                          // smoke rising, leaning east with the wind
+    const ph = (W / 5 + i / 9 + seed * 0.17) % 1;
+    glow(x + ph * 60 + Math.sin(W * 0.8 + i) * 5, y - 12 - ph * 96, 8 + ph * 36, COL.ash, 0.26 * (1 - ph) * Math.min(1, ph * 6));
+  }
+  g.lineCap = "round";
+  for (let i = 0; i < 4; i++) {                          // lava running down the flanks
+    const ph = (W / 3 + i / 4 + seed * 0.3) % 1, side = i % 2 ? 1 : -1, len = 9 + 5 * (i >> 1);
+    const ax = x + side * ph * len, ay = y - 6 + ph * 15;
+    g.strokeStyle = rgba(COL.ember, 0.85 * (1 - ph)); g.lineWidth = 2.2 * (1 - ph * 0.6);
+    g.beginPath(); g.moveTo(ax - side * 2.2, ay - 3.6); g.lineTo(ax, ay); g.stroke();
+  }
+  if (!erupting || since < 0) return;
+  const period = 4.5 + seed % 3, k = Math.floor((since + seed) / period), a = (since + seed) % period;
+  if (a < 0.3) glow(x, y - 10, 120, [255, 190, 120], 0.55 * (1 - a / 0.3));   // the flash
+  ring(x, y - 6, a, { r0: 8, r1: 90, c: COL.ember, life: 1.2, w: 3 });
+  ring(x, y - 6, a - 0.15, { r0: 6, r1: 56, c: [255, 225, 170], life: 0.9, w: 1.5 });
+  burst(x, y - 9, a, seed * 31 + k, { n: 40, speed: 190, life: 1.7, c: COL.ember, grav: 190, size: 2.2, streak: true, up: true });
+  burst(x, y - 9, a - 0.12, seed * 37 + k, { n: 22, speed: 120, life: 1.4, c: [255, 220, 140], grav: 160, size: 1.6, up: true });
+  for (let i = 0; i < 6; i++) {                          // a column of ash after each burst
+    const ph = clamp01((a - 0.2 - i * 0.12) / 2.6);
+    if (ph <= 0 || ph >= 1) continue;
+    glow(x + ph * 30, y - 20 - ph * 130, 14 + ph * 46, COL.ash, 0.3 * (1 - ph));
+  }
+}
+// Water moving down the larger rivers in view, spaced and paced in screen pixels at any zoom
+function riverFlow(W) {
+  if (!flowRivers.length) return;
+  const z = map.getZoom(), b = map.getBounds().pad(0.15), S = b.getSouth(), N = b.getNorth(), Wl = b.getWest(), E = b.getEast();
+  const maxRank = z >= 6.5 ? 7 : z >= 4.5 ? 5 : 3, perPx = 360 / (256 * 2 ** z);
+  const spacing = 34 * perPx, speed = 16 * perPx;
+  let budget = 520;
+  for (const r of flowRivers) {
+    if (budget <= 0) break;
+    if (r.rank > maxRank || r.box[2] < S || r.box[0] > N || r.box[3] < Wl || r.box[1] > E) continue;
+    const n = Math.min(budget, Math.max(1, Math.floor(r.len / spacing)));
+    budget -= n;
+    const big = r.rank <= 3 ? 1 : r.rank <= 5 ? 0.75 : 0.5;
+    let j = 1;
+    for (let i = 0; i < n; i++) {
+      const d = ((i * spacing + W * speed + r.len * rnd(81, r.rank + i * 0.001)) % r.len + r.len) % r.len;
+      j = 1; while (j < r.cum.length - 1 && r.cum[j] < d) j++;
+      const a = r.line[j - 1], c = r.line[j], u = (d - r.cum[j - 1]) / ((r.cum[j] - r.cum[j - 1]) || 1);
+      const p = xy([a[0] + (c[0] - a[0]) * u, a[1] + (c[1] - a[1]) * u]);
+      const ends = Math.min(1, d / (spacing * 1.5), (r.len - d) / (spacing * 1.5));
+      dot(p.x, p.y, 1.1 + 0.7 * big, [178, 236, 240], 0.55 * big * ends);
+      glow(p.x, p.y, 5 + 3 * big, [120, 210, 220], 0.22 * big * ends);
+    }
+  }
 }
 // Slow ripples on a lake
 function ripples(x, y, R, W, a) {
@@ -2610,11 +2743,23 @@ function paint(now) {
     case "excavation": break;    // the searchlight is drawn above
     case "delta": shown.forEach(q => delta(q.pt.ll, W, live ? clamp01(t / sc.duration) : 1)); break;
     case "greening": {           // wet from the start of the scene, drying over its last part
-      const u = live ? clamp01(t / sc.duration) : 0.5, wet = clamp01(u / 0.25) * (1 - clamp01((u - 0.7) / 0.3));
+      const wet = wetness(sc, t, live);
       greening(W, wet);
-      shown.filter(q => q.pt.form === "lake").forEach(q => ripples(q.p.x, q.p.y, kmToPx(q.pt.ll, q.pt.reach) * 0.8, W, wet));
+      shown.filter(q => q.pt.form === "lake").forEach(q => {      // the lake swells with the rains and shrinks as they fail
+        const r = kmToPx(q.pt.ll, q.pt.reach * lakeShare(wet));
+        glow(q.p.x, q.p.y, r * 1.15, VOCAB.lake, 0.3 + 0.2 * wet);
+        ripples(q.p.x, q.p.y, r * 0.8, W, Math.max(0.3, wet));
+      });
       break;
     }
+    case "desert-born":          // the dunes and the sand come in over the scene
+      desert(W, live ? clamp01((t - 1) / (sc.duration * 0.6)) : 1);
+      break;
+    case "volcanic":
+      glow(cvW / 2, cvH * 0.6, Math.max(cvW, cvH) * 0.6, COL.ember, 0.05 + 0.015 * Math.sin(W * 1.1));
+      shown.filter(q => q.pt.form === "volcano").forEach(q =>
+        volcano(q.p.x, q.p.y, W, q.pt.seed, fx.erupt.has(q.pt.id), age(q.pt.at)));
+      break;
   }
   for (const ln of fx.globeLines) {
     if (!ln.active || ln.pts.length < 2) continue;
@@ -2670,6 +2815,22 @@ function paint(now) {
   if (fx.count && fx.newArcs.length) {
     const a = live ? t - fx.count.end - 0.2 : x - 1.1;
     sweep(a / 1.1, COL.gold, 0.22);
+  }
+
+  // Water moving down the rivers on the historical background, in every scene drawn over it
+  if (sc.base === "period" && !sc.snapshot) { riverFlow(W); moving = moving || state.playing; }
+  // Places breathe softly once they are on the map, so a long read never leaves the map still
+  if (!calm) shown.filter(q => !q.pt.faded && q.pt.form !== "volcano" && q.pt.form !== "landmass").forEach(q =>
+    glow(q.p.x, q.p.y, 22, q.pt.rgb || COL.cyan, 0.1 + 0.07 * Math.sin(W * 1.6 + q.pt.seed)));
+  // A place named in the narration lights up as its sentence appears
+  if (live) for (const m of fx.mentions) {
+    const a = t - m.at;
+    if (a < 0 || a > 2.4) continue;
+    const p = xy(m.ll), fade = 1 - a / 2.4;
+    ring(p.x, p.y, a, { r0: 8, r1: 64, c: COL.gold, life: 1.4, w: 2.5 });
+    ring(p.x, p.y, a - 0.3, { r0: 8, r1: 44, c: COL.white, life: 1.2, w: 1.5 });
+    glow(p.x, p.y, 54, COL.gold, 0.35 * fade * fade);
+    moving = true;
   }
 
   // The map vocabulary in motion (decoration: the lines, dots and labels already say it all)
@@ -2976,7 +3137,7 @@ window.taswira = {
     $("mapwrap").classList.add("fx-on", "cinema");
     const sc = scene(), t = state.t - lead();
     const sentences = sc.text.match(/[^.!?]+[.!?]+(\s|$)|[^.!?]+$/g) || [sc.text];
-    const gap = sc.duration * .55 / sentences.length;
+    const gap = sc.duration * NARRATE / sentences.length;
     $("video-caption").textContent = t < 0 ? "" : directedBeat(sc,t)?.beat.text || sentences[Math.min(sentences.length - 1, Math.floor(t / gap))].trim();
     $("video-caution").textContent=sceneCaution(sc);
     $("video-credit").textContent = sc.base === "deep"

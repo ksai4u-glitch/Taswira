@@ -4,8 +4,8 @@
   "period": "600 million to 5,000 years ago",
   "area": "world",
   "clock": "ago",
-  "intro": "Before there were people, the land itself moved. This chapter covers about 600 million years in a few minutes: the continents gather and break apart, a rift opens into West Africa and stops, the Niger Delta grows, and the Sahara turns green and dries again. If those 600 million years were one day, everything since the first Nok farmers would fit into its last half-second.",
-  "method": "The continents are drawn where a published plate model puts them (Merdith et al. 2021), on a globe with the grid of latitude and longitude of the time. The outlines are today's continents with their shelves, simplified, so they show where the land was, not the coastlines of the time. Rocks record how far from the poles they formed but not how far east or west, so the longitudes of deep time are the model's choice. The last two scenes are on the plain map of today's land, lakes and rivers.",
+  "intro": "Before there were people, the land itself moved. This chapter covers about 600 million years in a few minutes: the continents gather and break apart, a rift opens into West Africa and stops, the Niger Delta grows, volcanoes rise, the Sahara is born, and it turns green and dries again. If those 600 million years were one day, everything since the first Nok farmers would fit into its last half-second.",
+  "method": "The continents are drawn where a published plate model puts them (Merdith et al. 2021), on a globe with the grid of latitude and longitude of the time. The outlines are today's continents with their shelves, simplified, so they show where the land was, not the coastlines of the time. Rocks record how far from the poles they formed but not how far east or west, so the longitudes of deep time are the model's choice. The last four scenes are on the plain map of today's land, lakes and rivers. A volcano is one cone symbol for every volcano or volcanic field. The glow, smoke, sand, grass and moving water drawn over the map are decoration, not measurements.",
   "features": [
     {
       "id": "nigeria-today",
@@ -171,6 +171,86 @@
       "status": "disputed",
       "disputed": "Its size is given as about 330,000 km² in one source and about 400,000 km² in another.",
       "sources": ["wiki-african-humid-period", "wiki-places-deep"]
+    },
+    {
+      "id": "ethiopian-traps",
+      "kind": "point",
+      "form": "volcano",
+      "name": "Ethiopian flood basalts",
+      "short": "Ethiopian highlands",
+      "coordinates": [11.5, 38.5],
+      "what": "Around 30 million years ago, floods of lava poured out here, most of them within about a million years, and built up the Ethiopian highlands. The eruptions are thought to mark hot rock rising from deep in the Earth, the Afar plume.",
+      "evidence": "Geology (peer-reviewed dating)",
+      "location": "A point on the Ethiopian plateau. The lava covered a much wider area, which is not drawn.",
+      "status": "approx",
+      "disputed": null,
+      "sources": ["hofmann-1997", "wiki-places-volcanoes"]
+    },
+    {
+      "id": "biu-plateau",
+      "kind": "point",
+      "form": "volcano",
+      "name": "Biu Plateau",
+      "coordinates": [10.61, 12.19],
+      "what": "A volcanic plateau in north-eastern Nigeria. Some geologists link its volcanoes to the Cameroon line to the south.",
+      "evidence": "Geology (secondary sources)",
+      "location": "Placed at the town of Biu, on the plateau. The volcanic field is wider and is not drawn.",
+      "status": "approx",
+      "disputed": null,
+      "sources": ["wiki-biu-plateau", "wiki-places-volcanoes"]
+    },
+    {
+      "id": "mount-cameroon",
+      "kind": "point",
+      "form": "volcano",
+      "name": "Mount Cameroon",
+      "coordinates": [4.203, 9.17],
+      "what": "The most active volcano of the Cameroon line, close to the sea. It erupted from its flanks in 1999 and 2000, when the lava came within about 200 m of the sea, and briefly in 2012.",
+      "evidence": "Geology and eruption records (secondary sources)",
+      "location": "The summit, from a gazetteer.",
+      "status": "firm",
+      "disputed": null,
+      "sources": ["wiki-mount-cameroon", "wiki-places-volcanoes"]
+    },
+    {
+      "id": "kilimanjaro",
+      "kind": "point",
+      "form": "volcano",
+      "name": "Kilimanjaro",
+      "coordinates": [-3.076, 37.353],
+      "what": "Three volcanic centres beside the East African Rift. Activity began about 2.5 million years ago at Shira and later moved east to Mawenzi and Kibo. Kibo, the summit cone, is dormant rather than extinct.",
+      "evidence": "Geology (peer-reviewed dating, seen through summaries)",
+      "location": "The summit, from a gazetteer.",
+      "status": "firm",
+      "disputed": null,
+      "sources": ["nonnotte-2008", "wiki-places-volcanoes"]
+    },
+    {
+      "id": "nyiragongo",
+      "kind": "point",
+      "form": "volcano",
+      "name": "Nyiragongo",
+      "coordinates": [-1.52, 29.25],
+      "what": "A volcano above the city of Goma, in the western branch of the East African Rift. Its lava is unusually runny: in 1977 it ran down the upper slopes at up to 60 km/h. In 2002 and 2021 lava reached Goma. Sources give different numbers of people killed and displaced, so none are given here.",
+      "evidence": "Eruption records (secondary sources)",
+      "location": "The summit, from a gazetteer.",
+      "status": "firm",
+      "disputed": null,
+      "sources": ["wiki-nyiragongo", "usgs-nyiragongo", "wiki-places-volcanoes"]
+    },
+    {
+      "id": "chad-dunes",
+      "kind": "point",
+      "name": "Northern Chad Basin",
+      "short": "Chad Basin",
+      "coordinates": [16.5, 18.0],
+      "uncertainty_km": 200,
+      "what": "Where wind-blown dune sand about 7 million years old was found: the oldest known sign of a desert in the Sahara.",
+      "evidence": "Geology (peer-reviewed article)",
+      "location": "A point in the northern Chad Basin, as the sources describe it. The find spot is not drawn; the dashed ring shows the uncertainty.",
+      "status": "approx",
+      "disputed": null,
+      "sources": ["schuster-2006"]
     }
   ],
   "scenes": [
@@ -228,6 +308,38 @@
       "sources": ["wiki-benue-trough", "wiki-places-deep"]
     },
     {
+      "id": "fire-below",
+      "title": "Fire from below: Africa's volcanoes",
+      "when": {"from": -66000000, "to": 2021, "label": "about 66 million years ago to today"},
+      "camera": {"center": [3.0, 22.0], "zoom": 4.0},
+      "duration": 34,
+      "show": ["biu-plateau", "mount-cameroon", "ethiopian-traps", "kilimanjaro", "nyiragongo"],
+      "appear": {"biu-plateau": 4.2, "mount-cameroon": 5.4, "ethiopian-traps": 11.4, "kilimanjaro": 17.4, "nyiragongo": 22.4},
+      "camera_path": [
+        {"at": 3.0, "center": [7.0, 10.8], "zoom": 5.4, "dur": 2.6},
+        {"at": 10.4, "center": [10.5, 37.5], "zoom": 5.2, "dur": 3.0},
+        {"at": 16.4, "center": [-2.3, 33.4], "zoom": 5.3, "dur": 2.8},
+        {"at": 22.0, "center": [3.0, 22.0], "zoom": 4.0, "dur": 3.6}
+      ],
+      "mood": "volcanic",
+      "erupt": ["mount-cameroon", "ethiopian-traps"],
+      "beats": [
+        {"at": 0, "text": "Africa's volcanoes rise where its plates are stretching apart, or where hot rock wells up from deep inside the Earth.", "pose": 1, "focus": [220, 150, 1],
+         "when": {"from": -66000000, "to": 2021, "label": "about 66 million years ago to today", "basis": "geology"}},
+        {"at": 3.6, "text": "In the west, a line of volcanoes runs from the Gulf of Guinea inland. Nigeria's Biu Plateau is linked to it, and Mount Cameroon is its most active volcano.", "pose": 5, "focus": [220, 150, 1],
+         "when": {"from": -66000000, "to": 2021, "label": "from about 66 or 52 million years ago: sources differ", "basis": "differ"}},
+        {"at": 11.0, "text": "About 30 million years ago, floods of lava poured out in Ethiopia, most of them within about a million years, and built the Ethiopian highlands.", "pose": 3, "focus": [220, 150, 1],
+         "when": {"from": -31000000, "to": -29000000, "label": "about 31 to 29 million years ago", "basis": "geology"}},
+        {"at": 17.0, "text": "In the East African Rift, Kilimanjaro began to grow about two and a half million years ago.", "pose": 5, "focus": [220, 150, 1],
+         "when": {"from": -2500000, "to": -2500000, "label": "about 2.5 million years ago", "basis": "geology"}},
+        {"at": 22.0, "text": "In recent decades Mount Cameroon erupted in 1999, 2000 and 2012, and the runny lava of Nyiragongo reached the city of Goma in 2002 and 2021, killing people and forcing many to flee.", "pose": 7, "focus": [220, 150, 1],
+         "when": {"from": 1999, "to": 2021, "label": "1999 to 2021", "basis": "record"}}
+      ],
+      "text": "Africa's volcanoes rise where its plates are stretching apart, or where hot rock wells up from deep inside the Earth. In the west, a line of volcanoes runs from the Gulf of Guinea inland. Nigeria's Biu Plateau is linked to it, and Mount Cameroon is its most active volcano. About 30 million years ago, floods of lava poured out in Ethiopia, most of them within about a million years, and built the Ethiopian highlands. In the East African Rift, Kilimanjaro began to grow about two and a half million years ago. In recent decades Mount Cameroon erupted in 1999, 2000 and 2012, and the runny lava of Nyiragongo reached the city of Goma in 2002 and 2021, killing people and forcing many to flee.",
+      "disputed": "Sources give different starts for the volcanoes of the Cameroon line, from about 66 to about 52 million years ago, and different dates for Kilimanjaro's first activity. Death tolls for Nyiragongo's eruptions also differ, so none are given.",
+      "sources": ["hofmann-1997", "wiki-cameroon-line", "wiki-biu-plateau", "wiki-mount-cameroon", "nonnotte-2008", "wiki-nyiragongo", "usgs-nyiragongo"]
+    },
+    {
       "id": "delta",
       "title": "The Niger Delta grows",
       "when": {"from": -56000000, "to": 2000, "label": "about 56 million years ago to today"},
@@ -236,6 +348,17 @@
       "mood": "delta",
       "text": "From about 56 million years ago, at the start of the Eocene, the Niger and the Benue carried sand and mud to the sea where the arms of the old rift met. The delta has built out about 250 km to the south-west, over the ocean floor, and now covers some 300,000 km². Its sediment is more than 10 km thick, and it is still growing.",
       "sources": ["usgs-niger-delta", "wiki-eocene"]
+    },
+    {
+      "id": "sahara-born",
+      "title": "The Sahara is born",
+      "when": {"from": -11000000, "to": -7000000, "label": "about 11 to 7 million years ago"},
+      "camera": {"center": [20.0, 12.0], "zoom": 4.0},
+      "show": ["chad-dunes"],
+      "mood": "desert-born",
+      "text": "The Sahara has a beginning. Wind-blown dune sand about 7 million years old, found in the northern Chad Basin, is the oldest known sign of a desert there. Before that find, most geologists thought the desert was only 2 to 3 million years old. A later study links the drying to the shrinking of the Tethys Sea, between about 11 and 7 million years ago.",
+      "disputed": "Not all researchers accept the early date or the Tethys explanation.",
+      "sources": ["schuster-2006", "nature-news-sahara-2014"]
     },
     {
       "id": "green-sahara",

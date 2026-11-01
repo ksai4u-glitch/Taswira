@@ -46,8 +46,10 @@ A point's `form` says what kind of power sat there:
 | `emirate` | a ring, tied to the caliphate by `allegiance` links |
 | `communities` | a dotted field with a soft edge (`reach_km` and `reach_note`), for self-governing towns and villages with no ruler over them |
 
-Two forms are about the land, not power: `lake`, a lake of the time, drawn as a blue dot with a halo
-of `reach_km`, and `landmass`, a continent's name on the globe (see "Deep time" below).
+Three forms are about the land, not power: `lake`, a lake of the time, drawn as a blue dot with a halo
+of `reach_km`; `volcano`, one small cone with a glowing vent for every volcano or volcanic field (a
+symbol, never a drawing of the mountain); and `landmass`, a continent's name on the globe (see "Deep
+time" below).
 
 A link's `type` is `allegiance`, `tribute`, `alliance`, `trade` or `ritual`; allegiance and
 tribute get an arrow towards the overlord. A move's `type` is one of three motion styles:
@@ -115,6 +117,18 @@ The build stops if a place, line point or camera centre on the globe is not on o
 continents, if the model does not place its plate at the scene's years, if a continent's `blocks`
 match no plate, or if a line or continent is shown on the map instead of the globe.
 
+**Volcanoes and the Sahara.** After the coal swamps, "Fire from below" (34 seconds) follows
+Africa's volcanoes in date order, each beat with its own date: the Cameroon line (Biu Plateau and
+Mount Cameroon; its start is given as about 66 or about 52 million years ago, so that beat says
+"sources differ"), the Ethiopian flood basalts about 31 to 29 million years ago, Kilimanjaro from
+about 2.5 million years ago, and the eruptions of 1999 to 2021. Mount Cameroon and the Ethiopian
+basalts erupt; Nyiragongo smokes but does not, because its lava killed people in Goma and the
+scene tells that with Zomo still. "The Sahara is born" shows the oldest known desert dunes, about
+7 million years old, in the northern Chad Basin (`desert-born`), and the green Sahara now greens
+northwards and dries from the north, with Lake Mega-Chad swelling and shrinking. The sources for
+these scenes could be seen only through search excerpts in the session that added them, and each
+says so and asks for a re-check on the page.
+
 ### Not yet checked
 
 Anything with status `to-check`, a feature or a drawn emblem, may only be shown in a scene whose
@@ -140,7 +154,8 @@ also show today's state borders faintly. Globe scenes and scenes before 1914 may
 Leave `background` out (or use `"period"`) for the neutral map.
 
 While a scene plays, things appear over time: a year counter runs from `when.from` to `when.to`,
-the narration appears sentence by sentence, places pulse in one after another, and on state maps
+the narration appears sentence by sentence over the first three quarters of the scene (`NARRATE` in
+the template), places pulse in one after another, and on state maps
 the new borders draw themselves before the new states take their colours. Jumping to a scene shows
 it finished, with the full date label rather than an animated starting year. Reduced-motion
 views also show complete information. Optional extras:
@@ -152,13 +167,37 @@ views also show complete information. Optional extras:
   `excavation` (a searchlight, dust and a camera flash as each site appears), `calm` (no sparks
   or flashes, only a soft ring as each place appears, for scenes about trade or everyday life),
   `delta` (sand and mud coming down the river from the north and fanning out into the sea, wider as
-  the scene goes on) or `greening` (green spreading over the land and ripples on its lakes, then
-  sand blowing back in over the last part of the scene).
+  the scene goes on), `greening` (green spreading north over the Sahara as the rains come, a lake
+  that swells with them, then the north drying first, the lake shrinking, and sand and dunes
+  returning over the last part of the scene), `desert-born` (sand spreading over the Sahara,
+  crescent dunes creeping south-west and sand blowing on the north-east wind) or `volcanic` (heat,
+  smoke and lava at each `volcano`, and a faint ember light over the map).
+- `erupt`: volcano ids, in a `volcanic` scene, that throw a fountain of embers every few seconds
+  from when they appear. Not allowed in a scene marked `sensitive`; a volcano whose eruptions killed
+  people is left out of `erupt` so no fireworks play while those deaths are told.
 - `effects`: a list of moments, where `at` is how far into the scene (0 to 1) each starts:
   `{"type": "pulse", "state": "NG-FC", "at": 0.5}` (a beacon of light over a state),
   `{"type": "arc", "from": [lat, lon], "to": [lat, lon], "from_label": "...", "to_label": "...", "at": 0.6}`
   (a comet from one place to another), or `{"type": "shatter", "features": ["..."], "at": 0.2}`
   (fragments flying from a site; only where the evidence is broken pieces, as at the Kagarko sites).
+
+### Keeping the map alive
+
+Three things keep the map moving while the narration is read, all decoration over what the map
+and panel already say:
+
+- **Moving water.** On the historical background, the larger rivers carry small points of light
+  downstream, spaced and paced in screen pixels at any zoom, under a soft band of water. Natural
+  Earth draws a few river segments from mouth to source; `orient_rivers` in `build_history.py`
+  turns them round where two segments start at one point and two end at another (a river does not
+  split at its source or vanish at an inland junction). It turns round 10 segments, among them the
+  Nile in Nubia, the Blue Nile, the Euphrates and the Volga.
+- **Places named in the narration light up.** When a sentence names a place the scene shows (its
+  full or short name), a gold ring and glow go out from it, after the place has appeared.
+- **Places breathe.** Places on the map glow softly in and out, except in `calm` and sensitive scenes.
+
+Scenes without an authored `duration` take `max(8, words × 0.3 + 3)` seconds. Scenes with
+hand-timed beats, `appear`, `camera_path` or `fade` keep an explicit `duration`.
 
 ### Effects
 
@@ -467,7 +506,7 @@ template), `at` (scene seconds), optional `until` (it fades out again), a `label
 exactly one of `natural: true` (the land), `year` (the date it rests on) or `oral: true`.
 
 **Dated beats.** A beat can carry `when`: `from` and `to` (whole years inside the scene's), a
-`label` and a `basis`, one of `archaeology`, `chronicle` (a Kano Chronicle reckoning: the label
+`label` and a `basis`, one of `archaeology`, `geology` (an age from dating rocks), `chronicle` (a Kano Chronicle reckoning: the label
 must say "Chronicle"), `differ` (the sources disagree: the label must say "differ"), `oral` (no
 `from` or `to`, and no digits in the label), `account` (see below) or `record` (a date from written
 records and the histories built on them, as for the Sokoto Caliphate; no label rule). If one beat is dated, every beat is. While the scene
