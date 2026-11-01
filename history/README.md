@@ -744,7 +744,13 @@ independence on 1 October 1960 at Lagos. All its sources were opened on 1 Novemb
   bed, a rail and cross-ties), never as the route of the track. A scene's `appear` can time a railway
   like a place: it draws itself from that moment, and once it is complete a train (a locomotive with
   its lamp lit, two wagons and steam) runs to and fro along it. Dimmed railways get no train.
-- A port with `seaward` sends two steamers at a time out to sea, with smoke and a widening wake.
+- A port with `seaward` has two steamers at a time, one leaving for the sea and one arriving from
+  it, with smoke and a widening wake, and no flag: the sources do not say whose ships they were.
+- A scene's `warships` lists ports a British warship sails into, once, from well out at sea, to lie
+  at anchor off them: a grey hull with two funnels flying the White Ensign. Use it only where a
+  source says a British naval force came (Lagos, August 1861). Not allowed in a `sensitive` scene.
+- Ships and trains are drawn with normal blending, not as added light, so hulls stay dark and a
+  flag keeps its colours.
 - Trains and steamers are decoration: they show a line or port is open, not a timetable or a count
   of shipping. Like every effect, they are not drawn in a scene marked `sensitive`.
 

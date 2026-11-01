@@ -88,6 +88,19 @@ class ColonialChapterTests(unittest.TestCase):
         sc["appear"]["rail-eastern"] = 99
         self.assertTrue(any("appear needs" in p for p in self.problems(ch)))
 
+    def test_the_british_warship_comes_only_where_a_source_says_so(self):
+        _, _, sc = self.copy("lagos-1861")
+        self.assertEqual(sc["warships"], ["lagos"])
+        self.assertIn("British naval force entered Lagos", sc["beats"][0]["text"])
+        others = [s["id"] for s in self.ch["scenes"] if s.get("warships") and s["id"] != "lagos-1861"]
+        self.assertEqual(others, [])
+        ch, feats, sc = self.copy("lagos-1861")
+        sc["warships"] = ["lokoja"]
+        self.assertTrue(any("warships sail into shown ports" in p for p in self.problems(ch)))
+        ch, feats, sc = self.copy("resistance")
+        sc["warships"] = ["benin-city"]
+        self.assertTrue(any("warships sail into shown ports" in p for p in self.problems(ch)))
+
     def test_every_source_was_opened(self):
         cited = {s for f in self.ch["features"] for s in f["sources"]} | {s for sc in self.ch["scenes"] for s in sc["sources"]}
         new = [s for s in cited if self.sources[s]["checked"].startswith("Opened 1 Nov 2026")]

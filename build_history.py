@@ -964,6 +964,9 @@ def check(chapters, sources, states, cited=None, emblems=None, plates=None):
             need("{" not in sc.get("text", ""), f"{where}: text still has a {{placeholder}}")
             for fid in sc.get("furnace", []):
                 need(fid in sc.get("show", []), f"{where}: furnace glow on {fid!r}, which the scene does not show")
+            for fid in sc.get("warships", []):
+                need(fid in sc.get("show", []) and features.get(fid, {}).get("seaward") and not sc.get("sensitive"),
+                     f"{where}: warships sail into shown ports with a seaward point, not in a sensitive scene")
             for fid in sc.get("erupt", []):
                 need(fid in sc.get("show", []) and features.get(fid, {}).get("form") == "volcano",
                      f"{where}: erupt needs volcanoes the scene shows, got {fid!r}")

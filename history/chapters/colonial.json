@@ -494,6 +494,7 @@
         "calabar": 7.4,
         "lokoja": 14.4
       },
+      "warships": ["lagos"],
       "control": {
         "lagos": "held",
         "calabar": "claimed",
