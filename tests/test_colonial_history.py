@@ -33,7 +33,7 @@ class ColonialChapterTests(unittest.TestCase):
 
     def test_chapter_sits_between_sokoto_and_the_states_and_passes(self):
         self.assertEqual(bh.CHAPTERS.index("colonial"), bh.CHAPTERS.index("sokoto") + 1)
-        self.assertEqual(bh.CHAPTERS.index("states"), bh.CHAPTERS.index("colonial") + 1)
+        self.assertEqual(bh.CHAPTERS.index("civil-war"), bh.CHAPTERS.index("colonial") + 1)
         self.assertEqual(self.problems(copy.deepcopy(self.ch)), [])
 
     def test_scenes_and_beats_run_forward_in_time(self):
@@ -87,6 +87,19 @@ class ColonialChapterTests(unittest.TestCase):
         ch, feats, sc = self.copy("coal-port")
         sc["appear"]["rail-eastern"] = 99
         self.assertTrue(any("appear needs" in p for p in self.problems(ch)))
+
+    def test_the_british_warship_comes_only_where_a_source_says_so(self):
+        _, _, sc = self.copy("lagos-1861")
+        self.assertEqual(sc["warships"], ["lagos"])
+        self.assertIn("British naval force entered Lagos", sc["beats"][0]["text"])
+        others = [s["id"] for s in self.ch["scenes"] if s.get("warships") and s["id"] != "lagos-1861"]
+        self.assertEqual(others, [])
+        ch, feats, sc = self.copy("lagos-1861")
+        sc["warships"] = ["lokoja"]
+        self.assertTrue(any("warships sail into shown ports" in p for p in self.problems(ch)))
+        ch, feats, sc = self.copy("resistance")
+        sc["warships"] = ["benin-city"]
+        self.assertTrue(any("warships sail into shown ports" in p for p in self.problems(ch)))
 
     def test_every_source_was_opened(self):
         cited = {s for f in self.ch["features"] for s in f["sources"]} | {s for sc in self.ch["scenes"] for s in sc["sources"]}
