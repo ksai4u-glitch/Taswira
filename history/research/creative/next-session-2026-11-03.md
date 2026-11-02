@@ -1,5 +1,9 @@
 # Next session (3 Nov 2026, 5pm): plan and Saifu's feedback
 
+## New project-direction handoff (2 Nov)
+Read [PROJECT-DIRECTION-2026-11-02.md](PROJECT-DIRECTION-2026-11-02.md) before continuing. Saifu wants one finished website with both maps, a visual landing/highlights experience, and cinematic social animation adapted from the map through Codex + Higgsfield. The handoff records the maintainer's direction, Codex's recommendations, reusable scene/export needs and the proposed Kano flagship. The earlier session snapshot below is retained as originally recorded; PR #69 has since merged.
+
+
 ## Saifu's feedback (2 Nov)
 1. **Conflict visuals.** In the conflict map (UCDP) there are bomb and gunfire bursts. Add the same for
    wars on the history page, Oversimplified-style: flashes, clashes, explosions. Not conservative.
