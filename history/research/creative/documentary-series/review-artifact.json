@@ -1,6 +1,6 @@
 {
-  "artifact": "taswira-ancient-kano-epic-workprint.mp4",
-  "status": "complete workprint, exact supplied R-logo layer pending",
+  "artifact": "taswira-ancient-kano-epic-logo-master.mp4",
+  "status": "Completed supplied-R-logo version delivered for owner review",
   "date": "2026-11-03",
   "duration_seconds": 47.25,
   "width": 1080,
@@ -8,8 +8,8 @@
   "fps": 24,
   "frames": 1134,
   "unique_decoded_frames": 1134,
-  "bytes": 41761788,
-  "sha256": "8511c0eba351f3d0e7babb4440c6d36504f9e2cba9bc81616abcea5fce5427b4",
+  "bytes": 41703373,
+  "sha256": "64734b701bfe6e486bba80e5ba04d7ca2e99cb6f347db0376ca81381994539b3",
   "browser": {
     "ended": true,
     "presented_frames": 1134,
@@ -25,7 +25,9 @@
     "narration_words_and_speed_retained": true,
     "quiet_edit_join_ramps_ms": 3,
     "thunder_start_seconds": 37.625,
-    "horse_start_seconds": 42.625
+    "horse_start_seconds": 42.625,
+    "aac_payload_matches_workprint": true,
+    "aac_payload_sha256": "f3129cf5fef6ac8c40db455a8889bfdb54ca8f56fcc8d702bec7f8294aa276ff"
   },
   "picture": {
     "deep_time_chapter_preamble_removed": true,
@@ -53,7 +55,9 @@
       37.625,
       42.625
     ],
-    "single_continuous_take_claimed": false
+    "single_continuous_take_claimed": false,
+    "body_frames_compared": 777,
+    "body_frames_changed": 0
   },
   "branding": {
     "series": "Hausa Kingdom Chronicles",
@@ -61,14 +65,22 @@
     "creator": "sai_fu",
     "production": "Rahzatech Media Production",
     "animated_wordmark_included": true,
-    "supplied_circular_R_mark_included": false
+    "supplied_circular_R_mark_included": true,
+    "logo_source_dimensions": [
+      447,
+      447
+    ],
+    "logo_display_diameter_px": 381,
+    "logo_source_sha256": "68900f359f475e6f5b86199199c1fdef9c56b6239a6d3814070c312fef9964dd",
+    "logo_redrawn_or_generated": false,
+    "artwork_pixels_clipped": 0
   },
   "additional_generation_credits": 0,
-  "delivery": "Withheld at owner request: wait for the R-logo master. Earlier50.25-second review delivered.",
+  "delivery": "Uploaded and confirmed in owner Higgsfield assets; result preview shown. Earlier wordmark-only workprint remains withheld.",
   "remaining": [
-    "Ingest supplied logo as an original PNG/SVG/file and complete exact-mark animation",
     "Owner listening/viewing review",
-    "Historical/editorial checks in KANO-PILOT.md before public release"
+    "Historical/editorial checks in KANO-PILOT.md before public release",
+    "Separate Taswira project teaser development"
   ],
   "source_records": [
     "SOURCES.md#epic-pass-sound-effects",

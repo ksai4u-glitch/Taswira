@@ -2,9 +2,17 @@
 
 3 November 2026. This records actual completed work separately from editorial proposals. The public repository stores research and production information; private asset delivery remains in the owner's Higgsfield workspace.
 
-## Latest revision in progress
+## Latest completed R-logo version
 
-The [Epic Pass](EPIC-PASS-2026-11-03.md) supersedes the opening, score-gap and branding decisions recorded below. The owner clarified that the usage reset was 15:39 today and authorized immediate continuation; no scheduled task was needed. A 47.25-second native-edit workprint has been rendered without new generation credits. Full browser playback presented all 1,134 frames; the decoded-frame scan found 1,134 unique frames. Delivered-file measurement was −16.20 LUFS integrated and −1.02 dBTP, with no sub-−65dB 10ms gaps before the final fade. These checks do not replace listening or owner review. An initial gate-cut test was rejected because it introduced a visible camera jump. The revised edit keeps city source 0–12.125 seconds with a smooth top-80-percent reframe through the foreground-gate passage, then changes clearly to street source 3.5–11.5 seconds. It keeps the existing seven-second ascent and palace source 0–5.25 seconds; the former palace wide-camera jump is removed. This is an edited sequence, not a claim of one continuous take. New weather/title graphics and public-domain horse/thunder FX are prepared. The revised workprint upload was blocked by automatic approval review pending specific permission for this new payload; the owner then chose to withhold this workprint and wait for the R-logo master. No revised workprint was uploaded. The exact supplied R logo has no ingestible file reference yet; the workprint uses an animated brand wordmark and must not be called the final supplied-logo master.
+The [Epic Pass](EPIC-PASS-2026-11-03.md) controls this version's opening, continuous score and branding. The owner supplied the logo in a ZIP; its original 447×447 JPG was verified and used directly as a video texture. The circular badge resolves from a perspective arrival into the original logo proportions, with a rim trace, light glint, Rahzatech Media Production wordmark and sai_fu credit. The source art was not redrawn or generated. The settled 381px badge uses less than the source resolution; its circular mask clips no red/black artwork pixels.
+
+**Completed and delivered:** `taswira-ancient-kano-epic-logo-master.mp4`, 47.25 seconds, 1080×1920, H.264, 24fps, stereo AAC 48kHz. Size: **41,703,373 bytes**. SHA-256: `64734b701bfe6e486bba80e5ba04d7ca2e99cb6f347db0376ca81381994539b3`. It was uploaded, confirmed and shown in the owner's Higgsfield result preview. The withheld wordmark-only workprint was not uploaded.
+
+Fresh verification found **1,134 unique decoded frames**, and full browser playback presented all 1,134 frames through the 47.25-second end. All **777 city-footage frames** before the title stage match the saved workprint's decoded frames. The mastered AAC payload was copied without re-encoding and its hash matches the workprint. Delivered-file measurement remains **−16.20 LUFS integrated / −1.02 dBTP**, with no sub-−65dB 10ms gap before the final fade. Visual frames from the exported movie, including the settled logo and credits, were inspected. These checks do not replace listening or owner review.
+
+The edit keeps city source 0–12.125 seconds with a gradual top-80-percent reframe through the foreground-gate passage; it then changes clearly to street source 3.5–11.5 seconds, retains the existing seven-second ascent and uses palace source 0–5.25 seconds. The former palace wide-camera jump remains omitted. An earlier 10.5-second gate-cut test was rejected. This is an edited sequence, not a claim of one uninterrupted take.
+
+**Additional generation spend for the Epic Pass/logo finishing: 0 credits.** Existing Arthur narration, continuous Majestic Hills score, kakaki accent and public-domain thunder/horse effects remain in the mastered mix. Owner viewing/listening and the Kano historical/editorial release checks remain open. The separate Taswira project teaser remains script/treatment development.
 
 ## Earlier complete working review
 
@@ -74,7 +82,7 @@ Licence: CC0, as stated in the checked file record. Changes: excerpted, cleaned 
 
 These are a modern orchestral composition and a modern field/sound recording. They are creative scoring choices, not evidence of the exact music of medieval Kano. Source/licence metadata was checked; no commercial music generation or music commission occurred. Retain full credit in the posting description as well as readable end credits; platform automated claims, if any, need the retained licence record rather than a claim of guaranteed clearance.
 
-The earlier review used **sai_fu** and **rahzatech**. The new revision retains **sai_fu** and expands the brand to **Rahzatech Media Production**, using kinetic typography and the supplied logo once its original file is ingested. The film must keep historical-source attribution distinct from production/music credits.
+The earlier review used **sai_fu** and **rahzatech**. The new revision retains **sai_fu** and expands the brand to **Rahzatech Media Production**, using kinetic typography and the supplied logo, now ingested from the original ZIP. The film must keep historical-source attribution distinct from production/music credits.
 
 ## Still open
 
