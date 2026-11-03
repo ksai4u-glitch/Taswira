@@ -59,3 +59,11 @@ After the Civil War: the states chapter exists (1967 to 1996). Candidates:
 ## State at end of 2 Nov
 - `main`: volcanoes/Sahara, Colonial Nigeria (railways, ports), source re-checks, iron-roads video.
 - Open: ksai4u-glitch/Taswira#69 (ships arriving, British warship at Lagos 1861, the Civil War chapter).
+
+
+## Documentary-series continuation — 3 November 2026
+
+Read the [latest Epic Pass revision](documentary-series/EPIC-PASS-2026-11-03.md) before continuing the Kano film. The earlier complete 50.25-second review was uploaded with owner approval. Its Deep Time opening, intentional score gap and bare rahzatech branding are superseded by the latest direct atmospheric cold-open, continuous music and expanded series/production identity. A revised workprint is documented separately from the earlier review.
+
+The [series package](documentary-series/README.md) preserves research, original script development, production lessons and the [map evidence handoff](documentary-series/CLAUDE-HANDOFF.md). Continue the current Kano foundation and separate Taswira teaser before spending on a new episode; Sokoto research has begun. Historical disputes remain proposed review work, not automatic chapter/geometry edits.
+

@@ -1,0 +1,77 @@
+{
+  "artifact": "taswira-ancient-kano-epic-workprint.mp4",
+  "status": "complete workprint, exact supplied R-logo layer pending",
+  "date": "2026-11-03",
+  "duration_seconds": 47.25,
+  "width": 1080,
+  "height": 1920,
+  "fps": 24,
+  "frames": 1134,
+  "unique_decoded_frames": 1134,
+  "bytes": 41761788,
+  "sha256": "8511c0eba351f3d0e7babb4440c6d36504f9e2cba9bc81616abcea5fce5427b4",
+  "browser": {
+    "ended": true,
+    "presented_frames": 1134,
+    "maximum_media_time_gap_seconds": 0.041667,
+    "audio_decoded": true
+  },
+  "audio": {
+    "integrated_lufs": -16.2,
+    "true_peak_dbtp": -1.02,
+    "score_from_frame_one": true,
+    "intentional_music_gap": false,
+    "voice_delay_seconds": 3,
+    "narration_words_and_speed_retained": true,
+    "quiet_edit_join_ramps_ms": 3,
+    "thunder_start_seconds": 37.625,
+    "horse_start_seconds": 42.625
+  },
+  "picture": {
+    "deep_time_chapter_preamble_removed": true,
+    "city_source_keep": [
+      0,
+      12.125
+    ],
+    "city_reframe": "Top-80-percent reframe reached smoothly from source6.5–9.5s; architecture unchanged",
+    "street_source_keep": [
+      3.5,
+      11.5
+    ],
+    "ascent_source_keep": [
+      0,
+      7
+    ],
+    "palace_source_keep": [
+      0,
+      5.25
+    ],
+    "palace_wide_camera_jump_removed": true,
+    "outro_start_seconds": 32.375,
+    "outro_duration_seconds": 14.875,
+    "lightning_seconds": [
+      37.625,
+      42.625
+    ],
+    "single_continuous_take_claimed": false
+  },
+  "branding": {
+    "series": "Hausa Kingdom Chronicles",
+    "film": "Ancient Kano",
+    "creator": "sai_fu",
+    "production": "Rahzatech Media Production",
+    "animated_wordmark_included": true,
+    "supplied_circular_R_mark_included": false
+  },
+  "additional_generation_credits": 0,
+  "delivery": "Withheld at owner request: wait for the R-logo master. Earlier50.25-second review delivered.",
+  "remaining": [
+    "Ingest supplied logo as an original PNG/SVG/file and complete exact-mark animation",
+    "Owner listening/viewing review",
+    "Historical/editorial checks in KANO-PILOT.md before public release"
+  ],
+  "source_records": [
+    "SOURCES.md#epic-pass-sound-effects",
+    "PRODUCTION.md#soundtrack-and-attribution"
+  ]
+}
