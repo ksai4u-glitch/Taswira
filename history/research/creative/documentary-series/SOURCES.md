@@ -26,3 +26,10 @@ The primary file records explicitly state a worldwide public-domain release and 
 **Selected text checked:** the named passages were read. **Extract/abstract checked:** supports only what the extract actually says. **Metadata checked:** establishes bibliographic existence, not an unseen argument. **Repository lead:** a prior source to revisit, not independent corroboration. **Failed retrieval:** no substitution from memory presented as a newly checked source.
 
 For a public documentary, attach the relevant page/passage to each consequential script claim, record alternative interpretations and check source-image/translation/music rights separately. Freely readable does not mean freely reusable; a catalogue record does not mean the book was read. Any additional source or archival asset must get its own access and rights entry.
+
+
+## Continuous-flight revision: typography and supplied emblems
+
+**Cinzel, Black weight (900)** — Google Fonts distribution, SIL Open Font License 1.1. Source: https://github.com/google/fonts/tree/main/ofl/cinzel ; font and OFL file retrieved 3 November 2026. Native title material/arrival animation uses this font; the font source is not modified or redistributed in this documentation commit.
+
+The green Arewa WEBP and red/black circular Rahzatech R JPG were supplied by the owner in ZIP attachments. Original artwork is composited directly rather than generated. Source hashes and treatments are recorded in the [revision brief](FLOW-REVISION-2026-11-03.md). Arewa is used as present-day editorial cultural identity, not evidence of a medieval flag or state insignia. English landmark surface lettering is a modern editorial annotation.

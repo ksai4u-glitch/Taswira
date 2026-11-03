@@ -1,89 +1,176 @@
 {
-  "artifact": "taswira-ancient-kano-epic-logo-master.mp4",
-  "status": "Completed supplied-R-logo version delivered for owner review",
+  "artifact": "taswira-ancient-kano-cinematic-revision.mp4",
+  "status": "Completed and delivered to owner Higgsfield assets; preview presented for review",
   "date": "2026-11-03",
-  "duration_seconds": 47.25,
+  "duration_seconds": 59,
   "width": 1080,
   "height": 1920,
   "fps": 24,
-  "frames": 1134,
-  "unique_decoded_frames": 1134,
-  "bytes": 41703373,
-  "sha256": "64734b701bfe6e486bba80e5ba04d7ca2e99cb6f347db0376ca81381994539b3",
+  "frames": 1416,
+  "unique_decoded_frames": 1416,
+  "identical_adjacent_frames": 0,
+  "bytes": 35340858,
+  "sha256": "e815cd26fe86d070fbcc57b3385ac4fa7130ae64f8fc4118070b46fb62b8aaaf",
   "browser": {
     "ended": true,
-    "presented_frames": 1134,
-    "maximum_media_time_gap_seconds": 0.041667,
-    "audio_decoded": true
+    "duration": 59,
+    "finalTime": 59,
+    "frameCallbacks": 1416,
+    "presentedFrames": 1416,
+    "firstTime": 0,
+    "lastTime": 58.958333,
+    "maxMediaGap": 0.04166700000000034,
+    "maxWallGapMs": 100,
+    "audioDecodedBytes": 1439119,
+    "videoDecodedBytes": 33858676
   },
   "audio": {
-    "integrated_lufs": -16.2,
-    "true_peak_dbtp": -1.02,
+    "integrated_lufs": -16.06,
+    "true_peak_dbtp": -1.04,
     "score_from_frame_one": true,
-    "intentional_music_gap": false,
-    "voice_delay_seconds": 3,
-    "narration_words_and_speed_retained": true,
-    "quiet_edit_join_ramps_ms": 3,
-    "thunder_start_seconds": 37.625,
-    "horse_start_seconds": 42.625,
-    "aac_payload_matches_workprint": true,
-    "aac_payload_sha256": "f3129cf5fef6ac8c40db455a8889bfdb54ca8f56fcc8d702bec7f8294aa276ff"
+    "sub_minus65db_10ms_bins_before_final_fade": 0,
+    "voice": "Arthur",
+    "voice_delay_seconds": 6.25,
+    "voice_end_seconds": 45.1442917,
+    "words_pitch_and_speed_retained": true,
+    "narration_subtitles": false,
+    "final_fade": [
+      58.3,
+      59
+    ],
+    "lightning_thunder_hits": [
+      45.5,
+      49.5,
+      53.75
+    ],
+    "horse_hit": 53.75,
+    "authored_wind_crossing": [
+      37.3,
+      38.2
+    ]
   },
   "picture": {
-    "deep_time_chapter_preamble_removed": true,
-    "city_source_keep": [
-      0,
-      12.125
+    "timeline": [
+      {
+        "shot": "fresh fog intro/city",
+        "start": 0,
+        "end": 8.5,
+        "source": [
+          0,
+          8.5
+        ]
+      },
+      {
+        "shot": "approved gate bridge",
+        "start": 8.5,
+        "end": 15.5
+      },
+      {
+        "shot": "street",
+        "start": 15.5,
+        "end": 22.5,
+        "source": [
+          4.5,
+          11.5
+        ]
+      },
+      {
+        "shot": "ascent + tracked Kurmi Market",
+        "start": 22.5,
+        "end": 29.5
+      },
+      {
+        "shot": "palace + tracked Rumfa Palace",
+        "start": 29.5,
+        "end": 34,
+        "source": [
+          0,
+          4.5
+        ]
+      },
+      {
+        "shot": "clean pullback portions; dust-concealed edit at 37.75s",
+        "start": 34,
+        "end": 41
+      },
+      {
+        "shot": "storm/title/Arewa/R-logo outro",
+        "start": 39,
+        "end": 59,
+        "overlap": "last 2s of moving aerial"
+      }
     ],
-    "city_reframe": "Top-80-percent reframe reached smoothly from source6.5–9.5s; architecture unchanged",
-    "street_source_keep": [
-      3.5,
-      11.5
+    "closing_source_keeps": [
+      [
+        0,
+        3.75
+      ],
+      [
+        6.75,
+        10
+      ]
     ],
-    "ascent_source_keep": [
-      0,
-      7
+    "closing_source_rejected": [
+      3.75,
+      6.75
     ],
-    "palace_source_keep": [
-      0,
-      5.25
+    "dust_concealed_edit_seconds": 37.75,
+    "world_labels": [
+      "Kurmi Market on road, with foreground occlusion",
+      "Rumfa Palace on formed tower, tracked through closing join"
     ],
-    "palace_wide_camera_jump_removed": true,
-    "outro_start_seconds": 32.375,
-    "outro_duration_seconds": 14.875,
-    "lightning_seconds": [
-      37.625,
-      42.625
-    ],
-    "single_continuous_take_claimed": false,
-    "body_frames_compared": 777,
-    "body_frames_changed": 0
+    "physical_single_take_claimed": false,
+    "english_engraving_is_modern_editorial_annotation": true,
+    "gate_development_and_city_layout": "Cinematic reimagining, not surveyed geometry",
+    "period_card": "Kano, Hausaland · 11th–15th centuries CE; first walls c.1095–1134 and Rumfa reign1463–1499, qualified as Chronicle dating"
   },
   "branding": {
     "series": "Hausa Kingdom Chronicles",
     "film": "Ancient Kano",
     "creator": "sai_fu",
     "production": "Rahzatech Media Production",
-    "animated_wordmark_included": true,
-    "supplied_circular_R_mark_included": true,
-    "logo_source_dimensions": [
-      447,
-      447
-    ],
-    "logo_display_diameter_px": 381,
-    "logo_source_sha256": "68900f359f475e6f5b86199199c1fdef9c56b6239a6d3814070c312fef9964dd",
-    "logo_redrawn_or_generated": false,
-    "artwork_pixels_clipped": 0
+    "original_R_artwork_included": true,
+    "R_source_sha256": "68900f359f475e6f5b86199199c1fdef9c56b6239a6d3814070c312fef9964dd",
+    "supplied_green_Arewa_included": true,
+    "Arewa_source_sha256": "52f9cc161ab033b852e95fedebfd6c5818e40a18d63a07a3370df99fc6de6fa0",
+    "logo_art_redrawn_or_generated": false,
+    "Arewa_medieval_flag_claimed": false,
+    "font": "Cinzel Black · SIL OFL1.1"
   },
-  "additional_generation_credits": 0,
-  "delivery": "Uploaded and confirmed in owner Higgsfield assets; result preview shown. Earlier wordmark-only workprint remains withheld.",
+  "generation": {
+    "approved_gate_seconds": 7,
+    "gate_credits": 42,
+    "approved_closing_seconds": 10,
+    "closing_credits": 60,
+    "total_credits": 102,
+    "attempts_per_shot": 1,
+    "automatic_retries": 0,
+    "native_finishing_generation_credits": 0,
+    "observed_balance_after_repairs": 828.3,
+    "balance_observation_date": "2026-11-03"
+  },
+  "delivery": "Uploaded with matching SHA-256, confirmed in owner assets and shown through the result preview. No private asset URLs are published in this record.",
+  "visual_review": {
+    "gate_and_join_contacts_inspected": true,
+    "closing_dissolve_interval_excluded": true,
+    "dust_and_moving_aerial_transition_inspected": true,
+    "outro_logos_titles_dates_inspected": true,
+    "physical_single_take_claimed": false,
+    "listening": "Owner review pending"
+  },
   "remaining": [
-    "Owner listening/viewing review",
-    "Historical/editorial checks in KANO-PILOT.md before public release",
-    "Separate Taswira project teaser development"
+    "Owner listening/viewing and proper-name pronunciation review",
+    "Historical/editorial release checks in KANO-PILOT.md",
+    "Separate Taswira map teaser; prepared treatment is not a completed film"
   ],
+  "previous_delivered_artifact": {
+    "filename": "taswira-ancient-kano-epic-logo-master.mp4",
+    "duration_seconds": 47.25,
+    "sha256": "64734b701bfe6e486bba80e5ba04d7ca2e99cb6f347db0376ca81381994539b3"
+  },
   "source_records": [
-    "SOURCES.md#epic-pass-sound-effects",
+    "FLOW-REVISION-2026-11-03.md",
+    "SOURCES.md",
     "PRODUCTION.md#soundtrack-and-attribution"
   ]
 }

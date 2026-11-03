@@ -2,7 +2,19 @@
 
 3 November 2026. This records actual completed work separately from editorial proposals. The public repository stores research and production information; private asset delivery remains in the owner's Higgsfield workspace.
 
-## Latest completed R-logo version
+## Latest completed 59-second cinematic revision
+
+The owner’s [continuous-flight / Arewa revision](FLOW-REVISION-2026-11-03.md) is complete and delivered for review as `taswira-ancient-kano-cinematic-revision.mp4`: **59 seconds, 1080×1920, 24fps, H.264/yuv420p and 48kHz stereo AAC**. Size: **35,340,858 bytes**. SHA-256: `e815cd26fe86d070fbcc57b3385ac4fa7130ae64f8fc4118070b46fb62b8aaaf`. The upload returned HTTP 200, its copied delivery file retained the same hash, confirmation succeeded and the video result preview was presented.
+
+The fresh fog intro has period/Chronicle dating and both series/film identity; Arthur enters at 6.25 seconds under continuous Majestic Hills. Narration subtitles are removed. The new gate bridge crosses into the avenue. Kurmi Market follows the road perspective with foreground walkers/riders occluding it; Rumfa Palace follows the formed tower across the closing-shot join. Both are modern editorial lettering, not medieval inscriptions. Cinzel Black titles use bevel/extrusion, perspective arrival and a moving highlight, with the original green Arewa and red/black R art. Thunder/lightning hits are at 45.5, 49.5, 53.75 seconds; the horse accent lands at 53.75. Arthur ends around 45.144, within the extended outro, which begins at 39 and carries a moving aerial for its first two seconds.
+
+Visual inspection rejected an internal 62-second candidate even though it passed technical playback. The new closing still dissolved buildings in its middle. Source 3.75–6.75 is excluded; clean 0–3.75 and 6.75–10 are linked under an authored moving dust occluder at film 37.75 (dust crosses 37.3–38.2). The final view continues into a wide kingdom overview. This is an edited cinematic flight, not an uninterrupted physical take. The rejected candidate was not uploaded. The repair authorization was not reused and no further model calls occurred.
+
+Independent export checks found **1,416 unique decoded frames**, zero identical adjacent frames, **−16.06 LUFS / −1.04 dBTP**, and no sub−65 dB 10ms audio bins before the final fade. Full browser playback presented all 1,416 frames through 59 seconds; maximum observed media-time gap was 0.041667 seconds, and audio decoded. Dense contacts from the actual export were inspected at the gate, joins, palace, dust crossing, overview and title/brand impacts. These checks establish observed playback and the recorded edit; they are not historical clearance, a claim of immutable generated geometry, or a substitute for listening.
+
+The two individually authorized shots completed once each: **42 + 60 = 102 credits**. Native editing, labels, logo/title animation, sound mix and export used **0 generation credits**. The subsequently rechecked balance remained **828.3 Plus credits**. Full sources and reconstruction limitations remain in this folder for Claude. Owner viewing/listening, pronunciation and the existing historical release checklist remain open. The separate Taswira map teaser is the next production; it remains a prepared treatment.
+
+## Previous completed 47.25-second R-logo version
 
 The [Epic Pass](EPIC-PASS-2026-11-03.md) controls this version's opening, continuous score and branding. The owner supplied the logo in a ZIP; its original 447×447 JPG was verified and used directly as a video texture. The circular badge resolves from a perspective arrival into the original logo proportions, with a rim trace, light glint, Rahzatech Media Production wordmark and sai_fu credit. The source art was not redrawn or generated. The settled 381px badge uses less than the source resolution; its circular mask clips no red/black artwork pixels.
 
@@ -48,7 +60,9 @@ Score drops out at 3–4.25 seconds before Arthur enters. Music then continues b
 
 ## Spend and authorization
 
-The earlier seven-second ascent repair cost 42 credits under its specific authorization. The latest separately approved batch was one ten-second, 1080p Wan 3.0 Prime palace/closing repair at 60 credits plus one Arthur narration at 2.5 credits: **62.5 credits total**, completed, with no automatic retries. These figures describe these batches, not a complete historical spend audit.
+The current gate/closing revision completed the separately approved seven-second gate repair (42 credits) and ten-second closing repair (60 credits), once each: **102 credits total**. No paid retries occurred. The account balance checked after these jobs was **828.3 Plus credits**. Native tracking, compositing, typography, mixing and export add **0 generation credits**. The new closing still contained an unstable middle; it is excluded in the final edit and joined behind an authored dust crossing, as recorded in the [revision](FLOW-REVISION-2026-11-03.md). Earlier caps below describe earlier completed batches and are not reusable.
+
+The earlier seven-second ascent repair cost 42 credits under its specific authorization. A later separately approved batch before the current revision was one ten-second, 1080p Wan 3.0 Prime palace/closing repair at 60 credits plus one Arthur narration at 2.5 credits: **62.5 credits total**, completed, with no automatic retries. These figures describe these batches, not a complete historical spend audit.
 
 No further paid generation is authorized by those caps. This research/documentation stage added no media-generation charges. Plus is useful for a selective hybrid workflow; it does not remove the cost of rejected footage or guarantee a finished film from one prompt. The previously shown website-only unlimited/free-generation terms must not be assumed to apply to MCP generation; use the live tool quote and actual account entitlement.
 
