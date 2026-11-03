@@ -33,3 +33,15 @@ For a public documentary, attach the relevant page/passage to each consequential
 **Cinzel, Black weight (900)** — Google Fonts distribution, SIL Open Font License 1.1. Source: https://github.com/google/fonts/tree/main/ofl/cinzel ; font and OFL file retrieved 3 November 2026. Native title material/arrival animation uses this font; the font source is not modified or redistributed in this documentation commit.
 
 The green Arewa WEBP and red/black circular Rahzatech R JPG were supplied by the owner in ZIP attachments. Original artwork is composited directly rather than generated. Source hashes and treatments are recorded in the [revision brief](FLOW-REVISION-2026-11-03.md). Arewa is used as present-day editorial cultural identity, not evidence of a medieval flag or state insignia. English landmark surface lettering is a modern editorial annotation.
+
+
+## Master polish: new typography and procession
+
+The current intro uses **Cormorant Garamond Medium** and the outro/surface labels use **Sora Bold/ExtraBold**. Google Fonts metadata, font binaries and their OFL 1.1 files were retrieved3 November2026. These supersede the earlier Cinzel treatment for the current master.
+
+- cormorantgaramond — `cormorantgaramond-CormorantGaramond.ttf`; 1,195,560bytes; SHA-256 `b20b7d9626dd956b2c5e558692ad328b1f19e3275e2782db4fa07670d83f35e0`. Source: https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf
+- cormorantgaramond — `cormorantgaramond-OFL.txt`; 4,387bytes; SHA-256 `60700d351cac4650c51f3f9db318d2a420f8b45052dba2715eb5fec41f0f6956`. Source: https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/OFL.txt
+- sora — `sora-Sora.ttf`; 111,400bytes; SHA-256 `84ff7096ae3ec6c8be47d906d1a0ba4de7f2ce78c615275c77301964a316e16c`. Source: https://raw.githubusercontent.com/google/fonts/main/ofl/sora/Sora%5Bwght%5D.ttf
+- sora — `sora-OFL.txt`; 4,385bytes; SHA-256 `ba0b9729c9428ba79a0459ab8ec575791b51509dbec213e383d0316d37fec299`. Source: https://raw.githubusercontent.com/google/fonts/main/ofl/sora/OFL.txt
+
+The mounted procession is a generated additive interpretation, composited over the original city plate. It is not historical footage, a documented royal event or evidence for period uniforms. Its 704×1248 generated layer and 1080×1920 original plate are recorded in the artifact metadata. No new soundtrack source was added; existing Majestic Hills/kakaki/thunder/horse credits and reuse records remain applicable.

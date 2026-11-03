@@ -53,3 +53,8 @@ The 59-second export is uploaded, confirmed and presented for owner review. Its 
 Preserve source-led distinctions in the map: the film's English road/tower labels, emblem, illustrative city plan and monumental scale are not historical evidence or surveyed locations. The period card identifies Kano/Hausaland and the 11th–15th centuries CE; it does not mean the palace, market and every gate coexisted throughout that entire interval. Rumfa-related material belongs to the late fifteenth-century portion and requires its existing reign/source context.
 
 The next production remains the **separate Taswira project teaser**, using actual readable map capture and the prepared [teaser treatment](TEASER.md), adjusted to the latest cold-open direction. Sokoto 1804–1817 remains the selected subsequent documentary research arc. Neither has a newly generated completed film. Retain the [wider map/website proposals](CLAUDE-HANDOFF.md) for Claude; no runtime chapter data or live website content changes in this production documentation pass.
+
+
+## Later master polish
+
+The [definitive master polish](MASTER-POLISH-2026-11-03.md) now controls intro/outro typography, landmark voice timing, the new procession and exact Arthur hook. This file records the earlier version; retained clean camera repairs still apply. The latest [artifact record](review-artifact.json) and [spoken script](NARRATION-MASTER-2026-11-03.md) identify what was actually delivered.

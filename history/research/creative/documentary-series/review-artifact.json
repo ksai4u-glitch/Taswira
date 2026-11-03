@@ -1,6 +1,6 @@
 {
-  "artifact": "taswira-ancient-kano-cinematic-revision.mp4",
-  "status": "Completed and delivered to owner Higgsfield assets; preview presented for review",
+  "artifact": "taswira-ancient-kano-master-polish.mp4",
+  "status": "Master polish completed, uploaded, confirmed and presented for owner review",
   "date": "2026-11-03",
   "duration_seconds": 59,
   "width": 1080,
@@ -9,8 +9,8 @@
   "frames": 1416,
   "unique_decoded_frames": 1416,
   "identical_adjacent_frames": 0,
-  "bytes": 35340858,
-  "sha256": "e815cd26fe86d070fbcc57b3385ac4fa7130ae64f8fc4118070b46fb62b8aaaf",
+  "bytes": 34727952,
+  "sha256": "9d094103002a35e7d560aef7eb508923056209c3bb9de147bc6add6199008568",
   "browser": {
     "ended": true,
     "duration": 59,
@@ -20,34 +20,75 @@
     "firstTime": 0,
     "lastTime": 58.958333,
     "maxMediaGap": 0.04166700000000034,
-    "maxWallGapMs": 100,
-    "audioDecodedBytes": 1439119,
-    "videoDecodedBytes": 33858676
+    "maxWallGapMs": 99.89999999999998,
+    "audioDecodedBytes": 1444598,
+    "videoDecodedBytes": 33240156
   },
   "audio": {
-    "integrated_lufs": -16.06,
-    "true_peak_dbtp": -1.04,
+    "integrated_lufs": -16.01,
+    "true_peak_dbtp": -1.06,
     "score_from_frame_one": true,
     "sub_minus65db_10ms_bins_before_final_fade": 0,
-    "voice": "Arthur",
-    "voice_delay_seconds": 6.25,
-    "voice_end_seconds": 45.1442917,
-    "words_pitch_and_speed_retained": true,
-    "narration_subtitles": false,
-    "final_fade": [
+    "final_program_10ms_rms_db": -87.62801442447198,
+    "final_whole_mix_fade": [
       58.3,
       59
     ],
+    "voice": "Arthur",
+    "body_voice_delay_seconds": 4,
+    "original_body_duration": 38.8942916667,
+    "new_market_full_name": [
+      25.004937499999997,
+      25.684937499999997
+    ],
+    "market_sentence_end": 28.124937499999998,
+    "palace_word": 31.399229499999997,
+    "exact_hook": "Join us on the journey of exploring the old kingdoms—the rise and fall of great empires.",
+    "hook_spoken_film": [
+      43.5249375,
+      50.0049375
+    ],
+    "speed_or_pitch_changed": false,
+    "delivered_waveform_correlation": {
+      "market": {
+        "expected_start": 25,
+        "detected_start": 25.004937499999997,
+        "offset_seconds": 0.0049374999999969305
+      },
+      "hook": {
+        "expected_start": 43.35,
+        "detected_start": 43.3549375,
+        "offset_seconds": 0.0049374999999969305
+      },
+      "palace": {
+        "expected_start": 31.1,
+        "detected_start": 31.1049375,
+        "offset_seconds": 0.0049374999999969305
+      },
+      "full_market_name_film": [
+        25.004937499999997,
+        25.684937499999997
+      ],
+      "full_market_sentence_end": 28.124937499999998,
+      "market_picture_end": 29.5,
+      "palace_word_film": 31.399229499999997,
+      "closing_hook_spoken_film": [
+        43.5249375,
+        50.0049375
+      ],
+      "outro_picture": [
+        39,
+        59
+      ],
+      "pronunciation": "ASR/waveform do not certify proper-name pronunciation; owner listening remains required"
+    },
+    "narration_subtitles": false,
     "lightning_thunder_hits": [
       45.5,
       49.5,
       53.75
     ],
-    "horse_hit": 53.75,
-    "authored_wind_crossing": [
-      37.3,
-      38.2
-    ]
+    "horse_effect_hit": 53.75
   },
   "picture": {
     "timeline": [
@@ -61,7 +102,7 @@
         ]
       },
       {
-        "shot": "approved gate bridge",
+        "shot": "HD gate bridge with additive mounted procession",
         "start": 8.5,
         "end": 15.5
       },
@@ -122,7 +163,20 @@
     "physical_single_take_claimed": false,
     "english_engraving_is_modern_editorial_annotation": true,
     "gate_development_and_city_layout": "Cinematic reimagining, not surveyed geometry",
-    "period_card": "Kano, Hausaland · 11th–15th centuries CE; first walls c.1095–1134 and Rumfa reign1463–1499, qualified as Chronicle dating"
+    "period_card": "Kano, Hausaland · 11th–15th centuries CE; first walls c.1095–1134 and Rumfa reign1463–1499, qualified as Chronicle dating",
+    "horse_procession": true,
+    "horse_generated_layer_resolution": [
+      704,
+      1248
+    ],
+    "original_city_plate_resolution": [
+      1080,
+      1920
+    ],
+    "horse_integration": "Changed-region road matte over original HD source; edited rider detail is upscaled. It is not native1080 rider detail.",
+    "world_labels_font": "Sora Bold",
+    "intro_font_and_motion": "Cormorant Garamond Medium; coupled sand/glyph drift and reveal",
+    "outro_font_and_motion": "Sora Bold/ExtraBold; crisp geometric masks, solid ivory type and green accents"
   },
   "branding": {
     "series": "Hausa Kingdom Chronicles",
@@ -135,9 +189,85 @@
     "Arewa_source_sha256": "52f9cc161ab033b852e95fedebfd6c5818e40a18d63a07a3370df99fc6de6fa0",
     "logo_art_redrawn_or_generated": false,
     "Arewa_medieval_flag_claimed": false,
-    "font": "Cinzel Black · SIL OFL1.1"
+    "font": "Cormorant Garamond Medium / Sora Bold–ExtraBold, SIL OFL1.1"
   },
   "generation": {
+    "approved_cap": 10,
+    "horse_edit_model": "flux_3_video_edit",
+    "horse_input_seconds": 7,
+    "horse_credits": 7,
+    "supplementary_audio_model": "seed_audio",
+    "supplementary_audio_credits": 0.9,
+    "total_credits": 7.9,
+    "attempts_per_job": 1,
+    "automatic_retries": 0,
+    "native_finishing_generation_credits": 0,
+    "balance_after": 820.4,
+    "hold_observed": "No submission before22:40Europe/London on3November2026; clock checked22:41 before quotes",
+    "lifetime_spend_audit": false
+  },
+  "delivery": "Upload returned HTTP200, delivery-copy SHA matched, confirmation succeeded and result preview was shown in owner Higgsfield assets. Private URLs are omitted.",
+  "visual_review": {
+    "actual_export_contacts_inspected": [
+      "sand opening and dates",
+      "gate/procession and street endpoint",
+      "market-name cue and road occlusion",
+      "palace/tower cue",
+      "kingdom/dust transition",
+      "Arewa/title/R-logo credits"
+    ],
+    "full_browser_playback": true,
+    "listening_and_pronunciation": "Owner review pending",
+    "geometry_guaranteed_by_frame_count": false
+  },
+  "remaining": [
+    "Owner listening/viewing and proper-name pronunciation review",
+    "Historical/editorial release checks in KANO-PILOT.md",
+    "Separate Taswira map teaser; prepared treatment is not a completed film"
+  ],
+  "previous_delivered_artifact": {
+    "artifact": "taswira-ancient-kano-cinematic-revision.mp4",
+    "duration_seconds": 59,
+    "sha256": "e815cd26fe86d070fbcc57b3385ac4fa7130ae64f8fc4118070b46fb62b8aaaf",
+    "bytes": 35340858
+  },
+  "source_records": [
+    "MASTER-POLISH-2026-11-03.md",
+    "NARRATION-MASTER-2026-11-03.md",
+    "SOURCES.md",
+    "PRODUCTION.md#soundtrack-and-attribution"
+  ],
+  "fonts": [
+    {
+      "family": "cormorantgaramond",
+      "filename": "cormorantgaramond-CormorantGaramond.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf",
+      "bytes": 1195560,
+      "sha256": "b20b7d9626dd956b2c5e558692ad328b1f19e3275e2782db4fa07670d83f35e0"
+    },
+    {
+      "family": "cormorantgaramond",
+      "filename": "cormorantgaramond-OFL.txt",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/OFL.txt",
+      "bytes": 4387,
+      "sha256": "60700d351cac4650c51f3f9db318d2a420f8b45052dba2715eb5fec41f0f6956"
+    },
+    {
+      "family": "sora",
+      "filename": "sora-Sora.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sora/Sora%5Bwght%5D.ttf",
+      "bytes": 111400,
+      "sha256": "84ff7096ae3ec6c8be47d906d1a0ba4de7f2ce78c615275c77301964a316e16c"
+    },
+    {
+      "family": "sora",
+      "filename": "sora-OFL.txt",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sora/OFL.txt",
+      "bytes": 4385,
+      "sha256": "ba0b9729c9428ba79a0459ab8ec575791b51509dbec213e383d0316d37fec299"
+    }
+  ],
+  "previous_generation_stage": {
     "approved_gate_seconds": 7,
     "gate_credits": 42,
     "approved_closing_seconds": 10,
@@ -148,29 +278,5 @@
     "native_finishing_generation_credits": 0,
     "observed_balance_after_repairs": 828.3,
     "balance_observation_date": "2026-11-03"
-  },
-  "delivery": "Uploaded with matching SHA-256, confirmed in owner assets and shown through the result preview. No private asset URLs are published in this record.",
-  "visual_review": {
-    "gate_and_join_contacts_inspected": true,
-    "closing_dissolve_interval_excluded": true,
-    "dust_and_moving_aerial_transition_inspected": true,
-    "outro_logos_titles_dates_inspected": true,
-    "physical_single_take_claimed": false,
-    "listening": "Owner review pending"
-  },
-  "remaining": [
-    "Owner listening/viewing and proper-name pronunciation review",
-    "Historical/editorial release checks in KANO-PILOT.md",
-    "Separate Taswira map teaser; prepared treatment is not a completed film"
-  ],
-  "previous_delivered_artifact": {
-    "filename": "taswira-ancient-kano-epic-logo-master.mp4",
-    "duration_seconds": 47.25,
-    "sha256": "64734b701bfe6e486bba80e5ba04d7ca2e99cb6f347db0376ca81381994539b3"
-  },
-  "source_records": [
-    "FLOW-REVISION-2026-11-03.md",
-    "SOURCES.md",
-    "PRODUCTION.md#soundtrack-and-attribution"
-  ]
+  }
 }

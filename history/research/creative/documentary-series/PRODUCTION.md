@@ -2,7 +2,17 @@
 
 3 November 2026. This records actual completed work separately from editorial proposals. The public repository stores research and production information; private asset delivery remains in the owner's Higgsfield workspace.
 
-## Latest completed 59-second cinematic revision
+## Latest completed master polish
+
+The [definitive master polish](MASTER-POLISH-2026-11-03.md) is delivered as `taswira-ancient-kano-master-polish.mp4`: **59 seconds,1080×1920,24fps**, 34,727,952bytes. SHA-256: `9d094103002a35e7d560aef7eb508923056209c3bb9de147bc6add6199008568`. Upload/confirmation and the result preview succeeded. Its [full spoken script](NARRATION-MASTER-2026-11-03.md) records the corrected market name and owner’s exact hook.
+
+It includes the disciplined gate procession, elegant ivory sand-drift entrance, crisp Arewa/Sora credits and both original logos. The full market name is spoken at 25.005–25.685 over the engraved road; the palace word is around 31.399 at the rising tower. Arthur’s hook runs 43.525–50.005 within the outro. Waveform correlation independently checked those actual export positions. The original body voice outside the insert and its speed/pitch are retained. The new lower-resolution horse elements are composited over the HD plate; source-resolution limits are explicit in the artifact record.
+
+Fresh checks: **1,416/1,416 frames presented in complete browser playback**, 1,416 unique decoded frames, zero identical adjacent frames; **-16.01LUFS / -1.06dBTP**, no sub−65dB10ms bins before the final fade. The complete mix now fades smoothly, including thunder; final 10ms RMS was-87.63dB. Selected exported visual contacts were inspected separately from these technical checks. Owner listening/pronunciation and the existing historical release audit remain open.
+
+This pass cost **7.9 credits** (one seven-credit procession edit and one 0.9-credit voice take) under the explicitly approved ten-credit maximum, with no automatic retries. Native finishing added 0 generation credits. The observed balance was 820.4. Older stage spend below is retained as history, not reusable authorization. The 22:40 hold was observed before any new submission.
+
+## Previous completed 59-second cinematic revision
 
 The owner’s [continuous-flight / Arewa revision](FLOW-REVISION-2026-11-03.md) is complete and delivered for review as `taswira-ancient-kano-cinematic-revision.mp4`: **59 seconds, 1080×1920, 24fps, H.264/yuv420p and 48kHz stereo AAC**. Size: **35,340,858 bytes**. SHA-256: `e815cd26fe86d070fbcc57b3385ac4fa7130ae64f8fc4118070b46fb62b8aaaf`. The upload returned HTTP 200, its copied delivery file retained the same hash, confirmation succeeded and the video result preview was presented.
 
@@ -60,7 +70,9 @@ Score drops out at 3–4.25 seconds before Arthur enters. Music then continues b
 
 ## Spend and authorization
 
-The current gate/closing revision completed the separately approved seven-second gate repair (42 credits) and ten-second closing repair (60 credits), once each: **102 credits total**. No paid retries occurred. The account balance checked after these jobs was **828.3 Plus credits**. Native tracking, compositing, typography, mixing and export add **0 generation credits**. The new closing still contained an unstable middle; it is excluded in the final edit and joined behind an authored dust crossing, as recorded in the [revision](FLOW-REVISION-2026-11-03.md). Earlier caps below describe earlier completed batches and are not reusable.
+The latest master-polish authorization was a new maximum of 10 credits. Actual charges were 7.9, once per job; details and source-resolution handling appear above. No additional attempt is authorized by the unused difference.
+
+The preceding gate/closing revision completed the separately approved seven-second gate repair (42 credits) and ten-second closing repair (60 credits), once each: **102 credits total**. No paid retries occurred. The account balance checked after these jobs was **828.3 Plus credits**. Native tracking, compositing, typography, mixing and export add **0 generation credits**. The new closing still contained an unstable middle; it is excluded in the final edit and joined behind an authored dust crossing, as recorded in the [revision](FLOW-REVISION-2026-11-03.md). Earlier caps below describe earlier completed batches and are not reusable.
 
 The earlier seven-second ascent repair cost 42 credits under its specific authorization. A later separately approved batch before the current revision was one ten-second, 1080p Wan 3.0 Prime palace/closing repair at 60 credits plus one Arthur narration at 2.5 credits: **62.5 credits total**, completed, with no automatic retries. These figures describe these batches, not a complete historical spend audit.
 
