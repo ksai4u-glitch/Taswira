@@ -364,5 +364,59 @@
     "media_generation_calls": 0,
     "plan": "MASTER-REBUILD-PLAN-2026-11-04.md",
     "critique_response": "CLAUDE-CRITIQUE-RESPONSE-2026-11-04.md"
+  },
+  "native_rebuild_checkpoint": {
+    "date": "2026-11-04",
+    "status": "native_integration_rejected_cleanplate_approval_pending",
+    "new_full_delivery": false,
+    "moving_formation_component_frames": 168,
+    "owner_movement_basis": "accepted four-second study; cinematic finish pending",
+    "new_media_generation_calls": 0,
+    "cleanplate_proposal": {
+      "model": "seedream_v4_5",
+      "quality": "basic up-to-4K",
+      "aspect_ratio": "9:16",
+      "independent_images": 3,
+      "count_each": 1,
+      "live_cost_only_credits_each": 1,
+      "proposed_total_cap": 3,
+      "owner_approval_received": false,
+      "reference_uploads_confirmed": false,
+      "full_reference_specific_quotes_required_before_submission": true,
+      "automatic_retries": false
+    },
+    "components": [
+      {
+        "filename": "native-cinematic-intro.mp4",
+        "sha256": "f50b72e80eb9a92e06591db8d5979309b548c372b2716bc2300509187595064d",
+        "bytes": 8707584,
+        "frames": 204,
+        "duration": 8.5,
+        "width": 1080,
+        "height": 1920,
+        "fps": "24/1",
+        "audio_streams": 0,
+        "browser_presented": 204,
+        "browser_ended": true,
+        "max_media_gap": 0.04166700000000034
+      },
+      {
+        "filename": "native-cinematic-outro.mp4",
+        "sha256": "3c519198dab4eb9cb6d99813851ae065b5fcf30dc08c7bf8a1640aacb34a7578",
+        "bytes": 7151957,
+        "frames": 480,
+        "duration": 20,
+        "width": 1080,
+        "height": 1920,
+        "fps": "24/1",
+        "audio_streams": 0,
+        "browser_presented": 480,
+        "browser_ended": true,
+        "max_media_gap": 0.04166700000000034
+      }
+    ],
+    "retained_master_sha256": "0e4ba04997cd7a8fdbc28c3a28e54ac7de792d1463bd4a3f7830380d05a38bd8",
+    "record": "NATIVE-REBUILD-PROGRESS-2026-11-04.md",
+    "independent_full_film_review": "pending a complete integrated candidate"
   }
 }

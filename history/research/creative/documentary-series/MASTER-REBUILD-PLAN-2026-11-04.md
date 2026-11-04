@@ -30,13 +30,15 @@
 
 ---
 
+**Checkpoint, 4 November:** camera/formation components and typography exports exist. Native plate cleanup/in-place replacement tests are rejected. A three-image clean-plate proposal is prepared at a live cost-only total of three credits, awaiting separate owner approval. No revised full-film delivery is claimed. See NATIVE-REBUILD-PROGRESS-2026-11-04.md.
+
 ### Task1: Full shot camera, masks and clean plate
 
 **Files:** `full_camera.py`, `source_masks.py`, `clean_plate.py`, `full-camera.json`, `plate-clean/` in the isolated native work folder.
 
 **Interfaces:** Consumes the original gate source and owner-accepted rig study. Produces168 camera records at24fps, foreground/cleanup masks at source resolution, and a clean seven-second plate with the original endpoint.
 
-- [ ] Extend the existing reconstruction across source0–7s, using static-background keyframes and measured reprojection evidence.
+- [x] Extend the existing reconstruction across source0–7s, using static-background keyframes and measured reprojection evidence.
 - [ ] Produce gate/roof/street holdouts and separate original-rider masks; inspect dense gate-passage frames.
 - [ ] Reconstruct removed riders' ground/shadows using temporally aligned plate content; protect architecture.
 - [ ] Verify no new texture boil, mask pop, camera wobble, wrong-depth rider or endpoint change.
@@ -47,7 +49,7 @@
 
 **Interfaces:** Consumes Task1 camera/holdouts and the accepted fixed horse rig. Produces a native1080 formation pass and seven-second integrated shot.
 
-- [ ] Build approximately24 riders as three disciplined columns/eight ranks; movement outward under the inward-flying camera, with coherent spacing and phase variation.
+- [x] Build approximately24 riders as three disciplined columns/eight ranks; movement outward under the inward-flying camera, with coherent spacing and phase variation.
 - [ ] Refine woven cloth, tack, coat variation, rider silhouette and warm-light/shadow match; no unverified period-uniform claim.
 - [ ] Ensure the gate has formed before the front rank enters; each rider persists to a real occlusion or exit.
 - [ ] Inspect normal-speed movement, silhouettes, hoof contact, reins, shadows and architecture across the whole shot; reject failed frames before integration.

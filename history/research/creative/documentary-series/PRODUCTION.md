@@ -1,6 +1,9 @@
 # Production record and lessons
 
 
+**Latest checkpoint, 4 November:** the 24-rider component and revised title components are rendered, but native integration tests remain rejected. No replacement full cut has been delivered. A [three-credit clean-plate proposal](NATIVE-REBUILD-PROGRESS-2026-11-04.md) awaits separate owner approval; no new generation was submitted.
+
+
 **4 November update:** The owner accepted the [controlled motion study](CONTROLLED-PROCESSION-PROOF-2026-11-04.md) as the movement basis and requested cinematic refinement. The existing 59-second procession remains rejected; the full native rebuild is in progress. See the [execution plan](MASTER-REBUILD-PLAN-2026-11-04.md) and [response to Claude’s fourteen findings](CLAUDE-CRITIQUE-RESPONSE-2026-11-04.md).
 
 **Quality correction, 4 November 2026:** the owner rejects the horse procession as still jittery and visibly artificial. Source-versus-delivered inspection confirms that the prior edge treatment did not resolve the anatomy/movement complaint. The delivered video is a review artifact, not an accepted final master. See [rejected-shot review and rebuild requirements](PROCESSION-REJECTION-2026-11-04.md). No new generation or replacement cut was made.
