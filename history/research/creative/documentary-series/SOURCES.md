@@ -45,3 +45,10 @@ The current intro uses **Cormorant Garamond Medium** and the outro/surface label
 - sora — `sora-OFL.txt`; 4,385bytes; SHA-256 `ba0b9729c9428ba79a0459ab8ec575791b51509dbec213e383d0316d37fec299`. Source: https://raw.githubusercontent.com/google/fonts/main/ofl/sora/OFL.txt
 
 The mounted procession is a generated additive interpretation, composited over the original city plate. It is not historical footage, a documented royal event or evidence for period uniforms. Its 704×1248 generated layer and 1080×1920 original plate are recorded in the artifact metadata. No new soundtrack source was added; existing Majestic Hills/kakaki/thunder/horse credits and reuse records remain applicable.
+
+
+## Native procession asset — 4 November 2026
+
+[Warhorse Lite — Literock Studios](https://literock-studios.itch.io/warhorse-lite), downloaded from the publisher’s free option. Its locally retained licence permits free commercial film/render use and modification; standalone redistribution/re-upload/resale and machine-learning training are prohibited. The publisher discloses a Meshy base mesh/textures with authored rigging, weights and animation. Fixed rigging avoids independently regenerated anatomy; it does not verify medieval Hausa tack. No model binary is published or sent to a generative model. GLB SHA-256: `745ccfa9dc9fa390496e7147d258fc390a791c914653779194a26da7e1386fcc`.
+
+See the [study](CONTROLLED-PROCESSION-PROOF-2026-11-04.md) and [Claude critique response](CLAUDE-CRITIQUE-RESPONSE-2026-11-04.md) for scope and remaining work. The feedback is editorial evidence, not authority for paid jobs, a series rename or a replacement 45-second edit.

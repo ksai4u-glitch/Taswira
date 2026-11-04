@@ -339,5 +339,30 @@
     "new_master_created": false,
     "generation_credits_this_review": 0,
     "required_next": "Replace the failed party source through a controlled gait/camera/occlusion proof before full production"
+  },
+  "controlled_motion_study": {
+    "date": "2026-11-04",
+    "filename": "taswira-two-rider-motion-proof.mp4",
+    "sha256": "6666c800b2a34e489c2df2f9ecb4405debc146581e1c912ddfb86e6e56824f99",
+    "duration_seconds": 4,
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "frames": 96,
+    "bytes": 4456544,
+    "silent": true,
+    "status": "movement_basis_accepted_full_finish_pending",
+    "owner_response": "Movement works; refine the cinematic finish",
+    "scope": "Two-second original gate composite plus two-second diagnostic; not a new master. Existing incidental riders remain in the study.",
+    "checks": {
+      "frames_decoded": 96,
+      "browser_presented": 96,
+      "delivery_hash_matched": true,
+      "put_http": 200,
+      "confirmed": true
+    },
+    "media_generation_calls": 0,
+    "plan": "MASTER-REBUILD-PLAN-2026-11-04.md",
+    "critique_response": "CLAUDE-CRITIQUE-RESPONSE-2026-11-04.md"
   }
 }

@@ -1,0 +1,36 @@
+# Ancient Kano — response to Claude’s critique
+
+4 November 2026. Read all three rasterized pages of the owner-supplied `Claude Feedback.pdf`. The review names a renamed 59-second `Ancient Kano.mp4` without a hash and explicitly excludes listening, pronunciation and exact speech/picture timing. Its observations must be reconciled with the exact latest artifact. This document records editorial assessment and work to carry forward; it does not imply that the full film has been repaired or that any new paid job is approved.
+
+## Cross-checks and constraints
+
+The current [map chapter](https://github.com/ksai4u-glitch/Taswira/blob/main/history/chapters/hausa.json) was fetched on 4 November 2026; its Git blob was `153c222576b1116b4334549ada2f7821ed6114f2`. It says Kano grew around Dala and describes Rumfa’s palace as a schematic compound, sequential courts, and a separate round gatehouse based on architectural history. The map is a coordination source, not independent historical clearance.
+
+The accepted Arthur hook occupies about **6.48 seconds**. A five-second outro cannot contain it unchanged at the accepted speech speed. The critique’s separate 37–45-second proposal gives eight seconds, which is a more workable starting point. A 45-second version still needs a timed script/edit: simply shortening picture will break the existing speech cues. No speech speed-up, new narration, series rename or replacement of the owner-requested extended cut is assumed.
+
+## Disposition of the fourteen findings
+
+| # | Assessment | Work to carry forward |
+|---|---|---|
+| 1 | Agree that roughly a third of a short film devoted to end cards is a substantial pacing choice. Audience drop-off is a prediction, not measured analytics. | Develop a separate compact Reels treatment alongside the cinematic version; combine identity/brand beats, preserve attribution and give the exact hook sufficient time. Duration remains an editorial decision. |
+| 2 | Agree that the first second needs a legible image hook. | Preserve the requested fog-clearing cold open while exposing a strong kingdom/gate silhouette immediately. Title arrival must support the image, not bury it in dust or tiny text. |
+| 3 | Partly agree on repetitive street composition. The current manifest has street 15.5–22.5 and ascent 22.5–29.5, so the cited 16–26 interval crosses two shots; the reviewed file is not hash-identified. | Shorten redundant travel on a timed board and preserve the complete Kurmi Market cue over the market. Recheck exported words against picture after every cut. |
+| 4 | Agree that the flat beige coverage at the closing transition can read as a fault. | Replace it with a visually justified match cut or genuinely coherent move. Never restore the already rejected closing source 3.75–6.75 merely to hide the edit. A technical frame count does not approve a transition. |
+| 5 | The map confirms the Dala/city relationship. The present distant peak, paired with the Dala narration, risks communicating the wrong geography. | Establish a modest hill within the urban setting or use a clear sourced spatial view. Do not relabel the distant mountain as Dala. Treat this as a historical-picture release issue. |
+| 6 | Qualify the criticism: a palace compound and a round entrance are not mutually exclusive. The map explicitly includes both, and the film has a wider compound as well as the rising round entrance. | Make the compound and sequential courts the identifying view; frame the round element as an entrance rather than the whole palace. Reconcile the schematic reconstruction and period claims with the cited architectural sources. |
+| 7 | Agree that regular grids, uniform boxes and a circular perimeter weaken the place-specific reconstruction. Reimagining is not a substitute for source-led geography. | Review mixed building forms, irregular routes, wall shape and land use against sources before new picture is locked. Do not turn the illustrative skyline or boundary into map evidence. |
+| 8 | Editorial proposal, not proof that the current series name asserts one unified Hausa state. The owner requested the existing name. | A plural title such as “Chronicles of the Hausa Kingdoms” is available for consideration. Do not silently rebrand. Keep the separate city-state history explicit. |
+| 9 | The exact “rise and fall of great empires” hook is the owner’s wider-series promise. The current film title is Ancient Kano, not a claim that Kano is an empire. | Retain the exact hook and avoid adding a false Kano-empire label. No new Arthur generation follows from this point. |
+| 10 | Agree; the gate procession remains rejected, and all other mounted figures require the same quality review. | Use the controlled two-rider motion study as a component test. The full formation, existing incidental gate riders and palace orbiting riders remain separate repair/cleanup tasks. No claim that this small study repairs them all. |
+| 11 | Agree that the period card must work on a phone. | Enlarge and simplify the date/location hierarchy, use a calmer contrast area and allow a readable hold. Retain the Chronicle qualification and distinguish the early wall dates from Rumfa’s reign and from the ages of individual buildings. |
+| 12 | Agree that clipped/soft lettering undermines the intended landmark identification. | Keep the owner’s integrated road/tower engraving treatment, but position it so the full name remains readable in-frame for at least one second, with proper foreground occlusion. A floating label is an alternative, not the default instruction. |
+| 13 | Agree that source softness and shot matching need review. | Grade and assess a restrained sharpening pass or a shorter selection. Do not claim that sharpening recovers absent native detail or introduce conspicuous halos. Preserve the existing city palette. |
+| 14 | Agree that the film-to-map connection needs a clear on-screen Taswira identity. | Add a concise map CTA in the next film edit, retaining production and cultural emblems as distinct identities. Use a verified released destination; no website deployment or publication is implied. |
+
+## Current native work and what it does not settle
+
+The new motion study replaces frame-generated anatomy with a fixed rigged horse and native rider geometry, with independently phased walk cycles and matched travel speed. It is a short diagnostic, not a complete historical or cinematic approval. Gate holdouts require separate facade/roof treatment; a facade-only homography caused an internal test to show a rider on the roof and was rejected before delivery. The native proof’s styling, full formation, source-plate cleanup and broader film corrections remain work, not completed claims.
+
+The PDF’s pacing proposal is useful input for a new timed treatment. The accepted narration, exact hook, fog entrance, integrated labels and previously requested branding must be reconciled in that treatment. The separate Taswira map teaser remains part of the project after the Kano foundation is satisfactory.
+
+No image, video, speech or soundtrack generation was submitted for this critique review. Earlier paid caps remain consumed. The original PDF and screenshots are retained privately; no private asset URL or PDF binary is published in this repository.

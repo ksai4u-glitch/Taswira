@@ -1,5 +1,8 @@
 # Production record and lessons
 
+
+**4 November update:** The owner accepted the [controlled motion study](CONTROLLED-PROCESSION-PROOF-2026-11-04.md) as the movement basis and requested cinematic refinement. The existing 59-second procession remains rejected; the full native rebuild is in progress. See the [execution plan](MASTER-REBUILD-PLAN-2026-11-04.md) and [response to Claude’s fourteen findings](CLAUDE-CRITIQUE-RESPONSE-2026-11-04.md).
+
 **Quality correction, 4 November 2026:** the owner rejects the horse procession as still jittery and visibly artificial. Source-versus-delivered inspection confirms that the prior edge treatment did not resolve the anatomy/movement complaint. The delivered video is a review artifact, not an accepted final master. See [rejected-shot review and rebuild requirements](PROCESSION-REJECTION-2026-11-04.md). No new generation or replacement cut was made.
 
 3 November 2026. This records actual completed work separately from editorial proposals. The public repository stores research and production information; private asset delivery remains in the owner's Higgsfield workspace.
