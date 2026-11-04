@@ -1,0 +1,422 @@
+{
+  "artifact": "taswira-ancient-kano-procession-polish.mp4",
+  "status": "Latest delivered review artifact; owner rejects horse-procession quality; not an accepted final master",
+  "date": "2026-11-04",
+  "duration_seconds": 59,
+  "width": 1080,
+  "height": 1920,
+  "fps": 24,
+  "frames": 1416,
+  "unique_decoded_frames": 1416,
+  "identical_adjacent_frames": 0,
+  "bytes": 37943081,
+  "sha256": "0e4ba04997cd7a8fdbc28c3a28e54ac7de792d1463bd4a3f7830380d05a38bd8",
+  "browser": {
+    "ended": true,
+    "duration": 59,
+    "finalTime": 59,
+    "frameCallbacks": 1416,
+    "presentedFrames": 1416,
+    "firstTime": 0,
+    "lastTime": 58.958333,
+    "maxMediaGap": 0.04166700000000034,
+    "maxWallGapMs": 100.1,
+    "audioDecodedBytes": 1444598,
+    "videoDecodedBytes": 36455245
+  },
+  "audio": {
+    "integrated_lufs": -16.01,
+    "true_peak_dbtp": -1.06,
+    "score_from_frame_one": true,
+    "sub_minus65db_10ms_bins_before_final_fade": 0,
+    "final_program_10ms_rms_db": -87.62801442447198,
+    "final_whole_mix_fade": [
+      58.3,
+      59
+    ],
+    "voice": "Arthur",
+    "body_voice_delay_seconds": 4,
+    "original_body_duration": 38.8942916667,
+    "new_market_full_name": [
+      25.004937499999997,
+      25.684937499999997
+    ],
+    "market_sentence_end": 28.124937499999998,
+    "palace_word": 31.399229499999997,
+    "exact_hook": "Join us on the journey of exploring the old kingdoms—the rise and fall of great empires.",
+    "hook_spoken_film": [
+      43.5249375,
+      50.0049375
+    ],
+    "speed_or_pitch_changed": false,
+    "delivered_waveform_correlation": {
+      "market": {
+        "expected_start": 25,
+        "detected_start": 25.004937499999997,
+        "offset_seconds": 0.0049374999999969305
+      },
+      "hook": {
+        "expected_start": 43.35,
+        "detected_start": 43.3549375,
+        "offset_seconds": 0.0049374999999969305
+      },
+      "palace": {
+        "expected_start": 31.1,
+        "detected_start": 31.1049375,
+        "offset_seconds": 0.0049374999999969305
+      },
+      "full_market_name_film": [
+        25.004937499999997,
+        25.684937499999997
+      ],
+      "full_market_sentence_end": 28.124937499999998,
+      "market_picture_end": 29.5,
+      "palace_word_film": 31.399229499999997,
+      "closing_hook_spoken_film": [
+        43.5249375,
+        50.0049375
+      ],
+      "outro_picture": [
+        39,
+        59
+      ],
+      "pronunciation": "ASR/waveform do not certify proper-name pronunciation; owner listening remains required"
+    },
+    "narration_subtitles": false,
+    "lightning_thunder_hits": [
+      45.5,
+      49.5,
+      53.75
+    ],
+    "horse_effect_hit": 53.75,
+    "latest_pass_waveform_unchanged": true
+  },
+  "picture": {
+    "timeline": [
+      {
+        "shot": "fresh fog intro/city",
+        "start": 0,
+        "end": 8.5,
+        "source": [
+          0,
+          8.5
+        ]
+      },
+      {
+        "shot": "HD gate bridge with additive mounted procession",
+        "start": 8.5,
+        "end": 15.5
+      },
+      {
+        "shot": "street",
+        "start": 15.5,
+        "end": 22.5,
+        "source": [
+          4.5,
+          11.5
+        ]
+      },
+      {
+        "shot": "ascent + tracked Kurmi Market",
+        "start": 22.5,
+        "end": 29.5
+      },
+      {
+        "shot": "palace + tracked Rumfa Palace",
+        "start": 29.5,
+        "end": 34,
+        "source": [
+          0,
+          4.5
+        ]
+      },
+      {
+        "shot": "clean pullback portions; dust-concealed edit at 37.75s",
+        "start": 34,
+        "end": 41
+      },
+      {
+        "shot": "storm/title/Arewa/R-logo outro",
+        "start": 39,
+        "end": 59,
+        "overlap": "last 2s of moving aerial"
+      }
+    ],
+    "closing_source_keeps": [
+      [
+        0,
+        3.75
+      ],
+      [
+        6.75,
+        10
+      ]
+    ],
+    "closing_source_rejected": [
+      3.75,
+      6.75
+    ],
+    "dust_concealed_edit_seconds": 37.75,
+    "world_labels": [
+      "Kurmi Market on road, with foreground occlusion",
+      "Rumfa Palace on formed tower, tracked through closing join"
+    ],
+    "physical_single_take_claimed": false,
+    "english_engraving_is_modern_editorial_annotation": true,
+    "gate_development_and_city_layout": "Cinematic reimagining, not surveyed geometry",
+    "period_card": "Kano, Hausaland · 11th–15th centuries CE; first walls c.1095–1134 and Rumfa reign1463–1499, qualified as Chronicle dating",
+    "horse_procession": true,
+    "horse_generated_layer_resolution": [
+      704,
+      1248
+    ],
+    "original_city_plate_resolution": [
+      1080,
+      1920
+    ],
+    "horse_integration": "Changed-region road matte over original HD source; edited rider detail is upscaled. It is not native1080 rider detail.",
+    "world_labels_font": "Sora Bold",
+    "intro_font_and_motion": "Cormorant Garamond Medium; coupled sand/glyph drift and reveal",
+    "outro_font_and_motion": "Sora Bold/ExtraBold; crisp geometric masks, solid ivory type and green accents",
+    "procession_native_refinement_window": [
+      11,
+      14
+    ]
+  },
+  "branding": {
+    "series": "Hausa Kingdom Chronicles",
+    "film": "Ancient Kano",
+    "creator": "sai_fu",
+    "production": "Rahzatech Media Production",
+    "original_R_artwork_included": true,
+    "R_source_sha256": "68900f359f475e6f5b86199199c1fdef9c56b6239a6d3814070c312fef9964dd",
+    "supplied_green_Arewa_included": true,
+    "Arewa_source_sha256": "52f9cc161ab033b852e95fedebfd6c5818e40a18d63a07a3370df99fc6de6fa0",
+    "logo_art_redrawn_or_generated": false,
+    "Arewa_medieval_flag_claimed": false,
+    "font": "Cormorant Garamond Medium / Sora Bold–ExtraBold, SIL OFL1.1"
+  },
+  "generation": {
+    "total_credits": 0,
+    "model_calls": 0,
+    "native_finishing_generation_credits": 0,
+    "balance_not_rechecked_this_pass": true,
+    "last_live_balance_observation_after_paid_jobs": 820.4
+  },
+  "delivery": "Upload returned HTTP200, delivery-copy SHA matched, confirmation succeeded and result preview was shown in owner Higgsfield assets. Private URLs are omitted.",
+  "visual_review": {
+    "actual_export_contacts_inspected": [
+      "sand opening and dates",
+      "gate/procession and street endpoint",
+      "market-name cue and road occlusion",
+      "palace/tower cue",
+      "kingdom/dust transition",
+      "Arewa/title/R-logo credits"
+    ],
+    "full_browser_playback": true,
+    "listening_and_pronunciation": "Owner review pending",
+    "geometry_guaranteed_by_frame_count": false,
+    "dense_eight_consecutive_frame_before_after_comparison": true
+  },
+  "remaining": [
+    "Blocking: replace/rebuild rejected mounted-procession element; prior smoothing did not resolve visual quality",
+    "Owner listening/viewing and proper-name pronunciation review",
+    "Historical/editorial release checks in KANO-PILOT.md",
+    "Separate Taswira map teaser; prepared treatment is not a completed film"
+  ],
+  "previous_delivered_artifact": {
+    "artifact": "taswira-ancient-kano-master-polish.mp4",
+    "duration_seconds": 59,
+    "sha256": "9d094103002a35e7d560aef7eb508923056209c3bb9de147bc6add6199008568",
+    "bytes": 34727952
+  },
+  "source_records": [
+    "PROCESSION-REJECTION-2026-11-04.md",
+    "PROCESSION-POLISH-2026-11-04.md",
+    "MASTER-POLISH-2026-11-03.md",
+    "NARRATION-MASTER-2026-11-03.md",
+    "SOURCES.md",
+    "PRODUCTION.md#soundtrack-and-attribution"
+  ],
+  "fonts": [
+    {
+      "family": "cormorantgaramond",
+      "filename": "cormorantgaramond-CormorantGaramond.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf",
+      "bytes": 1195560,
+      "sha256": "b20b7d9626dd956b2c5e558692ad328b1f19e3275e2782db4fa07670d83f35e0"
+    },
+    {
+      "family": "cormorantgaramond",
+      "filename": "cormorantgaramond-OFL.txt",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/OFL.txt",
+      "bytes": 4387,
+      "sha256": "60700d351cac4650c51f3f9db318d2a420f8b45052dba2715eb5fec41f0f6956"
+    },
+    {
+      "family": "sora",
+      "filename": "sora-Sora.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sora/Sora%5Bwght%5D.ttf",
+      "bytes": 111400,
+      "sha256": "84ff7096ae3ec6c8be47d906d1a0ba4de7f2ce78c615275c77301964a316e16c"
+    },
+    {
+      "family": "sora",
+      "filename": "sora-OFL.txt",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sora/OFL.txt",
+      "bytes": 4385,
+      "sha256": "ba0b9729c9428ba79a0459ab8ec575791b51509dbec213e383d0316d37fec299"
+    }
+  ],
+  "previous_generation_stage": {
+    "approved_gate_seconds": 7,
+    "gate_credits": 42,
+    "approved_closing_seconds": 10,
+    "closing_credits": 60,
+    "total_credits": 102,
+    "attempts_per_shot": 1,
+    "automatic_retries": 0,
+    "native_finishing_generation_credits": 0,
+    "observed_balance_after_repairs": 828.3,
+    "balance_observation_date": "2026-11-03"
+  },
+  "native_procession_polish": {
+    "film_window": [
+      11,
+      14
+    ],
+    "gate_window": [
+      2.5,
+      5.5
+    ],
+    "patch_frames": 72,
+    "fps": 24,
+    "method": "Measured background registration; flow-guided temporal alpha; gentle premultiplied 144-degree shutter integration only on procession; edge light-wrap; local patch eased at both ends",
+    "old_motion_compensated_alpha_churn_mean": 0.2223037573405438,
+    "new_motion_compensated_alpha_churn_mean": 0.10328813021381696,
+    "alpha_churn_reduction_fraction": 0.5353738890900013,
+    "old_new_alpha_area_means": [
+      0.07195942108196161,
+      0.0904161576217421
+    ],
+    "raw_rgb_max_change_outside_patch_support": 0,
+    "mean_fraction_changed_pixels_in_target": 0.09637860082304527,
+    "generation_calls": 0,
+    "generation_credits": 0,
+    "retimed": false,
+    "audio_changes": false,
+    "limits": "Native edge/cadence repair does not create missing gait anatomy or recover native 1080 rider detail. Actual moving shot requires review."
+  },
+  "paid_master_polish_generation": {
+    "approved_cap": 10,
+    "horse_edit_model": "flux_3_video_edit",
+    "horse_input_seconds": 7,
+    "horse_credits": 7,
+    "supplementary_audio_model": "seed_audio",
+    "supplementary_audio_credits": 0.9,
+    "total_credits": 7.9,
+    "attempts_per_job": 1,
+    "automatic_retries": 0,
+    "native_finishing_generation_credits": 0,
+    "balance_after": 820.4,
+    "hold_observed": "No submission before22:40Europe/London on3November2026; clock checked22:41 before quotes",
+    "lifetime_spend_audit": false
+  },
+  "preservation": {
+    "audio_aac_payload_identical": true,
+    "audio_decoded_float_samples_identical": true,
+    "audio_payload_sha256": "SHA256=69334f884eacb564fc66d11127ade46fba55f931663b8ea2b56203850d5240a9",
+    "audio_pcm_sha256": "SHA256=4f7a66bddb277b4bfc7d05f06e2c94ffc3b50c18eedae921ad9f62cfd86f7877",
+    "intro_ssim_mean": 0.9968757009803921,
+    "outside_11_14_ssim_mean": 0.9968123712797619,
+    "outside_11_14_ssim_min": 0.990032
+  },
+  "owner_review": {
+    "date": "2026-11-04",
+    "result": "rejected_procession",
+    "reason": "Jittery, artificial horse/rider anatomy and movement remain after edge polish",
+    "evidence": "Eight owner screenshots plus retained raw/source/composite/delivered frame comparisons",
+    "new_master_created": false,
+    "generation_credits_this_review": 0,
+    "required_next": "Replace the failed party source through a controlled gait/camera/occlusion proof before full production"
+  },
+  "controlled_motion_study": {
+    "date": "2026-11-04",
+    "filename": "taswira-two-rider-motion-proof.mp4",
+    "sha256": "6666c800b2a34e489c2df2f9ecb4405debc146581e1c912ddfb86e6e56824f99",
+    "duration_seconds": 4,
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "frames": 96,
+    "bytes": 4456544,
+    "silent": true,
+    "status": "movement_basis_accepted_full_finish_pending",
+    "owner_response": "Movement works; refine the cinematic finish",
+    "scope": "Two-second original gate composite plus two-second diagnostic; not a new master. Existing incidental riders remain in the study.",
+    "checks": {
+      "frames_decoded": 96,
+      "browser_presented": 96,
+      "delivery_hash_matched": true,
+      "put_http": 200,
+      "confirmed": true
+    },
+    "media_generation_calls": 0,
+    "plan": "MASTER-REBUILD-PLAN-2026-11-04.md",
+    "critique_response": "CLAUDE-CRITIQUE-RESPONSE-2026-11-04.md"
+  },
+  "native_rebuild_checkpoint": {
+    "date": "2026-11-04",
+    "status": "native_integration_rejected_cleanplate_approval_pending",
+    "new_full_delivery": false,
+    "moving_formation_component_frames": 168,
+    "owner_movement_basis": "accepted four-second study; cinematic finish pending",
+    "new_media_generation_calls": 0,
+    "cleanplate_proposal": {
+      "model": "seedream_v4_5",
+      "quality": "basic up-to-4K",
+      "aspect_ratio": "9:16",
+      "independent_images": 3,
+      "count_each": 1,
+      "live_cost_only_credits_each": 1,
+      "proposed_total_cap": 3,
+      "owner_approval_received": false,
+      "reference_uploads_confirmed": false,
+      "full_reference_specific_quotes_required_before_submission": true,
+      "automatic_retries": false
+    },
+    "components": [
+      {
+        "filename": "native-cinematic-intro.mp4",
+        "sha256": "f50b72e80eb9a92e06591db8d5979309b548c372b2716bc2300509187595064d",
+        "bytes": 8707584,
+        "frames": 204,
+        "duration": 8.5,
+        "width": 1080,
+        "height": 1920,
+        "fps": "24/1",
+        "audio_streams": 0,
+        "browser_presented": 204,
+        "browser_ended": true,
+        "max_media_gap": 0.04166700000000034
+      },
+      {
+        "filename": "native-cinematic-outro.mp4",
+        "sha256": "3c519198dab4eb9cb6d99813851ae065b5fcf30dc08c7bf8a1640aacb34a7578",
+        "bytes": 7151957,
+        "frames": 480,
+        "duration": 20,
+        "width": 1080,
+        "height": 1920,
+        "fps": "24/1",
+        "audio_streams": 0,
+        "browser_presented": 480,
+        "browser_ended": true,
+        "max_media_gap": 0.04166700000000034
+      }
+    ],
+    "retained_master_sha256": "0e4ba04997cd7a8fdbc28c3a28e54ac7de792d1463bd4a3f7830380d05a38bd8",
+    "record": "NATIVE-REBUILD-PROGRESS-2026-11-04.md",
+    "independent_full_film_review": "pending a complete integrated candidate"
+  }
+}
