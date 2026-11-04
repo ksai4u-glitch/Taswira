@@ -1,5 +1,7 @@
 # Ancient Kano — native procession polish
 
+**Quality correction, 4 November 2026:** the owner rejects the horse procession as still jittery and visibly artificial. Source-versus-delivered inspection confirms that the prior edge treatment did not resolve the anatomy/movement complaint. The delivered video is a review artifact, not an accepted final master. See [rejected-shot review and rebuild requirements](PROCESSION-REJECTION-2026-11-04.md). No new generation or replacement cut was made.
+
 This follows the [definitive master polish](MASTER-POLISH-2026-11-03.md) and addresses the owner’s observation that the mounted entourage looked jittery and pasted into the flyover at film 11–14 seconds. No new shot, soundtrack or speech was generated.
 
 ## Diagnosis and repair

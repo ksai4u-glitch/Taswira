@@ -1,5 +1,7 @@
 # Taswira documentary series
 
+**Quality correction, 4 November 2026:** the owner rejects the horse procession as still jittery and visibly artificial. Source-versus-delivered inspection confirms that the prior edge treatment did not resolve the anatomy/movement complaint. The delivered video is a review artifact, not an accepted final master. See [rejected-shot review and rebuild requirements](PROCESSION-REJECTION-2026-11-04.md). No new generation or replacement cut was made.
+
 Editorial mandate and production handoff, 3 November 2026. Maintainer: Saifu; screen credits: **sai_fu · Rahzatech Media Production**. Repository reviewed at `7b737d55b521da2aec60a0278aa2c9783af0713c`.
 
 **Latest refinement:** the [native procession polish](PROCESSION-POLISH-2026-11-04.md) steadies and blends the mounted party at 11–14 seconds, with the accepted audio copied exactly and zero new generation credits.

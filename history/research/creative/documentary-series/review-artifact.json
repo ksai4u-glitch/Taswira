@@ -1,6 +1,6 @@
 {
   "artifact": "taswira-ancient-kano-procession-polish.mp4",
-  "status": "Native procession polish completed, uploaded, confirmed and presented for owner review",
+  "status": "Latest delivered review artifact; owner rejects horse-procession quality; not an accepted final master",
   "date": "2026-11-04",
   "duration_seconds": 59,
   "width": 1080,
@@ -219,6 +219,7 @@
     "dense_eight_consecutive_frame_before_after_comparison": true
   },
   "remaining": [
+    "Blocking: replace/rebuild rejected mounted-procession element; prior smoothing did not resolve visual quality",
     "Owner listening/viewing and proper-name pronunciation review",
     "Historical/editorial release checks in KANO-PILOT.md",
     "Separate Taswira map teaser; prepared treatment is not a completed film"
@@ -230,6 +231,7 @@
     "bytes": 34727952
   },
   "source_records": [
+    "PROCESSION-REJECTION-2026-11-04.md",
     "PROCESSION-POLISH-2026-11-04.md",
     "MASTER-POLISH-2026-11-03.md",
     "NARRATION-MASTER-2026-11-03.md",
@@ -328,5 +330,14 @@
     "intro_ssim_mean": 0.9968757009803921,
     "outside_11_14_ssim_mean": 0.9968123712797619,
     "outside_11_14_ssim_min": 0.990032
+  },
+  "owner_review": {
+    "date": "2026-11-04",
+    "result": "rejected_procession",
+    "reason": "Jittery, artificial horse/rider anatomy and movement remain after edge polish",
+    "evidence": "Eight owner screenshots plus retained raw/source/composite/delivered frame comparisons",
+    "new_master_created": false,
+    "generation_credits_this_review": 0,
+    "required_next": "Replace the failed party source through a controlled gait/camera/occlusion proof before full production"
   }
 }
