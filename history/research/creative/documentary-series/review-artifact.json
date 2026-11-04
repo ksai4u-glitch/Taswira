@@ -1,7 +1,7 @@
 {
-  "artifact": "taswira-ancient-kano-master-polish.mp4",
-  "status": "Master polish completed, uploaded, confirmed and presented for owner review",
-  "date": "2026-11-03",
+  "artifact": "taswira-ancient-kano-procession-polish.mp4",
+  "status": "Native procession polish completed, uploaded, confirmed and presented for owner review",
+  "date": "2026-11-04",
   "duration_seconds": 59,
   "width": 1080,
   "height": 1920,
@@ -9,8 +9,8 @@
   "frames": 1416,
   "unique_decoded_frames": 1416,
   "identical_adjacent_frames": 0,
-  "bytes": 34727952,
-  "sha256": "9d094103002a35e7d560aef7eb508923056209c3bb9de147bc6add6199008568",
+  "bytes": 37943081,
+  "sha256": "0e4ba04997cd7a8fdbc28c3a28e54ac7de792d1463bd4a3f7830380d05a38bd8",
   "browser": {
     "ended": true,
     "duration": 59,
@@ -20,9 +20,9 @@
     "firstTime": 0,
     "lastTime": 58.958333,
     "maxMediaGap": 0.04166700000000034,
-    "maxWallGapMs": 99.89999999999998,
+    "maxWallGapMs": 100.1,
     "audioDecodedBytes": 1444598,
-    "videoDecodedBytes": 33240156
+    "videoDecodedBytes": 36455245
   },
   "audio": {
     "integrated_lufs": -16.01,
@@ -88,7 +88,8 @@
       49.5,
       53.75
     ],
-    "horse_effect_hit": 53.75
+    "horse_effect_hit": 53.75,
+    "latest_pass_waveform_unchanged": true
   },
   "picture": {
     "timeline": [
@@ -176,7 +177,11 @@
     "horse_integration": "Changed-region road matte over original HD source; edited rider detail is upscaled. It is not native1080 rider detail.",
     "world_labels_font": "Sora Bold",
     "intro_font_and_motion": "Cormorant Garamond Medium; coupled sand/glyph drift and reveal",
-    "outro_font_and_motion": "Sora Bold/ExtraBold; crisp geometric masks, solid ivory type and green accents"
+    "outro_font_and_motion": "Sora Bold/ExtraBold; crisp geometric masks, solid ivory type and green accents",
+    "procession_native_refinement_window": [
+      11,
+      14
+    ]
   },
   "branding": {
     "series": "Hausa Kingdom Chronicles",
@@ -192,19 +197,11 @@
     "font": "Cormorant Garamond Medium / Sora Bold–ExtraBold, SIL OFL1.1"
   },
   "generation": {
-    "approved_cap": 10,
-    "horse_edit_model": "flux_3_video_edit",
-    "horse_input_seconds": 7,
-    "horse_credits": 7,
-    "supplementary_audio_model": "seed_audio",
-    "supplementary_audio_credits": 0.9,
-    "total_credits": 7.9,
-    "attempts_per_job": 1,
-    "automatic_retries": 0,
+    "total_credits": 0,
+    "model_calls": 0,
     "native_finishing_generation_credits": 0,
-    "balance_after": 820.4,
-    "hold_observed": "No submission before22:40Europe/London on3November2026; clock checked22:41 before quotes",
-    "lifetime_spend_audit": false
+    "balance_not_rechecked_this_pass": true,
+    "last_live_balance_observation_after_paid_jobs": 820.4
   },
   "delivery": "Upload returned HTTP200, delivery-copy SHA matched, confirmation succeeded and result preview was shown in owner Higgsfield assets. Private URLs are omitted.",
   "visual_review": {
@@ -218,7 +215,8 @@
     ],
     "full_browser_playback": true,
     "listening_and_pronunciation": "Owner review pending",
-    "geometry_guaranteed_by_frame_count": false
+    "geometry_guaranteed_by_frame_count": false,
+    "dense_eight_consecutive_frame_before_after_comparison": true
   },
   "remaining": [
     "Owner listening/viewing and proper-name pronunciation review",
@@ -226,12 +224,13 @@
     "Separate Taswira map teaser; prepared treatment is not a completed film"
   ],
   "previous_delivered_artifact": {
-    "artifact": "taswira-ancient-kano-cinematic-revision.mp4",
+    "artifact": "taswira-ancient-kano-master-polish.mp4",
     "duration_seconds": 59,
-    "sha256": "e815cd26fe86d070fbcc57b3385ac4fa7130ae64f8fc4118070b46fb62b8aaaf",
-    "bytes": 35340858
+    "sha256": "9d094103002a35e7d560aef7eb508923056209c3bb9de147bc6add6199008568",
+    "bytes": 34727952
   },
   "source_records": [
+    "PROCESSION-POLISH-2026-11-04.md",
     "MASTER-POLISH-2026-11-03.md",
     "NARRATION-MASTER-2026-11-03.md",
     "SOURCES.md",
@@ -278,5 +277,56 @@
     "native_finishing_generation_credits": 0,
     "observed_balance_after_repairs": 828.3,
     "balance_observation_date": "2026-11-03"
+  },
+  "native_procession_polish": {
+    "film_window": [
+      11,
+      14
+    ],
+    "gate_window": [
+      2.5,
+      5.5
+    ],
+    "patch_frames": 72,
+    "fps": 24,
+    "method": "Measured background registration; flow-guided temporal alpha; gentle premultiplied 144-degree shutter integration only on procession; edge light-wrap; local patch eased at both ends",
+    "old_motion_compensated_alpha_churn_mean": 0.2223037573405438,
+    "new_motion_compensated_alpha_churn_mean": 0.10328813021381696,
+    "alpha_churn_reduction_fraction": 0.5353738890900013,
+    "old_new_alpha_area_means": [
+      0.07195942108196161,
+      0.0904161576217421
+    ],
+    "raw_rgb_max_change_outside_patch_support": 0,
+    "mean_fraction_changed_pixels_in_target": 0.09637860082304527,
+    "generation_calls": 0,
+    "generation_credits": 0,
+    "retimed": false,
+    "audio_changes": false,
+    "limits": "Native edge/cadence repair does not create missing gait anatomy or recover native 1080 rider detail. Actual moving shot requires review."
+  },
+  "paid_master_polish_generation": {
+    "approved_cap": 10,
+    "horse_edit_model": "flux_3_video_edit",
+    "horse_input_seconds": 7,
+    "horse_credits": 7,
+    "supplementary_audio_model": "seed_audio",
+    "supplementary_audio_credits": 0.9,
+    "total_credits": 7.9,
+    "attempts_per_job": 1,
+    "automatic_retries": 0,
+    "native_finishing_generation_credits": 0,
+    "balance_after": 820.4,
+    "hold_observed": "No submission before22:40Europe/London on3November2026; clock checked22:41 before quotes",
+    "lifetime_spend_audit": false
+  },
+  "preservation": {
+    "audio_aac_payload_identical": true,
+    "audio_decoded_float_samples_identical": true,
+    "audio_payload_sha256": "SHA256=69334f884eacb564fc66d11127ade46fba55f931663b8ea2b56203850d5240a9",
+    "audio_pcm_sha256": "SHA256=4f7a66bddb277b4bfc7d05f06e2c94ffc3b50c18eedae921ad9f62cfd86f7877",
+    "intro_ssim_mean": 0.9968757009803921,
+    "outside_11_14_ssim_mean": 0.9968123712797619,
+    "outside_11_14_ssim_min": 0.990032
   }
 }

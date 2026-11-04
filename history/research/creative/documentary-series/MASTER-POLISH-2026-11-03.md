@@ -2,6 +2,8 @@
 
 Owner direction and completed production record, 3 November 2026. This supersedes conflicting typography, voice timing and ending decisions in the preceding [revision](FLOW-REVISION-2026-11-03.md). The checked replacement is uploaded and presented for owner review; [review-artifact.json](review-artifact.json) identifies its exact bytes and hash. Historical release review and listening remain separate.
 
+The later [native procession polish](PROCESSION-POLISH-2026-11-04.md) refines only the party’s 11–14-second integration and supersedes the delivered filename/hash below as the latest artifact. This document retains the preceding paid-job record; its script, typography, source choices and audio remain in the new export.
+
 ## Requirements and resulting edit
 
 - A disciplined mounted procession now passes through the existing gate beneath the established flyover. The large city, gate formation and original street endpoint remain the foundation.
@@ -11,7 +13,7 @@ Owner direction and completed production record, 3 November 2026. This supersede
 - Arthur’s exact new closing hook runs about 43.525–50.005 within the outro: **“Join us on the journey of exploring the old kingdoms—the rise and fall of great empires.”**
 - Continuous music, no narration subtitles, the repaired gate passage, kingdom overview, tracked Rumfa tower / Kurmi road lettering and branching lightning/thunder are retained. The deliberate dust-concealed closing edit remains; rejected source 3.75–6.75 is not restored.
 
-The complete [current narration](NARRATION-MASTER-2026-11-03.md) is recorded separately from longer pilot drafts. The film remains **59 seconds at24fps**. It is an edited cinematic reimagining, not one surveyed, uninterrupted physical take.
+The complete [current narration](NARRATION-MASTER-2026-11-03.md) is recorded separately from longer pilot drafts. The film remains **59 seconds at24 fps**. It is an edited cinematic reimagining, not one surveyed, uninterrupted physical take.
 
 ## Timing correction
 
@@ -33,9 +35,9 @@ The earlier score-only ending left thunder audible at the cut. A half-sine fade 
 
 ## Verified delivery
 
-`taswira-ancient-kano-master-polish.mp4`: **34,727,952 bytes**, SHA-256 `9d094103002a35e7d560aef7eb508923056209c3bb9de147bc6add6199008568`. H.264/yuv420p,1080×1920,24fps, stereo 48kHz AAC. The delivered copy’s hash matched; upload returned HTTP 200, confirmation succeeded and the result preview was shown.
+`taswira-ancient-kano-master-polish.mp4`: **34,727,952 bytes**, SHA-256 `9d094103002a35e7d560aef7eb508923056209c3bb9de147bc6add6199008568`. H.264/yuv420p,1080×1920,24 fps, stereo 48kHz AAC. The delivered copy’s hash matched; upload returned HTTP 200, confirmation succeeded and the result preview was shown.
 
-The export decoded to **1,416 unique frames**, with zero identical adjacent frames. Full browser playback presented every frame through59 seconds; maximum observed media-time gap was0.041667 seconds and audio decoded. Delivered audio measured **-16.01LUFS / -1.06dBTP**. Exported contacts at the opening, procession, endpoint, market/tower cues, overview and branding were inspected.
+The export decoded to **1,416 unique frames**, with zero identical adjacent frames. Full browser playback presented every frame through 59 seconds; maximum observed media-time gap was0.041667 seconds and audio decoded. Delivered audio measured **-16.01LUFS / -1.06dBTP**. Exported contacts at the opening, procession, endpoint, market/tower cues, overview and branding were inspected.
 
 These checks establish the recorded playback/edit and timing. They do not certify every generated joint or building, replace an artistic listening/viewing review, or clear the historical claims. English surface lettering is modern editorial annotation. Arewa is present-day editorial cultural identity, not a medieval flag. Period dates are qualified as Chronicle reckoning, not dates for every visible building.
 
