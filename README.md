@@ -162,6 +162,23 @@ See [`history/README.md`](history/README.md) for how chapters and sources are wr
 Tests: `python -m unittest discover -s tests` (Python), and the browser tests in `tests/*.cjs`
 (Node with Playwright), for example `node tests/history_browser.cjs`.
 
+## Front door (preview)
+
+`build_home.py` builds a landing page in the style of a dotted globe: it opens in space, and as you
+scroll it turns to Africa, follows the Niger and the Benue down to Nigeria, then lights up the
+places where UCDP recorded people killed, and ends on two doors: the history map and the conflict map.
+
+```
+python build_home.py
+```
+
+It writes `previews/home.html` and needs no token or database: the conflict figures and lights come
+from the published `docs/index.html`, the land from Natural Earth and Nigeria's outline from
+`history/geo/`. Every figure keeps its dataset version, the page says it is not live, and preliminary
+Candidate data is labelled. While the history map is a draft, its door says "coming soon"; once it is
+published, `python build_home.py --output docs/home.html --history-url history.html` puts the page on the site.
+Check it with `python -m unittest tests.test_build_home`.
+
 ## Agent tasks (Claude + Codex)
 
 A comment such as `/agent review` plus a brief on an issue starts a task that
