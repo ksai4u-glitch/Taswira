@@ -1,0 +1,62 @@
+{
+  "round": 1,
+  "reviewed_sha": "3a6b07b0fe8d022a7774d8ca8c18681c7db51113",
+  "usable": true,
+  "review": {
+    "reviewed_sha": "3a6b07b0fe8d022a7774d8ca8c18681c7db51113",
+    "round": 1,
+    "summary": "The memo stays within the authorized research scope and largely distinguishes checked evidence from unresolved gaps. Two minor corrections would improve its consistency and source assessment.",
+    "findings": [
+      {
+        "id": "F1",
+        "severity": "minor",
+        "status": "open",
+        "title": "Distinguish FCT existence from its legal designation and boundaries",
+        "detail": "The summary and support table say the FCT has no primary-text support, although the inspected 1996 speech expressly describes a 30-state structure with a Federal Capital Territory. Qualify the unsupported claims as the FCT's creation instrument, designation date, component areas and capital-transfer date. The speech supports its acknowledged existence by 1996.",
+        "evidence": "The memo's Source 5 correctly quotes the speech's '30-state structure with a Federal Capital Territory'; I independently retrieved that passage from the linked Archivi.ng page on 2026-10-26.",
+        "location": "agent-tasks/issue-25-run-8/work/state-creation-source-check.md:22",
+        "assessment_of_response": "First review round; no response yet."
+      },
+      {
+        "id": "F2",
+        "severity": "minor",
+        "status": "open",
+        "title": "Update the UT source assessment with the accessible index",
+        "detail": "The reported bot-wall result is properly disclosed, but the index is accessible through a direct HTTP request during this review. Record its confirmed listing and attribution rather than leaving those facts entirely unverified. Inspecting the actual map and establishing item-specific reuse rights remain separate checks.",
+        "evidence": "Retrieved https://maps.lib.utexas.edu/maps/nigeria.html on 2026-10-26 with HTTP 200. It lists 'Nigeria (Political) 1993' with image and PDF links and states that maps were produced by the US Central Intelligence Agency unless otherwise indicated.",
+        "location": "agent-tasks/issue-25-run-8/work/state-creation-source-check.md:88",
+        "assessment_of_response": "First review round; no response yet."
+      }
+    ],
+    "checks_performed": [
+      "Confirmed HEAD matches the requested SHA and inspected the specified base-to-commit diff; non-record changes are confined to the authorized work folder.",
+      "Read AGENTS.md, shared instructions, TASK.md, Claude's draft records and the supplied issue-thread context, including earlier review summaries and answers.",
+      "Compared the memo's Stage 0/1 assessment with the revised scope recorded in the issue context.",
+      "Attempted both gazette PDF URLs using Python urllib; both returned HTTP 403.",
+      "Retried PolicyVault; the connection was refused.",
+      "Retrieved the National Repository homepage; the intended decree item remains unidentified.",
+      "Retrieved and read the UT Nigeria index's 1993 map listing and CIA attribution.",
+      "Retrieved the Archivi.ng speech and checked the six state announcements, parent states, 30-state/FCT passage, deferred boundary adjustments and copyright footer."
+    ],
+    "unverified_claims": [
+      "Gazette transcriptions, schedules, dates and section references could not be independently checked because both PDFs returned 403.",
+      "Claude's claimed page-image readings and original retrieval outcomes were not independently reproduced.",
+      "The actual UT map image, state count, FCT depiction, boundaries and item-specific reuse rights were not inspected.",
+      "The National Repository decree item and its applicable reuse terms remain unidentified.",
+      "The 1987, 1991 and 1996 creation instruments, FCT instrument and capital-transfer evidence remain unchecked.",
+      "Historical-to-modern geometry correspondence, enacted boundary adjustments and original-source reuse rights remain unresolved."
+    ],
+    "recommendation": "approve",
+    "recommendation_reason": "I recommend approve as a research memo, with the minor corrections above. The brief permits reporting inaccessible sources and unresolved evidence; this recommendation does not endorse implementation or publication of historical boundaries.",
+    "reviewed_sha_claimed": "3a6b07b0fe8d022a7774d8ca8c18681c7db51113"
+  },
+  "decision": {
+    "next": "final_response",
+    "reason": "round limit (1) reached",
+    "open": [
+      "F1",
+      "F2"
+    ],
+    "disputed": []
+  }
+}
