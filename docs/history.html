@@ -485,6 +485,8 @@
     /* On a phone Zomo is small and sits in the bottom corner beside the narration, off the map's middle */
     #ov-bottom { left:12px; right:12px; bottom:max(34px, calc(var(--attrib, 14px) + 10px)); grid-template-columns:minmax(0,1fr) auto;
       grid-template-areas:"text guide"; gap:4px 6px; }
+    /* the plate-model credit wraps onto two lines under the globe */
+    #mapwrap[data-base="deep"] #ov-bottom { bottom:max(42px, calc(var(--attrib, 14px) + 10px)); }
     body:not(.video-mode) #story-guide .guide-sprite { height:min(66px, calc(var(--map-h, 600px) * .1)); }
     body:not(.video-mode) #story-guide figcaption { display:none; }
     #ov-bottom #story-guide { justify-self:end; align-self:end; }
