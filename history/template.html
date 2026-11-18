@@ -137,7 +137,7 @@
   .site-label.hx-crowded { visibility: hidden; }
   .group-label { background: none; border: none; box-shadow: none; color: #fff; font: 600 11px/1.1 system-ui, sans-serif;
                  text-shadow: 0 0 3px #000, 0 0 3px #000; text-align: center; white-space: nowrap; }
-  .group-label.small { font-size: 9px; font-weight: 500; }
+  .group-label.small, .group-label.hx-tight { font-size: 9px; font-weight: 500; }
   .group-label::before { display: none; }
   /* Animation. Everything here is switched off for people who ask for less motion. */
   .hx-hidden { opacity: 0 !important; }
@@ -196,7 +196,8 @@
   .move-label { background: none; border: none; box-shadow: none; white-space: nowrap; font: italic 600 11px/1.1 system-ui, sans-serif;
                 text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 6px #000; }
   .move-label.date { font: 700 12px var(--mono); color: #ffb0a6; }
-  .move-label.date .lab-c { transform: translate(-50%, 15px); }
+  .move-label.date .lab-c { display: block; transform: translate(-50%, 15px); text-align: center; line-height: 1.15; }
+  .move-label.date small { font-size: 10px; font-weight: 600; opacity: .85; }
   .move-label.ask { font: 800 16px system-ui, sans-serif; color: #fff; }
   .move-label::before { display: none; }
   .lab-c { display: inline-block; transform: translate(-50%, -50%); }
@@ -387,6 +388,26 @@
   #culture-notes { width:min(850px,calc(100% - 24px)); max-height:85svh; overflow:auto; border:1px solid #48604e; border-radius:12px; padding:28px; background:#081a12; color:#f0eee2; }
   #culture-notes::backdrop { background:#030a07d9; } #culture-notes h2,#culture-notes h3 { font-family:Georgia,serif; color:#d4b57a; } #culture-notes h2 { font-size:32px; margin:0 0 12px; }
   #culture-notes article { border-top:1px solid #304b3d; padding:16px 0; } #culture-notes p { line-height:1.6; } #culture-notes small { color:#a9beb0; } #culture-notes a { color:#d4b57a; } #culture-notes button { float:right; background:#173b27; color:#f0eee2; padding:8px 15px; border:1px solid #48604e; border-radius:6px; } #culture-notes .culture-mark { float:right; width:100px; margin:0 0 12px 16px; }
+  /* Chapters drawer: in cinema view the header is hidden, so the chapters open from the controls */
+  #chapters-open { display:none; } body.theatre-mode #chapters-open { display:inline-block; }
+  #chapter-drawer { width:min(560px,calc(100% - 24px)); max-height:85svh; overflow:auto; border:1px solid #48604e; border-radius:12px; padding:20px 22px; background:#081a12; color:#f0eee2; }
+  #chapter-drawer::backdrop { background:#030a07c9; }
+  #chapter-drawer h2 { font:400 26px Georgia,serif; color:#d4b57a; margin:0 0 12px; }
+  #drawer-close { float:right; background:#173b27; color:#f0eee2; padding:8px 15px; border:1px solid #48604e; border-radius:6px; font:inherit; cursor:pointer; }
+  #drawer-list { list-style:none; margin:0; padding:0; display:grid; gap:6px; }
+  #drawer-list button { width:100%; min-height:44px; text-align:left; padding:8px 12px; border:1px solid #304b3d; border-radius:8px; background:#0d2219; color:#f0eee2; font:inherit; cursor:pointer; }
+  #drawer-list button[aria-current="true"] { border-color:#d4b57a; color:#d4b57a; }
+  #drawer-list .period { display:block; font-size:13px; color:#a9beb0; }
+  .drawer-links { display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; margin:16px 0 0; font-size:14px; }
+  .drawer-links a { color:#d4b57a; }
+  #drawer-details { background:none; border:1px solid #48604e; border-radius:6px; color:#f0eee2; padding:7px 12px; font:inherit; cursor:pointer; }
+  @media(max-width:760px) {
+    #chapter-drawer { margin:auto 0 0; width:100%; max-width:100%; max-height:80svh; border-radius:14px 14px 0 0; border-bottom:none; padding:16px; }
+    /* Cinema on a phone keeps the controls to one row: scenes, then back, Play, next, Chapters, Effects */
+    body.theatre-mode :is(#videobtn,#ruler-note) { display:none; }
+    body.theatre-mode #controls { gap:6px; }
+    body.theatre-mode #controls .ctl { padding:6px 10px; }
+  }
   #story-caption { display:none; position:absolute; z-index:790; bottom:42px; left:16px; right:168px; padding:12px 16px; color:#f0eee2; background:linear-gradient(95deg,#08120ef5,#08120ed9); border-left:2px solid #d4b57a; pointer-events:none; }
   #story-caption p { margin:0; } #story-caption .story-kicker { color:#d4b57a; font:11px/1.5 system-ui; letter-spacing:.08em; margin-bottom:5px; }
   #story-caption .story-line { font:19px/1.45 system-ui; }
@@ -461,10 +482,14 @@
     #ov-top { grid-template-columns:minmax(min(150px,48%),1fr) minmax(0,auto); grid-template-areas:"tools tools" "notes hud"; }
     #ov-top #hud { min-width:0; overflow-wrap:anywhere; }
     body:not(.video-mode) #mapwrap.cinema #hud { margin-top:16px; }
-    #ov-bottom { left:12px; right:12px; bottom:max(34px, calc(var(--attrib, 14px) + 10px)); grid-template-columns:minmax(0,1fr);
-      grid-template-areas:"guide" "text"; gap:4px; }
-    body:not(.video-mode) #story-guide .guide-sprite { height:min(120px, calc(var(--map-h, 600px) * .18)); }
-    #ov-bottom #story-guide { justify-self:end; }
+    /* On a phone Zomo is small and sits in the bottom corner beside the narration, off the map's middle */
+    #ov-bottom { left:12px; right:12px; bottom:max(34px, calc(var(--attrib, 14px) + 10px)); grid-template-columns:minmax(0,1fr) auto;
+      grid-template-areas:"text guide"; gap:4px 6px; }
+    /* the plate-model credit wraps onto two lines under the globe */
+    #mapwrap[data-base="deep"] #ov-bottom { bottom:max(42px, calc(var(--attrib, 14px) + 10px)); }
+    body:not(.video-mode) #story-guide .guide-sprite { height:min(66px, calc(var(--map-h, 600px) * .1)); }
+    body:not(.video-mode) #story-guide figcaption { display:none; }
+    #ov-bottom #story-guide { justify-self:end; align-self:end; }
     #story-caption .story-line { -webkit-line-clamp:5; }
     #story-caption.whole { max-height:max(120px, calc(var(--map-h, 600px) * .28)); }
   }
@@ -574,6 +599,7 @@
     <button class="ctl" id="prev" type="button" aria-label="Previous scene">&#9664;</button>
     <button class="ctl" id="play" type="button">Play</button>
     <button class="ctl" id="next" type="button" aria-label="Next scene">&#9654;</button>
+    <button class="ctl" id="chapters-open" type="button" aria-haspopup="dialog" aria-controls="chapter-drawer">Chapters</button>
     <div id="ruler-wrap">
       <ol id="ruler" aria-label="Scenes in this chapter"></ol>
       <div id="ruler-note">Scenes in story order. Progress follows playback, not proportional years.</div>
@@ -584,6 +610,12 @@
   </div>
 </div>
 <dialog id="culture-notes" aria-labelledby="culture-title"><button id="culture-close" type="button">Close</button><h2 id="culture-title">Zomo’s cultural notebook</h2><p>Specific traditions, people and objects. Cultural motifs are distinct from dated political flags. Dates below describe checked evidence, not the invention of a tradition.</p><p>In documented Hausa storytelling, Zomo the hare and Gizo the spider are distinct recurring characters. Taswira’s Zomo is a new fictional guide. When adapting a tale, name its telling and its teller; do not turn it into a dated historical event. <a href="https://archive.org/stream/hausasuperstitio00tremuoft/hausasuperstitio00tremuoft_djvu.txt" target="_blank" rel="noopener">Tremearne, 1913: hare telling credited to Umoru Gombe</a>.</p><div id="culture-records"></div></dialog>
+<dialog id="chapter-drawer" aria-labelledby="drawer-title"><button id="drawer-close" type="button">Close</button>
+  <h2 id="drawer-title">Chapters</h2>
+  <ol id="drawer-list"></ol>
+  <p class="drawer-links"><button id="drawer-details" type="button">Scene details and sources</button>
+    <a href="./">Home</a><a href="conflict.html">Conflict map</a><a href="#text" id="drawer-text">Text version</a></p>
+</dialog>
 <button id="exit-video" type="button">Exit video preview</button>
 <div id="video-tools"><label for="video-time">Scene time</label><input id="video-time" type="range" min="0" step="0.1"><output id="video-seconds" for="video-time"></output></div>
 <div id="announce" class="sr-only" aria-live="polite"></div>
@@ -955,6 +987,8 @@ function pointAt(line, u) {
   const v = (u - cum[k - 1]) / ((cum[k] - cum[k - 1]) || 1);
   return [pts[k - 1][0] + (pts[k][0] - pts[k - 1][0]) * v, pts[k - 1][1] + (pts[k][1] - pts[k - 1][1]) * v];
 }
+// A campaign date, with how precise it is ("year only") on a small second line so it stays narrow
+const dateLabel = d => esc(d).replace(/ \((\w+ only)\)$/, '<br><small>($1)</small>');
 // A text label centred on a place
 const textLabel = (ll, html, cls) => L.marker(ll, { interactive: false, keyboard: false,
   icon: L.divIcon({ className: "group-label " + cls, html: `<span class="lab-c">${html}</span>`, iconSize: null }) })
@@ -1391,7 +1425,7 @@ function drawMoves(ch, sc, atOf) {
         fx.arrivals.push({ ll: stops[i], at: t, rgb });
         for (const fl of fx.flips) if (fl.id === p) fl.at = Math.min(fl.at, t);
         if (f.dates && f.dates[p]) {
-          fx.timed.push({ els: [textLabel(stops[i], esc(f.dates[p]), "move-label date")], from: t, to: Infinity, now: null });
+          fx.timed.push({ els: [textLabel(stops[i], dateLabel(f.dates[p]), "move-label date")], from: t, to: Infinity, now: null });
         }
       });
     } else if (f.type === "migration") {
@@ -1483,12 +1517,14 @@ function drawSnapshot(ch, sc) {
   const prevNames = new Set(prev ? prev.labels.map(g => g.name) : []);
   const names = new Set(snap.labels.map(g => g.name));
   const label = (g, cls) => L.marker(g.at, { interactive: false, keyboard: false, icon: L.divIcon({
-    className: "group-label" + (g.not_a_state ? " small" : "") + cls, html: esc(g.not_a_state ? "FCT" : g.name),
+    className: "group-label state-name" + (g.not_a_state ? " small" : "") + cls, html: esc(g.not_a_state ? "FCT" : g.name),
     iconSize: null }) }).addTo(sceneLayer).getElement();
   for (const g of snap.labels) {
     const isNew = !prevNames.has(g.name);
     const at = isNew ? (isFinite(firstAt(g.name)) ? firstAt(g.name) : COLOUR_FROM) : 0;
-    fx.labels.push({ el: label(g, isNew ? " new" : ""), from: at, to: Infinity, now: null });
+    const el = label(g, isNew ? " new" : "");
+    fx.labels.push({ el, from: at, to: Infinity, now: null });
+    fx.stateNames.push(el);
   }
   for (const g of prev ? prev.labels : []) {
     if (!names.has(g.name)) fx.labels.push({ el: label(g, " old"), from: 0, to: COLOUR_FROM, now: null });
@@ -1785,7 +1821,7 @@ function render({ animate = true, announce = false } = {}) {
   const rollFrom = ch.area !== "africa" && state.drawnC === state.c ? state.shownYear : null;
   state.drawnC = state.c;
   sceneLayer.clearLayers();
-  fx = { sets: [], siteLabels: [], labelKey: null, points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
+  fx = { sets: [], siteLabels: [], labelKey: null, stateNames: [], stateKey: null, points: [], states: [], newArcs: [], labels: [], effects: [], count: null, sentences: [], focus: null,
          timed: [], draws: [], flips: [], ties: [], fades: [], arrivals: [], heads: [], drifts: [], goods: [], globeLines: [],
          flow: [], mentions: [], lakes: [], rails: [], erupt: new Set(sc.erupt || []),
          rollFrom, jump: rollFrom == null ? 0 : sc.when.from - rollFrom, cues: [], cue: 0, lastCue: null,
@@ -1951,7 +1987,7 @@ function drawGlobe(now) {
   globeSetup();
   const ma = maOf(state.shownYear), cam = sc.camera;
   const [lon, lat] = moved(cam.plate, ma, ...cam.center);
-  const u = captureClock !== null || !gcam.set || lessMotion.matches ? 1 : 1 - Math.exp(-Math.min(0.1, (now - gcam.at) / 1000) * 3.2);
+  const u = captureClock !== null || !gcam.set || lessMotion.matches ? 1 : 1 - Math.exp(-Math.min(0.1, Math.max(0, now - gcam.at) / 1000) * 3.2);   // a frame stamped before the last one moves nothing
   const dLon = ((lon - gcam.lon + 540) % 360) - 180;
   if (captureClock !== null) Object.assign(gcam, captureGlobeCamera());
   else { gcam.lat += (lat - gcam.lat) * u; gcam.lon += dLon * u; gcam.k += (cam.zoom - gcam.k) * u; }
@@ -2221,6 +2257,7 @@ function frame(now) {
   if (live && state.playing) runCues(t);
   fx.globeBusy = drawGlobe(now);
   declutterLabels();
+  declutterStateNames();
 }
 
 // --- Place names that never pile up --------------------------------------------------------------
@@ -2251,7 +2288,7 @@ function declutterLabels() {
   const size = map.getSize(), c = map.getCenter();
   const key = [map.getZoom().toFixed(3), c.lat.toFixed(4), c.lng.toFixed(4), size.x, size.y, visible.length,
     document.body.className, $("ov-top").offsetHeight, $("ov-bottom").offsetHeight,          // a new caption can change the free space
-    document.querySelectorAll(".note-label:not(.hx-hidden)").length].join();
+    document.querySelectorAll(".note-label:not(.hx-hidden), .move-label.date:not(.hx-hidden)").length].join();
   if (key === fx.labelKey) return;
   fx.labelKey = key;
   for (const el of fx.siteLabels) { el.style.translate = ""; el.classList.remove("hx-moved", "hx-crowded"); }
@@ -2266,6 +2303,27 @@ function declutterLabels() {
     if (fx.siteLabels.includes(el) || el.classList?.contains("hx-hidden")) continue;
     const town = el.classList?.contains("hx-town"), r = town ? townBox(el) : el.getBoundingClientRect();
     if (r.width > 1 && (town || r.width <= 60 && r.height <= 60)) dots.push({ pt, ...edges(r) });
+  }
+  // The dates a campaign writes under the towns it took come first: each stays under its town, or
+  // moves above it or to one side when another date, a town or an overlay is there. The names follow.
+  const dates = [...document.querySelectorAll(".move-label.date:not(.hx-hidden) .lab-c")];
+  dates.forEach(el => { el.style.translate = ""; });
+  for (const el of dates) {
+    const r0 = edges(el.getBoundingClientRect()), w = r0.r - r0.x, h = r0.b - r0.y;
+    const side = w / 2 + 14, mid = -15 - h / 2, above = -30 - h;
+    const slots = [[0, 0], [0, above], [side, mid], [-side, mid], [side, 0], [-side, 0], [side, above], [-side, above], [0, h + 2], [0, above - h - 2]];
+    const inside = r => r.x >= wrap.left + 2 && r.r <= wrap.right - 2 && r.y >= wrap.top + 2 && r.b <= wrap.bottom - 2;
+    // the first free slot, or else the one that covers the least
+    const cover = r => taken.concat(dots).reduce((sum, t) => sum + Math.max(0, Math.min(t.r, r.r) - Math.max(t.x, r.x))
+      * Math.max(0, Math.min(t.b, r.b) - Math.max(t.y, r.y)), 0) + (inside(r) ? 0 : 1e6);
+    let best = slots[0], least = Infinity;
+    for (const [dx, dy] of slots) {
+      const c = cover({ x: r0.x + dx, y: r0.y + dy, r: r0.r + dx, b: r0.b + dy });
+      if (c < least - 1) { least = c; best = [dx, dy]; }
+      if (c <= 1) break;
+    }
+    if (best[0] || best[1]) el.style.translate = `${Math.round(best[0])}px ${Math.round(best[1])}px`;
+    taken.push({ x: r0.x + best[0], y: r0.y + best[1], r: r0.r + best[0], b: r0.b + best[1] });
   }
   const rects = visible.map(el => edges(el.getBoundingClientRect()));
   visible.forEach((el, i) => {
@@ -2305,6 +2363,39 @@ function declutterLabels() {
     }
     el.classList.add("hx-crowded");
   });
+}
+
+// State names on a snapshot map sit at the middle of each state, so the small states of the Delta
+// (Bayelsa, Rivers, Akwa Ibom) and the south-east crowd. A name that would touch one already placed,
+// or an overlay, tries a short step up, down or sideways, then the same in a smaller size. A name
+// with no free place stays where it is, small, so no state loses its name.
+const STATE_STEPS = [[0, 0], [0, -1], [0, 1], [-.5, 0], [.5, 0], [-.5, -1], [.5, -1], [-.5, 1], [.5, 1]];
+function declutterStateNames() {
+  if (!fx || !fx.stateNames.length) return;
+  const shown = fx.stateNames.filter(el => el.isConnected && !el.classList.contains("old") && !el.classList.contains("hx-hidden"));
+  const size = map.getSize(), c = map.getCenter();
+  const key = [map.getZoom().toFixed(3), c.lat.toFixed(4), c.lng.toFixed(4), size.x, size.y, shown.length,
+    document.body.className, $("ov-top").offsetHeight, $("ov-bottom").offsetHeight].join();
+  if (key === fx.stateKey) return;
+  fx.stateKey = key;
+  for (const el of fx.stateNames) { el.style.translate = ""; el.classList.remove("hx-tight"); }
+  const taken = overlayBoxes();
+  for (const el of shown) {
+    let placed = false;
+    for (const tight of [false, true]) {
+      el.classList.toggle("hx-tight", tight);
+      const r0 = edges(el.getBoundingClientRect()), w = r0.r - r0.x, h = r0.b - r0.y;
+      for (const [sx, sy] of STATE_STEPS) {
+        const dx = Math.round(sx * w), dy = Math.round(sy * (h + 1));
+        const r = { x: r0.x + dx, y: r0.y + dy, r: r0.r + dx, b: r0.b + dy };
+        if (taken.some(t => overlaps(t, { x: r.x - 2, y: r.y, r: r.r + 2, b: r.b }))) continue;
+        el.style.translate = dx || dy ? `${dx}px ${dy}px` : "";
+        taken.push(r); placed = true; break;
+      }
+      if (placed) break;
+    }
+    if (!placed) taken.push(edges(el.getBoundingClientRect()));
+  }
 }
 
 function showCard(ct) {
@@ -3129,7 +3220,7 @@ $("chapters").onclick = e => {
   if (b) { setPlaying(false); goTo(+b.dataset.i, 0, { announce: true }); }
 };
 document.addEventListener("keydown", e => {
-  if($("culture-notes").open)return;
+  if($("culture-notes").open||$("chapter-drawer").open)return;
   if (captureClock !== null) {
     if (e.key === "Escape") { e.preventDefault(); window.taswira.exitVideo(); }
     return;
@@ -3352,6 +3443,38 @@ $("fullscreen-toggle").onclick = async()=>{
 };
 document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement)setTheatre(fullscreenFromTheatre);});
 document.querySelector(".skip").addEventListener("click",()=>setTheatre(false));
+// On a phone the page opens in cinema view: the map fills the screen, with Play and a Chapters
+// drawer instead of the header's chapter buttons. Leaving cinema on a phone is remembered.
+const VIEW_KEY = "taswira-history-phone-view", phone = matchMedia("(max-width: 760px)");
+let phoneView = null;
+try { phoneView = localStorage.getItem(VIEW_KEY); } catch {}
+if (phone.matches && phoneView !== "normal") theatreOn = true;
+$("cinema-toggle").addEventListener("click", () => {
+  if (phone.matches) try { localStorage.setItem(VIEW_KEY, theatreOn ? "cinema" : "normal"); } catch {}
+});
+// The chapters drawer
+let drawerWasPlaying = false;
+$("chapters-open").onclick = () => {
+  drawerWasPlaying = state.playing; setPlaying(false);
+  $("drawer-list").innerHTML = DATA.chapters.map((ch, i) => `<li><button type="button" data-i="${i}" aria-current="${i === state.c}">`
+    + `${esc(ch.title.split(":")[0])}${ch.reference ? " · reference" : ""}<span class="period">${esc(ch.period)}</span></button></li>`).join("");
+  $("chapter-drawer").showModal();
+  ($("drawer-list").querySelector('[aria-current="true"]') || $("drawer-close")).focus();
+};
+$("drawer-list").onclick = e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  drawerWasPlaying = false;
+  $("chapter-drawer").close();
+  goTo(+b.dataset.i, 0, { announce: true });
+};
+$("drawer-close").onclick = () => $("chapter-drawer").close();
+$("drawer-details").onclick = () => { drawerWasPlaying = false; $("chapter-drawer").close(); setTheatre(false); setDetailsHidden(false); };
+$("drawer-text").onclick = () => { drawerWasPlaying = false; $("chapter-drawer").close(); setTheatre(false); };
+$("chapter-drawer").addEventListener("close", () => {
+  if (drawerWasPlaying) setPlaying(true);
+  if (theatreOn) $("chapters-open").focus();
+});
 applyViewLayout();
 
 // --- Links like #chapter=nok&scene=iron -------------------------------------------------------

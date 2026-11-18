@@ -1090,6 +1090,7 @@
       "id": "1963",
       "title": "Four regions",
       "snapshot": "1963",
+      "clock": "label",
       "when": {
         "from": 1963,
         "to": 1967,
@@ -1112,6 +1113,7 @@
       "id": "1967",
       "title": "Twelve states",
       "snapshot": "1967",
+      "clock": "label",
       "when": {
         "from": 1967,
         "to": 1976,
@@ -1135,6 +1137,7 @@
       "id": "1976",
       "title": "Nineteen states and a new capital territory",
       "snapshot": "1976",
+      "clock": "label",
       "when": {
         "from": 1976,
         "to": 1987,
@@ -1165,6 +1168,7 @@
       "id": "1987",
       "title": "Twenty-one states",
       "snapshot": "1987",
+      "clock": "label",
       "when": {
         "from": 1987,
         "to": 1991,
@@ -1187,6 +1191,7 @@
       "id": "1991",
       "title": "Thirty states, and the capital moves",
       "snapshot": "1991",
+      "clock": "label",
       "when": {
         "from": 1991,
         "to": 1996,
@@ -1230,6 +1235,7 @@
       "id": "1996",
       "title": "Thirty-six states",
       "snapshot": "1996",
+      "clock": "label",
       "when": {
         "from": 1996,
         "to": 2026,
