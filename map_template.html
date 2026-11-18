@@ -14,7 +14,7 @@
 <meta property="og:title" content="Taswira: organised violence in __AREA__, __SHOWN_PERIOD__">
 <meta property="og:description" content="Interactive map of conflict events and deaths, from UCDP data. Last updated __BUILT_LONG__.">
 <meta property="og:image" content="https://ksai4u-glitch.github.io/Taswira/preview.png">
-<meta property="og:url" content="https://ksai4u-glitch.github.io/Taswira/">
+<meta property="og:url" content="https://ksai4u-glitch.github.io/Taswira/conflict.html">
 <meta name="twitter:card" content="summary_large_image">
 <!-- Open the connections to the library and base-map servers straight away -->
 <link rel="preconnect" href="https://unpkg.com" crossorigin>
@@ -66,6 +66,9 @@
     --level-elevated: #d9c23a;
     --accent: #d4b57a;
   }
+  .site-nav { display: flex; gap: 16px; font-size: 13px; margin: 0 0 6px; }
+  .site-nav a { color: var(--accent); text-decoration: none; }
+  .site-nav a:hover { text-decoration: underline; }
   h1 { font-family: var(--display); font-weight: 400; font-size: 28px; line-height: 1.12;
        letter-spacing: -.025em; color: var(--text-primary); }
   h2 { font-family: var(--display); font-weight: 400; font-size: 19px; text-transform: none;
@@ -283,6 +286,7 @@
 <p id="map-context" role="status"></p>
 <aside id="panel">
   <button id="drawer" type="button" aria-expanded="false" aria-controls="panel">Show filters and years &#9650;</button>
+  <nav class="site-nav" aria-label="Site"><a href="./">&larr; Taswira home</a><a href="history.html">History map</a></nav>
   <div class="title-row">
     <h1>Taswira: __AREA__ __SHOWN_PERIOD__</h1>
     <button id="theme" type="button" class="link-button"></button>

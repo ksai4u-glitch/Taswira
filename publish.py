@@ -1,26 +1,29 @@
 """
-Stage 7: build the public version of the map as docs/index.html.
+Stage 7: build the public version of the map as docs/conflict.html, then the
+site's home page docs/index.html (build_home.py), whose figures come from it.
 
-GitHub Pages can serve the docs/ folder of the repository as a website, so
-committing docs/index.html and pushing it is what publishes the map.
+GitHub Pages serves the docs/ folder of the repository as the website, so
+committing those two files and pushing them is what publishes the map.
 
 Reads the clean_events table (no API requests), builds the same page as
-build_map.py, runs a few safety checks, then writes docs/index.html.
-The page is written in one step (safe_files.py): if a check or the write
-fails, the old docs/index.html is left exactly as it was.
+build_map.py, runs a few safety checks, then writes docs/conflict.html.
+Each page is written in one step (safe_files.py): if a check or the write
+fails, the old page is left exactly as it was.
 Uses only the Python standard library.
 """
 
 import os
 import sys
 
+import build_home
 from build_map import fill_template, load_all
 from fetch_nigeria import load_token
 from safe_files import write_text
 from settings import API_VERSION, CANDIDATE_VERSIONS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_PATH = os.path.join(HERE, "docs", "index.html")
+OUTPUT_PATH = os.path.join(HERE, "docs", "conflict.html")
+HOME_PATH = os.path.join(HERE, "docs", "index.html")
 
 # Placeholders fill_template() must have replaced; one left over means a broken page.
 PLACEHOLDERS = ["__EVENTS_JSON__", "__UNMAPPED_JSON__", "__VERSION__", "__CANDIDATES__"]
@@ -71,14 +74,16 @@ def main():
 
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     write_text(OUTPUT_PATH, page)
+    build_home.write_home(HOME_PATH, map_page=OUTPUT_PATH, quiet=True)
 
     prelim = sum(e["preliminary"] for e in mapped + unmapped)
     size_mb = os.path.getsize(OUTPUT_PATH) / 1_000_000
     print(f"Checks passed: no token, UCDP credited (GED {API_VERSION}), "
           f"{prelim} preliminary events labelled.")
     print(f"Wrote {OUTPUT_PATH} ({size_mb:.1f} MB, {len(mapped)} events on the map).")
-    print("\nTo publish, commit and push it:")
-    print("  git add docs/index.html")
+    print(f"Wrote {HOME_PATH} (the home page, with the new figures).")
+    print("\nTo publish, commit and push them:")
+    print("  git add docs/conflict.html docs/index.html")
     print('  git commit -m "Update public map"')
     print("  git push")
 

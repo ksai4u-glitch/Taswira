@@ -478,10 +478,10 @@ jobs:
           fi
 
           preview=""
-          if [ "$MODE" = implement ] && echo "$changed" | grep -qE '^(map_template\.html|build_map\.py|publish\.py|clean_events\.py|settings\.py)$'; then
+          if [ "$MODE" = implement ] && echo "$changed" | grep -qE '^(map_template\.html|build_map\.py|publish\.py|clean_events\.py|settings\.py|build_home\.py|home_template\.html)$'; then
             if [ -f data/taswira.db ]; then
               if python3 publish.py > "$RUNNER_TEMP/checks/publish.log" 2>&1; then
-                mkdir -p "$RUNNER_TEMP/preview" && cp docs/index.html "$RUNNER_TEMP/preview/index.html"
+                mkdir -p "$RUNNER_TEMP/preview" && cp docs/index.html docs/conflict.html "$RUNNER_TEMP/preview/"
                 record "publish.py builds the page from cached data" "passed"
                 echo "preview=true" >> "$GITHUB_OUTPUT"
                 preview="Preview: download the preview-site artifact from the workflow run and open index.html (not deployed)."

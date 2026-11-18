@@ -8,7 +8,7 @@ import build_home as bh
 class FrontDoorTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.page = bh.build("", bh.LIVE_MAP_URL)
+        cls.page = bh.build("", "conflict.html")
         cls.mapped, cls.unmapped = bh.read_events(bh.MAP_PAGE)
 
     def test_every_placeholder_is_filled(self):
@@ -30,9 +30,30 @@ class FrontDoorTests(unittest.TestCase):
         self.assertIn(f'{stats["nigeriaDeaths"]:,}', self.page)
 
     def test_unpublished_history_map_is_not_linked(self):
-        self.assertIn('data-history="draft"', self.page)
+        self.assertIn('<body data-history="draft"', self.page)
         self.assertNotIn("history.html", self.page)
-        self.assertIn('data-history="ready"', bh.build("history.html", bh.LIVE_MAP_URL))
+        ready = bh.build("history.html", "conflict.html")
+        self.assertIn('<body data-history="ready"', ready)
+        self.assertIn('href="history.html"', ready)
+        self.assertIn("Unreviewed draft", ready)          # published, but never passed off as reviewed
+
+    def test_old_shared_conflict_map_links_still_open_the_map(self):
+        # The conflict map used to be the home address; #country=...&year=... links must still work.
+        self.assertIn('location.replace("conflict.html" + location.hash)', self.page)
+        self.assertIn("country|group|year|month|layer|zones", self.page)
+
+    def test_both_maps_link_back_home(self):
+        with open(bh.os.path.join(bh.HERE, "map_template.html"), encoding="utf-8") as f:
+            conflict = f.read()
+        with open(bh.os.path.join(bh.HERE, "history", "template.html"), encoding="utf-8") as f:
+            history = f.read()
+        self.assertIn('<a href="./">&larr; Taswira home</a><a href="history.html">History map</a>', conflict)
+        self.assertIn('<a href="./">Home</a><a href="conflict.html">Conflict map</a>', history)
+
+    def test_problems_are_reported(self):
+        self.assertEqual(bh.problems_with(self.page), [])
+        self.assertTrue(bh.problems_with("__GEO_JSON__ Uppsala Conflict Data Program preliminary"))
+        self.assertTrue(bh.problems_with("no credit here"))
 
     def test_nigeria_dots_fall_inside_nigeria(self):
         land, lakes, _ = bh.load_background()

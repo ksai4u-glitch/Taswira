@@ -1,15 +1,21 @@
-"""Build the Taswira front door: a dotted globe that zooms from space to Africa to Nigeria.
+"""Build the Taswira home page: a dotted globe that zooms from space to Africa to Nigeria,
+then opens the two maps.
 
 Usage:
-    python build_home.py                      # writes previews/home.html (a local preview)
-    python build_home.py --output docs/home.html --history-url history.html
+    python build_home.py              # writes docs/index.html, the site's home page
+    python build_home.py --preview    # writes previews/home.html instead, linking to the live site
+
+publish.py runs this after it writes the conflict map, so normally you don't need to.
+
+The site (GitHub Pages serves the docs/ folder):
+    docs/index.html     this home page
+    docs/conflict.html  the conflict map (publish.py)
+    docs/history.html   the history map (build_history.py); until it exists, its door says "coming soon"
 
 It reads only files already in the repository, so it needs no token and makes no requests:
-- the published conflict map docs/index.html, for the UCDP events (totals and lights),
+- the published conflict map docs/conflict.html, for the UCDP events (totals and lights),
 - history/geo/natural-earth-background.json, for land, lakes and rivers (Natural Earth),
 - history/geo/nga-states-2022.topojson, for Nigeria's outline (GRID3 / geoBoundaries).
-
-Fills home_template.html. The default output is a preview: docs/ (the live site) is not touched.
 """
 import argparse
 import json
@@ -20,15 +26,18 @@ import sys
 from datetime import date
 
 from build_map import fill, to_js
+from safe_files import write_text
 from settings import CANDIDATE_VERSIONS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_PATH = os.path.join(HERE, "home_template.html")
-MAP_PAGE = os.path.join(HERE, "docs", "index.html")
+MAP_PAGE = os.path.join(HERE, "docs", "conflict.html")
+HISTORY_PAGE = os.path.join(HERE, "docs", "history.html")
+SITE_HOME = os.path.join(HERE, "docs", "index.html")
 LAND_PATH = os.path.join(HERE, "history", "geo", "natural-earth-background.json")
 STATES_PATH = os.path.join(HERE, "history", "geo", "nga-states-2022.topojson")
-OUTPUT_PATH = os.path.join(HERE, "previews", "home.html")
-LIVE_MAP_URL = "https://ksai4u-glitch.github.io/Taswira/"
+PREVIEW_PATH = os.path.join(HERE, "previews", "home.html")
+SITE_URL = "https://ksai4u-glitch.github.io/Taswira/"
 
 # Dot layers: (spacing in degrees of latitude, box (west, south, east, north) or None for the world).
 # The page shows the coarse world layer from space and swaps in the finer ones as it zooms in.
@@ -256,7 +265,7 @@ def long_date(text):
     return f"{day.day} {day:%B %Y}"
 
 
-def build(history_url, conflict_url):
+def build(history_url, conflict_url, map_page=None):
     land, lakes, rivers = load_background()
     nigeria = load_nigeria()
 
@@ -272,7 +281,7 @@ def build(history_url, conflict_url):
         # bit 1: Africa; bit 2: Nigeria (the page hides these when it shows the finer Nigeria dots)
         region_flags.append((1 if is_africa(lon, lat) else 0) + (2 if in_nigeria else 0))
 
-    mapped, unmapped = read_events(MAP_PAGE)
+    mapped, unmapped = read_events(map_page or MAP_PAGE)
     stats = summarise(mapped, unmapped)
     geo = {
         "world": world, "worldAfrica": africa_flags,
@@ -299,30 +308,48 @@ def build(history_url, conflict_url):
         "__HISTORY_URL__": history_url,
         "__HISTORY_STATE__": "ready" if history_url else "draft",
         "__CONFLICT_URL__": conflict_url,
+        "__SITE_URL__": SITE_URL,
         "__BUILT__": date.today().isoformat(),
     })
 
 
+def problems_with(page):
+    """Every rule the home page breaks (empty if it is fine)."""
+    problems = []
+    leftover = sorted(set(re.findall(r"__[A-Z_]+__", page)))
+    if leftover:
+        problems.append("template placeholders left unfilled: " + ", ".join(leftover))
+    if "Uppsala Conflict Data Program" not in page or "preliminary" not in page:
+        problems.append("the UCDP credit or the preliminary label is missing")
+    return problems
+
+
+def write_home(output=SITE_HOME, preview=False, map_page=None, quiet=False):
+    """Build the home page and write it in one step. Returns the path written."""
+    if preview:
+        history_url = SITE_URL + "history.html" if os.path.exists(HISTORY_PAGE) else ""
+        page = build(history_url, SITE_URL + "conflict.html", map_page)
+    else:
+        page = build("history.html" if os.path.exists(HISTORY_PAGE) else "", "conflict.html", map_page)
+    problems = problems_with(page)
+    if problems:
+        sys.exit("Not writing the home page: " + "; ".join(problems) + ".")
+    os.makedirs(os.path.dirname(os.path.abspath(output)), exist_ok=True)
+    write_text(output, page)
+    if not quiet:
+        print(f"Wrote {output} ({os.path.getsize(output) / 1000:.0f} KB).")
+    return output
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--output", default=OUTPUT_PATH, help="where to write the page (default: a preview)")
-    parser.add_argument("--history-url", default="",
-                        help="link for the history map; leave empty while it is an unpublished draft")
-    parser.add_argument("--conflict-url", default=LIVE_MAP_URL, help="link for the conflict map")
+    parser.add_argument("--preview", action="store_true",
+                        help="write previews/home.html (links to the live site) instead of docs/index.html")
     args = parser.parse_args()
-
-    page = build(args.history_url, args.conflict_url)
-    leftover = re.findall(r"__[A-Z_]+__", page)
-    if leftover:
-        sys.exit(f"Template placeholders left unfilled: {sorted(set(leftover))}")
-    if "ucdp" not in page.lower() or "preliminary" not in page.lower():
-        sys.exit("The page must credit UCDP and label preliminary data.")
-
-    os.makedirs(os.path.dirname(os.path.abspath(args.output)), exist_ok=True)
-    with open(args.output, "w", encoding="utf-8", newline="\n") as f:
-        f.write(page)
-    print(f"Wrote {args.output} ({os.path.getsize(args.output) / 1000:.0f} KB).")
-    if os.path.abspath(args.output) != os.path.abspath(os.path.join(HERE, "docs", "home.html")):
+    if not os.path.exists(MAP_PAGE):
+        sys.exit(f"No conflict map at {MAP_PAGE}. Run publish.py first.")
+    write_home(PREVIEW_PATH if args.preview else SITE_HOME, preview=args.preview)
+    if args.preview:
         print("Local preview only. The live site in docs/ was not changed.")
 
 

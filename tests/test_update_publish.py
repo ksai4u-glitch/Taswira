@@ -1,5 +1,5 @@
-"""Tests for publish.py's safety checks and its all-or-nothing write of docs/index.html.
-No database, network or token needed; the real docs/index.html is never touched.
+"""Tests for publish.py's safety checks and its all-or-nothing write of docs/conflict.html.
+No database, network or token needed; the real docs/ pages are never touched.
 
     python -m unittest discover -s tests
 """
@@ -105,12 +105,12 @@ class RealTemplateTests(unittest.TestCase):
 
 
 class WriteTests(unittest.TestCase):
-    """main() against a temporary docs/index.html."""
+    """main() against a temporary docs/conflict.html (building the home page is mocked)."""
 
     def setUp(self):
         self.folder = tempfile.mkdtemp()
         self.addCleanup(shutil.rmtree, self.folder)
-        self.output = os.path.join(self.folder, "docs", "index.html")
+        self.output = os.path.join(self.folder, "docs", "conflict.html")
         os.makedirs(os.path.dirname(self.output))
         with open(self.output, "w", encoding="utf-8") as f:
             f.write("OLD PAGE")
@@ -118,6 +118,7 @@ class WriteTests(unittest.TestCase):
                   mock.patch.object(publish, "API_VERSION", "26.1"),
                   mock.patch.object(publish, "CANDIDATE_VERSIONS", CANDIDATES),
                   mock.patch.object(publish, "load_token", return_value=TOKEN),
+                  mock.patch.object(publish.build_home, "write_home"),
                   mock.patch.object(publish, "load_all", return_value=(STABLE + PRELIM, []))):
             p.start()
             self.addCleanup(p.stop)
@@ -128,13 +129,15 @@ class WriteTests(unittest.TestCase):
 
     def assert_old_page_kept(self):
         self.assertEqual(self.page_on_disk(), "OLD PAGE")
-        self.assertEqual(os.listdir(os.path.dirname(self.output)), ["index.html"])   # no temp files
+        self.assertEqual(os.listdir(os.path.dirname(self.output)), ["conflict.html"])   # no temp files
 
     def test_writes_a_good_page(self):
         with mock.patch.object(publish, "fill_template", return_value=GOOD_PAGE), redirect_stdout(StringIO()):
             publish.main()
         self.assertEqual(self.page_on_disk(), GOOD_PAGE)
-        self.assertEqual(os.listdir(os.path.dirname(self.output)), ["index.html"])
+        self.assertEqual(os.listdir(os.path.dirname(self.output)), ["conflict.html"])
+        # The home page is rebuilt from the page just written, so its figures match it.
+        publish.build_home.write_home.assert_called_once_with(publish.HOME_PATH, map_page=self.output, quiet=True)
 
     def test_failed_check_keeps_the_old_page(self):
         with mock.patch.object(publish, "fill_template", return_value=GOOD_PAGE + TOKEN):
@@ -142,6 +145,7 @@ class WriteTests(unittest.TestCase):
                 publish.main()
         self.assertNotEqual(caught.exception.code, 0)
         self.assert_old_page_kept()
+        publish.build_home.write_home.assert_not_called()
 
     def test_failed_write_keeps_the_old_page(self):
         with mock.patch.object(publish, "fill_template", return_value=GOOD_PAGE), \

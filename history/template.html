@@ -66,7 +66,7 @@
   #chapters button, .ctl { min-height: 40px; padding: 6px 12px; border-radius: 8px; cursor: pointer;
     border: 1px solid var(--border); background: var(--surface-2); color: var(--text-primary); font: inherit; }
   #chapters button[aria-current="true"] { border-color: var(--accent); color: var(--accent); }
-  header .back { margin-left: auto; font-size: 14px; }
+  header .back { margin-left: auto; font-size: 14px; display: flex; gap: 14px; }
   #chapters .period { color: var(--text-muted); }
   /* Medium screens: slightly tighter buttons so nine chapters keep to two rows and the map
      keeps room for the year and the bottom strip (checked by tests/history_layout_browser.cjs) */
@@ -529,7 +529,7 @@
   <header>
     <h1>Taswira History</h1>
     <nav id="chapters" aria-label="Chapters"></nav>
-    <a class="back" href="./">Conflict map</a>
+    <nav class="back site-nav" aria-label="Site"><a href="./">Home</a><a href="conflict.html">Conflict map</a></nav>
   </header>
   <p id="draft" role="note"><strong>Unreviewed draft.</strong> Not yet checked by a historian.<span class="long"> Shapes and places are simplified,
     and each scene says how sure it is.</span> <a href="https://github.com/ksai4u-glitch/Taswira/issues/new?title=History%20page%3A%20correction">Suggest a correction</a>.</p>

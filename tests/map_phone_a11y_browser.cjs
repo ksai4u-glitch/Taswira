@@ -1,5 +1,5 @@
 /* Phone layout, keyboard, contrast and chart-text checks for the built conflict map.
-   node tests/map_phone_a11y_browser.cjs docs/index.html <folder with leaflet.js, leaflet.css, leaflet-heat.js> [screenshots folder]
+   node tests/map_phone_a11y_browser.cjs docs/conflict.html <folder with leaflet.js, leaflet.css, leaflet-heat.js> [screenshots folder]
    Set CHROMIUM to a browser path if Playwright's own Chromium isn't installed. */
 const fs=require('fs'),path=require('path'),assert=require('assert/strict'),{chromium}=require('playwright');
 const [,,page,libs,shots]=process.argv;

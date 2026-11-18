@@ -174,7 +174,7 @@ Next steps:
   python clean_events.py
   python build_map.py       # optional: look at the map locally first
   python publish.py
-Then commit settings.py and docs/index.html on a branch and open a pull request."""
+Then commit settings.py, docs/conflict.html and docs/index.html on a branch and open a pull request."""
 
 
 def main(argv=None):
