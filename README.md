@@ -60,7 +60,8 @@ again: only the new version is downloaded.
    python3 build_map.py
    ```
 
-7. Run the Stage 7 script to build the public page `docs/index.html`. It checks that
+7. Run the Stage 7 script to build the public conflict map `docs/conflict.html` and the
+   site's home page `docs/index.html` (see "The website" below). It checks that
    your token is not in the page, that UCDP and the dataset version are credited, and that
    preliminary data is labelled, before writing anything:
 
@@ -68,16 +69,16 @@ again: only the new version is downloaded.
    python3 publish.py
    ```
 
-   Then commit and push `docs/index.html`. With GitHub Pages set to serve the `docs/`
+   Then commit and push `docs/conflict.html` and `docs/index.html`. With GitHub Pages set to serve the `docs/`
    folder of `main` (repo Settings → Pages → Deploy from a branch → `main` / `/docs`),
-   the map appears at `https://ksai4u-glitch.github.io/Taswira/`.
+   the site appears at `https://ksai4u-glitch.github.io/Taswira/` and the map at `…/Taswira/conflict.html`.
    Re-run `publish.py` and push again whenever you add a new Candidate release.
 
    To check the page in a browser (phone layout, keyboard, contrast, chart text), with Node and
    Playwright installed and Leaflet's `leaflet.js`, `leaflet.css` and `leaflet-heat.js` saved in a folder:
 
    ```
-   node tests/map_phone_a11y_browser.cjs docs/index.html <that folder> [screenshots folder]
+   node tests/map_phone_a11y_browser.cjs docs/conflict.html <that folder> [screenshots folder]
    ```
 
 ## Automatic updates
@@ -85,7 +86,8 @@ again: only the new version is downloaded.
 A GitHub Actions workflow (`.github/workflows/update.yml`) runs every Monday. It costs
 1 API request to check whether UCDP has published the next monthly Candidate release
 (`update_candidates.py`). If it has, the workflow adds it to `settings.py`, downloads it,
-rebuilds `docs/index.html` and opens a pull request ("Add GED Candidate …") with both.
+rebuilds `docs/conflict.html` and the home page `docs/index.html`, and opens a pull request
+("Add GED Candidate …") with all three.
 Nothing goes live until you merge it; merging republishes the map. While one data pull
 request is open, later runs wait for it instead of opening another.
 
@@ -93,7 +95,7 @@ If UCDP is slow or busy (a timeout, HTTP 429 or 5xx), each request is tried up t
 with a pause in between (`ucdp_api.py`). Every attempt counts towards the daily limit, so one
 run never makes more than `MAX_REQUESTS_PER_RUN` (2,000) requests. If something still fails,
 or UCDP's answer has an unexpected shape, the run stops with a message and a non-zero exit
-code; `settings.py` and `docs/index.html` are only ever replaced in one step, so they are
+code; `settings.py` and the `docs/` pages are only ever replaced in one step, so they are
 never left half-written, and no pull request is opened. The update scripts have offline tests
 (the API is mocked): `python -m unittest discover -s tests -p "test_update_*.py"`.
 
@@ -138,7 +140,7 @@ to the end of 2026). To switch to it:
    python build_map.py
    python publish.py
    ```
-5. Look at the map, then commit `settings.py` and `docs/index.html`, push and open a pull
+5. Look at the map, then commit `settings.py`, `docs/conflict.html` and `docs/index.html`, push and open a pull
    request. Merging it publishes the new release.
 6. Optional: update the year in the comments of `settings.py`, the dates in this README
    ("2020 to 2025 from the stable GED 26.1") and `API_VERSION` in `fetch_nigeria.py`
@@ -161,6 +163,27 @@ See [`history/README.md`](history/README.md) for how chapters and sources are wr
 
 Tests: `python -m unittest discover -s tests` (Python), and the browser tests in `tests/*.cjs`
 (Node with Playwright), for example `node tests/history_browser.cjs`.
+
+## The website
+
+GitHub Pages serves the `docs/` folder as one site with a shared Home · History · Conflict map bar:
+
+| Address | Page | Built by |
+|---|---|---|
+| `…/Taswira/` | Home: a dotted globe that zooms from space to Africa to Nigeria, then opens both maps | `build_home.py` (run by `publish.py`) |
+| `…/Taswira/conflict.html` | The conflict map (UCDP) | `publish.py` |
+| `…/Taswira/history.html` | The history map, labelled as an unreviewed draft | `build_history.py` |
+
+The conflict map used to be the home address. A shared link to one of its views
+(`…/Taswira/#country=Nigeria&year=2024`) still opens that view: the home page forwards it to `conflict.html`.
+
+The home page needs no token or database: its figures and lights come from `docs/conflict.html`, the
+land from Natural Earth and Nigeria's outline from `history/geo/`. Every figure keeps its dataset
+version, the page says it is not live, and preliminary Candidate data is labelled. If
+`docs/history.html` is missing, its door says "coming soon". To rebuild it alone, run
+`python build_home.py`; `python build_home.py --preview` writes `previews/home.html` instead.
+`docs/home-preview.png` is the picture shown when the link is shared.
+Check it with `python -m unittest tests.test_build_home`.
 
 ## Agent tasks (Claude + Codex)
 

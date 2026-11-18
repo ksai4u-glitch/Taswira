@@ -4,7 +4,7 @@ Write a file all at once or not at all.
 The text goes to a temporary file in the same folder, which then replaces the
 real file in one step (os.replace). If anything fails before that step, the
 old file is left exactly as it was and the temporary file is removed, so a
-crash can never leave a half-written settings.py or docs/index.html.
+crash can never leave a half-written settings.py or docs/ page.
 
 Uses only the Python standard library.
 """

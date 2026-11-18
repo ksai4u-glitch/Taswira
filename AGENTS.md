@@ -6,7 +6,7 @@ Instructions for Codex (and any other coding agent) working in this repository.
 
 Taswira maps organised violence across Africa, with a focus on Nigeria, from the
 UCDP Georeferenced Event Dataset. Python scripts (standard library only) fetch,
-store and clean the data; `publish.py` builds the public page `docs/index.html`
+store and clean the data; `publish.py` builds the conflict map `docs/conflict.html` and the home page `docs/index.html`
 from `map_template.html`, served by GitHub Pages at
 https://ksai4u-glitch.github.io/Taswira/. See `README.md` for the stages.
 

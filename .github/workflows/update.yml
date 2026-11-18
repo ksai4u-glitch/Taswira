@@ -1,5 +1,5 @@
 # Weekly check for a new monthly UCDP GED Candidate release.
-# If there is one: add it to settings.py, download it, rebuild docs/index.html,
+# If there is one: add it to settings.py, download it, rebuild docs/conflict.html and the home page docs/index.html,
 # and open a pull request with both. Nothing goes live until the maintainer
 # merges it (merging is a normal push, so GitHub Pages then republishes the map).
 # Needs a repository secret called UCDP_TOKEN (Settings -> Secrets and variables -> Actions)
@@ -104,16 +104,16 @@ jobs:
           NEW_VERSIONS: ${{ steps.check.outputs.new_versions }}
           BASE: ${{ github.event.repository.default_branch || 'main' }}
         run: |
-          # Only these two files may change; anything else means something is wrong.
+          # Only these three files may change; anything else means something is wrong.
           unexpected=$(git status --porcelain --untracked-files=no | awk '{print $2}' \
-                       | grep -vxE 'settings\.py|docs/index\.html' || true)
+                       | grep -vxE 'settings\.py|docs/conflict\.html|docs/index\.html' || true)
           if [ -n "$unexpected" ]; then echo "Unexpected changes: $unexpected"; exit 1; fi
 
           branch="data/ged-${NEW_VERSIONS// /-}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
-          git add settings.py docs/index.html
+          git add settings.py docs/conflict.html docs/index.html
           git commit -m "Add GED Candidate $NEW_VERSIONS"
           gh auth setup-git          # push with GH_TOKEN (checkout did not keep credentials)
           git push --force origin "HEAD:refs/heads/$branch"   # a data/ branch only this workflow writes
@@ -121,7 +121,7 @@ jobs:
           {
             echo "UCDP published GED Candidate **$NEW_VERSIONS** (preliminary data)."
             echo
-            echo "This adds it to \`CANDIDATE_VERSIONS\` in \`settings.py\` and rebuilds \`docs/index.html\`."
+            echo "This adds it to \`CANDIDATE_VERSIONS\` in \`settings.py\` and rebuilds the conflict map \`docs/conflict.html\` and the home page \`docs/index.html\`."
             echo "**Merging publishes it on the live map.** Closing it skips it for now (next Monday's run will offer it again)."
             echo
             echo "publish.py output:"
