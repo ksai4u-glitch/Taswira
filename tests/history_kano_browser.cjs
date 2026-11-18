@@ -29,7 +29,11 @@ async function open(browser, viewport, mode) {
   await page.setContent(fs.readFileSync(html, 'utf8'));
   await page.waitForFunction(() => window.taswira && state.drawn !== null);
   await page.evaluate(() => window.taswira.ready());
-  if (mode !== 'normal') await page.click(`#${mode}-toggle`);
+  // A phone opens in cinema view, so each layout is set from where the page starts
+  const theatre = () => page.evaluate(() => document.body.classList.contains('theatre-mode'));
+  if (mode !== 'cinema' && await theatre()) await page.click('#cinema-toggle');
+  if (mode === 'details') await page.click('#details-toggle');
+  if (mode === 'cinema' && !await theatre()) await page.click('#cinema-toggle');
   return { page, errors };
 }
 
