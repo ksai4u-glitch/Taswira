@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who drew Africa's borders? · Taswira (draft)</title>
+<meta name="description" content="Draft proof scene: how European powers carved up Africa between 1886 and 1914, on a globe, from the CShapes 2.0 border dataset.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2308120e' stroke='%23d4b57a' stroke-width='2'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-size='17' text-anchor='middle' fill='%23d4b57a'%3ET%3C/text%3E%3C/svg%3E">
+<!-- Built by build_borders.py from borders/template.html on __BUILT__. Edit the template, not this file. -->
+<style>
+:root {
+  --space: #050b08; --green: #08120e; --green-2: #12271e; --line: #304b3d;
+  --ivory: #f0eee2; --sage: #b5c4b8; --gold: #d4b57a;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--space); color: var(--ivory); font: 15px/1.5 var(--sans); overflow: hidden; }
+a { color: var(--gold); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+#globe { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+#globe.dragging { cursor: grabbing; }
+
+header.top { position: fixed; top: 0; left: 0; right: 0; z-index: 3; display: flex; align-items: center; gap: 14px;
+  padding: 12px 22px; background: linear-gradient(to bottom, rgba(5,11,8,.9), rgba(5,11,8,0)); pointer-events: none; }
+header.top > * { pointer-events: auto; }
+.brand { font: 400 22px var(--serif); color: var(--gold); text-decoration: none; }
+.draft { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green); background: var(--gold);
+  border-radius: 3px; padding: 2px 7px; font-weight: 700; }
+header.top nav { margin-left: auto; display: flex; gap: 18px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+header.top nav a { color: var(--ivory); text-decoration: none; opacity: .85; }
+header.top nav a:hover { color: var(--gold); opacity: 1; }
+
+.panel { position: fixed; z-index: 2; left: 22px; top: 64px; width: min(400px, calc(100vw - 44px));
+  background: rgba(5,11,8,.78); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; backdrop-filter: blur(4px); }
+.kicker { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; }
+h1 { font: 400 clamp(26px, 3.2vw, 40px)/1.08 var(--serif); margin: 0 0 10px; }
+.lede { color: var(--sage); margin: 0 0 12px; font-size: 14px; }
+.date { font: 400 clamp(40px, 5vw, 64px)/1 var(--serif); color: var(--ivory); margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+.date small { font-size: 15px; color: var(--sage); margin-left: 6px; }
+.share { display: flex; align-items: baseline; gap: 10px; margin: 8px 0 6px; }
+.share b { font: 400 34px/1 var(--serif); color: var(--gold); font-variant-numeric: tabular-nums; min-width: 2.6em; }
+.share span { color: var(--sage); font-size: 13px; line-height: 1.3; }
+.bar { display: flex; height: 12px; border-radius: 3px; overflow: hidden; background: #1c3529; margin: 0 0 10px; }
+.bar i { display: block; height: 100%; transition: width .35s ease; }
+.legend { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 12px; font-size: 12px; color: var(--sage); margin: 0; padding: 0; list-style: none; }
+.legend li { display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.legend li em { font-style: normal; margin-left: auto; color: var(--ivory); font-variant-numeric: tabular-nums; }
+.sw { width: 11px; height: 11px; border-radius: 2px; flex: none; border: 1px solid rgba(240,238,226,.35); }
+.legend li.off { opacity: .35; }
+
+.moment { position: fixed; z-index: 2; right: 22px; top: 64px; width: min(360px, calc(100vw - 44px));
+  background: rgba(240,238,226,.95); color: var(--green); border-radius: 10px; padding: 14px 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.45); transition: opacity .4s ease, transform .4s ease; }
+.moment.hidden { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+.moment .when { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #7a5a1f; margin: 0 0 4px; font-weight: 700; }
+.moment h2 { font: 400 24px/1.1 var(--serif); margin: 0 0 6px; }
+.moment p { margin: 0; font-size: 14px; }
+.moment .cite { font-size: 11px; color: #4b5d53; margin-top: 8px; }
+
+.controls { position: fixed; z-index: 2; left: 22px; right: 22px; bottom: 16px; display: flex; align-items: center; gap: 12px;
+  background: rgba(5,11,8,.82); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+.btn { border: 1px solid var(--gold); background: rgba(8,18,14,.6); border-radius: 6px; padding: 7px 12px; cursor: pointer; white-space: nowrap; }
+.btn.gold { background: var(--gold); color: var(--green); font-weight: 700; }
+.btn[aria-pressed="true"] { background: var(--gold); color: var(--green); }
+.track { position: relative; flex: 1; height: 34px; }
+.track input { position: absolute; inset: 8px 0 auto; width: 100%; margin: 0; accent-color: var(--gold); }
+.ticks { position: absolute; left: 0; right: 0; top: 0; height: 8px; }
+.ticks button { position: absolute; top: -2px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; padding: 0;
+  border: 2px solid var(--gold); background: var(--green); cursor: pointer; }
+.ticks button.past { background: var(--gold); }
+.years { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; font-size: 11px; color: var(--sage); }
+.links { display: flex; gap: 8px; }
+.links button { background: none; border: 0; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 13px; padding: 4px; }
+
+#tip { position: fixed; z-index: 4; pointer-events: none; max-width: 280px; background: rgba(5,11,8,.95); border: 1px solid var(--gold);
+  border-radius: 8px; padding: 9px 11px; font-size: 13px; display: none; }
+#tip b { font-family: var(--serif); font-weight: 400; font-size: 17px; display: block; }
+#tip .who { color: var(--gold); }
+#tip .meta { color: var(--sage); font-size: 12px; }
+#tip p { margin: 6px 0 0; color: var(--sage); font-size: 12px; }
+
+dialog { max-width: 680px; width: calc(100vw - 32px); max-height: 82vh; background: var(--green); color: var(--ivory);
+  border: 1px solid var(--gold); border-radius: 10px; padding: 20px 22px; }
+dialog::backdrop { background: rgba(0,0,0,.6); }
+dialog h2 { font: 400 26px var(--serif); margin: 0 0 10px; }
+dialog h3 { font: 400 18px var(--serif); color: var(--gold); margin: 18px 0 6px; }
+dialog p, dialog li { color: var(--sage); font-size: 14px; }
+dialog .close { float: right; }
+
+@media (max-width: 760px) {
+  header.top { padding: 10px 16px; }
+  header.top nav { gap: 12px; font-size: 11px; }
+  .panel { left: 16px; right: 16px; top: 52px; width: auto; padding: 10px 12px; }
+  .panel h1, .panel .lede, .panel .kicker { display: none; }
+  .date { font-size: 34px; }
+  .share b { font-size: 26px; }
+  .legend { grid-template-columns: 1fr 1fr 1fr; font-size: 11px; }
+  .legend li em { display: none; }
+  .moment { left: 16px; right: 16px; width: auto; top: auto; bottom: 150px; padding: 10px 12px; }
+  .moment h2 { font-size: 19px; }
+  .moment p { font-size: 13px; }
+  .moment .cite, .wide { display: none; }
+  .controls { left: 16px; right: 16px; bottom: 12px; flex-wrap: wrap; gap: 8px; padding: 8px 10px; }
+  .track { order: -1; flex-basis: 100%; }
+  .links { margin-left: auto; }
+}
+@media (max-width: 760px) and (max-height: 700px) { .legend { display: none; } }
+</style>
+</head>
+<body>
+<canvas id="globe" aria-label="Globe showing Africa's colonial borders on the chosen date" role="img"></canvas>
+
+<header class="top">
+  <a class="brand" href="./">Taswira</a>
+  <span class="draft">Draft</span>
+  <nav aria-label="Site">
+    <a href="./">Home</a>
+    <a href="history.html">History</a>
+    <a href="conflict.html">Conflict<span class="wide"> map</span></a>
+  </nav>
+</header>
+
+<section class="panel" aria-live="polite">
+  <p class="kicker" id="kicker"></p>
+  <h1 id="title"></h1>
+  <p class="lede" id="lede"></p>
+  <div class="date" id="date">1886</div>
+  <div class="share"><b id="pct">0%</b><span>of Africa's land claimed by<br>European powers</span></div>
+  <div class="bar" id="bar" aria-hidden="true"></div>
+  <ul class="legend" id="legend"></ul>
+</section>
+
+<aside class="moment hidden" id="moment" aria-live="polite">
+  <p class="when" id="m-when"></p>
+  <h2 id="m-title"></h2>
+  <p id="m-text"></p>
+  <p class="cite" id="m-cite"></p>
+</aside>
+
+<div class="controls">
+  <button class="btn gold" id="play" type="button">Play</button>
+  <button class="btn" id="b1886" type="button" aria-pressed="false">1886</button>
+  <button class="btn" id="b1914" type="button" aria-pressed="false">1914</button>
+  <div class="track">
+    <div class="ticks" id="ticks"></div>
+    <input type="range" id="slider" min="0" max="1000" step="1" value="0" aria-label="Date">
+    <div class="years"><span>1886</span><span>1895</span><span>1905</span><span>1914</span></div>
+  </div>
+  <div class="links">
+    <button type="button" id="open-text">Text version</button>
+    <button type="button" id="open-sources">Sources</button>
+  </div>
+</div>
+
+<div id="tip" role="tooltip"></div>
+
+<dialog id="sources">
+  <button class="btn close" type="button" data-close>Close</button>
+  <h2>Sources and method</h2>
+  <p>This is a <strong>draft proof scene</strong> for a new Taswira map. It is not published on the site yet.</p>
+  <h3>What the colours mean</h3>
+  <p>Each colour is the European power that <em>claimed</em> the land on that date, as recorded by CShapes 2.0.
+    A claim on paper often came years before real control: Britain claimed northern Nigeria from 1900, but the
+    Sokoto Caliphate fell only in 1903. Dark land is land no European power claimed yet, ruled by African states and peoples.</p>
+  <p>The share is the area of land claimed by Britain, France, Germany, Belgium (King Leopold's Congo), Portugal,
+    Italy and Spain, out of all the land of Africa and its islands mapped by CShapes on 1 January 1914.</p>
+  <h3>Corrections and notes</h3>
+  <ul id="notes"></ul>
+  <h3>Sources</h3>
+  <ul id="source-list"></ul>
+  <p>Borders simplified to about 4 km for the web. Map libraries: d3-geo and d3-array (ISC).</p>
+</dialog>
+
+<dialog id="textver">
+  <button class="btn close" type="button" data-close>Close</button>
+  <h2>Text version</h2>
+  <ol id="text-list"></ol>
+</dialog>
+
+<script src="https://unpkg.com/d3-array@3.2.4/dist/d3-array.min.js"></script>
+<script src="https://unpkg.com/d3-geo@3.1.1/dist/d3-geo.min.js"></script>
+<script>
+const DATA = __DATA__;
+const STORY = DATA.story, GEO = DATA.geo, BG = DATA.background;
+const lessMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const $ = id => document.getElementById(id);
+
+// ---------- geometry ----------
+const arcs = GEO.arcs.map(a => { const out = []; let x = 0, y = 0;
+  for (let i = 0; i < a.length; i += 2) { x += a[i]; y += a[i + 1]; out.push([x / 100, y / 100]); } return out; });
+const arcPts = i => i >= 0 ? arcs[i] : arcs[~i].slice().reverse();
+const ringOf = ids => { const r = []; ids.forEach(i => { const p = arcPts(i); r.push(...(r.length ? p.slice(1) : p)); }); return r; };
+// d3 wants the outer ring clockwise; a ring that encloses more than half the sphere is wound the wrong way.
+const fixPolygon = poly => { const f = { type: "Polygon", coordinates: poly };
+  if (d3.geoArea(f) > 2 * Math.PI) poly.forEach(r => r.reverse()); return poly; };
+
+const units = GEO.units.map(u => {
+  // Simplifying can shrink a tiny island to a line: drop rings with fewer than three corners.
+  const polys = u.polygons.map(p => p.map(ringOf).filter(r => r.length >= 4)).filter(p => p.length);
+  const geometry = { type: "MultiPolygon", coordinates: polys.map(fixPolygon) };
+  const feature = { type: "Feature", geometry };
+  return Object.assign({}, u, { feature, area: d3.geoArea(feature), centroid: d3.geoCentroid(feature) });
+});
+const land = { type: "MultiPolygon", coordinates: BG.land.map(poly => fixPolygon(poly.map(r => {
+  const out = []; let la = 0, lo = 0;
+  for (let i = 0; i < r.length; i += 2) { la += r[i]; lo += r[i + 1]; out.push([lo / 1000, la / 1000]); } return out; }))) };
+const lakes = { type: "MultiPolygon", coordinates: (BG.lakes || []).map(poly => fixPolygon(poly.map(r => {
+  const out = []; let la = 0, lo = 0;
+  for (let i = 0; i < r.length; i += 2) { la += r[i]; lo += r[i + 1]; out.push([lo / 1000, la / 1000]); } return out; }))) };
+
+// ---------- time ----------
+const T0 = Date.parse(GEO.first + "T00:00:00Z"), T1 = Date.parse(GEO.last + "T00:00:00Z");
+const iso = t => new Date(t).toISOString().slice(0, 10);
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const longDate = d => { const [y, m, day] = d.split("-").map(Number); return day + " " + MONTHS[m - 1] + " " + y; };
+const active = d => units.filter(u => u.start <= d && d <= u.end);
+const nameOf = (u, d, short) => { const list = STORY.names[u.gw] || [[GEO.first, u.name]]; let n = list[0][1];
+  list.forEach(([from, name, label]) => { if (from <= d) n = short && label ? label : name; }); return n; };
+const groupOf = (u, d) => {
+  for (const c of STORY.corrections) if (c.gw.includes(u.gw) && d >= c.from) return c.owner;
+  const own = String(u.owner);
+  if (STORY.powers[own] && !STORY.owner_groups[own]) return own;
+  return STORY.owner_groups[own] || "african";
+};
+const AFRICA = active(GEO.last).reduce((s, u) => s + u.area, 0);
+const EURO = new Set(STORY.european);
+
+function shares(d) {
+  const by = {}; let euro = 0;
+  active(d).forEach(u => { const g = groupOf(u, d); by[g] = (by[g] || 0) + u.area; if (EURO.has(g)) euro += u.area; });
+  return { by, euro: euro / AFRICA };
+}
+
+// ---------- drawing ----------
+const canvas = $("globe"), ctx = canvas.getContext("2d");
+const projection = d3.geoOrthographic().precision(0.3).clipAngle(90);
+const path = d3.geoPath(projection, ctx);
+const graticule = d3.geoGraticule10();
+let W = 0, H = 0, DPR = 1, baseScale = 1;
+const view = { lon: 17, lat: 2, zoom: 1 };
+const NIGERIA = new Set([475, 4781, 4782, 4783, 4784]);
+const born = new Map();   // gw+start -> time it appeared, for a short flash
+
+function layout() {
+  DPR = Math.min(2, window.devicePixelRatio || 1);
+  W = innerWidth; H = innerHeight;
+  canvas.width = W * DPR; canvas.height = H * DPR;
+  const phone = W < 760;
+  baseScale = phone ? Math.min(W * 0.62, H * 0.36) : Math.min(W * 0.36, H * 0.47);
+  projection.translate(phone ? [W / 2, H * 0.52] : [W * (W > 1100 ? 0.56 : 0.6), H * 0.5]);
+}
+
+function draw(now) {
+  const d = state.date;
+  projection.scale(baseScale * view.zoom).rotate([-view.lon, -view.lat]);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  const [cx, cy] = projection.translate(), r = projection.scale();
+  const glow = ctx.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.18);
+  glow.addColorStop(0, "rgba(212,181,122,.16)"); glow.addColorStop(1, "rgba(212,181,122,0)");
+  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(cx, cy, r * 1.18, 0, 7); ctx.fill();
+  ctx.beginPath(); path({ type: "Sphere" }); ctx.fillStyle = "#0a1a14"; ctx.fill();
+  ctx.beginPath(); path(graticule); ctx.strokeStyle = "rgba(181,196,184,.07)"; ctx.lineWidth = 1; ctx.stroke();
+  ctx.beginPath(); path(land); ctx.fillStyle = "#1d3a2c"; ctx.fill();
+
+  const list = active(d);
+  list.forEach(u => {
+    const g = groupOf(u, d), key = u.gw + "|" + u.start;
+    if (!born.has(key)) born.set(key, state.seeded ? now : -1e9);
+    ctx.beginPath(); path(u.feature);
+    ctx.fillStyle = STORY.powers[g].colour; ctx.globalAlpha = g === "african" ? 0.82 : 0.9; ctx.fill();
+    const age = (now - born.get(key)) / 900;
+    if (age < 1 && !lessMotion.matches) { ctx.globalAlpha = 0.75 * (1 - age); ctx.fillStyle = "#fff8e0"; ctx.fill(); }
+    ctx.globalAlpha = 1;
+  });
+  state.seeded = true;
+  ctx.beginPath(); path(lakes); ctx.fillStyle = "#0a1a14"; ctx.fill();
+  ctx.lineJoin = "round";
+  list.forEach(u => { ctx.beginPath(); path(u.feature); ctx.strokeStyle = "rgba(5,11,8,.75)"; ctx.lineWidth = 0.9; ctx.stroke(); });
+  // Nigeria's pieces in gold: this map leads into the history map.
+  list.filter(u => NIGERIA.has(u.gw)).forEach(u => { ctx.beginPath(); path(u.feature); ctx.strokeStyle = "#d4b57a"; ctx.lineWidth = 2; ctx.stroke(); });
+  if (state.hover && list.includes(state.hover)) { ctx.beginPath(); path(state.hover.feature); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2.2; ctx.stroke(); }
+  ctx.beginPath(); path({ type: "Sphere" }); ctx.strokeStyle = "rgba(212,181,122,.45)"; ctx.lineWidth = 1.2; ctx.stroke();
+  labels(list, d);
+}
+
+function labels(list, d) {
+  const centre = [view.lon, view.lat], minArea = 0.012 / (view.zoom * view.zoom) * (W < 760 ? 1.6 : 1);
+  const placed = [];
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  list.slice().sort((a, b) => b.area - a.area).forEach(u => {
+    const big = u.area >= minArea, nga = NIGERIA.has(u.gw), indep = ["african"].includes(groupOf(u, d));
+    if (!big && !nga && !indep) return;
+    if (d3.geoDistance(u.centroid, centre) > 1.25) return;
+    const [x, y] = projection(u.centroid); if (!isFinite(x)) return;
+    let text = nameOf(u, d, true).replace(/ \(.*\)$/, "");
+    const size = big ? (W < 760 ? 10 : 12) : 10;
+    ctx.font = (nga || indep ? "italic " : "") + size + "px Georgia, serif";
+    const w = ctx.measureText(text).width, box = [x - w / 2 - 3, y - size, x + w / 2 + 3, y + size];
+    if (placed.some(b => !(box[2] < b[0] || box[0] > b[2] || box[3] < b[1] || box[1] > b[3]))) return;
+    placed.push(box);
+    ctx.lineWidth = 3; ctx.strokeStyle = "rgba(5,11,8,.8)"; ctx.strokeText(text, x, y);
+    ctx.fillStyle = nga ? "#f3dca8" : "#f0eee2"; ctx.fillText(text, x, y);
+  });
+}
+
+// ---------- state + panel ----------
+const state = { date: GEO.first, t: T0, playing: false, hover: null, seeded: false, shown: null };
+const ORDER = [...STORY.european, "640", "settler", "african", "unclaimed"];
+
+function buildLegend() {
+  $("legend").innerHTML = ORDER.map(g => `<li data-g="${g}"><span class="sw" style="background:${STORY.powers[g].colour}"></span>${STORY.powers[g].short || STORY.powers[g].name}<em></em></li>`).join("");
+}
+function panel() {
+  const d = state.date, s = shares(d);
+  $("date").innerHTML = d.slice(0, 4) + `<small>${longDate(d).replace(/ \d{4}$/, "")}</small>`;
+  $("pct").textContent = Math.round(s.euro * 100) + "%";
+  $("bar").innerHTML = STORY.european.map(g => `<i style="width:${(100 * (s.by[g] || 0) / AFRICA).toFixed(2)}%;background:${STORY.powers[g].colour}"></i>`).join("");
+  s.by.unclaimed = Math.max(0, AFRICA - Object.values(s.by).reduce((a, b) => a + b, 0));
+  document.querySelectorAll("#legend li").forEach(li => { const v = (s.by[li.dataset.g] || 0) / AFRICA;
+    li.classList.toggle("off", v === 0); li.querySelector("em").textContent = v ? Math.max(1, Math.round(v * 100)) + "%" : ""; });
+  $("b1886").setAttribute("aria-pressed", String(d === GEO.first));
+  $("b1914").setAttribute("aria-pressed", String(d === GEO.last));
+  $("slider").value = Math.round(1000 * (state.t - T0) / (T1 - T0));
+  $("slider").setAttribute("aria-valuetext", longDate(d));
+  document.querySelectorAll("#ticks button").forEach(b => b.classList.toggle("past", b.dataset.date <= d));
+}
+const cites = ids => ids.map(id => STORY.sources[id].cite.split(" (")[0].replace(/,.*$/, "") + (id === "cshapes-2" ? " et al. 2022 (CShapes 2.0)" : " " + (STORY.sources[id].cite.match(/\((\d{4})\)/) || ["", ""])[1])).join("; ");
+function showMoment(m) {
+  state.shown = m;
+  if (!m) { $("moment").classList.add("hidden"); return; }
+  $("m-when").textContent = longDate(m.date);
+  $("m-title").textContent = m.title;
+  $("m-text").textContent = m.text;
+  $("m-cite").textContent = "Sources: " + cites(m.sources);
+  $("moment").classList.remove("hidden");
+}
+function momentAt(d) { let m = null; STORY.moments.forEach(x => { if (x.date <= d) m = x; }); return m; }
+
+function setTime(t, opts = {}) {
+  state.t = Math.max(T0, Math.min(T1, t));
+  state.date = state.t >= T1 ? GEO.last : iso(state.t);
+  panel();
+  if (!opts.keepMoment) showMoment(momentAt(state.date));
+}
+
+// ---------- camera ----------
+let tween = null;
+function flyTo(lon, lat, zoom, ms = 1400) {
+  if (lessMotion.matches) ms = 0;
+  const a = { ...view }, b = { lon, lat, zoom }, start = performance.now();
+  tween = now => { const k = ms ? Math.min(1, (now - start) / ms) : 1, e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    view.lon = a.lon + (b.lon - a.lon) * e; view.lat = a.lat + (b.lat - a.lat) * e; view.zoom = a.zoom + (b.zoom - a.zoom) * e;
+    if (k >= 1) tween = null; };
+}
+const HOME = () => flyTo(17, 2, 1);
+
+// ---------- play ----------
+const SECONDS_PER_YEAR = 1.1, HOLD = 3200;
+let hold = 0, last = 0;
+function setPlaying(p) {
+  state.playing = p;
+  $("play").textContent = p ? "Pause" : (state.t >= T1 ? "Replay" : "Play");
+  if (p && state.t >= T1) { setTime(T0); born.clear(); state.seeded = false; HOME(); }
+  if (p) { hold = 0; last = performance.now(); const m = STORY.moments.find(x => x.date === state.date); if (m) arrive(m); }
+}
+function arrive(m) { showMoment(m); hold = HOLD; flyTo(m.focus[0], Math.max(-25, Math.min(25, m.focus[1])), 1.25); }
+function step(now) {
+  const dt = Math.min(100, now - last); last = now;
+  if (state.playing) {
+    if (hold > 0) { hold -= dt; if (hold <= 0) HOME(); }
+    else {
+      const before = state.date, t = state.t + dt / 1000 / SECONDS_PER_YEAR * 365.25 * 864e5;
+      const next = STORY.moments.find(m => m.date > before && Date.parse(m.date) <= t);
+      if (next) { setTime(Date.parse(next.date + "T00:00:00Z"), { keepMoment: true }); arrive(next); }
+      else setTime(t, { keepMoment: true });
+      if (state.t >= T1) setPlaying(false);
+    }
+  }
+  if (tween) tween(now);
+  draw(now);
+  requestAnimationFrame(step);
+}
+
+// ---------- interaction ----------
+$("play").onclick = () => setPlaying(!state.playing);
+$("b1886").onclick = () => { setPlaying(false); setTime(T0); HOME(); };
+$("b1914").onclick = () => { setPlaying(false); setTime(T1); HOME(); };
+$("slider").oninput = e => { setPlaying(false); setTime(T0 + (T1 - T0) * e.target.value / 1000); };
+$("ticks").innerHTML = STORY.moments.map(m => `<button type="button" data-date="${m.date}" style="left:${(100 * (Date.parse(m.date) - T0) / (T1 - T0)).toFixed(2)}%" aria-label="${longDate(m.date)}: ${m.title}" title="${m.title}"></button>`).join("");
+document.querySelectorAll("#ticks button").forEach(b => b.onclick = () => { setPlaying(false);
+  const m = STORY.moments.find(x => x.date === b.dataset.date); setTime(Date.parse(m.date + "T00:00:00Z")); arrive(m); });
+
+function unitAt(x, y) {
+  const p = projection.invert([x, y]); if (!p || d3.geoDistance(p, [view.lon, view.lat]) > Math.PI / 2) return null;
+  return active(state.date).filter(u => d3.geoContains(u.feature, p)).sort((a, b) => a.area - b.area)[0] || null;
+}
+function tip(u, x, y) {
+  const t = $("tip");
+  if (!u) { t.style.display = "none"; state.hover = null; return; }
+  state.hover = u;
+  const d = state.date, g = groupOf(u, d), power = STORY.powers[g].name;
+  const corr = STORY.corrections.find(c => c.gw.includes(u.gw) && d >= c.from);
+  const status = corr ? "British colony" : g === "african" || g === "settler" ? "Independent" : u.status[0].toUpperCase() + u.status.slice(1) + " of " + power;
+  const note = corr ? corr.note : STORY.notes[u.gw] || "";
+  t.innerHTML = `<b></b><span class="who"></span><div class="meta"></div>${note ? "<p></p>" : ""}`;
+  t.querySelector("b").textContent = nameOf(u, d);
+  t.querySelector(".who").textContent = status;
+  t.querySelector(".meta").textContent = "These borders: " + longDate(u.start) + " to " + (u.end > GEO.last ? "after 1914" : longDate(u.end)) + " (CShapes 2.0)";
+  if (note) t.querySelector("p").textContent = note;
+  t.style.display = "block";
+  const w = t.offsetWidth, h = t.offsetHeight;
+  t.style.left = Math.min(innerWidth - w - 8, x + 14) + "px"; t.style.top = Math.max(8, Math.min(innerHeight - h - 8, y + 14)) + "px";
+}
+let drag = null;
+canvas.addEventListener("pointerdown", e => { drag = { x: e.clientX, y: e.clientY, lon: view.lon, lat: view.lat, moved: false }; canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener("pointermove", e => {
+  if (drag) {
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (Math.hypot(dx, dy) > 4) { drag.moved = true; canvas.classList.add("dragging"); tween = null; tip(null); }
+    if (drag.moved) { const k = 90 / projection.scale(); view.lon = drag.lon - dx * k; view.lat = Math.max(-60, Math.min(60, drag.lat + dy * k)); }
+  } else if (e.pointerType === "mouse") tip(unitAt(e.clientX, e.clientY), e.clientX, e.clientY);
+});
+canvas.addEventListener("pointerup", e => {
+  if (drag && !drag.moved) tip(unitAt(e.clientX, e.clientY), e.clientX, e.clientY);
+  drag = null; canvas.classList.remove("dragging");
+});
+canvas.addEventListener("pointerleave", () => { if (!drag) tip(null); });
+canvas.addEventListener("wheel", e => { e.preventDefault(); tween = null; view.zoom = Math.max(0.8, Math.min(4, view.zoom * Math.exp(-e.deltaY / 500))); }, { passive: false });
+addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || document.querySelector("dialog[open]")) return;
+  if (e.key === " ") { e.preventDefault(); setPlaying(!state.playing); }
+});
+
+// ---------- dialogs ----------
+document.querySelectorAll("[data-close]").forEach(b => b.onclick = () => b.closest("dialog").close());
+$("open-sources").onclick = () => $("sources").showModal();
+$("open-text").onclick = () => $("textver").showModal();
+$("source-list").innerHTML = Object.values(STORY.sources).map(s => `<li></li>`).join("");
+Object.values(STORY.sources).forEach((s, i) => { const li = $("source-list").children[i];
+  li.textContent = s.cite + " Used for: " + s.used_for + " ";
+  if (s.url) { const a = document.createElement("a"); a.href = s.url; a.textContent = s.url; a.rel = "noopener"; li.append(a); } });
+const noteItems = [...STORY.corrections.map(c => c.note), ...Object.entries(STORY.notes).filter(([gw]) => !["4783", "564"].includes(gw)).map(([, n]) => n), STORY.unclaimed];
+$("notes").innerHTML = noteItems.map(() => "<li></li>").join("");
+noteItems.forEach((n, i) => $("notes").children[i].textContent = n);
+$("text-list").innerHTML = STORY.moments.map(() => "<li></li>").join("");
+STORY.moments.forEach((m, i) => { const s = shares(m.date);
+  $("text-list").children[i].textContent = longDate(m.date) + ". " + m.title + ". " + m.text + " European powers claim " + Math.round(s.euro * 100) + "% of Africa's land on this date."; });
+
+$("kicker").textContent = STORY.kicker; $("title").textContent = STORY.title; $("lede").textContent = STORY.lede;
+buildLegend(); layout(); setTime(T0);
+addEventListener("resize", layout);
+window.taswiraBorders = { setTime: d => { setPlaying(false); setTime(Date.parse(d + "T00:00:00Z")); }, shares, flyTo, view, play: () => setPlaying(true), state };
+requestAnimationFrame(now => { last = now; step(now); });
+</script>
+</body>
+</html>

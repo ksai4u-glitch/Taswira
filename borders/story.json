@@ -1,0 +1,644 @@
+{
+  "title": "Who drew Africa's borders?",
+  "kicker": "Draft proof scene: the Scramble for Africa, 1886 to 1914",
+  "lede": "In 1886, just after the Berlin Conference, European powers claimed the coasts and a few big blocks of the interior. By 1 January 1914, the day Nigeria was made one colony, only two African states were left outside European rule.",
+  "powers": {
+    "200": {
+      "name": "Britain",
+      "colour": "#d65f5a"
+    },
+    "220": {
+      "name": "France",
+      "colour": "#5d8fd8"
+    },
+    "255": {
+      "name": "Germany",
+      "colour": "#8f8576"
+    },
+    "211": {
+      "name": "Belgium (King Leopold II until 1908)",
+      "short": "Belgium",
+      "colour": "#e3c447"
+    },
+    "235": {
+      "name": "Portugal",
+      "colour": "#4fae74"
+    },
+    "325": {
+      "name": "Italy",
+      "colour": "#a7cf5e"
+    },
+    "230": {
+      "name": "Spain",
+      "colour": "#ec8f3e"
+    },
+    "640": {
+      "name": "Ottoman Empire",
+      "colour": "#a874b4"
+    },
+    "settler": {
+      "name": "Boer republics and South Africa (white minority rule)",
+      "short": "Settler states",
+      "colour": "#c9a46a"
+    },
+    "african": {
+      "name": "Independent African states",
+      "short": "Independent",
+      "colour": "#f0eee2"
+    },
+    "unclaimed": {
+      "name": "Not yet claimed (ruled by African states and peoples)",
+      "short": "Not yet claimed",
+      "colour": "#1d3a2c"
+    }
+  },
+  "european": [
+    "200",
+    "220",
+    "255",
+    "211",
+    "235",
+    "325",
+    "230"
+  ],
+  "owner_groups": {
+    "563": "settler",
+    "564": "settler",
+    "560": "settler",
+    "450": "african",
+    "530": "african",
+    "580": "african",
+    "600": "african"
+  },
+  "names": {
+    "402": [
+      [
+        "1886",
+        "Cape Verde"
+      ]
+    ],
+    "404": [
+      [
+        "1886",
+        "Portuguese Guinea"
+      ]
+    ],
+    "411": [
+      [
+        "1886",
+        "Spanish Guinea"
+      ]
+    ],
+    "420": [
+      [
+        "1886",
+        "Gambia"
+      ]
+    ],
+    "430": [
+      [
+        "1886",
+        "French West Africa (interior)"
+      ]
+    ],
+    "432": [
+      [
+        "1886",
+        "Upper Senegal and Niger",
+        "Upper Senegal-Niger"
+      ]
+    ],
+    "433": [
+      [
+        "1886",
+        "Senegal"
+      ]
+    ],
+    "434": [
+      [
+        "1886",
+        "Dahomey"
+      ]
+    ],
+    "435": [
+      [
+        "1886",
+        "Mauritania"
+      ]
+    ],
+    "436": [
+      [
+        "1886",
+        "Military Territory of Niger"
+      ]
+    ],
+    "437": [
+      [
+        "1886",
+        "Ivory Coast"
+      ]
+    ],
+    "438": [
+      [
+        "1886",
+        "French Guinea"
+      ]
+    ],
+    "450": [
+      [
+        "1886",
+        "Liberia"
+      ]
+    ],
+    "451": [
+      [
+        "1886",
+        "Sierra Leone"
+      ]
+    ],
+    "452": [
+      [
+        "1886",
+        "Gold Coast"
+      ]
+    ],
+    "460": [
+      [
+        "1886",
+        "Togoland"
+      ]
+    ],
+    "470": [
+      [
+        "1886",
+        "Kamerun"
+      ]
+    ],
+    "475": [
+      [
+        "1886",
+        "Colony and Protectorate of Nigeria",
+        "Nigeria"
+      ]
+    ],
+    "481": [
+      [
+        "1886",
+        "Gabon"
+      ]
+    ],
+    "482": [
+      [
+        "1886",
+        "Ubangi-Shari"
+      ]
+    ],
+    "483": [
+      [
+        "1886",
+        "Chad"
+      ]
+    ],
+    "484": [
+      [
+        "1886",
+        "French Congo"
+      ]
+    ],
+    "490": [
+      [
+        "1886",
+        "Congo Free State"
+      ],
+      [
+        "1908-11-15",
+        "Belgian Congo"
+      ]
+    ],
+    "500": [
+      [
+        "1886",
+        "Uganda Protectorate"
+      ]
+    ],
+    "501": [
+      [
+        "1886",
+        "British East Africa"
+      ]
+    ],
+    "510": [
+      [
+        "1886",
+        "German East Africa"
+      ]
+    ],
+    "511": [
+      [
+        "1886",
+        "Zanzibar"
+      ]
+    ],
+    "521": [
+      [
+        "1886",
+        "British Somaliland"
+      ]
+    ],
+    "522": [
+      [
+        "1886",
+        "French Somaliland"
+      ]
+    ],
+    "530": [
+      [
+        "1886",
+        "Ethiopia"
+      ]
+    ],
+    "531": [
+      [
+        "1886",
+        "Eritrea"
+      ]
+    ],
+    "540": [
+      [
+        "1886",
+        "Angola"
+      ]
+    ],
+    "541": [
+      [
+        "1886",
+        "Mozambique"
+      ]
+    ],
+    "551": [
+      [
+        "1886",
+        "Northern Rhodesia"
+      ]
+    ],
+    "552": [
+      [
+        "1886",
+        "Southern Rhodesia"
+      ]
+    ],
+    "553": [
+      [
+        "1886",
+        "British Central Africa"
+      ],
+      [
+        "1907",
+        "Nyasaland"
+      ]
+    ],
+    "560": [
+      [
+        "1886",
+        "Union of South Africa"
+      ]
+    ],
+    "561": [
+      [
+        "1886",
+        "Cape Colony"
+      ]
+    ],
+    "562": [
+      [
+        "1886",
+        "Natal"
+      ]
+    ],
+    "563": [
+      [
+        "1886",
+        "South African Republic (Transvaal)"
+      ],
+      [
+        "1902-05-31",
+        "Transvaal Colony"
+      ]
+    ],
+    "564": [
+      [
+        "1886",
+        "Orange Free State"
+      ],
+      [
+        "1902-05-31",
+        "Orange River Colony"
+      ]
+    ],
+    "565": [
+      [
+        "1886",
+        "German South West Africa"
+      ]
+    ],
+    "570": [
+      [
+        "1886",
+        "Basutoland"
+      ]
+    ],
+    "571": [
+      [
+        "1886",
+        "Bechuanaland Protectorate"
+      ]
+    ],
+    "572": [
+      [
+        "1886",
+        "Swaziland"
+      ]
+    ],
+    "580": [
+      [
+        "1886",
+        "Madagascar (Merina kingdom)"
+      ],
+      [
+        "1896",
+        "Madagascar"
+      ]
+    ],
+    "585": [
+      [
+        "1886",
+        "Réunion"
+      ]
+    ],
+    "590": [
+      [
+        "1886",
+        "Mauritius"
+      ]
+    ],
+    "600": [
+      [
+        "1886",
+        "Morocco"
+      ],
+      [
+        "1912-11-27",
+        "French Morocco"
+      ]
+    ],
+    "602": [
+      [
+        "1886",
+        "Spanish Morocco"
+      ]
+    ],
+    "610": [
+      [
+        "1886",
+        "Río de Oro (Spanish Sahara)"
+      ]
+    ],
+    "615": [
+      [
+        "1886",
+        "Algeria"
+      ]
+    ],
+    "616": [
+      [
+        "1886",
+        "Tunisia"
+      ]
+    ],
+    "620": [
+      [
+        "1886",
+        "Italian Libya"
+      ]
+    ],
+    "625": [
+      [
+        "1886",
+        "Anglo-Egyptian Sudan",
+        "Sudan"
+      ]
+    ],
+    "640": [
+      [
+        "1886",
+        "Ottoman Tripolitania"
+      ]
+    ],
+    "651": [
+      [
+        "1886",
+        "Egypt (British-occupied)"
+      ]
+    ],
+    "4781": [
+      [
+        "1886",
+        "Lagos Colony"
+      ]
+    ],
+    "4782": [
+      [
+        "1886",
+        "Oil Rivers Protectorate"
+      ],
+      [
+        "1893",
+        "Niger Coast Protectorate"
+      ]
+    ],
+    "4783": [
+      [
+        "1886",
+        "Southern Nigeria"
+      ]
+    ],
+    "4784": [
+      [
+        "1886",
+        "Northern Nigeria"
+      ]
+    ],
+    "5200": [
+      [
+        "1886",
+        "Italian Somaliland"
+      ]
+    ],
+    "5518": [
+      [
+        "1886",
+        "North-Eastern Rhodesia"
+      ]
+    ],
+    "5519": [
+      [
+        "1886",
+        "North-Western Rhodesia"
+      ]
+    ],
+    "5612": [
+      [
+        "1886",
+        "British Bechuanaland"
+      ]
+    ]
+  },
+  "corrections": [
+    {
+      "gw": [
+        563,
+        564
+      ],
+      "from": "1902-05-31",
+      "owner": "200",
+      "note": "CShapes 2.0 keeps the two Boer republics independent until the Union of 1910. Britain annexed them during the South African War, and they became British colonies when the war ended with the Treaty of Vereeniging on 31 May 1902, so the map shows them as British from that day.",
+      "sources": [
+        "pakenham-1991"
+      ]
+    }
+  ],
+  "notes": {
+    "651": "Egypt was formally an Ottoman province under its khedive until December 1914, but Britain occupied it from 1882 and ran it in practice. CShapes 2.0 codes it as a British dependency.",
+    "640": "Tripolitania and Cyrenaica (today's Libya) stayed Ottoman until Italy took them in the war of 1911 to 1912.",
+    "490": "From 1885 to 1908 the Congo was the personal possession of King Leopold II of the Belgians, not of Belgium. Belgium annexed it in 1908.",
+    "4784": "CShapes 2.0 starts the two Nigerian protectorates on 1 January 1899. The British government took over from the Royal Niger Company on 1 January 1900. Before that the company claimed the north under its charter, which this dataset does not map, so the north shows as unclaimed until then.",
+    "4783": "CShapes 2.0 starts the two Nigerian protectorates on 1 January 1899. The British government took them over on 1 January 1900.",
+    "580": "The Merina kingdom ruled much of Madagascar until France made the island a colony in 1896.",
+    "560": "A self-governing British dominion from 1910, ruled by its white minority.",
+    "563": "A Boer (Afrikaner settler) republic, independent of Britain but ruled by its white settlers.",
+    "564": "A Boer (Afrikaner settler) republic, independent of Britain but ruled by its white settlers.",
+    "600": "Morocco kept its sultan, but from 1912 it was a French protectorate, with a Spanish zone in the north."
+  },
+  "unclaimed": "Not claimed by a European power on this date. These lands were ruled by African states and communities, such as the Sokoto Caliphate, Asante, the Mahdist state in Sudan and many self-governing peoples. The dataset maps claims, not these African states.",
+  "moments": [
+    {
+      "date": "1886-01-01",
+      "title": "The table is set",
+      "text": "The Berlin Conference (November 1884 to February 1885) agreed the rules for claiming African land. No African ruler was invited. A year later, Europe holds the coasts, King Leopold's huge Congo Free State and a few big blocks inland.",
+      "focus": [
+        12,
+        -2
+      ],
+      "sources": [
+        "pakenham-1991",
+        "cshapes-2"
+      ]
+    },
+    {
+      "date": "1890-07-01",
+      "title": "Swapping land on paper",
+      "text": "Britain and Germany sign the Heligoland-Zanzibar Treaty. Germany drops its claims on Zanzibar and parts of East Africa; Britain hands over the North Sea island of Heligoland. Lines are drawn across lands neither had seen.",
+      "focus": [
+        36,
+        -4
+      ],
+      "sources": [
+        "pakenham-1991",
+        "cshapes-2"
+      ]
+    },
+    {
+      "date": "1896-03-01",
+      "title": "Adwa",
+      "text": "Ethiopia's army under Emperor Menelik II defeats an Italian invasion at Adwa. Ethiopia stays independent, one of only two African states that do.",
+      "focus": [
+        39,
+        11
+      ],
+      "sources": [
+        "pakenham-1991"
+      ]
+    },
+    {
+      "date": "1899-01-19",
+      "title": "After Fashoda",
+      "text": "French and British forces met at Fashoda on the Nile in 1898 and nearly went to war. Britain and Egypt then declare a joint rule over Sudan, the Anglo-Egyptian condominium.",
+      "focus": [
+        31,
+        14
+      ],
+      "sources": [
+        "pakenham-1991",
+        "cshapes-2"
+      ]
+    },
+    {
+      "date": "1900-01-01",
+      "title": "Northern and Southern Nigeria",
+      "text": "Britain takes over from the Royal Niger Company and rules two protectorates. On paper, Europe now claims about nine-tenths of Africa. On the ground, many states still fight on: the Sokoto Caliphate falls to British forces only in 1903.",
+      "focus": [
+        8,
+        9
+      ],
+      "sources": [
+        "pakenham-1991",
+        "cshapes-2"
+      ]
+    },
+    {
+      "date": "1910-05-31",
+      "title": "Union of South Africa",
+      "text": "The Cape, Natal and the two former Boer republics join as one self-governing British dominion, ruled by its white minority. On this map its land leaves Britain's column, so Europe's share dips.",
+      "focus": [
+        25,
+        -28
+      ],
+      "sources": [
+        "cshapes-2"
+      ]
+    },
+    {
+      "date": "1912-11-27",
+      "title": "Morocco and Libya fall",
+      "text": "Italy takes Libya from the Ottoman Empire (October 1912), and France and Spain divide Morocco (treaty of 27 November 1912).",
+      "focus": [
+        5,
+        30
+      ],
+      "sources": [
+        "pakenham-1991",
+        "cshapes-2"
+      ]
+    },
+    {
+      "date": "1914-01-01",
+      "title": "One Nigeria",
+      "text": "Lord Lugard merges Northern and Southern Nigeria into one colony. Across the continent only Ethiopia and Liberia are outside European rule. Many of these lines are still borders today.",
+      "focus": [
+        8,
+        6
+      ],
+      "sources": [
+        "cshapes-2",
+        "pakenham-1991"
+      ]
+    }
+  ],
+  "sources": {
+    "cshapes-2": {
+      "cite": "Schvitz, Guy, Luc Girardin, Seraina Rüegger, Nils B. Weidmann, Lars-Erik Cederman and Kristian Skrede Gleditsch (2022). Mapping the International System, 1886-2019: The CShapes 2.0 Dataset. Journal of Conflict Resolution 66(1): 144-161.",
+      "url": "https://doi.org/10.1177/00220027211013563",
+      "used_for": "Every border on the map, and the date each one starts and ends (Gleditsch-Ward version, from the CShapes 2.0 R package, CRAN version 2.0)."
+    },
+    "pakenham-1991": {
+      "cite": "Pakenham, Thomas (1991). The Scramble for Africa: The White Man's Conquest of the Dark Continent from 1876 to 1912. London: Weidenfeld and Nicolson.",
+      "url": "",
+      "used_for": "The story of each moment (Berlin, Heligoland-Zanzibar, Adwa, Fashoda, Nigeria, Morocco and Libya)."
+    },
+    "natural-earth": {
+      "cite": "Natural Earth, version 5.2.0-pre (public domain).",
+      "url": "https://www.naturalearthdata.com/",
+      "used_for": "The land and lakes under the borders."
+    }
+  }
+}
