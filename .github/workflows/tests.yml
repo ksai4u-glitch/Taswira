@@ -35,3 +35,6 @@ jobs:
 
       - name: History page checks (sources, dates, emblems; nothing written)
         run: python build_history.py --check
+
+      - name: Borders map checks (draft; nothing written)
+        run: python build_borders.py --check
