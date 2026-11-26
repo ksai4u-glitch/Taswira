@@ -48,7 +48,8 @@ def check(story, geo):
     first, last = geo["first"], geo["last"]
     for u in geo["units"]:
         owner = str(u["owner"])
-        if owner not in powers and owner not in story["owner_groups"]:
+        self_ruled = u["owner"] == u["gw"] and u["status"] == "independent"
+        if owner not in powers and owner not in story["owner_groups"] and not self_ruled:
             problems.append(f"{u['name']} ({u['gw']}): owner {owner} has no power or group")
         names = story["names"].get(str(u["gw"]))
         if not names:
@@ -60,6 +61,8 @@ def check(story, geo):
         if not all(DATE.match(d) for d in dates) or dates != sorted(dates):
             problems.append(f"names for {gw}: dates must be YYYY or YYYY-MM-DD, in order")
     for c in story["corrections"]:
+        if c.get("to") and not (DATE.match(c["to"]) and c["from"] < c["to"]):
+            problems.append(f"correction for {c['gw']}: 'to' must be a date after 'from'")
         if c["owner"] not in powers or not c.get("note") or not c.get("sources"):
             problems.append(f"correction for {c['gw']}: needs a known owner, a note and sources")
         problems += [f"correction for {c['gw']}: unknown source {s}" for s in c.get("sources", []) if s not in sources]
@@ -76,6 +79,8 @@ def check(story, geo):
         if not m.get("sources"):
             problems.append(f"{where}: no sources")
         problems += [f"{where}: unknown source {s}" for s in m.get("sources", []) if s not in sources]
+        known = {u["gw"] for u in geo["units"] if u["start"] <= m["date"] <= u["end"]}
+        problems += [f"{where}: highlight {gw} is not on the map that day" for gw in m.get("highlight", []) if gw not in known]
         lon, lat = m["focus"]
         if not (-30 <= lon <= 60 and -40 <= lat <= 40):
             problems.append(f"{where}: focus is not over Africa")

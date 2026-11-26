@@ -1,7 +1,7 @@
-# Borders 1886 to 1914
+# Borders 1886 to 1960
 
 `scramble.json` holds every country, colony and protectorate that touched Africa between
-1 January 1886 and 1 January 1914, with the dates each set of borders starts and ends.
+1 January 1886 and 1 October 1960 (the day Nigeria became independent), with the dates each set of borders starts and ends.
 Made by `make_scramble.py` in this folder (standard library only).
 
 - **Source:** CShapes 2.0, Gleditsch-Ward version: `inst/extdata/cshapes_2_gw.topojson.xz` from the
@@ -16,7 +16,7 @@ Made by `make_scramble.py` in this folder (standard library only).
 - **Licence:** the R package that carries the data is GPL (>= 2). Taswira is non-commercial and
   credits the authors on the page. To check before publishing: the licence on ETH's data page.
 - **What the script does:**
-  - keeps units whose dates overlap 1886-01-01 to 1914-01-01, and of each one only the polygons
+  - keeps units whose dates overlap 1886-01-01 to 1960-10-01, and of each one only the polygons
     whose middle lies in Africa or its islands (so the Ottoman Empire keeps Tripolitania but not
     Arabia; Spain's and Portugal's own islands, which are not colonies, are left out);
   - simplifies each border line on its own (Douglas-Peucker, 0.04 degrees, about 4 km), so a
@@ -35,6 +35,11 @@ differences from other sources are written in `borders/story.json` and shown on 
 - CShapes starts Northern and Southern Nigeria on 1 January 1899; British government rule began
   on 1 January 1900 (a note);
 - Egypt is coded as a British dependency from 1886, although it was formally Ottoman until 1914
+  (a note);
+- CShapes keeps Ethiopia independent through Italy's occupation, because most states never
+  recognised it; the page shows it as Italian from 9 May 1936 to 4 May 1941 (a `correction` with
+  a `to` date, source: Mockler 1984);
+- CShapes dates Tunisia's independence from 1 January 1956; France recognised it on 20 March 1956
   (a note).
 
 To make the file again:

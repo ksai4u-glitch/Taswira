@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who drew Africa's borders? · Taswira (draft)</title>
-<meta name="description" content="Draft proof scene: how European powers carved up Africa between 1886 and 1914, on a globe, from the CShapes 2.0 border dataset.">
+<meta name="description" content="Draft: how European powers carved up Africa from 1886, and how Africa won its independence by 1960, on a globe, from the CShapes 2.0 border dataset.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2308120e' stroke='%23d4b57a' stroke-width='2'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-size='17' text-anchor='middle' fill='%23d4b57a'%3ET%3C/text%3E%3C/svg%3E">
 <!-- Built by build_borders.py from borders/template.html on __BUILT__. Edit the template, not this file. -->
@@ -72,7 +72,9 @@ h1 { font: 400 clamp(26px, 3.2vw, 40px)/1.08 var(--serif); margin: 0 0 10px; }
 .ticks button { position: absolute; top: -2px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; padding: 0;
   border: 2px solid var(--gold); background: var(--green); cursor: pointer; }
 .ticks button.past { background: var(--gold); }
-.years { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; font-size: 11px; color: var(--sage); }
+.years { position: absolute; left: 0; right: 0; bottom: 0; height: 14px; font-size: 11px; color: var(--sage); }
+.years span { position: absolute; transform: translateX(-50%); }
+.years span:first-child { transform: none; }
 .links { display: flex; gap: 8px; }
 .links button { background: none; border: 0; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 13px; padding: 4px; }
 
@@ -106,6 +108,7 @@ dialog .close { float: right; }
   .moment .cite, .wide { display: none; }
   .controls { left: 16px; right: 16px; bottom: 12px; flex-wrap: wrap; gap: 8px; padding: 8px 10px; }
   .track { order: -1; flex-basis: 100%; }
+  .ticks button { width: 10px; height: 10px; margin-left: -5px; }
   .links { margin-left: auto; }
 }
 @media (max-width: 760px) and (max-height: 700px) { .legend { display: none; } }
@@ -145,10 +148,11 @@ dialog .close { float: right; }
   <button class="btn gold" id="play" type="button">Play</button>
   <button class="btn" id="b1886" type="button" aria-pressed="false">1886</button>
   <button class="btn" id="b1914" type="button" aria-pressed="false">1914</button>
+  <button class="btn" id="b1960" type="button" aria-pressed="false">1960</button>
   <div class="track">
     <div class="ticks" id="ticks"></div>
     <input type="range" id="slider" min="0" max="1000" step="1" value="0" aria-label="Date">
-    <div class="years"><span>1886</span><span>1895</span><span>1905</span><span>1914</span></div>
+    <div class="years" id="years"></div>
   </div>
   <div class="links">
     <button type="button" id="open-text">Text version</button>
@@ -161,13 +165,15 @@ dialog .close { float: right; }
 <dialog id="sources">
   <button class="btn close" type="button" data-close>Close</button>
   <h2>Sources and method</h2>
-  <p>This is a <strong>draft proof scene</strong> for a new Taswira map. It is not published on the site yet.</p>
+  <p>This is a <strong>draft</strong> for a new Taswira map. It is not published on the site yet.</p>
   <h3>What the colours mean</h3>
   <p>Each colour is the European power that <em>claimed</em> the land on that date, as recorded by CShapes 2.0.
     A claim on paper often came years before real control: Britain claimed northern Nigeria from 1900, but the
-    Sokoto Caliphate fell only in 1903. Dark land is land no European power claimed yet, ruled by African states and peoples.</p>
+    Sokoto Caliphate fell only in 1903. Dark land is land no European power claimed yet, ruled by African states and peoples.
+    White is independent African states: Ethiopia and Liberia at first, then from the 1950s the new states, still inside the colonial borders.</p>
   <p>The share is the area of land claimed by Britain, France, Germany, Belgium (King Leopold's Congo), Portugal,
-    Italy and Spain, out of all the land of Africa and its islands mapped by CShapes on 1 January 1914.</p>
+    Italy and Spain (including the League of Nations mandates they ran), out of all the land of Africa and its islands mapped
+    by CShapes at the end of 1960. South Africa and its South West Africa mandate count as white minority rule, not as European.</p>
   <h3>Corrections and notes</h3>
   <ul id="notes"></ul>
   <h3>Sources</h3>
@@ -214,6 +220,13 @@ const lakes = { type: "MultiPolygon", coordinates: (BG.lakes || []).map(poly => 
 
 // ---------- time ----------
 const T0 = Date.parse(GEO.first + "T00:00:00Z"), T1 = Date.parse(GEO.last + "T00:00:00Z");
+// The timeline is not to scale: the Scramble and the 1950s, when the map changes fastest, get more room
+// (and more playing time) than the quieter years between the wars.
+const KNOTS = [[T0, 0], [Date.parse("1914-01-01T00:00:00Z"), 0.38], [Date.parse("1950-01-01T00:00:00Z"), 0.6], [T1, 1]];
+const posOf = t => { for (let i = 1; i < KNOTS.length; i++) { const [ta, pa] = KNOTS[i - 1], [tb, pb] = KNOTS[i];
+  if (t <= tb) return pa + (pb - pa) * Math.max(0, t - ta) / (tb - ta); } return 1; };
+const timeOf = p => { for (let i = 1; i < KNOTS.length; i++) { const [ta, pa] = KNOTS[i - 1], [tb, pb] = KNOTS[i];
+  if (p <= pb) return ta + (tb - ta) * Math.max(0, p - pa) / (pb - pa); } return T1; };
 const iso = t => new Date(t).toISOString().slice(0, 10);
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const longDate = d => { const [y, m, day] = d.split("-").map(Number); return day + " " + MONTHS[m - 1] + " " + y; };
@@ -221,11 +234,12 @@ const active = d => units.filter(u => u.start <= d && d <= u.end);
 const nameOf = (u, d, short) => { const list = STORY.names[u.gw] || [[GEO.first, u.name]]; let n = list[0][1];
   list.forEach(([from, name, label]) => { if (from <= d) n = short && label ? label : name; }); return n; };
 const groupOf = (u, d) => {
-  for (const c of STORY.corrections) if (c.gw.includes(u.gw) && d >= c.from) return c.owner;
+  for (const c of correctionsFor(u, d)) return c.owner;
   const own = String(u.owner);
   if (STORY.powers[own] && !STORY.owner_groups[own]) return own;
   return STORY.owner_groups[own] || "african";
 };
+function correctionsFor(u, d) { return STORY.corrections.filter(c => c.gw.includes(u.gw) && d >= c.from && (!c.to || d <= c.to)); }
 const AFRICA = active(GEO.last).reduce((s, u) => s + u.area, 0);
 const EURO = new Set(STORY.european);
 
@@ -292,8 +306,10 @@ function labels(list, d) {
   const centre = [view.lon, view.lat], minArea = 0.012 / (view.zoom * view.zoom) * (W < 760 ? 1.6 : 1);
   const placed = [];
   ctx.textAlign = "center"; ctx.textBaseline = "middle";
-  list.slice().sort((a, b) => b.area - a.area).forEach(u => {
-    const big = u.area >= minArea, nga = NIGERIA.has(u.gw), indep = ["african"].includes(groupOf(u, d));
+  // The places a moment is about are labelled first, so a bigger neighbour never hides them.
+  const first = new Set((state.shown && state.shown.date <= d && state.shown.highlight) || []);
+  list.slice().sort((a, b) => (first.has(b.gw) - first.has(a.gw)) || (b.area - a.area)).forEach(u => {
+    const big = u.area >= minArea || first.has(u.gw), nga = NIGERIA.has(u.gw), indep = ["african"].includes(groupOf(u, d));
     if (!big && !nga && !indep) return;
     if (d3.geoDistance(u.centroid, centre) > 1.25) return;
     const [x, y] = projection(u.centroid); if (!isFinite(x)) return;
@@ -324,8 +340,9 @@ function panel() {
   document.querySelectorAll("#legend li").forEach(li => { const v = (s.by[li.dataset.g] || 0) / AFRICA;
     li.classList.toggle("off", v === 0); li.querySelector("em").textContent = v ? Math.max(1, Math.round(v * 100)) + "%" : ""; });
   $("b1886").setAttribute("aria-pressed", String(d === GEO.first));
-  $("b1914").setAttribute("aria-pressed", String(d === GEO.last));
-  $("slider").value = Math.round(1000 * (state.t - T0) / (T1 - T0));
+  $("b1914").setAttribute("aria-pressed", String(d === "1914-01-01"));
+  $("b1960").setAttribute("aria-pressed", String(d === GEO.last));
+  $("slider").value = Math.round(1000 * posOf(state.t));
   $("slider").setAttribute("aria-valuetext", longDate(d));
   document.querySelectorAll("#ticks button").forEach(b => b.classList.toggle("past", b.dataset.date <= d));
 }
@@ -360,7 +377,7 @@ function flyTo(lon, lat, zoom, ms = 1400) {
 const HOME = () => flyTo(17, 2, 1);
 
 // ---------- play ----------
-const SECONDS_PER_YEAR = 1.1, HOLD = 3200;
+const PLAY_SECONDS = 60, HOLD = 3400;   // the whole timeline, plus a hold at each moment
 let hold = 0, last = 0;
 function setPlaying(p) {
   state.playing = p;
@@ -374,7 +391,7 @@ function step(now) {
   if (state.playing) {
     if (hold > 0) { hold -= dt; if (hold <= 0) HOME(); }
     else {
-      const before = state.date, t = state.t + dt / 1000 / SECONDS_PER_YEAR * 365.25 * 864e5;
+      const before = state.date, t = timeOf(Math.min(1, posOf(state.t) + dt / 1000 / PLAY_SECONDS));
       const next = STORY.moments.find(m => m.date > before && Date.parse(m.date) <= t);
       if (next) { setTime(Date.parse(next.date + "T00:00:00Z"), { keepMoment: true }); arrive(next); }
       else setTime(t, { keepMoment: true });
@@ -389,9 +406,20 @@ function step(now) {
 // ---------- interaction ----------
 $("play").onclick = () => setPlaying(!state.playing);
 $("b1886").onclick = () => { setPlaying(false); setTime(T0); HOME(); };
-$("b1914").onclick = () => { setPlaying(false); setTime(T1); HOME(); };
-$("slider").oninput = e => { setPlaying(false); setTime(T0 + (T1 - T0) * e.target.value / 1000); };
-$("ticks").innerHTML = STORY.moments.map(m => `<button type="button" data-date="${m.date}" style="left:${(100 * (Date.parse(m.date) - T0) / (T1 - T0)).toFixed(2)}%" aria-label="${longDate(m.date)}: ${m.title}" title="${m.title}"></button>`).join("");
+$("b1914").onclick = () => { setPlaying(false); setTime(Date.parse("1914-01-01T00:00:00Z")); HOME(); };
+$("b1960").onclick = () => { setPlaying(false); setTime(T1); HOME(); };
+$("years").innerHTML = [1886, 1900, 1914, 1950, 1960].map(y => `<span style="left:${(100 * posOf(Date.parse(y + "-01-01T00:00:00Z"))).toFixed(2)}%">${y}</span>`).join("");
+$("slider").oninput = e => { setPlaying(false); setTime(timeOf(e.target.value / 1000)); };
+$("ticks").innerHTML = STORY.moments.map(m => `<button type="button" data-date="${m.date}" style="left:${(100 * posOf(Date.parse(m.date))).toFixed(2)}%" aria-label="${longDate(m.date)}: ${m.title}" title="${m.title}"></button>`).join("");
+// Moments close in time (1899 and 1900, 1914 and 1915) would hide each other: spread the dots just
+// enough to keep them apart. The dot nearest its true date is never more than a few pixels off.
+function spreadTicks() {
+  const buttons = [...document.querySelectorAll("#ticks button")], width = $("ticks").clientWidth || 1;
+  const gap = (W < 760 ? 12 : 15) / width, pos = buttons.map(b => posOf(Date.parse(b.dataset.date)));
+  for (let i = 1; i < pos.length; i++) pos[i] = Math.max(pos[i], pos[i - 1] + gap);
+  for (let i = pos.length - 1; i >= 0; i--) pos[i] = Math.min(pos[i], i === pos.length - 1 ? 1 : pos[i + 1] - gap);
+  buttons.forEach((b, i) => b.style.left = (100 * pos[i]).toFixed(2) + "%");
+}
 document.querySelectorAll("#ticks button").forEach(b => b.onclick = () => { setPlaying(false);
   const m = STORY.moments.find(x => x.date === b.dataset.date); setTime(Date.parse(m.date + "T00:00:00Z")); arrive(m); });
 
@@ -404,13 +432,13 @@ function tip(u, x, y) {
   if (!u) { t.style.display = "none"; state.hover = null; return; }
   state.hover = u;
   const d = state.date, g = groupOf(u, d), power = STORY.powers[g].name;
-  const corr = STORY.corrections.find(c => c.gw.includes(u.gw) && d >= c.from);
-  const status = corr ? "British colony" : g === "african" || g === "settler" ? "Independent" : u.status[0].toUpperCase() + u.status.slice(1) + " of " + power;
+  const corr = correctionsFor(u, d)[0];
+  const status = corr ? (corr.owner === "325" ? "Occupied by Italy" : "British colony") : g === "african" || g === "settler" ? "Independent" : u.status[0].toUpperCase() + u.status.slice(1) + " of " + power;
   const note = corr ? corr.note : STORY.notes[u.gw] || "";
   t.innerHTML = `<b></b><span class="who"></span><div class="meta"></div>${note ? "<p></p>" : ""}`;
   t.querySelector("b").textContent = nameOf(u, d);
   t.querySelector(".who").textContent = status;
-  t.querySelector(".meta").textContent = "These borders: " + longDate(u.start) + " to " + (u.end > GEO.last ? "after 1914" : longDate(u.end)) + " (CShapes 2.0)";
+  t.querySelector(".meta").textContent = "These borders: " + longDate(u.start) + " to " + (u.end > GEO.last ? "after 1960" : longDate(u.end)) + " (CShapes 2.0)";
   if (note) t.querySelector("p").textContent = note;
   t.style.display = "block";
   const w = t.offsetWidth, h = t.offsetHeight;
@@ -453,7 +481,8 @@ STORY.moments.forEach((m, i) => { const s = shares(m.date);
 
 $("kicker").textContent = STORY.kicker; $("title").textContent = STORY.title; $("lede").textContent = STORY.lede;
 buildLegend(); layout(); setTime(T0);
-addEventListener("resize", layout);
+spreadTicks();
+addEventListener("resize", () => { layout(); spreadTicks(); });
 window.taswiraBorders = { setTime: d => { setPlaying(false); setTime(Date.parse(d + "T00:00:00Z")); }, shares, flyTo, view, play: () => setPlaying(true), state };
 requestAnimationFrame(now => { last = now; step(now); });
 </script>

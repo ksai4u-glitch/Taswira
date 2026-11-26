@@ -53,12 +53,26 @@ class BordersMapTests(unittest.TestCase):
         self.assertTrue(any("outside" in p for p in problems))
         self.assertTrue(any("date order" in p for p in problems))
 
-    def test_borders_cover_1886_to_1914_and_end_with_one_nigeria(self):
-        self.assertEqual((self.geo["first"], self.geo["last"]), ("1886-01-01", "1914-01-01"))
-        on_last = {u["gw"] for u in self.geo["units"] if u["start"] <= "1914-01-01" <= u["end"]}
-        self.assertIn(475, on_last)
-        self.assertFalse({4783, 4784} & on_last)
-        self.assertEqual(self.story["moments"][-1]["date"], "1914-01-01")
+    def test_borders_cover_1886_to_1960_with_one_nigeria_then_independence(self):
+        self.assertEqual((self.geo["first"], self.geo["last"]), ("1886-01-01", "1960-10-01"))
+        def on(date):
+            return {(u["gw"], u["owner"]) for u in self.geo["units"] if u["start"] <= date <= u["end"]}
+        self.assertIn((475, 200), on("1914-01-01"))
+        self.assertFalse({4783, 4784} & {gw for gw, _ in on("1914-01-01")})
+        self.assertIn((475, 475), on("1960-10-01"))
+        dates = [m["date"] for m in self.story["moments"]]
+        self.assertIn("1914-01-01", dates)
+        self.assertEqual(dates[-1], "1960-10-01")
+
+    def test_highlight_must_be_on_the_map_that_day(self):
+        story = copy.deepcopy(self.story)
+        story["moments"][0]["highlight"] = [475]   # Nigeria did not exist in 1886
+        self.assertTrue(any("highlight 475" in p for p in bb.check(story, self.geo)))
+
+    def test_correction_needs_an_end_after_its_start(self):
+        story = copy.deepcopy(self.story)
+        story["corrections"][-1]["to"] = "1930-01-01"
+        self.assertTrue(any("'to' must be a date after 'from'" in p for p in bb.check(story, self.geo)))
 
     def test_africa_filter_keeps_africa_and_drops_arabia_and_europe(self):
         self.assertTrue(ms.in_africa(8, 9))        # Nigeria
