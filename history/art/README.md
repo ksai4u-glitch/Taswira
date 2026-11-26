@@ -24,3 +24,10 @@ or a dated historical flag/seal. It is deliberately separate from actor emblems.
 The concept-board PNG in previews is original art direction. Its animal personalities
 are proposed character design, not traditional meanings; the hornbill is not a
 verified species model or a claim of Hausa hornbill mythology.
+
+`zomo-poses.webp`: the copy the history page actually carries. Same 1536×1024 grid as the
+PNG master, saved as lossy WebP with transparency (quality 90, about 0.4 MB instead of
+2.3 MB), because the PNG made up two thirds of `docs/history.html`. If you change the PNG,
+make a new WebP from it, for example with Pillow:
+`python -c "from PIL import Image; Image.open('history/art/zomo-poses.png').save('history/art/zomo-poses.webp', quality=90, method=6)"`
+(or any image editor that exports WebP). The build refuses a WebP whose size differs from the PNG.

@@ -39,6 +39,7 @@ import re
 import sys
 from datetime import date
 from calendar import isleap
+from vendor import inline_vendor
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 HISTORY_DIR = os.path.join(HERE, "history")
@@ -1075,17 +1076,32 @@ def campaign_clock(scene, features, duration):
     return {"knots": [[stop["at"], stop["year"]] for stop in anchors], "campaigns": campaigns}
 
 
+def webp_size(data):
+    """Width and height of an extended (VP8X) WebP, the kind that carries transparency."""
+    if data[:4] != b"RIFF" or data[8:12] != b"WEBP" or data[12:16] != b"VP8X":
+        raise ValueError("Zomo pose atlas must be a WebP with transparency (VP8X)")
+    width = 1 + int.from_bytes(data[24:27], "little")
+    height = 1 + int.from_bytes(data[27:30], "little")
+    return width, height
+
+
 def guide_art():
-    path = os.path.join(HISTORY_DIR, "art", "zomo-poses.png")
+    # The page carries the WebP copy (about 0.4 MB) rather than the PNG master (2.3 MB):
+    # the PNG made up two thirds of history.html. See history/art/README.md.
+    path = os.path.join(HISTORY_DIR, "art", "zomo-poses.webp")
     with open(path, "rb") as f:
-        png = f.read()
-    if png[:8] != b"\x89PNG\r\n\x1a\n" or len(png) > 8_000_000:
-        raise ValueError("Zomo pose atlas must be a PNG smaller than 8 MB")
-    width, height = struct.unpack(">II", png[16:24])
+        webp = f.read()
+    if len(webp) > 1_000_000:
+        raise ValueError("Zomo pose atlas must be a WebP smaller than 1 MB")
+    width, height = webp_size(webp)
+    with open(os.path.join(HISTORY_DIR, "art", "zomo-poses.png"), "rb") as f:
+        master = struct.unpack(">II", f.read(24)[16:24])
+    if (width, height) != master:
+        raise ValueError(f"zomo-poses.webp is {width}x{height} but the PNG master is {master[0]}x{master[1]}")
     if width % 4 or height % 2 or not width or not height:
         raise ValueError("Zomo pose atlas must have a four-column, two-row grid")
     return {"name": "Zomo", "columns": 4, "rows": 2, "width": width, "height": height,
-            "image": "data:image/png;base64," + base64.b64encode(png).decode("ascii")}
+            "image": "data:image/webp;base64," + base64.b64encode(webp).decode("ascii")}
 
 
 def page_data(chapters, sources, states, arcs, users, background, emblems=None, plates=None):
@@ -1305,6 +1321,7 @@ def build():
     page = (template.replace("{{DATA}}", data_json)
                     .replace("{{TRANSCRIPT}}", transcript(chapters, sources, states, emblems))
                     .replace("{{BUILT}}", data["built"]))
+    page = inline_vendor(page)   # Leaflet and d3 inside the page, not from unpkg.com
 
     # The page must say it is an unreviewed draft and credit the boundary and background data
     for must in ("Unreviewed draft", "GRID3", "geoBoundaries", "CC BY 4.0", "Natural Earth"):

@@ -18,6 +18,7 @@ from datetime import date
 from pathlib import Path
 
 from settings import API_VERSION, AREA_NAME, AREAS, BOUNDS, CANDIDATE_VERSIONS, FILE_STEM, HEAT_MAX, PERIOD
+from vendor import inline_vendor
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(HERE, "data", "taswira.db")
@@ -95,7 +96,7 @@ def fill_template(mapped, unmapped):
     """Fill map_template.html with the events and settings; return the finished page as text."""
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         page = f.read()
-    return fill(page, {
+    return inline_vendor(fill(page, {
         "__EVENTS_JSON__": to_js(pack(mapped)),
         "__UNMAPPED_JSON__": to_js(pack(unmapped)),
         "__VERSION__": API_VERSION,
@@ -109,7 +110,7 @@ def fill_template(mapped, unmapped):
         "__BUILT__": date.today().isoformat(),
         "__BUILT_LONG__": f"{date.today().day} {date.today():%B %Y}",
         "__SHOWN_PERIOD__": shown_period(mapped + unmapped),
-    })
+    }))
 
 
 def load_all():
