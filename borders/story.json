@@ -1,7 +1,7 @@
 {
   "title": "Who drew Africa's borders?",
-  "kicker": "Draft proof scene: the Scramble for Africa, 1886 to 1914",
-  "lede": "In 1886, just after the Berlin Conference, European powers claimed the coasts and a few big blocks of the interior. By 1 January 1914, the day Nigeria was made one colony, only two African states were left outside European rule.",
+  "kicker": "Draft: the Scramble for Africa and the road to independence, 1886 to 1960",
+  "lede": "In 1886, just after the Berlin Conference, European powers claimed the coasts and a few big blocks of the interior. By 1914 only Ethiopia and Liberia were outside European rule. Then the map turned: on 1 October 1960, the day Nigeria became independent, most of Africa was free, inside borders Europe had drawn.",
   "powers": {
     "200": {
       "name": "Britain",
@@ -37,8 +37,8 @@
       "colour": "#a874b4"
     },
     "settler": {
-      "name": "Boer republics and South Africa (white minority rule)",
-      "short": "Settler states",
+      "name": "White minority rule: Boer republics, South Africa and its mandate",
+      "short": "Minority rule",
       "colour": "#c9a46a"
     },
     "african": {
@@ -106,6 +106,18 @@
         "1886",
         "Upper Senegal and Niger",
         "Upper Senegal-Niger"
+      ],
+      [
+        "1919-03-01",
+        "French Sudan"
+      ],
+      [
+        "1959-04-04",
+        "Mali Federation"
+      ],
+      [
+        "1960-09-22",
+        "Mali"
       ]
     ],
     "433": [
@@ -130,6 +142,10 @@
       [
         "1886",
         "Military Territory of Niger"
+      ],
+      [
+        "1922",
+        "Niger"
       ]
     ],
     "437": [
@@ -142,6 +158,10 @@
       [
         "1886",
         "French Guinea"
+      ],
+      [
+        "1958-10-02",
+        "Guinea"
       ]
     ],
     "450": [
@@ -160,6 +180,10 @@
       [
         "1886",
         "Gold Coast"
+      ],
+      [
+        "1957-03-06",
+        "Ghana"
       ]
     ],
     "460": [
@@ -179,6 +203,11 @@
         "1886",
         "Colony and Protectorate of Nigeria",
         "Nigeria"
+      ],
+      [
+        "1960-10-01",
+        "Federation of Nigeria",
+        "Nigeria"
       ]
     ],
     "481": [
@@ -191,6 +220,11 @@
       [
         "1886",
         "Ubangi-Shari"
+      ],
+      [
+        "1958-12-01",
+        "Central African Republic",
+        "Central African Rep."
       ]
     ],
     "483": [
@@ -203,6 +237,11 @@
       [
         "1886",
         "French Congo"
+      ],
+      [
+        "1960-08-15",
+        "Republic of the Congo",
+        "Congo"
       ]
     ],
     "490": [
@@ -213,6 +252,11 @@
       [
         "1908-11-15",
         "Belgian Congo"
+      ],
+      [
+        "1960-06-30",
+        "Republic of the Congo (Léopoldville)",
+        "Congo"
       ]
     ],
     "500": [
@@ -225,12 +269,21 @@
       [
         "1886",
         "British East Africa"
+      ],
+      [
+        "1920-07-23",
+        "Kenya Colony",
+        "Kenya"
       ]
     ],
     "510": [
       [
         "1886",
         "German East Africa"
+      ],
+      [
+        "1920",
+        "Tanganyika"
       ]
     ],
     "511": [
@@ -339,6 +392,10 @@
       [
         "1886",
         "German South West Africa"
+      ],
+      [
+        "1915-08-16",
+        "South West Africa"
       ]
     ],
     "570": [
@@ -389,6 +446,10 @@
       [
         "1912-11-27",
         "French Morocco"
+      ],
+      [
+        "1956-03-02",
+        "Morocco"
       ]
     ],
     "602": [
@@ -419,12 +480,25 @@
       [
         "1886",
         "Italian Libya"
+      ],
+      [
+        "1943-05-13",
+        "Libya (British-run)"
+      ],
+      [
+        "1951-12-24",
+        "Kingdom of Libya",
+        "Libya"
       ]
     ],
     "625": [
       [
         "1886",
         "Anglo-Egyptian Sudan",
+        "Sudan"
+      ],
+      [
+        "1956-01-01",
         "Sudan"
       ]
     ],
@@ -438,6 +512,15 @@
       [
         "1886",
         "Egypt (British-occupied)"
+      ],
+      [
+        "1914-12-18",
+        "Egypt (British protectorate)"
+      ],
+      [
+        "1922-02-28",
+        "Kingdom of Egypt",
+        "Egypt"
       ]
     ],
     "4781": [
@@ -472,6 +555,11 @@
       [
         "1886",
         "Italian Somaliland"
+      ],
+      [
+        "1950-04-01",
+        "Trust Territory of Somaliland",
+        "Somaliland (trust)"
       ]
     ],
     "5518": [
@@ -491,6 +579,82 @@
         "1886",
         "British Bechuanaland"
       ]
+    ],
+    "439": [
+      [
+        "1886",
+        "Upper Volta"
+      ]
+    ],
+    "461": [
+      [
+        "1886",
+        "French Togoland"
+      ],
+      [
+        "1960-04-27",
+        "Togo"
+      ]
+    ],
+    "462": [
+      [
+        "1886",
+        "British Togoland"
+      ]
+    ],
+    "471": [
+      [
+        "1886",
+        "French Cameroun"
+      ],
+      [
+        "1960-01-01",
+        "Cameroun"
+      ]
+    ],
+    "472": [
+      [
+        "1886",
+        "British Cameroons"
+      ]
+    ],
+    "515": [
+      [
+        "1886",
+        "Ruanda-Urundi"
+      ]
+    ],
+    "520": [
+      [
+        "1886",
+        "Somalia"
+      ]
+    ],
+    "550": [
+      [
+        "1886",
+        "Federation of Rhodesia and Nyasaland",
+        "Rhodesia and Nyasaland"
+      ]
+    ],
+    "581": [
+      [
+        "1886",
+        "Comoros"
+      ]
+    ],
+    "609": [
+      [
+        "1886",
+        "Spanish Sahara"
+      ]
+    ],
+    "6021": [
+      [
+        "1886",
+        "Spanish zone of southern Morocco (Tarfaya)",
+        "Tarfaya"
+      ]
     ]
   },
   "corrections": [
@@ -505,10 +669,22 @@
       "sources": [
         "pakenham-1991"
       ]
+    },
+    {
+      "gw": [
+        530
+      ],
+      "from": "1936-05-09",
+      "to": "1941-05-04",
+      "owner": "325",
+      "note": "CShapes 2.0 keeps Ethiopia independent throughout, because most states never recognised Italy's conquest. Italy invaded in October 1935, took Addis Ababa in May 1936 and declared Ethiopia part of Italian East Africa on 9 May 1936, until British and Ethiopian forces brought Emperor Haile Selassie back on 5 May 1941. The map shows the occupation.",
+      "sources": [
+        "mockler-1984"
+      ]
     }
   ],
   "notes": {
-    "651": "Egypt was formally an Ottoman province under its khedive until December 1914, but Britain occupied it from 1882 and ran it in practice. CShapes 2.0 codes it as a British dependency.",
+    "651": "Egypt was formally an Ottoman province under its khedive until December 1914, but Britain occupied it from 1882 and ran it in practice. Britain made it a protectorate in 1914 and declared it independent in 1922, but kept troops there and control of the Suez Canal.",
     "640": "Tripolitania and Cyrenaica (today's Libya) stayed Ottoman until Italy took them in the war of 1911 to 1912.",
     "490": "From 1885 to 1908 the Congo was the personal possession of King Leopold II of the Belgians, not of Belgium. Belgium annexed it in 1908.",
     "4784": "CShapes 2.0 starts the two Nigerian protectorates on 1 January 1899. The British government took over from the Royal Niger Company on 1 January 1900. Before that the company claimed the north under its charter, which this dataset does not map, so the north shows as unclaimed until then.",
@@ -517,7 +693,18 @@
     "560": "A self-governing British dominion from 1910, ruled by its white minority.",
     "563": "A Boer (Afrikaner settler) republic, independent of Britain but ruled by its white settlers.",
     "564": "A Boer (Afrikaner settler) republic, independent of Britain but ruled by its white settlers.",
-    "600": "Morocco kept its sultan, but from 1912 it was a French protectorate, with a Spanish zone in the north."
+    "600": "Morocco kept its sultan, but from 1912 it was a French protectorate, with a Spanish zone in the north.",
+    "530": "Ethiopia defeated Italy at Adwa in 1896 and stayed independent, apart from Italy's occupation of 1936 to 1941. Eritrea was joined to it in a federation in 1952.",
+    "461": "A former German colony, split after the First World War and run by France under a League of Nations mandate, later a UN trust territory.",
+    "471": "A former German colony, split after the First World War and run by France under a League of Nations mandate, later a UN trust territory.",
+    "462": "The British half of German Togoland, run as a mandate. In a 1956 vote it chose to join the Gold Coast, which became Ghana in 1957.",
+    "472": "The British half of German Kamerun, run from Nigeria as a mandate. In 1961 its north voted to join Nigeria and its south to join Cameroon.",
+    "510": "German East Africa was taken by Britain in the First World War and run as the Tanganyika mandate. The north-west became Ruanda-Urundi under Belgium.",
+    "515": "Taken from German East Africa and run by Belgium as a mandate, later a UN trust territory. Independent in 1962 as Rwanda and Burundi.",
+    "565": "German until 1915, then run by South Africa under a League of Nations mandate, and by its white minority government. Independent as Namibia only in 1990.",
+    "616": "CShapes 2.0 dates Tunisia's independence from 1 January 1956; France recognised it on 20 March 1956.",
+    "439": "Upper Volta was split up between its neighbours from 1932 to 1947, so it disappears from the map in those years.",
+    "550": "Britain joined Northern Rhodesia, Southern Rhodesia and Nyasaland in a federation, run by Southern Rhodesia's white settlers, from 1953 to 1963."
   },
   "unclaimed": "Not claimed by a European power on this date. These lands were ruled by African states and communities, such as the Sokoto Caliphate, Asante, the Mahdist state in Sudan and many self-governing peoples. The dataset maps claims, not these African states.",
   "moments": [
@@ -557,6 +744,9 @@
       ],
       "sources": [
         "pakenham-1991"
+      ],
+      "highlight": [
+        530
       ]
     },
     {
@@ -570,6 +760,9 @@
       "sources": [
         "pakenham-1991",
         "cshapes-2"
+      ],
+      "highlight": [
+        625
       ]
     },
     {
@@ -583,6 +776,10 @@
       "sources": [
         "pakenham-1991",
         "cshapes-2"
+      ],
+      "highlight": [
+        4783,
+        4784
       ]
     },
     {
@@ -595,6 +792,9 @@
       ],
       "sources": [
         "cshapes-2"
+      ],
+      "highlight": [
+        560
       ]
     },
     {
@@ -613,7 +813,7 @@
     {
       "date": "1914-01-01",
       "title": "One Nigeria",
-      "text": "Lord Lugard merges Northern and Southern Nigeria into one colony. Across the continent only Ethiopia and Liberia are outside European rule. Many of these lines are still borders today.",
+      "text": "Lord Lugard merges Northern and Southern Nigeria into one colony. Across the continent only Ethiopia and Liberia are outside European rule.",
       "focus": [
         8,
         6
@@ -621,6 +821,164 @@
       "sources": [
         "cshapes-2",
         "pakenham-1991"
+      ],
+      "highlight": [
+        475
+      ]
+    },
+    {
+      "date": "1914-08-31",
+      "title": "War comes to the colonies",
+      "text": "The First World War spreads to Africa. British and French troops take German Togoland within weeks. German South West Africa falls in 1915 and Kamerun in 1916, and fighting in German East Africa goes on until November 1918.",
+      "focus": [
+        12,
+        0
+      ],
+      "sources": [
+        "strachan-2004",
+        "cshapes-2"
+      ]
+    },
+    {
+      "date": "1922-07-20",
+      "title": "Germany's colonies shared out",
+      "text": "Germany lost all its colonies in the peace of 1919. The League of Nations now hands them to Britain, France, Belgium and South Africa as 'mandates', and Togoland and Kamerun are cut in two. In February, Britain declared Egypt independent, but kept its troops and its grip on the Suez Canal.",
+      "focus": [
+        15,
+        0
+      ],
+      "sources": [
+        "strachan-2004",
+        "birmingham-1995",
+        "cshapes-2"
+      ]
+    },
+    {
+      "date": "1936-05-09",
+      "title": "Italy takes Ethiopia",
+      "text": "Mussolini's army invades in October 1935, using poison gas, and takes Addis Ababa in May 1936. Emperor Haile Selassie appeals to the League of Nations, which does little. Liberia is now the last independent African-ruled state south of Egypt.",
+      "focus": [
+        39,
+        9
+      ],
+      "sources": [
+        "mockler-1984"
+      ],
+      "highlight": [
+        530
+      ]
+    },
+    {
+      "date": "1941-05-05",
+      "title": "Haile Selassie returns",
+      "text": "In the Second World War, British, Commonwealth and Ethiopian forces drive Italy out, and the emperor rides back into Addis Ababa five years to the day after it fell.",
+      "focus": [
+        39,
+        9
+      ],
+      "sources": [
+        "mockler-1984"
+      ],
+      "highlight": [
+        530
+      ]
+    },
+    {
+      "date": "1951-12-24",
+      "title": "Libya",
+      "text": "Libya, taken from Italy in the Second World War, becomes an independent kingdom under King Idris, after a vote of the United Nations.",
+      "focus": [
+        17,
+        27
+      ],
+      "sources": [
+        "birmingham-1995",
+        "cshapes-2"
+      ],
+      "highlight": [
+        620
+      ]
+    },
+    {
+      "date": "1956-03-02",
+      "title": "North Africa breaks free",
+      "text": "Sudan (1 January), Morocco (2 March) and Tunisia (20 March) become independent in 1956. In Algeria, where a million European settlers live, war with France has raged since 1954 and lasts until 1962.",
+      "focus": [
+        10,
+        25
+      ],
+      "sources": [
+        "birmingham-1995",
+        "cshapes-2"
+      ],
+      "highlight": [
+        625,
+        600,
+        616
+      ]
+    },
+    {
+      "date": "1957-03-06",
+      "title": "Ghana",
+      "text": "The Gold Coast becomes Ghana, led by Kwame Nkrumah: the first of Britain's West African colonies to win independence, and a signal to the rest of the continent.",
+      "focus": [
+        0,
+        8
+      ],
+      "sources": [
+        "birmingham-1995",
+        "cshapes-2"
+      ],
+      "highlight": [
+        452
+      ]
+    },
+    {
+      "date": "1958-10-02",
+      "title": "Guinea says no",
+      "text": "Offered a place in a French Community by de Gaulle, Guinea alone votes No and becomes independent at once. France pulls out its staff and equipment.",
+      "focus": [
+        -11,
+        10
+      ],
+      "sources": [
+        "birmingham-1995",
+        "cshapes-2"
+      ],
+      "highlight": [
+        438
+      ]
+    },
+    {
+      "date": "1960-01-01",
+      "title": "1960, the Year of Africa",
+      "text": "Seventeen African countries become independent this year, most of them French colonies. Cameroun goes first, today. The Belgian Congo follows on 30 June, after only months of notice, and slides into crisis within days.",
+      "focus": [
+        18,
+        2
+      ],
+      "sources": [
+        "birmingham-1995",
+        "cshapes-2"
+      ],
+      "highlight": [
+        471
+      ]
+    },
+    {
+      "date": "1960-10-01",
+      "title": "Nigeria is independent",
+      "text": "Nigeria becomes independent, with Sir Abubakar Tafawa Balewa as prime minister, inside the borders drawn by 1914. Almost every new state keeps its colonial lines. Portugal, Britain, France and South Africa's white minority still hold the rest, for now.",
+      "focus": [
+        12,
+        4
+      ],
+      "sources": [
+        "birmingham-1995",
+        "cshapes-2"
+      ],
+      "highlight": [
+        475
       ]
     }
   ],
@@ -633,12 +991,27 @@
     "pakenham-1991": {
       "cite": "Pakenham, Thomas (1991). The Scramble for Africa: The White Man's Conquest of the Dark Continent from 1876 to 1912. London: Weidenfeld and Nicolson.",
       "url": "",
-      "used_for": "The story of each moment (Berlin, Heligoland-Zanzibar, Adwa, Fashoda, Nigeria, Morocco and Libya)."
+      "used_for": "The moments from 1886 to 1914 (Berlin, Heligoland-Zanzibar, Adwa, Fashoda, Nigeria, Morocco and Libya)."
     },
     "natural-earth": {
       "cite": "Natural Earth, version 5.2.0-pre (public domain).",
       "url": "https://www.naturalearthdata.com/",
       "used_for": "The land and lakes under the borders."
+    },
+    "birmingham-1995": {
+      "cite": "Birmingham, David (1995). The Decolonization of Africa. London: UCL Press.",
+      "url": "",
+      "used_for": "The moments from 1922 to 1960 (Egypt, Libya, North Africa, Ghana, Guinea, the Year of Africa, Nigeria)."
+    },
+    "mockler-1984": {
+      "cite": "Mockler, Anthony (1984). Haile Selassie's War: The Italian-Ethiopian Campaign, 1935-1941. Oxford: Oxford University Press.",
+      "url": "",
+      "used_for": "Italy's occupation of Ethiopia, 1936 to 1941, and the correction to CShapes for those years."
+    },
+    "strachan-2004": {
+      "cite": "Strachan, Hew (2004). The First World War in Africa. Oxford: Oxford University Press.",
+      "url": "",
+      "used_for": "The First World War in Germany's colonies and the mandates that followed."
     }
   }
 }

@@ -16,7 +16,7 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUTPUT = os.path.join(HERE, "scramble.json")
 EXPECTED_SHA256 = "196c6d9d881cf944e176e4ce5bfc61074d21792de7152cb0a9e035e56b0297c8"
-FIRST, LAST = "1886-01-01", "1914-01-01"
+FIRST, LAST = "1886-01-01", "1960-10-01"
 TOLERANCE = 0.04   # degrees (about 4 km): smallest wiggle kept on a border
 SCALE = 100        # coordinates kept to a hundredth of a degree (about 1 km)
 
