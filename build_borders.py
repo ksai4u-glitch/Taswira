@@ -1,10 +1,12 @@
 """
-Build the draft borders map ("Who drew Africa's borders?") into previews/borders.html.
+Build the borders map ("Who drew Africa's borders?").
 
-    python build_borders.py            # checks the files and writes previews/borders.html
+    python build_borders.py            # checks the files and writes a draft preview, previews/borders.html
+    python build_borders.py --publish  # writes the live page, docs/borders.html
     python build_borders.py --check    # only checks
 
-It never writes docs/: the page goes live only when Saifu approves it, in a later pull request.
+The preview carries a Draft badge and asks search engines not to list it. Only --publish writes
+docs/, and the live site changes only when that change is merged.
 Standard library only. The borders come from borders/geo/scramble.json (see borders/geo/README.md).
 """
 
@@ -19,6 +21,7 @@ from vendor import inline_vendor
 HERE = os.path.dirname(os.path.abspath(__file__))
 BORDERS = os.path.join(HERE, "borders")
 OUTPUT = os.path.join(HERE, "previews", "borders.html")
+SITE_PAGE = os.path.join(HERE, "docs", "borders.html")
 BACKGROUND = os.path.join(HERE, "history", "geo", "natural-earth-background.json")
 DATE = re.compile(r"^\d{4}(-\d{2}-\d{2})?$")
 
@@ -89,10 +92,11 @@ def check(story, geo):
     return problems
 
 
-def build(output=OUTPUT, built=None):
+def build(output=OUTPUT, built=None, publish=False):
     out = os.path.abspath(output)
-    if os.path.commonpath([out, os.path.join(HERE, "docs")]) == os.path.join(HERE, "docs"):
-        raise SystemExit("build_borders.py does not write docs/: the borders map is a draft until approved")
+    in_docs = os.path.commonpath([out, os.path.join(HERE, "docs")]) == os.path.join(HERE, "docs")
+    if in_docs and not publish:
+        raise SystemExit("build_borders.py writes docs/ only with --publish")
     story = load(os.path.join(BORDERS, "story.json"))
     geo = load(os.path.join(BORDERS, "geo", "scramble.json"))
     problems = check(story, geo)
@@ -107,10 +111,16 @@ def build(output=OUTPUT, built=None):
         raise SystemExit("template must hold __DATA__ exactly once")
     built = built or datetime.date.today().isoformat()
     page = page.replace("__DATA__", blob).replace("__BUILT__", built)
+    page = page.replace("__TITLE_DRAFT__", "" if publish else " (draft)")
+    # <!--draft-->...<!--/draft--> holds what only the preview shows: the badge and the noindex tag.
+    page = re.sub(r"<!--draft-->(.*?)<!--/draft-->", "" if publish else r"\1", page, flags=re.S)
     page = inline_vendor(page)
-    for must in ("CShapes 2.0", "Draft"):
+    musts = ("CShapes 2.0", "Schvitz", "Pakenham") + (() if publish else ("Draft", "noindex"))
+    for must in musts:
         if must not in page:
             raise SystemExit(f"page lost its {must!r} label")
+    if publish and ("noindex" in page or 'class="draft"' in page):
+        raise SystemExit("the live page still carries the draft badge or the noindex tag")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
         f.write(page)
@@ -120,11 +130,12 @@ def build(output=OUTPUT, built=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
     parser.add_argument("--check", action="store_true", help="only check the files")
-    parser.add_argument("--output", default=OUTPUT)
+    parser.add_argument("--output", help="where to write (default: the preview, or docs/borders.html with --publish)")
+    parser.add_argument("--publish", action="store_true", help="write the live page, docs/borders.html")
     args = parser.parse_args()
     if args.check:
         problems = check(load(os.path.join(BORDERS, "story.json")), load(os.path.join(BORDERS, "geo", "scramble.json")))
         print("\n".join(problems) or "borders/ is fine")
         raise SystemExit(1 if problems else 0)
-    path, size = build(args.output)
+    path, size = build(args.output or (SITE_PAGE if args.publish else OUTPUT), publish=args.publish)
     print(f"Wrote {path} ({size:,} bytes)")

@@ -11,6 +11,7 @@ The site (GitHub Pages serves the docs/ folder):
     docs/index.html     this home page
     docs/conflict.html  the conflict map (publish.py)
     docs/history.html   the history map (build_history.py); until it exists, its door says "coming soon"
+    docs/borders.html   the borders map (build_borders.py --publish); until it exists, its door is hidden
 
 It reads only files already in the repository, so it needs no token and makes no requests:
 - the published conflict map docs/conflict.html, for the UCDP events (totals and lights),
@@ -33,6 +34,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_PATH = os.path.join(HERE, "home_template.html")
 MAP_PAGE = os.path.join(HERE, "docs", "conflict.html")
 HISTORY_PAGE = os.path.join(HERE, "docs", "history.html")
+BORDERS_PAGE = os.path.join(HERE, "docs", "borders.html")
 SITE_HOME = os.path.join(HERE, "docs", "index.html")
 LAND_PATH = os.path.join(HERE, "history", "geo", "natural-earth-background.json")
 STATES_PATH = os.path.join(HERE, "history", "geo", "nga-states-2022.topojson")
@@ -265,7 +267,7 @@ def long_date(text):
     return f"{day.day} {day:%B %Y}"
 
 
-def build(history_url, conflict_url, map_page=None):
+def build(history_url, conflict_url, map_page=None, borders_url=""):
     land, lakes, rivers = load_background()
     nigeria = load_nigeria()
 
@@ -308,6 +310,8 @@ def build(history_url, conflict_url, map_page=None):
         "__HISTORY_URL__": history_url,
         "__HISTORY_STATE__": "ready" if history_url else "draft",
         "__CONFLICT_URL__": conflict_url,
+        "__BORDERS_URL__": borders_url or "#doors",
+        "__BORDERS_STATE__": "ready" if borders_url else "draft",
         "__SITE_URL__": SITE_URL,
         "__BUILT__": date.today().isoformat(),
     })
@@ -328,9 +332,11 @@ def write_home(output=SITE_HOME, preview=False, map_page=None, quiet=False):
     """Build the home page and write it in one step. Returns the path written."""
     if preview:
         history_url = SITE_URL + "history.html" if os.path.exists(HISTORY_PAGE) else ""
-        page = build(history_url, SITE_URL + "conflict.html", map_page)
+        borders_url = SITE_URL + "borders.html" if os.path.exists(BORDERS_PAGE) else ""
+        page = build(history_url, SITE_URL + "conflict.html", map_page, borders_url)
     else:
-        page = build("history.html" if os.path.exists(HISTORY_PAGE) else "", "conflict.html", map_page)
+        borders_url = "borders.html" if os.path.exists(BORDERS_PAGE) else ""
+        page = build("history.html" if os.path.exists(HISTORY_PAGE) else "", "conflict.html", map_page, borders_url)
     problems = problems_with(page)
     if problems:
         sys.exit("Not writing the home page: " + "; ".join(problems) + ".")
