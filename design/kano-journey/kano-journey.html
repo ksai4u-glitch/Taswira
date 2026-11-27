@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Kano journey mock-ups · Taswira design handover</title>
+<!--
+  Design mock-up, not a page of the site. Editable: change the text here and re-export with
+  `node design/kano-journey/capture.cjs` (needs `python -m http.server` in the repo root, see README).
+  Every fact is copied from the files named next to it; nothing here is new historical content.
+  Map pictures (img/map-kano-*.png) are frames of the live scene hausa/kano at 34 s, captured from docs/history.html.
+-->
+<style>
+:root{--space:#050b08;--green:#08120e;--green-2:#12271e;--line:#304b3d;--ivory:#f0eee2;--sage:#b5c4b8;--muted:#95ab9c;
+  --gold:#d4b57a;--warn:#f0a040;--serif:Georgia,"Times New Roman",serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,Consolas,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:#1d2420;color:var(--ivory);font:15px/1.45 var(--sans);padding:40px}
+.step{margin:0 0 70px}
+.step>h2{font:400 30px var(--serif);margin:0 0 4px;color:var(--ivory)}
+.step>p.why{max-width:1100px;color:var(--sage);margin:0 0 18px}
+.pair{display:flex;gap:40px;align-items:flex-start}
+.frame{background:var(--green);border:1px solid #000;box-shadow:0 10px 40px #0008;position:relative;overflow:hidden;flex:none}
+.desk{width:1440px;height:900px}.phone{width:390px;height:844px;border-radius:28px}
+.tag{font:12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+a{color:var(--gold)}
+/* shared header (B1) */
+.top{display:flex;align-items:center;gap:28px;height:60px;padding:0 28px;border-bottom:1px solid var(--line);background:#050b08f0;position:relative;z-index:5}
+.brand{font:400 24px var(--serif);color:var(--gold)}
+.top nav{display:flex;gap:26px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-left:auto}
+.top nav span{color:var(--ivory)}.top nav span.on{color:var(--gold);border-bottom:2px solid var(--gold);padding-bottom:4px}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:6px;padding:7px 12px;color:var(--muted);width:280px;font-size:14px;background:var(--green)}
+.phone .top{height:54px;padding:0 16px}.phone .brand{font-size:21px}
+.icons{margin-left:auto;display:flex;gap:18px;color:var(--ivory);font-size:18px}
+.btn{display:inline-block;padding:12px 20px;border-radius:6px;border:1px solid var(--gold);color:var(--ivory);font-weight:600;font-size:15px}
+.btn.gold{background:var(--gold);color:var(--green)}
+.kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+.draft{display:inline-flex;align-items:center;gap:6px;color:var(--warn);font-size:13px}
+.draft:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--warn)}
+.chip{display:inline-block;font-size:11px;padding:2px 7px;border-radius:10px;border:1px solid var(--line);color:var(--sage);margin-left:6px;vertical-align:2px}
+.chip.approx{border-color:#8a7a50;color:#e2cf9e}.chip.disputed{border-color:#a06a3a;color:#f0b880}.chip.firm{border-color:#4f7a60;color:#a9d6b6}.chip.chron{border-color:#6a6a8a;color:#c8c8ea}.chip.prelim{border-color:#a06a3a;color:#f0b880}
+.hl{outline:2px dashed #e0a040;outline-offset:4px}
+.note-new{position:absolute;font:12px/1.3 var(--sans);background:#e0a040;color:#1a1206;padding:4px 8px;border-radius:4px;z-index:20;max-width:240px}
+/* Home */
+.globe{position:absolute;right:-60px;top:40px;width:820px;height:820px;border-radius:50%;
+  background:radial-gradient(circle at 40% 40%,#1f3a2c 0,#0d1d15 55%,#050b08 70%);box-shadow:0 0 80px #d4b57a33, inset 0 0 0 2px #d4b57a55}
+.globe:after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(#c7d6c999 1.2px,transparent 1.6px) 0 0/11px 11px;
+  -webkit-mask:radial-gradient(ellipse 34% 44% at 44% 50%,#000 60%,transparent 62%);mask:radial-gradient(ellipse 34% 44% at 44% 50%,#000 60%,transparent 62%)}
+.hero{position:absolute;left:80px;top:150px;width:620px;z-index:2}
+.hero h1{font:400 60px/1.06 var(--serif);margin:0 0 18px}
+.hero p.lede{font-size:19px;color:var(--sage);margin:0 0 26px}
+.results{position:absolute;z-index:8;background:#0d1b14;border:1px solid var(--line);border-radius:8px;box-shadow:0 14px 40px #000a;overflow:hidden}
+.results .q{padding:12px 16px;border-bottom:1px solid var(--line);font-size:16px;color:var(--ivory)}
+.results .grp{padding:10px 16px 4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.results .r{padding:8px 16px;display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.results .r b{font-weight:600;color:var(--ivory)}.results .r small{color:var(--sage);white-space:nowrap}
+.results .r.sel{background:#1b3528}
+.qs{position:absolute;z-index:2}
+.qs .q1{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:#0d1b14cc;margin:0 0 10px;font-size:15px}
+.qs .q1 small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+/* History */
+.crumb{display:flex;align-items:center;gap:12px;height:44px;padding:0 28px;border-bottom:1px solid var(--line);font-size:14px;color:var(--sage)}
+.crumb b{color:var(--ivory);font-weight:600}
+.stage{position:absolute;left:0;right:0;top:104px;bottom:86px;display:flex}
+.mapbox{position:relative;flex:1;background:#151c14 center/cover no-repeat;overflow:hidden}
+.mapbox .date{position:absolute;right:22px;top:16px;font:400 30px var(--serif);color:var(--gold);text-shadow:0 2px 8px #000}
+.mapbox .date small{display:block;font:12px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ivory);text-align:right}
+.tools{position:absolute;left:18px;top:16px;display:flex;gap:6px}
+.tools span{border:1px solid var(--line);background:#08120ee0;border-radius:5px;padding:6px 10px;font-size:13px}
+.tools span.on{border-color:var(--gold);color:var(--gold)}
+.legend{position:absolute;left:18px;bottom:14px;background:#08120ee6;border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--sage);display:flex;gap:16px}
+.legend i{display:inline-block;width:22px;height:0;border-top:3px solid #c98a55;vertical-align:3px;margin-right:6px}
+.legend i.d{border-top-style:dashed}.legend i.o{border-top:3px dotted #e8c070}
+.panel{width:440px;border-left:1px solid var(--line);padding:22px 26px;overflow:hidden;background:var(--green)}
+.panel h3{font:400 32px/1.1 var(--serif);margin:0 0 12px}
+.sure{border-left:3px solid var(--warn);background:#1c2a1f;padding:9px 12px;font-size:14px;color:#ecdcbc;margin:0 0 14px}
+.sure a{color:var(--gold)}
+.panel p{margin:0 0 12px;color:#e3e3d6;font-size:15.5px}
+.links{border-top:1px solid var(--line);padding-top:12px;margin-top:6px;font-size:14px;display:flex;flex-wrap:wrap;gap:8px 16px}
+.ctrl{position:absolute;left:0;right:0;bottom:0;height:86px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 22px;background:#050b08}
+.ctrl .c{border:1px solid var(--line);border-radius:6px;padding:9px 14px;font-size:14px}
+.ctrl .c.gold{background:var(--gold);color:var(--green);font-weight:600;border-color:var(--gold)}
+.strip{flex:1;display:flex;gap:6px}
+.strip span{flex:1;border:1px solid var(--line);border-radius:6px;padding:7px 10px;font-size:13px;line-height:1.25;color:var(--sage)}
+.strip span b{display:block;color:var(--ivory);font-weight:600}
+.strip span.on{border-color:var(--gold);background:#1b3528}
+.strip span em{display:block;height:3px;background:#304b3d;margin-top:5px;border-radius:2px;font-style:normal}
+.strip span em i{display:block;height:3px;background:var(--gold);width:60%}
+.pop{position:absolute;z-index:6;width:330px;background:#0d1b14f5;border:1px solid var(--gold);border-radius:8px;padding:14px 16px;box-shadow:0 10px 30px #000c;font-size:14px}
+.pop h4{font:400 21px var(--serif);margin:0 0 6px}
+.pop p{margin:0 0 8px;color:#e3e3d6}.pop .meta{color:var(--sage);font-size:12.5px}
+.drawer{position:absolute;z-index:7;background:#0b1712;border-left:1px solid var(--gold);box-shadow:-12px 0 40px #000b;padding:22px 26px;overflow:hidden}
+.drawer h4{font:400 24px var(--serif);margin:0 0 10px}
+.drawer h5{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:16px 0 6px}
+.drawer p,.drawer li{font-size:14px;color:#e3e3d6;margin:0 0 8px}
+.drawer ol{padding-left:18px;margin:0}
+.drawer li small{display:block;color:var(--muted);font-size:12px}
+/* Place page */
+.place{position:absolute;left:0;right:0;top:60px;bottom:0;overflow:hidden;padding:30px 80px}
+.place h1{font:400 52px var(--serif);margin:0}
+.place .sub{color:var(--sage);font-size:17px;margin:4px 0 22px}
+.cols{display:flex;gap:40px}
+.tl{flex:1.25}
+.tl .row{display:flex;gap:16px;padding:9px 0;border-bottom:1px solid #1f3529;font-size:15px}
+.tl .row .y{width:150px;flex:none;color:var(--gold);font-family:var(--serif);font-size:16px}
+.tl .row .t{flex:1}.tl .row .t small{display:block;color:var(--muted);font-size:12.5px}
+.cards{flex:1;display:flex;flex-direction:column;gap:12px}
+.card{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:var(--green-2)}
+.card h4{margin:0 0 4px;font:400 20px var(--serif)}
+.card p{margin:0;color:var(--sage);font-size:14px}
+.card .big{font:400 30px var(--serif);color:var(--ivory)}
+.card.off{opacity:.55;border-style:dashed}
+.phone .place{padding:18px 16px;top:54px}
+.phone .place h1{font-size:36px}
+.phone .tl .row .y{width:96px;font-size:14px}.phone .tl .row{font-size:13.5px;gap:10px;padding:7px 0}
+/* phone history */
+.pcrumb{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;font-size:13px;color:var(--sage);border-bottom:1px solid var(--line)}
+.pmap{position:relative;height:360px;background:#151c14 center/cover no-repeat}
+.pmap .date{position:absolute;right:12px;top:10px;font:400 22px var(--serif);color:var(--gold);text-shadow:0 2px 8px #000;text-align:right}
+.pmap .date small{display:block;font:10px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ivory)}
+.sheet{position:absolute;left:0;right:0;top:414px;bottom:122px;background:var(--green);border-top:1px solid var(--line);border-radius:16px 16px 0 0;padding:8px 16px;overflow:hidden}
+.sheet:before{content:"";display:block;width:44px;height:4px;border-radius:2px;background:#4a6656;margin:0 auto 10px}
+.sheet h3{font:400 25px var(--serif);margin:0 0 8px}
+.sheet p{font-size:15px;margin:0 0 8px;color:#e3e3d6}
+.pctrl{position:absolute;left:0;right:0;bottom:0;height:122px;background:#050b08;border-top:1px solid var(--line);padding:10px 12px}
+.pctrl .row1{display:flex;gap:8px;margin-bottom:8px}
+.pctrl .row1 span{border:1px solid var(--line);border-radius:6px;padding:9px 12px;font-size:14px}
+.pctrl .row1 span.gold{background:var(--gold);color:var(--green);font-weight:600;border-color:var(--gold)}
+.pctrl .row1 span.grow{flex:1;text-align:center}
+.pstrip{display:flex;gap:6px;overflow:hidden}
+.pstrip span{flex:none;border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:12.5px;color:var(--sage);white-space:nowrap}
+.pstrip span.on{border-color:var(--gold);color:var(--ivory);background:#1b3528}
+</style>
+</head>
+<body>
+
+<h1 style="font:400 40px var(--serif);margin:0 0 6px">Kano: one visitor journey</h1>
+<p style="color:var(--sage);max-width:1100px;margin:0 0 40px">Five steps, desktop 1440×900 and phone 390×844. Orange dashed outlines mark what is new; everything else already exists on the site.
+  All text is copied from <code>history/chapters/hausa.json</code>, <code>sokoto.json</code>, <code>colonial.json</code>, <code>states.json</code>,
+  <code>elections/raw/</code> and the conflict data in <code>docs/conflict.html</code> at commit 87c4058. Map pictures are frames of the live Kano scene.</p>
+
+<!-- STEP 1 · DISCOVERY -->
+<section class="step" id="s1">
+<h2>1 · Discovery: the home page, searching "Kano"</h2>
+<p class="why">The cinematic globe stays. New: a "Skip to the maps" route, a search box in the shared header, and question cards. Typing "Kano" lists the place, its scenes and its data in one list, each labelled with its period and review state.</p>
+<div class="pair">
+<div><p class="tag">Desktop</p>
+<div class="frame desk" id="d1">
+  <div class="top"><span class="brand">Taswira</span>
+    <div class="search hl">&#9906;&nbsp; <span style="color:var(--ivory)">Kano</span></div>
+    <nav><span>Explore</span><span>History</span><span>Maps ▾</span><span>About</span></nav></div>
+  <div class="globe"></div>
+  <div class="hero">
+    <p class="kicker">Taswira · Hausa for "map"</p>
+    <h1>Where Africa's story happened, and is still happening.</h1>
+    <p class="lede">An animated history of the land that became Nigeria, and a sourced map of organised violence across Africa since 2020.</p>
+    <span class="btn gold">Watch the story</span>&nbsp; <span class="btn hl">Skip to the maps →</span>
+  </div>
+  <div class="qs hl" style="left:80px;top:620px;width:620px">
+    <p class="kicker">Start with a question</p>
+    <div class="q1">How did Kano become a walled city?<small>Hausa cities · 3 scenes · about 1000 to 1526</small></div>
+    <div class="q1">Who drew Africa's borders?<small>Borders map · 1886 to 1960</small></div>
+  </div>
+  <div class="results hl" style="left:520px;top:58px;width:470px">
+    <div class="q">Kano</div>
+    <div class="grp">Place</div>
+    <div class="r sel"><b>Kano · city and state</b><small>all periods</small></div>
+    <div class="grp">History scenes</div>
+    <div class="r"><span><b>The earth becomes a city</b> · Hausa cities</span><small>about 1000–1499</small></div>
+    <div class="r"><span><b>Who lived inside the walls</b> · Hausa cities</span><small>1438–1526</small></div>
+    <div class="r"><span><b>The jihad: from Degel to Sokoto</b></span><small>1807</small></div>
+    <div class="r"><span><b>Conquest: the caliphate falls</b></span><small>3 Feb 1903</small></div>
+    <div class="r"><span><b>Iron roads to the north</b></span><small>1907–1911</small></div>
+    <div class="grp">Maps</div>
+    <div class="r"><span><b>Conflict · Kano State</b></span><small>2020–2026</small></div>
+    <div class="r"><span><b>Elections · Kano State</b> <span class="chip prelim">draft</span></span><small>2015–2023</small></div>
+  </div>
+  <div class="note-new" style="left:1010px;top:70px">New: search over places, scenes and maps (index built from the chapter files)</div>
+</div></div>
+<div><p class="tag">Phone</p>
+<div class="frame phone" id="p1">
+  <div class="top"><span class="brand">Taswira</span><div class="icons"><span class="hl">&#9906;</span><span>☰</span></div></div>
+  <div class="results hl" style="left:10px;right:10px;top:62px">
+    <div class="q">Kano</div>
+    <div class="grp">Place</div>
+    <div class="r sel"><b>Kano · city and state</b><small>all periods</small></div>
+    <div class="grp">History scenes</div>
+    <div class="r"><span><b>The earth becomes a city</b></span><small>c.1000–1499</small></div>
+    <div class="r"><span><b>Who lived inside the walls</b></span><small>1438–1526</small></div>
+    <div class="r"><span><b>Conquest: the caliphate falls</b></span><small>1903</small></div>
+    <div class="r"><span><b>Iron roads to the north</b></span><small>1907–1911</small></div>
+    <div class="grp">Maps</div>
+    <div class="r"><span><b>Conflict · Kano State</b></span><small>2020–2026</small></div>
+    <div class="r"><span><b>Elections · Kano State</b> <span class="chip prelim">draft</span></span><small>2015–2023</small></div>
+  </div>
+  <div style="position:absolute;left:16px;right:16px;bottom:30px">
+    <p class="kicker">Start with a question</p>
+    <div class="qs" style="position:static"><div class="q1">How did Kano become a walled city?<small>3 scenes · about 1000 to 1526</small></div></div>
+    <span class="btn gold" style="display:block;text-align:center;margin-bottom:10px">Watch the story</span>
+    <span class="btn hl" style="display:block;text-align:center">Skip to the maps →</span>
+  </div>
+</div></div>
+</div></section>
+
+<!-- STEP 2 · STORY -->
+<section class="step" id="s2">
+<h2>2 · Storytelling: the scene "The earth becomes a city"</h2>
+<p class="why">Same scene, same map, calmer frame. The date appears once on the map; the title once in the panel; a "How sure" line sits under it. Chapters move into the existing drawer; the scene strip names scenes instead of truncated dates. Zomo, Lore, Cinema and Effects stay, as optional tools.</p>
+<div class="pair">
+<div><p class="tag">Desktop</p>
+<div class="frame desk" id="d2">
+  <div class="top"><span class="brand">Taswira</span><div class="search">&#9906;&nbsp; Search places, people, years</div>
+    <nav><span>Explore</span><span class="on">History</span><span>Maps ▾</span><span>About</span></nav></div>
+  <div class="crumb hl"><span>☰ Chapters</span><span>›</span><b>Hausa cities: walls, markets and kings</b><span>· scene 1 of 3</span>
+    <span style="margin-left:auto" class="draft">Unreviewed draft · <a href="#">Suggest a correction</a></span></div>
+  <div class="stage">
+    <div class="mapbox" style="background-image:url(img/map-kano-desktop.png)">
+      <div class="tools"><span>Details</span><span>Cinema</span><span>⛶</span><span>Lore</span><span>Zomo</span></div>
+      <div class="date hl">about 1000–1499<small>Kano Chronicle reckoning</small></div>
+      <div class="legend hl"><span><i></i>wall, by its Chronicle date</span><span>Key follows the Map key chapter</span><span>Gate positions are schematic</span></div>
+    </div>
+    <div class="panel">
+      <p class="kicker">Hausa cities · Kano</p>
+      <h3>The earth becomes a city</h3>
+      <div class="sure hl">How sure: dates follow the Kano Chronicle, written down about the 1880s. Who finished the first wall is disputed. <a href="#">Why?</a></div>
+      <p>Before Kano was a city, it was a hill. People worked iron on Dala. The Kano Chronicle remembers Barbushe, keeper of a shrine on the hill. That memory is tradition, and it has no date.</p>
+      <p>By the Chronicle's reckoning, King Gijimasu began a wall, gate by gate. Who finished it? The Chronicle says Yusa, in the 1100s. Nigeria's heritage file says Zamnagawa, in the 1300s.</p>
+      <p>Then Muhammad Rumfa. The Chronicle says he built a palace and moved in the next year. The year after, he pushed the walls outward, gate by gate. He founded a market, Kurmi, which still trades today.</p>
+      <div class="links hl"><a href="#">Sources (13)</a><a href="#">Kano across time →</a><a href="#">Text version</a></div>
+    </div>
+  </div>
+  <div class="ctrl"><span class="c">◀</span><span class="c gold">Play</span><span class="c">▶</span>
+    <div class="strip hl"><span class="on"><b>The earth becomes a city</b>about 1000–1499<em><i></i></em></span><span><b>Who lived inside the walls</b>1438–1526</span><span><b>Hausa cities side by side</b>1349–1516</span></div>
+    <span class="c">Effects</span></div>
+</div></div>
+<div><p class="tag">Phone</p>
+<div class="frame phone" id="p2">
+  <div class="top"><span class="brand">Taswira</span><div class="icons"><span>&#9906;</span><span>☰</span></div></div>
+  <div class="pcrumb hl"><span>Hausa cities · 1 of 3</span><span class="draft">Draft</span></div>
+  <div class="pmap" style="background-image:url(img/map-kano-phone.png)"><div class="date">about 1000–1499<small>Chronicle reckoning</small></div></div>
+  <div class="sheet">
+    <h3>The earth becomes a city</h3>
+    <div class="sure hl">How sure: Chronicle dates; first wall disputed. <a href="#">Why?</a></div>
+    <p>Before Kano was a city, it was a hill. People worked iron on Dala. The Kano Chronicle remembers Barbushe, keeper of a shrine on the hill…</p>
+  </div>
+  <div class="pctrl"><div class="row1"><span>◀</span><span class="gold">Play</span><span>▶</span><span class="grow">Chapters</span><span>Tools</span></div>
+    <div class="pstrip hl"><span class="on">The earth becomes a city</span><span>Who lived inside</span><span>Side by side</span></div></div>
+</div></div>
+</div></section>
+
+<!-- STEP 3 · EXPLORE -->
+<section class="step" id="s3">
+<h2>3 · Map exploration: pause and tap Rumfa's palace</h2>
+<p class="why">Pausing (Space, or tapping the map) lets the reader open any drawn part. The card reuses the part's own label, date basis and status from <code>hausa.json</code>; nothing new is said. On phone it opens as a sheet over the text.</p>
+<div class="pair">
+<div><p class="tag">Desktop</p>
+<div class="frame desk" id="d3">
+  <div class="top"><span class="brand">Taswira</span><div class="search">&#9906;&nbsp; Search places, people, years</div>
+    <nav><span>Explore</span><span class="on">History</span><span>Maps ▾</span><span>About</span></nav></div>
+  <div class="crumb"><span>☰ Chapters</span><span>›</span><b>Hausa cities: walls, markets and kings</b><span>· scene 1 of 3 · paused</span>
+    <span style="margin-left:auto" class="draft">Unreviewed draft · <a href="#">Suggest a correction</a></span></div>
+  <div class="stage">
+    <div class="mapbox" style="background-image:url(img/map-kano-desktop.png)">
+      <div class="tools"><span>Details</span><span>Cinema</span><span>⛶</span><span>Lore</span><span>Zomo</span></div>
+      <div class="date">about 1000–1499<small>Kano Chronicle reckoning</small></div>
+      <div class="pop hl" style="left:600px;top:420px">
+        <p class="kicker">Drawn part</p>
+        <h4>Rumfa's palace <span class="chip chron">Chronicle date</span> <span class="chip approx">schematic</span></h4>
+        <p>Muhammad Rumfa (1463–1499 by the Chronicle's reckoning) built a palace and moved in the next year. The palace site, Gidan Rumfa, is still the emir's residence.</p>
+        <p class="meta">Footprint is schematic, not a survey. Most of today's palace decoration dates from the 1930s–40s and is not drawn.</p>
+        <p class="meta"><a href="#">Kano Chronicle (Palmer 1908)</a> · <a href="#">ArchNet: Gidan Rumfa</a></p>
+      </div>
+    </div>
+    <div class="panel">
+      <p class="kicker">Hausa cities · Kano</p>
+      <h3>The earth becomes a city</h3>
+      <div class="sure">How sure: dates follow the Kano Chronicle, written down about the 1880s. Who finished the first wall is disputed. <a href="#">Why?</a></div>
+      <p class="kicker" style="margin-top:14px">On the map · tap any part</p>
+      <p style="font-size:14px;color:var(--sage)">Dala hill · Goron Dutse hill · first wall (begun 1095–1134) · Kofar Dagachi · Kofar Mata · Kofar Gertawasa · Kofar Kawayi · Kofar Na'isa · <b style="color:var(--ivory)">Rumfa's palace</b> · Kurmi market</p>
+      <div class="links"><a href="#">Sources (13)</a><a href="#">Kano across time →</a><a href="#">Text version</a></div>
+    </div>
+  </div>
+  <div class="ctrl"><span class="c">◀</span><span class="c gold">Play</span><span class="c">▶</span>
+    <div class="strip"><span class="on"><b>The earth becomes a city</b>about 1000–1499<em><i style="width:77%"></i></em></span><span><b>Who lived inside the walls</b>1438–1526</span><span><b>Hausa cities side by side</b>1349–1516</span></div>
+    <span class="c">Effects</span></div>
+</div></div>
+<div><p class="tag">Phone</p>
+<div class="frame phone" id="p3">
+  <div class="top"><span class="brand">Taswira</span><div class="icons"><span>&#9906;</span><span>☰</span></div></div>
+  <div class="pcrumb"><span>Hausa cities · 1 of 3 · paused</span><span class="draft">Draft</span></div>
+  <div class="pmap" style="background-image:url(img/map-kano-phone.png)"><div class="date">about 1000–1499<small>Chronicle reckoning</small></div></div>
+  <div class="sheet hl" style="top:330px">
+    <p class="kicker">Drawn part</p>
+    <h3>Rumfa's palace</h3>
+    <p><span class="chip chron" style="margin:0">Chronicle date</span> <span class="chip approx">schematic</span></p>
+    <p>Muhammad Rumfa (1463–1499 by the Chronicle's reckoning) built a palace and moved in the next year. The site, Gidan Rumfa, is still the emir's residence.</p>
+    <p style="font-size:13px;color:var(--sage)">Footprint is schematic. Today's decoration (1930s–40s) is not drawn.</p>
+    <p style="font-size:13px"><a href="#">Kano Chronicle</a> · <a href="#">ArchNet</a></p>
+  </div>
+  <div class="pctrl"><div class="row1"><span>◀</span><span class="gold">Play</span><span>▶</span><span class="grow">Chapters</span><span>Tools</span></div>
+    <div class="pstrip"><span class="on">The earth becomes a city</span><span>Who lived inside</span><span>Side by side</span></div></div>
+</div></div>
+</div></section>
+
+<!-- STEP 4 · EVIDENCE -->
+<section class="step" id="s4">
+<h2>4 · Evidence: "Why?" opens what we know and how</h2>
+<p class="why">One evidence drawer per scene, built from the scene's existing <code>disputed</code> text and <code>sources</code> list (with each source's kind), plus "Cite this scene" and the existing correction link. Playback stays paused while it is open; Esc closes it and returns focus to "Why?".</p>
+<div class="pair">
+<div><p class="tag">Desktop</p>
+<div class="frame desk" id="d4">
+  <div class="top"><span class="brand">Taswira</span><div class="search">&#9906;&nbsp; Search places, people, years</div>
+    <nav><span>Explore</span><span class="on">History</span><span>Maps ▾</span><span>About</span></nav></div>
+  <div class="crumb"><span>☰ Chapters</span><span>›</span><b>Hausa cities: walls, markets and kings</b><span>· scene 1 of 3 · paused</span>
+    <span style="margin-left:auto" class="draft">Unreviewed draft · <a href="#">Suggest a correction</a></span></div>
+  <div class="stage">
+    <div class="mapbox" style="background-image:url(img/map-kano-desktop.png);filter:brightness(.6)"></div>
+  </div>
+  <div class="drawer hl" style="right:0;top:104px;bottom:86px;width:560px">
+    <p class="kicker">How we know · The earth becomes a city</p>
+    <h4>Dates follow the Kano Chronicle</h4>
+    <p>The Chronicle was compiled from older traditions and written down about the 1880s; its reign dates are a reckoning, not records. The map shows each part at its Chronicle date and says so.</p>
+    <h5>Where sources disagree</h5>
+    <p>Who finished Kano's first wall? The Kano Chronicle credits Yusa (1136–1194 by its reckoning); Nigeria's 2007 UNESCO tentative-list file credits Zamnagawa, in the mid-14th century.</p>
+    <p>The age of the Dala settlement also differs: the 7th century (Iliffe) or the 10th (UNESCO file). The map shows it from the later date.</p>
+    <h5>What is drawn, and what is not</h5>
+    <p>Gate positions, wall lines, the palace footprint and the market are schematic. Not drawn: present-day palace decoration (mostly 1930s–40s), the 1951 mosque, the 16th-century wall line.</p>
+    <h5>Sources</h5>
+    <ol>
+      <li>H. R. Palmer (transl.), "The Kano Chronicle", JRAI 38, 1908 <small>Primary tradition, translated · via Wikipedia summary</small></li>
+      <li>Murray Last, "Historical Metaphors in the Kano Chronicle", History in Africa 7, 1980 <small>Peer-reviewed analysis</small></li>
+      <li>UNESCO, Ancient Kano City Walls and Associated Sites (Tentative List), 2007 <small>Heritage nomination by Nigeria's NCMM</small></li>
+      <li>ArchNet, Gidan Rumfa <small>Architectural history database</small></li>
+    </ol>
+    <p style="margin-top:12px"><a href="#">Cite this scene</a> · <a href="#">Suggest a correction</a> · <a href="#">All 13 sources in the text version</a></p>
+  </div>
+  <div class="ctrl"><span class="c">◀</span><span class="c gold">Play</span><span class="c">▶</span>
+    <div class="strip"><span class="on"><b>The earth becomes a city</b>about 1000–1499<em><i style="width:77%"></i></em></span><span><b>Who lived inside the walls</b>1438–1526</span><span><b>Hausa cities side by side</b>1349–1516</span></div>
+    <span class="c">Effects</span></div>
+</div></div>
+<div><p class="tag">Phone</p>
+<div class="frame phone" id="p4">
+  <div class="top"><span class="brand">Taswira</span><div class="icons"><span>&#9906;</span><span>☰</span></div></div>
+  <div class="drawer hl" style="left:0;right:0;top:54px;bottom:0;border-left:none;border-top:1px solid var(--gold);padding:16px">
+    <p class="kicker">How we know · ✕ Close</p>
+    <h4>Dates follow the Kano Chronicle</h4>
+    <p>Compiled from older traditions and written down about the 1880s; its reign dates are a reckoning, not records.</p>
+    <h5>Where sources disagree</h5>
+    <p>First wall finished by Yusa (Chronicle, 1136–1194) or by Zamnagawa (UNESCO file, mid-14th century). Dala settled in the 7th century (Iliffe) or the 10th (UNESCO).</p>
+    <h5>What is not drawn</h5>
+    <p>Today's palace decoration (1930s–40s), the 1951 mosque, the 16th-century wall line. Gates are schematic.</p>
+    <h5>Sources</h5>
+    <ol><li>Palmer 1908, Kano Chronicle <small>Primary tradition, translated</small></li><li>Last 1980 <small>Peer-reviewed analysis</small></li><li>UNESCO 2007 <small>Heritage nomination</small></li><li>ArchNet: Gidan Rumfa <small>Database</small></li></ol>
+    <p><a href="#">Cite</a> · <a href="#">Suggest a correction</a></p>
+  </div>
+</div></div>
+</div></section>
+
+<!-- STEP 5 · RELATED -->
+<section class="step" id="s5">
+<h2>5 · Related subjects: "Kano across time"</h2>
+<p class="why">A generated place page joins what the site already holds about Kano: dated history scenes (each a deep link), the borders map, and today's conflict and election figures with their own version and draft labels. The film card appears only once Saifu approves a film. Every row links back to the scene or map it came from.</p>
+<div class="pair">
+<div><p class="tag">Desktop</p>
+<div class="frame desk" id="d5">
+  <div class="top"><span class="brand">Taswira</span><div class="search">&#9906;&nbsp; Search places, people, years</div>
+    <nav><span class="on">Explore</span><span>History</span><span>Maps ▾</span><span>About</span></nav></div>
+  <div class="place">
+    <p class="kicker">Place · Nigeria · Kano State</p>
+    <h1>Kano across time</h1>
+    <p class="sub">A city that grew around Dala hill, became a walled Hausa capital, an emirate of the Sokoto Caliphate, a railway terminus and a state capital.</p>
+    <div class="cols">
+      <div class="tl hl">
+        <div class="row"><span class="y">before about 1000</span><span class="t">Iron working on Dala hill <span class="chip disputed">7th or 10th c.</span><small>Hausa cities · The earth becomes a city</small></span></div>
+        <div class="row"><span class="y">1095–1134</span><span class="t">First wall begun under Gijimasu <span class="chip chron">Chronicle</span><small>Hausa cities · The earth becomes a city</small></span></div>
+        <div class="row"><span class="y">1463–1499</span><span class="t">Rumfa: palace, walls extended, Kurmi market <span class="chip chron">Chronicle</span><small>Hausa cities · The earth becomes a city</small></span></div>
+        <div class="row"><span class="y">1438–1526</span><span class="t">Who lived inside: Burja's roads, Rumfa's council of nine, Leo Africanus's account <span class="chip disputed">visit doubted</span><small>Hausa cities · Who lived inside the walls</small></span></div>
+        <div class="row"><span class="y">1807</span><span class="t">Jihad forces capture Kano; an emirate replaces its Hausa king<small>Sokoto Caliphate · The jihad</small></span></div>
+        <div class="row"><span class="y">3 Feb 1903</span><span class="t">British force under Morland takes Kano after heavy fighting<small>Sokoto Caliphate · Conquest · also Borders map, 1903</small></span></div>
+        <div class="row"><span class="y">1907–1911</span><span class="t">Railway built from Baro on the Niger to Kano<small>Colonial Nigeria · Iron roads to the north</small></span></div>
+        <div class="row"><span class="y">27 May 1967</span><span class="t">Kano State created among the twelve states<small>From four regions to 36 states</small></span></div>
+      </div>
+      <div class="cards">
+        <div class="card hl"><p class="kicker">Today · Conflict map</p><span class="big">15 events · 33 deaths</span>
+          <p>Kano State, Jan 2020 to Oct 2026, UCDP GED 26.1 + Candidate 26.0.10 (best estimates). 11 of the events are 2026 Candidate data <span class="chip prelim">preliminary</span>. Open the map for Kano State →</p></div>
+        <div class="card hl"><p class="kicker">Elections map <span class="chip prelim">draft</span></p><span class="big">2023: Kwankwaso 58.6%</span>
+          <p>NNPP won Kano State: 997,279 of 1,702,005 valid votes, as announced (Wikipedia compilation; not yet checked against INEC Form EC8D). 2019 and 2015: Buhari.</p></div>
+        <div class="card off"><p class="kicker">Film · awaiting approval</p><h4>Ancient Kano</h4><p>Shown only after Saifu approves the film and its accuracy fixes.</p></div>
+        <div class="card"><p class="kicker">Related</p><p>Katsina · Zazzau · Bornu · Sokoto Caliphate · Lagos–Kano railway</p></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+<div><p class="tag">Phone</p>
+<div class="frame phone" id="p5">
+  <div class="top"><span class="brand">Taswira</span><div class="icons"><span>&#9906;</span><span>☰</span></div></div>
+  <div class="place">
+    <p class="kicker">Place · Kano State</p>
+    <h1>Kano across time</h1>
+    <div class="cards hl" style="margin:12px 0">
+      <div class="card"><p class="kicker">Today · Conflict</p><span class="big" style="font-size:22px">15 events · 33 deaths</span><p>2020 to Oct 2026 · UCDP · 11 preliminary</p></div>
+      <div class="card"><p class="kicker">Elections <span class="chip prelim">draft</span></p><span class="big" style="font-size:22px">2023: Kwankwaso 58.6%</span><p>As announced; EC8D check pending</p></div>
+    </div>
+    <div class="tl hl">
+      <div class="row"><span class="y">1095–1134</span><span class="t">First wall begun <span class="chip chron">Chronicle</span></span></div>
+      <div class="row"><span class="y">1463–1499</span><span class="t">Rumfa: palace, Kurmi market</span></div>
+      <div class="row"><span class="y">1807</span><span class="t">Jihad forces capture Kano</span></div>
+      <div class="row"><span class="y">3 Feb 1903</span><span class="t">British force takes Kano</span></div>
+      <div class="row"><span class="y">1907–1911</span><span class="t">Railway from Baro reaches Kano</span></div>
+      <div class="row"><span class="y">27 May 1967</span><span class="t">Kano State created</span></div>
+    </div>
+  </div>
+</div></div>
+</div></section>
+
+</body>
+</html>
