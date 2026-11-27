@@ -1,0 +1,7 @@
+*{box-sizing:border-box}body{margin:0;background:#0b1510;font:14px/1.35 system-ui,sans-serif;color:#efe8d6;padding:24px;display:flex;gap:28px;align-items:flex-start}
+.f{border:1px solid #3c5a48;border-radius:10px;overflow:hidden;background:#0f1d16}.cap{font:12px system-ui;color:#c9a96a;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}
+.b{border:1px dashed #56786a;border-radius:6px;padding:8px;margin:6px;color:#b9c8bd;font-size:12px}.g{background:#c9a96a;color:#0f1d16;border:none;font-weight:600}
+.h{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #2c4436}.h b{font-family:Georgia,serif;font-weight:400;color:#c9a96a;font-size:18px}.h span{font-size:11px;letter-spacing:.1em;color:#d8d0bd}
+.map{background:radial-gradient(circle at 50% 50%,#2b4637 0,#13221a 60%);display:flex;align-items:center;justify-content:center;color:#7f9a8a;position:relative}
+.row{display:flex}.col{flex:1}.t{font-family:Georgia,serif;font-size:20px;color:#efe8d6}.s{color:#c9a96a;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.note{border-left:3px solid #e2a54a;padding:6px 8px;margin:6px;background:#1a2a20;font-size:12px;color:#e8d7b5}
