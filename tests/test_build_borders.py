@@ -35,9 +35,20 @@ class BordersMapTests(unittest.TestCase):
         self.assertNotIn("__DATA__", self.page)
         self.assertNotIn("__BUILT__", self.page)
 
-    def test_never_writes_docs(self):
+    def test_writes_docs_only_when_publishing(self):
         with self.assertRaises(SystemExit):
             bb.build(os.path.join(os.path.dirname(bb.__file__), "docs", "borders.html"))
+
+    def test_published_page_drops_the_draft_badge_and_noindex_but_keeps_credits(self):
+        out, _ = bb.build(os.path.join(self.tmp.name, "live.html"), built="2026-11-27", publish=True)
+        with open(out, encoding="utf-8") as f:
+            live = f.read()
+        self.assertNotIn("noindex", live)
+        self.assertNotIn('class="draft"', live)
+        self.assertNotIn("(draft)", live)
+        for credit in ("CShapes 2.0", "Schvitz", "Pakenham", "Not yet reviewed by a historian"):
+            self.assertIn(credit, live)
+        self.assertIn('og:image" content="https://ksai4u-glitch.github.io/Taswira/borders-preview.png"', live)
 
     def test_every_unit_needs_a_period_name(self):
         story = copy.deepcopy(self.story)

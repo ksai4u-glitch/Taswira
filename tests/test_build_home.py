@@ -42,13 +42,25 @@ class FrontDoorTests(unittest.TestCase):
         self.assertIn('location.replace("conflict.html" + location.hash)', self.page)
         self.assertIn("country|group|year|month|layer|zones", self.page)
 
-    def test_both_maps_link_back_home(self):
+    def test_every_map_links_home_and_to_the_others(self):
         with open(bh.os.path.join(bh.HERE, "map_template.html"), encoding="utf-8") as f:
             conflict = f.read()
         with open(bh.os.path.join(bh.HERE, "history", "template.html"), encoding="utf-8") as f:
             history = f.read()
-        self.assertIn('<a href="./">&larr; Taswira home</a><a href="history.html">History map</a>', conflict)
-        self.assertIn('<a href="./">Home</a><a href="conflict.html">Conflict map</a>', history)
+        with open(bh.os.path.join(bh.HERE, "borders", "template.html"), encoding="utf-8") as f:
+            borders = f.read()
+        self.assertIn('<a href="./">&larr; Taswira home</a><a href="history.html">History map</a>'
+                      '<a href="borders.html">Borders map</a>', conflict)
+        self.assertIn('<a href="./">Home</a><a href="borders.html">Borders map</a><a href="conflict.html">Conflict map</a>', history)
+        for link in ('href="./"', 'href="history.html"', 'href="conflict.html"'):
+            self.assertIn(link, borders)
+
+    def test_borders_door_shows_only_when_the_borders_page_exists(self):
+        ready = bh.build("history.html", "conflict.html", borders_url="borders.html")
+        self.assertIn('data-borders="ready"', ready)
+        self.assertIn('<a class="go" href="borders.html">See the borders</a>', ready)
+        self.assertIn("CShapes 2.0", ready)
+        self.assertIn('data-borders="draft"', self.page)   # built with no borders page
 
     def test_problems_are_reported(self):
         self.assertEqual(bh.problems_with(self.page), [])

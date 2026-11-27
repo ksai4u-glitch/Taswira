@@ -1,8 +1,10 @@
 # Borders map (draft)
 
 "Who drew Africa's borders?": the Scramble for Africa on a globe. It runs from 1 January 1886 to
-1 October 1960, the day Nigeria became independent. It is a draft and is **not published**: `python build_borders.py` writes
-`previews/borders.html` and refuses to write `docs/`.
+1 October 1960, the day Nigeria became independent. `python build_borders.py` writes a draft preview, `previews/borders.html` (with a Draft badge and
+`noindex`). `python build_borders.py --publish` writes the live page, `docs/borders.html`, the third
+door on the home page (`build_home.py` shows the door only when that file exists). The link
+preview image is `docs/borders-preview.png` (1200 x 630, the map on 1 January 1914).
 
 - `story.json`: the words on the page. `powers` (colours), `names` (the name each unit had at the
   time, from a date; an optional third item is a shorter map label), `corrections` (where the page

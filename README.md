@@ -170,9 +170,10 @@ GitHub Pages serves the `docs/` folder as one site with a shared Home · History
 
 | Address | Page | Built by |
 |---|---|---|
-| `…/Taswira/` | Home: a dotted globe that zooms from space to Africa to Nigeria, then opens both maps | `build_home.py` (run by `publish.py`) |
+| `…/Taswira/` | Home: a dotted globe that zooms from space to Africa to Nigeria, then opens the three maps | `build_home.py` (run by `publish.py`) |
 | `…/Taswira/conflict.html` | The conflict map (UCDP) | `publish.py` |
 | `…/Taswira/history.html` | The history map, labelled as an unreviewed draft | `build_history.py` |
+| `…/Taswira/borders.html` | Who drew Africa's borders? The Scramble and independence, 1886 to 1960, from CShapes 2.0 (see `borders/README.md`) | `build_borders.py --publish` |
 
 The conflict map used to be the home address. A shared link to one of its views
 (`…/Taswira/#country=Nigeria&year=2024`) still opens that view: the home page forwards it to `conflict.html`.
@@ -180,7 +181,7 @@ The conflict map used to be the home address. A shared link to one of its views
 The home page needs no token or database: its figures and lights come from `docs/conflict.html`, the
 land from Natural Earth and Nigeria's outline from `history/geo/`. Every figure keeps its dataset
 version, the page says it is not live, and preliminary Candidate data is labelled. If
-`docs/history.html` is missing, its door says "coming soon". To rebuild it alone, run
+`docs/history.html` is missing, its door says "coming soon"; if `docs/borders.html` is missing, its door is hidden. To rebuild it alone, run
 `python build_home.py`; `python build_home.py --preview` writes `previews/home.html` instead.
 `docs/home-preview.png` is the picture shown when the link is shared.
 Check it with `python -m unittest tests.test_build_home`.
@@ -203,4 +204,5 @@ follow are in [`.github/agents/INSTRUCTIONS.md`](.github/agents/INSTRUCTIONS.md)
 5. **Map:** plot events and build a heatmap for Nigeria
 6. **Expand:** extend to wider Africa, add time filtering and Candidate data (done)
 7. **Publish:** public version with full UCDP attribution, updated weekly (done)
-8. **History:** animated chapters of African and Nigerian history (`docs/history.html`) ← *current*
+8. **History:** animated chapters of African and Nigerian history (`docs/history.html`)
+9. **Borders:** the Scramble for Africa and independence on a globe, 1886 to 1960 (`docs/borders.html`) ← *current*

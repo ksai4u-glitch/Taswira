@@ -13,8 +13,9 @@ Made by `make_scramble.py` in this folder (standard library only).
 - **Cite:** Schvitz, Guy, Luc Girardin, Seraina Rüegger, Nils B. Weidmann, Lars-Erik Cederman and
   Kristian Skrede Gleditsch (2022). Mapping the International System, 1886-2019: The CShapes 2.0
   Dataset. *Journal of Conflict Resolution* 66(1): 144-161.
-- **Licence:** the R package that carries the data is GPL (>= 2). Taswira is non-commercial and
-  credits the authors on the page. To check before publishing: the licence on ETH's data page.
+- **Licence:** the R package that carries the data is GPL (>= 2); ETH Zurich's Research Collection
+  lists the CShapes 2.0 article under CC BY-NC 4.0 (checked 27 Nov 2026). Taswira is non-commercial
+  and credits the authors on the page and on the home page.
 - **What the script does:**
   - keeps units whose dates overlap 1886-01-01 to 1960-10-01, and of each one only the polygons
     whose middle lies in Africa or its islands (so the Ottoman Empire keeps Tripolitania but not
