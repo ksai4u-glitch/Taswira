@@ -38,3 +38,6 @@ jobs:
 
       - name: Borders map checks (draft; nothing written)
         run: python build_borders.py --check
+
+      - name: Elections map checks (draft; nothing written)
+        run: python build_elections.py --check

@@ -1,0 +1,232 @@
+{
+  "title": "How Nigeria voted",
+  "lede": "Who won each state in Nigeria's presidential elections, from the votes declared by the Independent National Electoral Commission (INEC).",
+  "parties": {
+    "APC": {
+      "name": "All Progressives Congress",
+      "colour": "#5aa9e6"
+    },
+    "PDP": {
+      "name": "Peoples Democratic Party",
+      "colour": "#e0605a"
+    },
+    "LP": {
+      "name": "Labour Party",
+      "colour": "#9ad06b"
+    },
+    "NNPP": {
+      "name": "New Nigeria Peoples Party",
+      "colour": "#f0a24a"
+    },
+    "others": {
+      "name": "All other candidates",
+      "colour": "#8a968e"
+    }
+  },
+  "elections": [
+    {
+      "year": 2015,
+      "polled": "2015-03-28",
+      "declared": "2015-03-31",
+      "raw": "pres-2015-wikipedia.psv",
+      "candidates": [
+        {
+          "party": "APC",
+          "name": "Muhammadu Buhari",
+          "column": 1
+        },
+        {
+          "party": "PDP",
+          "name": "Goodluck Jonathan",
+          "column": 2
+        }
+      ],
+      "national": {
+        "APC": 15424921,
+        "PDP": 12853162,
+        "valid": 28587564
+      },
+      "winner": "APC",
+      "headline": "The first time a sitting president lost",
+      "text": "Muhammadu Buhari of the new APC beat President Goodluck Jonathan of the PDP, which had won every presidential election since military rule ended in 1999. Jonathan conceded before the result was declared.",
+      "sources": [
+        "inec-2015",
+        "wiki-2015",
+        "bbc-2015"
+      ],
+      "others_columns": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "year": 2019,
+      "polled": "2019-02-23",
+      "declared": "2019-02-27",
+      "raw": "pres-2019-wikipedia.psv",
+      "candidates": [
+        {
+          "party": "APC",
+          "name": "Muhammadu Buhari",
+          "column": 1
+        },
+        {
+          "party": "PDP",
+          "name": "Atiku Abubakar",
+          "column": 4
+        }
+      ],
+      "others_columns": [
+        7,
+        9,
+        11,
+        13
+      ],
+      "valid_column": 17,
+      "national": {
+        "APC": 15191847,
+        "PDP": 11262978,
+        "valid": 27324583
+      },
+      "winner": "APC",
+      "headline": "Buhari re-elected, the map splits",
+      "text": "Buhari won a second term against Atiku Abubakar. The APC took most of the north and four of the six south-western states; the PDP took every state in the south-east and south-south, and much of the middle belt.",
+      "sources": [
+        "inec-2019",
+        "wiki-2019"
+      ]
+    },
+    {
+      "year": 2023,
+      "polled": "2023-02-25",
+      "declared": "2023-03-01",
+      "raw": "pres-2023-wikipedia.tsv",
+      "candidates": [
+        {
+          "party": "APC",
+          "name": "Bola Tinubu",
+          "column": 1
+        },
+        {
+          "party": "PDP",
+          "name": "Atiku Abubakar",
+          "column": 2
+        },
+        {
+          "party": "LP",
+          "name": "Peter Obi",
+          "column": 3
+        },
+        {
+          "party": "NNPP",
+          "name": "Rabiu Kwankwaso",
+          "column": 4
+        }
+      ],
+      "others_columns": [
+        5
+      ],
+      "valid_column": 6,
+      "national": {
+        "APC": 8794726,
+        "PDP": 6984520,
+        "LP": 6101533,
+        "NNPP": 1496687,
+        "valid": 24025940
+      },
+      "winner": "APC",
+      "headline": "Four strong candidates, three regions",
+      "text": "Bola Tinubu won with the smallest share of these three elections. Peter Obi of the Labour Party won the south-east, the FCT and Tinubu's home state of Lagos; Rabiu Kwankwaso won Kano. The Supreme Court upheld the result on 26 October 2023.",
+      "sources": [
+        "inec-2023",
+        "wiki-2023",
+        "supreme-2023"
+      ]
+    }
+  ],
+  "corrections": [
+    {
+      "year": 2023,
+      "state": "Yobe",
+      "party": "PDP",
+      "from": 196567,
+      "to": 198567,
+      "note": "The compiled table gives 196,567, but its own share (52.47%) and Yobe's total of valid votes (378,397) both need 198,567, the figure other reports of the declaration give.",
+      "sources": [
+        "wiki-2023",
+        "tekedia-2023"
+      ]
+    }
+  ],
+  "known_gaps": [
+    {
+      "year": 2023,
+      "rows_off": [
+        "Kwara"
+      ],
+      "sources": [
+        "wiki-2023",
+        "inec-2023"
+      ],
+      "text": "The 37 state results here, as announced at INEC's national collation centre and reported in the press, do not add up exactly to the national totals INEC declared: they give Tinubu 10,694 more votes, Obi 10,516 fewer and Atiku 2,230 fewer (all under 0.2% of a candidate's votes). Kwara's own figures are also 40 votes more than its total of valid votes. The national figures on this page are INEC's declared totals and the state figures are as announced. Checking each state against INEC's own result sheets (Form EC8D) is still to do."
+    }
+  ],
+  "rule": "To win in the first round, the winner needs the most votes and at least a quarter of the votes in two-thirds of the 36 states and the FCT (Constitution of Nigeria 1999, section 134(2)). Two-thirds of 36 states is 24.",
+  "sources": {
+    "inec-2015": {
+      "cite": "INEC, declaration of the 2015 presidential election result, 31 March 2015.",
+      "used_for": "national totals 2015"
+    },
+    "inec-2019": {
+      "cite": "INEC, declaration of the 2019 presidential election result, 27 February 2019.",
+      "used_for": "national totals 2019"
+    },
+    "inec-2023": {
+      "cite": "INEC, declaration of the 2023 presidential election result, 1 March 2023.",
+      "used_for": "national totals 2023"
+    },
+    "wiki-2015": {
+      "cite": "Wikipedia, \"2015 Nigerian presidential election\", results by state (source given: INEC), read 27 November 2026.",
+      "url": "https://en.wikipedia.org/wiki/2015_Nigerian_presidential_election",
+      "used_for": "state results 2015 (they add up to INEC's national totals)"
+    },
+    "wiki-2019": {
+      "cite": "Wikipedia, \"2019 Nigerian presidential election\", results by state (sources given: BBC, ThisDay, Vanguard), read 27 November 2026.",
+      "url": "https://en.wikipedia.org/wiki/2019_Nigerian_presidential_election",
+      "used_for": "state results 2019 (they add up to INEC's national totals)"
+    },
+    "wiki-2023": {
+      "cite": "Wikipedia, \"2023 Nigerian presidential election\", results by state (each state cites the press report of its declaration), read 27 November 2026.",
+      "url": "https://en.wikipedia.org/wiki/2023_Nigerian_presidential_election",
+      "used_for": "state results 2023"
+    },
+    "tekedia-2023": {
+      "cite": "Tekedia, \"Nigeria Presidential Election Final Results for 2023\", 28 February 2023.",
+      "url": "https://www.tekedia.com/nigeria-2023-presidential-election-result-dashboard/",
+      "used_for": "second report of the state figures (Yobe)"
+    },
+    "bbc-2015": {
+      "cite": "BBC News, reports of Goodluck Jonathan conceding to Muhammadu Buhari, 31 March 2015.",
+      "used_for": "Jonathan's concession"
+    },
+    "supreme-2023": {
+      "cite": "Supreme Court of Nigeria, judgment in the appeals of Atiku Abubakar and Peter Obi, 26 October 2023.",
+      "used_for": "result upheld"
+    },
+    "grid3": {
+      "cite": "GRID3 Nigeria state boundaries (2022), via geoBoundaries (gbOpen NGA ADM1), CC BY 4.0.",
+      "url": "https://www.geoboundaries.org/",
+      "used_for": "state borders"
+    }
+  }
+}
