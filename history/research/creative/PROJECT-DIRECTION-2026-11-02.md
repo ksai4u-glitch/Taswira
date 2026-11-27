@@ -134,3 +134,11 @@ Read-only review on 2 November 2026 of:
 - [Hausa chapter](../../chapters/hausa.json) and [capture script](../../../capture_history.cjs).
 
 This is a direction and handoff review. It does not certify historical accuracy, media rights, finished animation quality, Instagram performance or a completed website build.
+
+
+## Documentary series and Epic Pass — 3 November 2026
+
+The maintainer has established an ongoing adult historical documentary series within Taswira. The Kano cinematic proof-of-concept now introduces **Hausa Kingdom Chronicles**, with the latest cold-open, continuous-score and **Rahzatech Media Production** direction recorded in the [Epic Pass brief](documentary-series/EPIC-PASS-2026-11-03.md). That brief supersedes conflicting opening/music/branding instructions above for this revision.
+
+See the [series handoff](documentary-series/README.md) for the current Kano story audit, separate project-teaser treatment, future-subject comparison, source-access records and production lessons. **Sokoto, 1804–1817** is selected for subsequent research development; an original opening and source comparisons are prepared. The [Claude map/website handoff](documentary-series/CLAUDE-HANDOFF.md) distinguishes existing coverage, proposed additions and chronology conflicts requiring reconciliation. The combined Home/Visualize/History/Conflict website remains a product direction, not a claimed deployment.
+
